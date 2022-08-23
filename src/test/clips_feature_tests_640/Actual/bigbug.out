@@ -1,0 +1,23 @@
+TRUE
+CLIPS> (clear)
+CLIPS> (progn (release-mem) TRUE)
+TRUE
+CLIPS> (mem-used)
+855639
+CLIPS> (load-facts bigbug.fct)
+1
+CLIPS> (clear)
+CLIPS> (progn (release-mem) TRUE)
+TRUE
+CLIPS> (mem-used)
+855639
+CLIPS> (load bigbug.clp)
+:
+TRUE
+CLIPS> (reset)
+CLIPS> (clear)
+CLIPS> (progn (release-mem) TRUE)
+TRUE
+CLIPS> (mem-used)
+855639
+CLIPS> (dribble-off)

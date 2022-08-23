@@ -1,0 +1,3 @@
+gnrcerr.bat differences are as follows:
+    82: (defmethod MAIN::bad 2147483647 ;; Different number OK
+    82: (defmethod MAIN::bad 2147483648

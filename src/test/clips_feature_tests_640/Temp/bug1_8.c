@@ -1,0 +1,6 @@
+#include "bug.h"
+
+unsigned long L1_1[] = {
+0x1L,
+0x2L,
+0x10L,0x2L};
