@@ -1,0 +1,972 @@
+coolcmd.bat differences are as follows:
+     8: [ARGACCES4] Function ppdefclass expected exactly 1 argument(s)
+     8: [ARGACCES1] Function 'ppdefclass' expected at least 1 argument.
+    11: [PRNTUTIL1] Unable to find defclass BOGUS.
+    11: [PRNTUTIL1] Unable to find defclass 'BOGUS'.
+    34: INITIAL-OBJECT
+    34: PP-TEST
+    35: PP-TEST
+    35: For a total of 17 defclasses.
+    36: For a total of 18 defclasses.
+    36: CLIPS> (defclass TEST (is-a USER) (role concrete))
+    37: CLIPS> (defclass TEST (is-a USER) (role concrete))
+    37: CLIPS> (defclass ANOTHER-TEST (is-a TEST))
+    38: CLIPS> (defclass ANOTHER-TEST (is-a TEST))
+    38: CLIPS> (defclass * (is-a OBJECT))
+    39: CLIPS> (defclass * (is-a OBJECT))
+    39: CLIPS> (undefclass BOGUS)
+    40: CLIPS> (undefclass BOGUS)
+    40: [PRNTUTIL1] Unable to find defclass 'BOGUS'.
+    41: [PRNTUTIL1] Unable to find defclass BOGUS.
+    41: CLIPS> (undefclass *)
+    42: CLIPS> (undefclass *)
+    42: CLIPS> (undefclass OBJECT)
+    43: CLIPS> (undefclass OBJECT)
+    43: [PRNTUTIL4] Unable to delete defclass 'OBJECT'.
+    44: [PRNTUTIL4] Unable to delete defclass OBJECT.
+    44: CLIPS> (undefclass USER)
+    45: CLIPS> (undefclass USER)
+    45: [PRNTUTIL4] Unable to delete defclass 'USER'.
+    46: [PRNTUTIL4] Unable to delete defclass USER.
+    46: CLIPS> (undefclass PRIMITIVE)
+    47: CLIPS> (undefclass PRIMITIVE)
+    47: [PRNTUTIL4] Unable to delete defclass 'PRIMITIVE'.
+    48: [PRNTUTIL4] Unable to delete defclass PRIMITIVE.
+    48: CLIPS> (undefclass MULTIFIELD)
+    49: CLIPS> (undefclass MULTIFIELD)
+    49: [PRNTUTIL4] Unable to delete defclass 'MULTIFIELD'.
+    50: [PRNTUTIL4] Unable to delete defclass MULTIFIELD.
+    50: CLIPS> (undefclass EXTERNAL-ADDRESS)
+    51: CLIPS> (undefclass EXTERNAL-ADDRESS)
+    51: [PRNTUTIL4] Unable to delete defclass 'EXTERNAL-ADDRESS'.
+    52: [PRNTUTIL4] Unable to delete defclass EXTERNAL-ADDRESS.
+    52: CLIPS> (undefclass NUMBER)
+    53: CLIPS> (undefclass NUMBER)
+    53: [PRNTUTIL4] Unable to delete defclass 'NUMBER'.
+    54: [PRNTUTIL4] Unable to delete defclass NUMBER.
+    54: CLIPS> (undefclass LEXEME)
+    55: CLIPS> (undefclass LEXEME)
+    55: [PRNTUTIL4] Unable to delete defclass 'LEXEME'.
+    56: [PRNTUTIL4] Unable to delete defclass LEXEME.
+    56: CLIPS> (undefclass INTEGER)
+    57: CLIPS> (undefclass INTEGER)
+    57: [PRNTUTIL4] Unable to delete defclass 'INTEGER'.
+    58: [PRNTUTIL4] Unable to delete defclass INTEGER.
+    58: CLIPS> (undefclass FLOAT)
+    59: CLIPS> (undefclass FLOAT)
+    59: [PRNTUTIL4] Unable to delete defclass 'FLOAT'.
+    60: [PRNTUTIL4] Unable to delete defclass FLOAT.
+    60: CLIPS> (undefclass SYMBOL)
+    61: CLIPS> (undefclass SYMBOL)
+    61: [PRNTUTIL4] Unable to delete defclass 'SYMBOL'.
+    62: [PRNTUTIL4] Unable to delete defclass SYMBOL.
+    62: CLIPS> (undefclass STRING)
+    63: CLIPS> (undefclass STRING)
+    63: [PRNTUTIL4] Unable to delete defclass 'STRING'.
+    64: [PRNTUTIL4] Unable to delete defclass STRING.
+    64: CLIPS> (make-instance t of TEST)
+    65: CLIPS> (make-instance t of TEST)
+    65: [PRNTUTIL1] Unable to find class 'TEST'.
+    66: [t]
+    66: CLIPS> (undefclass TEST)
+    67: CLIPS> (undefclass TEST)
+    67: [PRNTUTIL1] Unable to find defclass 'TEST'.
+    68: [PRNTUTIL4] Unable to delete defclass TEST.
+    68: CLIPS> (unmake-instance *)
+    69: CLIPS> (unmake-instance *)
+    69: TRUE
+    70: TRUE
+    70: CLIPS> (defmethod foo ((?a TEST)))
+    71: CLIPS> (defmethod foo ((?a TEST)))
+    71: [GENRCPSR14] Unknown class in method.
+    72: CLIPS> (undefclass TEST)
+    72: 
+    73: [PRNTUTIL4] Unable to delete defclass TEST.
+    73: ERROR:
+    74: CLIPS> (undefgeneric foo)
+    74: (defmethod MAIN::foo
+    75: CLIPS> (undefclass TEST)
+    75:    ((?a TEST
+    76: CLIPS> (list-defclasses)
+    76: CLIPS> (undefclass TEST)
+    77: FLOAT
+    77: [PRNTUTIL1] Unable to find defclass 'TEST'.
+    78: INTEGER
+    78: CLIPS> (undefgeneric foo)
+    79: SYMBOL
+    79: [PRNTUTIL1] Unable to find defgeneric 'foo'.
+    80: STRING
+    80: CLIPS> (undefclass TEST)
+    81: MULTIFIELD
+    81: [PRNTUTIL1] Unable to find defclass 'TEST'.
+    82: EXTERNAL-ADDRESS
+    82: CLIPS> (list-defclasses)
+    83: FACT-ADDRESS
+    83: FLOAT
+    84: INSTANCE-ADDRESS
+    84: INTEGER
+    85: INSTANCE-NAME
+    85: SYMBOL
+    86: OBJECT
+    86: STRING
+    87: PRIMITIVE
+    87: MULTIFIELD
+    88: NUMBER
+    88: EXTERNAL-ADDRESS
+    89: LEXEME
+    89: FACT-ADDRESS
+    90: ADDRESS
+    90: INSTANCE-ADDRESS
+    91: INSTANCE
+    91: INSTANCE-NAME
+    92: USER
+    92: OBJECT
+    93: INITIAL-OBJECT
+    93: PRIMITIVE
+    94: PP-TEST
+    94: NUMBER
+    95: For a total of 18 defclasses.
+    95: LEXEME
+    96: CLIPS> (undefclass *)
+    96: ADDRESS
+    97: CLIPS> (list-defclasses)
+    97: INSTANCE
+    98: FLOAT
+    98: USER
+    99: INTEGER
+    99: For a total of 16 defclasses.
+   100: SYMBOL
+   100: CLIPS> (undefclass *)
+   101: STRING
+   101: CLIPS> (list-defclasses)
+   102: MULTIFIELD
+   102: FLOAT
+   103: EXTERNAL-ADDRESS
+   103: INTEGER
+   104: FACT-ADDRESS
+   104: SYMBOL
+   105: INSTANCE-ADDRESS
+   105: STRING
+   106: INSTANCE-NAME
+   106: MULTIFIELD
+   107: OBJECT
+   107: EXTERNAL-ADDRESS
+   108: PRIMITIVE
+   108: FACT-ADDRESS
+   109: NUMBER
+   109: INSTANCE-ADDRESS
+   110: LEXEME
+   110: INSTANCE-NAME
+   111: ADDRESS
+   111: OBJECT
+   112: INSTANCE
+   112: PRIMITIVE
+   113: USER
+   113: NUMBER
+   114: INITIAL-OBJECT
+   114: LEXEME
+   115: For a total of 17 defclasses.
+   115: ADDRESS
+   116: CLIPS> (defclass CHILD (is-a USER) (role abstract)
+   116: INSTANCE
+   117:   (slot age (create-accessor ?NONE))
+   117: USER
+   118:   (slot sex (access read-only)
+   118: For a total of 16 defclasses.
+   119:             (storage shared)
+   119: CLIPS> (defclass CHILD (is-a USER) (role abstract)
+   120:             (create-accessor ?NONE)))
+   120:   (slot age (create-accessor ?NONE))
+   121: CLIPS> (defclass BOY (is-a CHILD)
+   121:   (slot sex (access read-only)
+   122:    (role concrete)
+   122:             (storage shared)
+   123:    (slot sex (source composite)
+   123:             (create-accessor ?NONE)))
+   124:              (default male)
+   124: CLIPS> (defclass BOY (is-a CHILD)
+   125:              (create-accessor ?NONE)))
+   125:    (role concrete)
+   126: CLIPS> (defmessage-handler BOY play ()
+   126:    (slot sex (source composite)
+   127:    (printout t "The boy is now playing..." crlf))
+   127:              (default male)
+   128: CLIPS> (describe-class CHILD)
+   128:              (create-accessor ?NONE)))
+   129: ================================================================================
+   129: CLIPS> (defmessage-handler BOY play ()
+   130: ********************************************************************************
+   130:    (printout t "The boy is now playing..." crlf))
+   131: Abstract: direct instances of this class cannot be created.
+   131: CLIPS> (describe-class CHILD)
+   132: 
+   132: ================================================================================
+   133: Direct Superclasses: USER
+   133: ********************************************************************************
+   134: Inheritance Precedence: CHILD USER OBJECT
+   134: Abstract: direct instances of this class cannot be created.
+   135: Direct Subclasses: BOY
+   135: 
+   136: --------------------------------------------------------------------------------
+   136: Direct Superclasses: USER
+   137: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   137: Inheritance Precedence: CHILD USER OBJECT
+   138: age   : SGL STC INH RW  LCL RCT EXC PRV NIL put-age  CHILD
+   138: Direct Subclasses: BOY
+   139: sex   : SGL STC INH  R  SHR RCT EXC PRV NIL NIL      CHILD
+   139: --------------------------------------------------------------------------------
+   140: 
+   140: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   141: Constraint information for slots:
+   141: age   : SGL STC INH RW  LCL RCT EXC PRV NIL put-age  CHILD
+   142: 
+   142: sex   : SGL STC INH  R  SHR RCT EXC PRV NIL NIL      CHILD
+   143: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   143: 
+   144: age   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   144: Constraint information for slots:
+   145: sex   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   145: 
+   146: --------------------------------------------------------------------------------
+   146: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   147: Recognized message-handlers:
+   147: age   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   148: init primary in class USER
+   148: sex   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   149: delete primary in class USER
+   149: --------------------------------------------------------------------------------
+   150: create primary in class USER
+   150: Recognized message-handlers:
+   151: print primary in class USER
+   151: init primary in class USER
+   152: direct-modify primary in class USER
+   152: delete primary in class USER
+   153: message-modify primary in class USER
+   153: create primary in class USER
+   154: direct-duplicate primary in class USER
+   154: print primary in class USER
+   155: message-duplicate primary in class USER
+   155: direct-modify primary in class USER
+   156: ********************************************************************************
+   156: message-modify primary in class USER
+   157: ================================================================================
+   157: direct-duplicate primary in class USER
+   158: CLIPS> (describe-class BOY)
+   158: message-duplicate primary in class USER
+   159: ================================================================================
+   159: ********************************************************************************
+   160: ********************************************************************************
+   160: ================================================================================
+   161: Concrete: direct instances of this class can be created.
+   161: CLIPS> (describe-class BOY)
+   162: Non-reactive: direct instances of this class cannot match defrule patterns.
+   162: ================================================================================
+   163: 
+   163: ********************************************************************************
+   164: Direct Superclasses: CHILD
+   164: Concrete: direct instances of this class can be created.
+   165: Inheritance Precedence: BOY CHILD USER OBJECT
+   165: Non-reactive: direct instances of this class cannot match defrule patterns.
+   166: Direct Subclasses:
+   166: 
+   167: --------------------------------------------------------------------------------
+   167: Direct Superclasses: CHILD
+   168: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   168: Inheritance Precedence: BOY CHILD USER OBJECT
+   169: age   : SGL STC INH RW  LCL RCT EXC PRV NIL put-age  CHILD
+   169: Direct Subclasses:
+   170: sex   : SGL STC INH  R  SHR RCT CMP PRV NIL NIL      CHILD BOY
+   170: --------------------------------------------------------------------------------
+   171: 
+   171: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   172: Constraint information for slots:
+   172: age   : SGL STC INH RW  LCL RCT EXC PRV NIL put-age  CHILD
+   173: 
+   173: sex   : SGL STC INH  R  SHR RCT CMP PRV NIL NIL      CHILD BOY
+   174: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   174: 
+   175: age   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   175: Constraint information for slots:
+   176: sex   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   176: 
+   177: --------------------------------------------------------------------------------
+   177: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   178: Recognized message-handlers:
+   178: age   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   179: init primary in class USER
+   179: sex   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   180: delete primary in class USER
+   180: --------------------------------------------------------------------------------
+   181: create primary in class USER
+   181: Recognized message-handlers:
+   182: print primary in class USER
+   182: init primary in class USER
+   183: direct-modify primary in class USER
+   183: delete primary in class USER
+   184: message-modify primary in class USER
+   184: create primary in class USER
+   185: direct-duplicate primary in class USER
+   185: print primary in class USER
+   186: message-duplicate primary in class USER
+   186: direct-modify primary in class USER
+   187: play primary in class BOY
+   187: message-modify primary in class USER
+   188: ********************************************************************************
+   188: direct-duplicate primary in class USER
+   189: ================================================================================
+   189: message-duplicate primary in class USER
+   190: CLIPS> (defclass a (is-a USER))
+   190: play primary in class BOY
+   191: CLIPS> (defclass b (is-a USER))
+   191: ********************************************************************************
+   192: CLIPS> (defclass c (is-a a b))
+   192: ================================================================================
+   193: CLIPS> (defclass d (is-a USER))
+   193: CLIPS> (defclass a (is-a USER))
+   194: CLIPS> (defclass e (is-a c d))
+   194: CLIPS> (defclass b (is-a USER))
+   195: CLIPS> (defclass f (is-a e))
+   195: CLIPS> (defclass c (is-a a b))
+   196: CLIPS> (browse-classes)
+   196: CLIPS> (defclass d (is-a USER))
+   197: OBJECT
+   197: CLIPS> (defclass e (is-a c d))
+   198:   PRIMITIVE
+   198: CLIPS> (defclass f (is-a e))
+   199:     NUMBER
+   199: CLIPS> (browse-classes)
+   200:       INTEGER
+   200: OBJECT
+   201:       FLOAT
+   201:   PRIMITIVE
+   202:     LEXEME
+   202:     NUMBER
+   203:       SYMBOL
+   203:       INTEGER
+   204:       STRING
+   204:       FLOAT
+   205:     MULTIFIELD
+   205:     LEXEME
+   206:     ADDRESS
+   206:       SYMBOL
+   207:       EXTERNAL-ADDRESS
+   207:       STRING
+   208:       FACT-ADDRESS
+   208:     MULTIFIELD
+   209:       INSTANCE-ADDRESS *
+   209:     ADDRESS
+   210:     INSTANCE
+   210:       EXTERNAL-ADDRESS
+   211:       INSTANCE-ADDRESS *
+   211:       FACT-ADDRESS
+   212:       INSTANCE-NAME
+   212:       INSTANCE-ADDRESS *
+   213:   USER
+   213:     INSTANCE
+   214:     INITIAL-OBJECT
+   214:       INSTANCE-ADDRESS *
+   215:     CHILD
+   215:       INSTANCE-NAME
+   216:       BOY
+   216:   USER
+   217:     a
+   217:     CHILD
+   218:       c *
+   218:       BOY
+   219:         e *
+   219:     a
+   220:           f
+   220:       c *
+   221:     b
+   221:         e *
+   222:       c *
+   222:           f
+   223:         e *
+   223:     b
+   224:           f
+   224:       c *
+   225:     d
+   225:         e *
+   226:       e *
+   226:           f
+   227:         f
+   227:     d
+   228: CLIPS> (browse-classes a)
+   228:       e *
+   229: a
+   229:         f
+   230:   c *
+   230: CLIPS> (browse-classes a)
+   231:     e *
+   231: a
+   232:       f
+   232:   c *
+   233: CLIPS> (browse-classes BOGUS)
+   233:     e *
+   234: [CLASSFUN1] Unable to find class BOGUS in function browse-classes.
+   234:       f
+   235: CLIPS> (browse-classes 34)
+   235: CLIPS> (browse-classes BOGUS)
+   236: [ARGACCES5] Function browse-classes expected argument #1 to be of type symbol
+   236: [CLASSFUN1] Unable to find class 'BOGUS' in function 'browse-classes'.
+   237: CLIPS> (ppdefmessage-handler)
+   237: CLIPS> (browse-classes 34)
+   238: [ARGACCES4] Function ppdefmessage-handler expected at least 2 argument(s)
+   238: [ARGACCES2] Function 'browse-classes' expected argument #1 to be of type symbol.
+   239: CLIPS> (ppdefmessage-handler bogus)
+   239: CLIPS> (ppdefmessage-handler)
+   240: [ARGACCES4] Function ppdefmessage-handler expected at least 2 argument(s)
+   240: [ARGACCES1] Function 'ppdefmessage-handler' expected at least 2 arguments.
+   241: CLIPS> (ppdefmessage-handler bogus bogus)
+   241: CLIPS> (ppdefmessage-handler bogus)
+   242: [MSGCOM2] Unable to find message-handler bogus primary for class bogus in function ppdefmessage-handler.
+   242: [ARGACCES1] Function 'ppdefmessage-handler' expected at least 2 arguments.
+   243: CLIPS> (ppdefmessage-handler USER bogus)
+   243: CLIPS> (ppdefmessage-handler bogus bogus)
+   244: [MSGCOM2] Unable to find message-handler bogus primary for class USER in function ppdefmessage-handler.
+   244: [MSGCOM2] Unable to find message-handler 'bogus' primary for class 'bogus' in function 'ppdefmessage-handler'.
+   245: CLIPS> (ppdefmessage-handler bogus init)
+   245: CLIPS> (ppdefmessage-handler USER bogus)
+   246: [MSGCOM2] Unable to find message-handler init primary for class bogus in function ppdefmessage-handler.
+   246: [MSGCOM2] Unable to find message-handler 'bogus' primary for class 'USER' in function 'ppdefmessage-handler'.
+   247: CLIPS> (ppdefmessage-handler USER init)
+   247: CLIPS> (ppdefmessage-handler bogus init)
+   248: CLIPS> (ppdefmessage-handler BOY play)
+   248: [MSGCOM2] Unable to find message-handler 'init' primary for class 'bogus' in function 'ppdefmessage-handler'.
+   249: (defmessage-handler MAIN::BOY play
+   249: CLIPS> (ppdefmessage-handler USER init)
+   250:    ()
+   250: CLIPS> (ppdefmessage-handler BOY play)
+   251:    (printout t "The boy is now playing..." crlf))
+   251: (defmessage-handler MAIN::BOY play
+   252: CLIPS> (ppdefmessage-handler BOY play primary)
+   252:    ()
+   253: (defmessage-handler MAIN::BOY play
+   253:    (printout t "The boy is now playing..." crlf))
+   254:    ()
+   254: CLIPS> (ppdefmessage-handler BOY play primary)
+   255:    (printout t "The boy is now playing..." crlf))
+   255: (defmessage-handler MAIN::BOY play
+   256: CLIPS> (ppdefmessage-handler USER init around)
+   256:    ()
+   257: [MSGCOM2] Unable to find message-handler init around for class USER in function ppdefmessage-handler.
+   257:    (printout t "The boy is now playing..." crlf))
+   258: CLIPS> (ppdefmessage-handler USER init before)
+   258: CLIPS> (ppdefmessage-handler USER init around)
+   259: [MSGCOM2] Unable to find message-handler init before for class USER in function ppdefmessage-handler.
+   259: [MSGCOM2] Unable to find message-handler 'init' around for class 'USER' in function 'ppdefmessage-handler'.
+   260: CLIPS> (ppdefmessage-handler USER init after)
+   260: CLIPS> (ppdefmessage-handler USER init before)
+   261: [MSGCOM2] Unable to find message-handler init after for class USER in function ppdefmessage-handler.
+   261: [MSGCOM2] Unable to find message-handler 'init' before for class 'USER' in function 'ppdefmessage-handler'.
+   262: CLIPS> (defmessage-handler BOY init after ())
+   262: CLIPS> (ppdefmessage-handler USER init after)
+   263: CLIPS> (list-defmessage-handlers)
+   263: [MSGCOM2] Unable to find message-handler 'init' after for class 'USER' in function 'ppdefmessage-handler'.
+   264: init primary in class USER
+   264: CLIPS> (defmessage-handler BOY init after ())
+   265: delete primary in class USER
+   265: CLIPS> (list-defmessage-handlers)
+   266: create primary in class USER
+   266: init primary in class USER
+   267: print primary in class USER
+   267: delete primary in class USER
+   268: direct-modify primary in class USER
+   268: create primary in class USER
+   269: message-modify primary in class USER
+   269: print primary in class USER
+   270: direct-duplicate primary in class USER
+   270: direct-modify primary in class USER
+   271: message-duplicate primary in class USER
+   271: message-modify primary in class USER
+   272: play primary in class BOY
+   272: direct-duplicate primary in class USER
+   273: init after in class BOY
+   273: message-duplicate primary in class USER
+   274: For a total of 10 message-handlers.
+   274: play primary in class BOY
+   275: CLIPS> (list-defmessage-handlers *)
+   275: init after in class BOY
+   276: [CLASSFUN1] Unable to find class * in function list-defmessage-handlers.
+   276: For a total of 10 message-handlers.
+   277: CLIPS> (defclass * (is-a USER))
+   277: CLIPS> (list-defmessage-handlers *)
+   278: CLIPS> (list-defmessage-handlers)
+   278: [CLASSFUN1] Unable to find class '*' in function 'list-defmessage-handlers'.
+   279: init primary in class USER
+   279: CLIPS> (defclass * (is-a USER))
+   280: delete primary in class USER
+   280: CLIPS> (list-defmessage-handlers)
+   281: create primary in class USER
+   281: init primary in class USER
+   282: print primary in class USER
+   282: delete primary in class USER
+   283: direct-modify primary in class USER
+   283: create primary in class USER
+   284: message-modify primary in class USER
+   284: print primary in class USER
+   285: direct-duplicate primary in class USER
+   285: direct-modify primary in class USER
+   286: message-duplicate primary in class USER
+   286: message-modify primary in class USER
+   287: play primary in class BOY
+   287: direct-duplicate primary in class USER
+   288: init after in class BOY
+   288: message-duplicate primary in class USER
+   289: For a total of 10 message-handlers.
+   289: play primary in class BOY
+   290: CLIPS> (undefclass *)
+   290: init after in class BOY
+   291: CLIPS> (list-defmessage-handlers USER)
+   291: For a total of 10 message-handlers.
+   292: init primary in class USER
+   292: CLIPS> (undefclass *)
+   293: delete primary in class USER
+   293: CLIPS> (list-defmessage-handlers USER)
+   294: create primary in class USER
+   294: init primary in class USER
+   295: print primary in class USER
+   295: delete primary in class USER
+   296: direct-modify primary in class USER
+   296: create primary in class USER
+   297: message-modify primary in class USER
+   297: print primary in class USER
+   298: direct-duplicate primary in class USER
+   298: direct-modify primary in class USER
+   299: message-duplicate primary in class USER
+   299: message-modify primary in class USER
+   300: For a total of 8 message-handlers.
+   300: direct-duplicate primary in class USER
+   301: CLIPS> (defmessage-handler USER * ())
+   301: message-duplicate primary in class USER
+   302: CLIPS> (defmessage-handler USER bogus ())
+   302: For a total of 8 message-handlers.
+   303: CLIPS> (list-defmessage-handlers USER)
+   303: CLIPS> (defmessage-handler USER * ())
+   304: init primary in class USER
+   304: CLIPS> (defmessage-handler USER bogus ())
+   305: delete primary in class USER
+   305: CLIPS> (list-defmessage-handlers USER)
+   306: create primary in class USER
+   306: init primary in class USER
+   307: print primary in class USER
+   307: delete primary in class USER
+   308: direct-modify primary in class USER
+   308: create primary in class USER
+   309: message-modify primary in class USER
+   309: print primary in class USER
+   310: direct-duplicate primary in class USER
+   310: direct-modify primary in class USER
+   311: message-duplicate primary in class USER
+   311: message-modify primary in class USER
+   312: * primary in class USER
+   312: direct-duplicate primary in class USER
+   313: bogus primary in class USER
+   313: message-duplicate primary in class USER
+   314: For a total of 10 message-handlers.
+   314: * primary in class USER
+   315: CLIPS> (undefmessage-handler USER *)
+   315: bogus primary in class USER
+   316: CLIPS> (list-defmessage-handlers USER)
+   316: For a total of 10 message-handlers.
+   317: init primary in class USER
+   317: CLIPS> (undefmessage-handler USER *)
+   318: delete primary in class USER
+   318: CLIPS> (list-defmessage-handlers USER)
+   319: create primary in class USER
+   319: init primary in class USER
+   320: print primary in class USER
+   320: delete primary in class USER
+   321: direct-modify primary in class USER
+   321: create primary in class USER
+   322: message-modify primary in class USER
+   322: print primary in class USER
+   323: direct-duplicate primary in class USER
+   323: direct-modify primary in class USER
+   324: message-duplicate primary in class USER
+   324: message-modify primary in class USER
+   325: bogus primary in class USER
+   325: direct-duplicate primary in class USER
+   326: For a total of 9 message-handlers.
+   326: message-duplicate primary in class USER
+   327: CLIPS> (undefmessage-handler)
+   327: bogus primary in class USER
+   328: [ARGACCES4] Function undefmessage-handler expected at least 2 argument(s)
+   328: For a total of 9 message-handlers.
+   329: CLIPS> (undefmessage-handler * *)
+   329: CLIPS> (undefmessage-handler)
+   330: CLIPS> (list-defmessage-handlers)
+   330: [ARGACCES1] Function 'undefmessage-handler' expected at least 2 arguments.
+   331: init primary in class USER
+   331: CLIPS> (undefmessage-handler * *)
+   332: delete primary in class USER
+   332: CLIPS> (list-defmessage-handlers)
+   333: create primary in class USER
+   333: init primary in class USER
+   334: print primary in class USER
+   334: delete primary in class USER
+   335: direct-modify primary in class USER
+   335: create primary in class USER
+   336: message-modify primary in class USER
+   336: print primary in class USER
+   337: direct-duplicate primary in class USER
+   337: direct-modify primary in class USER
+   338: message-duplicate primary in class USER
+   338: message-modify primary in class USER
+   339: init after in class BOY
+   339: direct-duplicate primary in class USER
+   340: For a total of 9 message-handlers.
+   340: message-duplicate primary in class USER
+   341: CLIPS> (undefmessage-handler * * *)
+   341: init after in class BOY
+   342: CLIPS> (list-defmessage-handlers)
+   342: For a total of 9 message-handlers.
+   343: init primary in class USER
+   343: CLIPS> (undefmessage-handler * * *)
+   344: delete primary in class USER
+   344: CLIPS> (list-defmessage-handlers)
+   345: create primary in class USER
+   345: init primary in class USER
+   346: print primary in class USER
+   346: delete primary in class USER
+   347: direct-modify primary in class USER
+   347: create primary in class USER
+   348: message-modify primary in class USER
+   348: print primary in class USER
+   349: direct-duplicate primary in class USER
+   349: direct-modify primary in class USER
+   350: message-duplicate primary in class USER
+   350: message-modify primary in class USER
+   351: For a total of 8 message-handlers.
+   351: direct-duplicate primary in class USER
+   352: CLIPS> (clear)
+   352: message-duplicate primary in class USER
+   353: CLIPS> (defmessage-handler USER my-message around ())
+   353: For a total of 8 message-handlers.
+   354: CLIPS> (defmessage-handler USER my-message before ())
+   354: CLIPS> (clear)
+   355: CLIPS> (defmessage-handler USER my-message ())
+   355: CLIPS> (defmessage-handler USER my-message around ())
+   356: CLIPS> (defmessage-handler USER my-message after ())
+   356: CLIPS> (defmessage-handler USER my-message before ())
+   357: CLIPS> (defmessage-handler OBJECT my-message around ())
+   357: CLIPS> (defmessage-handler USER my-message ())
+   358: CLIPS> (defmessage-handler OBJECT my-message before ())
+   358: CLIPS> (defmessage-handler USER my-message after ())
+   359: CLIPS> (defmessage-handler OBJECT my-message primary ())
+   359: CLIPS> (defmessage-handler OBJECT my-message around ())
+   360: CLIPS> (defmessage-handler OBJECT my-message after ())
+   360: CLIPS> (defmessage-handler OBJECT my-message before ())
+   361: CLIPS> (preview-send)
+   361: CLIPS> (defmessage-handler OBJECT my-message primary ())
+   362: [ARGACCES4] Function preview-send expected exactly 2 argument(s)
+   362: CLIPS> (defmessage-handler OBJECT my-message after ())
+   363: CLIPS> (preview-send BOGUS blah)
+   363: CLIPS> (preview-send)
+   364: [CLASSFUN1] Unable to find class BOGUS in function preview-send.
+   364: [ARGACCES1] Function 'preview-send' expected exactly 2 arguments.
+   365: CLIPS> (preview-send USER blah)
+   365: CLIPS> (preview-send BOGUS blah)
+   366: [MSGFUN1] No applicable primary message-handlers found for blah.
+   366: [CLASSFUN1] Unable to find class 'BOGUS' in function 'preview-send'.
+   367: CLIPS> (preview-send USER my-message)
+   367: CLIPS> (preview-send USER blah)
+   368: >> my-message around in class USER
+   368: [MSGFUN1] No applicable primary message-handlers found for 'blah'.
+   369: | >> my-message around in class OBJECT
+   369: CLIPS> (preview-send USER my-message)
+   370: | | >> my-message before in class USER
+   370: >> my-message around in class USER
+   371: | | << my-message before in class USER
+   371: | >> my-message around in class OBJECT
+   372: | | >> my-message before in class OBJECT
+   372: | | >> my-message before in class USER
+   373: | | << my-message before in class OBJECT
+   373: | | << my-message before in class USER
+   374: | | >> my-message primary in class USER
+   374: | | >> my-message before in class OBJECT
+   375: | | | >> my-message primary in class OBJECT
+   375: | | << my-message before in class OBJECT
+   376: | | | << my-message primary in class OBJECT
+   376: | | >> my-message primary in class USER
+   377: | | << my-message primary in class USER
+   377: | | | >> my-message primary in class OBJECT
+   378: | | >> my-message after in class OBJECT
+   378: | | | << my-message primary in class OBJECT
+   379: | | << my-message after in class OBJECT
+   379: | | << my-message primary in class USER
+   380: | | >> my-message after in class USER
+   380: | | >> my-message after in class OBJECT
+   381: | | << my-message after in class USER
+   381: | | << my-message after in class OBJECT
+   382: | << my-message around in class OBJECT
+   382: | | >> my-message after in class USER
+   383: << my-message around in class USER
+   383: | | << my-message after in class USER
+   384: CLIPS> (preview-send OBJECT my-message)
+   384: | << my-message around in class OBJECT
+   385: >> my-message around in class OBJECT
+   385: << my-message around in class USER
+   386: | >> my-message before in class OBJECT
+   386: CLIPS> (preview-send OBJECT my-message)
+   387: | << my-message before in class OBJECT
+   387: >> my-message around in class OBJECT
+   388: | >> my-message primary in class OBJECT
+   388: | >> my-message before in class OBJECT
+   389: | << my-message primary in class OBJECT
+   389: | << my-message before in class OBJECT
+   390: | >> my-message after in class OBJECT
+   390: | >> my-message primary in class OBJECT
+   391: | << my-message after in class OBJECT
+   391: | << my-message primary in class OBJECT
+   392: << my-message around in class OBJECT
+   392: | >> my-message after in class OBJECT
+   393: CLIPS> (clear)
+   393: | << my-message after in class OBJECT
+   394: CLIPS> (defclass TEST (is-a USER) (role concrete)
+   394: << my-message around in class OBJECT
+   395:    (slot x (create-accessor write)) 
+   395: CLIPS> (clear)
+   396:    (multislot y (default ?NONE) (create-accessor write))
+   396: CLIPS> (defclass TEST (is-a USER) (role concrete)
+   397:    (slot z (create-accessor write)))
+   397:    (slot x (create-accessor write)) 
+   398: CLIPS> (definstances TEST-CASES "Random comment..."
+   398:    (multislot y (default ?NONE) (create-accessor write))
+   399:    (t1 of TEST (x 100) (y a b c d e f))
+   399:    (slot z (create-accessor write)))
+   400:    (t2 of TEST (y blah)))
+   400: CLIPS> (definstances TEST-CASES "Random comment..."
+   401: CLIPS> (ppdefinstances)
+   401:    (t1 of TEST (x 100) (y a b c d e f))
+   402: [ARGACCES4] Function ppdefinstances expected exactly 1 argument(s)
+   402:    (t2 of TEST (y blah)))
+   403: CLIPS> (ppdefinstances BOGUS)
+   403: CLIPS> (ppdefinstances)
+   404: [PRNTUTIL1] Unable to find definstances BOGUS.
+   404: [ARGACCES1] Function 'ppdefinstances' expected at least 1 argument.
+   405: CLIPS> (ppdefinstances 34)
+   405: CLIPS> (ppdefinstances BOGUS)
+   406: [ARGACCES5] Function ppdefinstances expected argument #1 to be of type symbol
+   406: [PRNTUTIL1] Unable to find definstances 'BOGUS'.
+   407: CLIPS> (ppdefinstances TEST-CASES)
+   407: CLIPS> (ppdefinstances 34)
+   408: (definstances MAIN::TEST-CASES "Random comment..."
+   408: [ARGACCES2] Function 'ppdefinstances' expected argument #1 to be of type symbol.
+   409:    (t1 of TEST
+   409: CLIPS> (ppdefinstances TEST-CASES)
+   410:       (x 100)
+   410: (definstances MAIN::TEST-CASES "Random comment..."
+   411:       (y a b c d e f))
+   411:    (t1 of TEST
+   412:    (t2 of TEST
+   412:       (x 100)
+   413:       (y blah)))
+   413:       (y a b c d e f))
+   414: CLIPS> (list-definstances)
+   414:    (t2 of TEST
+   415: initial-object
+   415:       (y blah)))
+   416: TEST-CASES
+   416: CLIPS> (list-definstances)
+   417: For a total of 2 definstances.
+   417: TEST-CASES
+   418: CLIPS> (reset)
+   418: For a total of 1 definstances.
+   419: CLIPS> (instances)
+   419: CLIPS> (reset)
+   420: [initial-object] of INITIAL-OBJECT
+   420: CLIPS> (instances)
+   423: For a total of 3 instances.
+   423: For a total of 2 instances.
+   430: [initial-object] of INITIAL-OBJECT
+   430: [t1] of TEST
+   431: [t1] of TEST
+   431: [t2] of TEST
+   432: [t2] of TEST
+   432: For a total of 2 instances.
+   433: For a total of 3 instances.
+   433: CLIPS> (instances MAIN BOGUS)
+   434: CLIPS> (instances MAIN BOGUS)
+   434: [CLASSFUN1] Unable to find class 'BOGUS' in function 'instances'.
+   435: [CLASSFUN1] Unable to find class BOGUS in function instances.
+   435: CLIPS> (instances MAIN USER junk)
+   436: CLIPS> (instances MAIN USER junk)
+   436: [ARGACCES2] Function 'instances' expected argument #3 to be of type keyword "inherit".
+   437: [ARGACCES5] Function instances expected argument #3 to be of type keyword "inherit"
+   437: CLIPS> (send [t1] print)
+   438: CLIPS> (send [t1] print)
+   438: [t1] of TEST
+   439: [t1] of TEST
+   439: (x 100)
+   440: (x 100)
+   440: (y a b c d e f)
+   441: (y a b c d e f)
+   441: (z nil)
+   442: (z nil)
+   442: CLIPS> (defmessage-handler TEST print ()
+   443: CLIPS> (defmessage-handler TEST print ()
+   443:    (printout t "Printing twice..." crlf)
+   444:    (printout t "Printing twice..." crlf)
+   444:    (ppinstance)
+   445:    (ppinstance)
+   445:    (call-next-handler)
+   446:    (call-next-handler)
+   446:    (printout t "Done!" crlf))
+   447:    (printout t "Done!" crlf))
+   447: CLIPS> (send [t2] print)
+   448: CLIPS> (send [t2] print)
+   448: Printing twice...
+   449: Printing twice...
+   449: [t2] of TEST
+   450: [t2] of TEST
+   450: (x nil)
+   451: (x nil)
+   451: (y blah)
+   452: (y blah)
+   452: (z nil)
+   453: (z nil)
+   453: [t2] of TEST
+   454: [t2] of TEST
+   454: (x nil)
+   455: (x nil)
+   455: (y blah)
+   456: (y blah)
+   456: (z nil)
+   457: (z nil)
+   457: Done!
+   458: Done!
+   458: CLIPS> (undefinstances)
+   459: CLIPS> (undefinstances)
+   459: [ARGACCES1] Function 'undefinstances' expected exactly 1 argument.
+   460: [ARGACCES4] Function undefinstances expected exactly 1 argument(s)
+   460: CLIPS> (definstances * (t3 of TEST))
+   461: CLIPS> (definstances * (t3 of TEST))
+   461: CLIPS> (undefinstances *)
+   462: CLIPS> (undefinstances *)
+   462: CLIPS> (list-definstances)
+   463: CLIPS> (list-definstances)
+   463: TEST-CASES
+   464: initial-object
+   464: For a total of 1 definstances.
+   465: TEST-CASES
+   465: CLIPS> (undefinstances *)
+   466: For a total of 2 definstances.
+   466: CLIPS> (list-definstances)
+   467: CLIPS> (undefinstances *)
+   467: CLIPS> (load-instances)
+   468: CLIPS> (list-definstances)
+   468: [ARGACCES1] Function 'load-instances' expected exactly 1 argument.
+   469: CLIPS> (load-instances)
+   469: CLIPS> (load-instances 34)
+   470: [ARGACCES4] Function load-instances expected exactly 1 argument(s)
+   470: [ARGACCES2] Function 'load-instances' expected argument #1 to be of type symbol or string.
+   471: CLIPS> (load-instances 34)
+   471: CLIPS> (load-instances "coolcmd.bat")
+   472: [ARGACCES5] Function load-instances expected argument #1 to be of type symbol or string
+   472: 
+   473: CLIPS> (load-instances "coolcmd.bat")
+   473: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for make-instance.
+   474: 
+   474: [INSFILE1] Function 'load-instances' could not completely process file 'coolcmd.bat'.
+   475: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for make-instance.
+   475: 0
+   476: [INSFILE1] Function load-instances could not completely process file coolcmd.bat.
+   476: CLIPS> (save-instances)
+   477: 0
+   477: [ARGACCES1] Function 'save-instances' expected at least 1 argument.
+   478: CLIPS> (save-instances)
+   478: CLIPS> (save-instances 34)
+   479: [ARGACCES4] Function save-instances expected at least 1 argument(s)
+   479: [ARGACCES2] Function 'save-instances' expected argument #1 to be of type symbol or string.
+   480: CLIPS> (save-instances 34)
+   480: CLIPS> (send [t2] put-z (instance-address t1))
+   481: [ARGACCES5] Function save-instances expected argument #1 to be of type symbol or string
+   481: <Instance-t1>
+   482: CLIPS> (send [t2] put-z (instance-address t1))
+   482: CLIPS> (mv-slot-replace t1 y 2 2 (instance-address t2))
+   483: <Instance-t1>
+   483: 
+   484: CLIPS> (mv-slot-replace t1 y 2 2 (instance-address t2))
+   484: [EXPRNPSR3] Missing function declaration for 'mv-slot-replace'.
+   485: (a <Instance-t2> c d e f)
+   485: CLIPS> (save-instances "Actual//coolcmd2.out")
+   486: CLIPS> (save-instances "Actual//coolcmd2.out")
+   486: 2
+   487: 3
+   487: CLIPS> (reset)
+   488: CLIPS> (reset)
+   488: CLIPS> (load-instances "Actual//coolcmd2.out")
+   489: CLIPS> (load-instances "Actual//coolcmd2.out")
+   489: 2
+   490: 3
+   490: CLIPS> (restore-instances "Actual//coolcmd2.out")
+   491: CLIPS> (restore-instances "Actual//coolcmd2.out")
+   491: 2
+   492: 3
+   492: CLIPS> (do-for-all-instances ((?a OBJECT)) TRUE (send ?a print))
+   493: CLIPS> (do-for-all-instances ((?a OBJECT)) TRUE (send ?a print))
+   493: Printing twice...
+   494: [initial-object] of INITIAL-OBJECT
+   494: [t1] of TEST
+   495: Printing twice...
+   495: (x 100)
+   496: [t1] of TEST
+   496: (y a b c d e f)
+   497: (x 100)
+   497: (z nil)
+   498: (y a [t2] c d e f)
+   498: [t1] of TEST
+   499: (z nil)
+   499: (x 100)
+   500: [t1] of TEST
+   500: (y a b c d e f)
+   501: (x 100)
+   501: (z nil)
+   502: (y a [t2] c d e f)
+   502: Done!
+   503: (z nil)
+   503: Printing twice...
+   504: Done!
+   504: [t2] of TEST
+   505: Printing twice...
+   505: (x nil)
+   506: [t2] of TEST
+   506: (y blah)
+   507: (x nil)
+   507: (z [t1])
+   508: (y blah)
+   508: [t2] of TEST
+   509: (z [t1])
+   509: (x nil)
+   510: [t2] of TEST
+   510: (y blah)
+   511: (x nil)
+   511: (z [t1])
+   512: (y blah)
+   512: Done!
+   513: (z [t1])
+   513: CLIPS> (dribble-off)
+   Files do not have the same # of lines
+coolcmd.ins differences are as follows:
+     1: ([initial-object] of INITIAL-OBJECT)
+     1: ([t1] of TEST
+     2: 
+     2:    (x 100)
+     3: ([t1] of TEST
+     3:    (y a b c d e f)
+     4:    (x 100)
+     4:    (z nil))
+     5:    (y a [t2] c d e f)
+     5: 
+     6:    (z nil))
+     6: ([t2] of TEST
+     7: 
+     7:    (x nil)
+     8: ([t2] of TEST
+     8:    (y blah)
+     9:    (x nil)
+     9:    (z [t1]))
+    10:    (y blah)
+    10: 
+   Files do not have the same # of lines

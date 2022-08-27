@@ -1,0 +1,680 @@
+dftmpfun.bat differences are as follows:
+    36: [PRNTUTIL1] Unable to find deftemplate huh.
+    36: [PRNTUTIL1] Unable to find deftemplate 'huh'.
+    39: [ARGACCES5] Function deftemplate-slot-names expected argument #1 to be of type deftemplate name
+    39: [ARGACCES2] Function 'deftemplate-slot-names' expected argument #1 to be of type symbol.
+    40: FALSE
+    40: CLIPS> (deftemplate-slot-names foo bar)
+    41: CLIPS> (deftemplate-slot-names foo bar)
+    41: [ARGACCES1] Function 'deftemplate-slot-names' expected exactly 1 argument.
+    42: [ARGACCES4] Function deftemplate-slot-names expected exactly 1 argument(s)
+    42: CLIPS> (deftemplate-slot-names)
+    43: CLIPS> (deftemplate-slot-names)
+    43: [ARGACCES1] Function 'deftemplate-slot-names' expected exactly 1 argument.
+    44: [ARGACCES4] Function deftemplate-slot-names expected exactly 1 argument(s)
+    44: CLIPS> (deftemplate-slot-names foo)
+    45: CLIPS> (deftemplate-slot-names foo)
+    45: (implied)
+    46: (implied)
+    46: CLIPS> (deftemplate-slot-names bar)
+    47: CLIPS> (deftemplate-slot-names bar)
+    47: ()
+    48: ()
+    48: CLIPS> (deftemplate-slot-names yak)
+    49: CLIPS> (deftemplate-slot-names yak)
+    49: (x1 x2 x3 y1 y2 y3)
+    50: (x1 x2 x3 y1 y2 y3)
+    50: CLIPS> (deftemplate-slot-default-value)
+    51: CLIPS> (deftemplate-slot-default-value)
+    51: [ARGACCES1] Function 'deftemplate-slot-default-value' expected exactly 2 arguments.
+    52: [ARGACCES4] Function deftemplate-slot-default-value expected exactly 2 argument(s)
+    52: CLIPS> (deftemplate-slot-default-value foo)
+    53: CLIPS> (deftemplate-slot-default-value foo)
+    53: [ARGACCES1] Function 'deftemplate-slot-default-value' expected exactly 2 arguments.
+    54: [ARGACCES4] Function deftemplate-slot-default-value expected exactly 2 argument(s)
+    54: CLIPS> (deftemplate-slot-default-value bar)
+    55: CLIPS> (deftemplate-slot-default-value bar)
+    55: [ARGACCES1] Function 'deftemplate-slot-default-value' expected exactly 2 arguments.
+    56: [ARGACCES4] Function deftemplate-slot-default-value expected exactly 2 argument(s)
+    56: CLIPS> (deftemplate-slot-default-value yak)
+    57: CLIPS> (deftemplate-slot-default-value yak)
+    57: [ARGACCES1] Function 'deftemplate-slot-default-value' expected exactly 2 arguments.
+    58: [ARGACCES4] Function deftemplate-slot-default-value expected exactly 2 argument(s)
+    58: CLIPS> (deftemplate-slot-default-value huh)
+    59: CLIPS> (deftemplate-slot-default-value huh)
+    59: [ARGACCES1] Function 'deftemplate-slot-default-value' expected exactly 2 arguments.
+    60: [ARGACCES4] Function deftemplate-slot-default-value expected exactly 2 argument(s)
+    60: CLIPS> (deftemplate-slot-default-value yak x 3)
+    61: CLIPS> (deftemplate-slot-default-value yak x 3)
+    61: [ARGACCES1] Function 'deftemplate-slot-default-value' expected exactly 2 arguments.
+    62: [ARGACCES4] Function deftemplate-slot-default-value expected exactly 2 argument(s)
+    62: CLIPS> (deftemplate-slot-default-value foo zip)
+    63: CLIPS> (deftemplate-slot-default-value foo zip)
+    63: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'foo'.
+    64: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate foo.
+    64: FALSE
+    65: FALSE
+    65: CLIPS> (deftemplate-slot-default-value bar zip)
+    66: CLIPS> (deftemplate-slot-default-value bar zip)
+    66: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'bar'.
+    67: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate bar.
+    67: FALSE
+    68: FALSE
+    68: CLIPS> (deftemplate-slot-default-value yak zip)
+    69: CLIPS> (deftemplate-slot-default-value yak zip)
+    69: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'yak'.
+    70: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate yak.
+    70: FALSE
+    71: FALSE
+    71: CLIPS> (deftemplate-slot-default-value huh x)
+    72: CLIPS> (deftemplate-slot-default-value huh x)
+    72: [PRNTUTIL1] Unable to find deftemplate 'huh'.
+    73: [PRNTUTIL1] Unable to find deftemplate huh.
+    73: FALSE
+    74: FALSE
+    74: CLIPS> (deftemplate-slot-default-value foo implied)
+    75: CLIPS> (deftemplate-slot-default-value foo implied)
+    75: ()
+    76: ()
+    76: CLIPS> (deftemplate-slot-default-value yak x1)
+    77: CLIPS> (deftemplate-slot-default-value yak x1)
+    77: 3
+    78: 3
+    78: CLIPS> (deftemplate-slot-default-value yak x2)
+    79: CLIPS> (deftemplate-slot-default-value yak x2)
+    79: gen1
+    80: gen1
+    80: CLIPS> (deftemplate-slot-default-value yak x3)
+    81: CLIPS> (deftemplate-slot-default-value yak x3)
+    81: ?NONE
+    82: ?NONE
+    82: CLIPS> (deftemplate-slot-default-value yak y1)
+    83: CLIPS> (deftemplate-slot-default-value yak y1)
+    83: ("a" 3.1 [c])
+    84: ("a" 3.1 [c])
+    84: CLIPS> (deftemplate-slot-default-value yak y2)
+    85: CLIPS> (deftemplate-slot-default-value yak y2)
+    85: (gen2 gen3)
+    86: (gen2 gen3)
+    86: CLIPS> (deftemplate-slot-default-value yak y3)
+    87: CLIPS> (deftemplate-slot-default-value yak y3)
+    87: ?NONE
+    88: ?NONE
+    88: CLIPS> (deftemplate-slot-defaultp)
+    89: CLIPS> (deftemplate-slot-defaultp)
+    89: [ARGACCES1] Function 'deftemplate-slot-defaultp' expected exactly 2 arguments.
+    90: [ARGACCES4] Function deftemplate-slot-defaultp expected exactly 2 argument(s)
+    90: CLIPS> (deftemplate-slot-defaultp foo)
+    91: CLIPS> (deftemplate-slot-defaultp foo)
+    91: [ARGACCES1] Function 'deftemplate-slot-defaultp' expected exactly 2 arguments.
+    92: [ARGACCES4] Function deftemplate-slot-defaultp expected exactly 2 argument(s)
+    92: CLIPS> (deftemplate-slot-defaultp bar)
+    93: CLIPS> (deftemplate-slot-defaultp bar)
+    93: [ARGACCES1] Function 'deftemplate-slot-defaultp' expected exactly 2 arguments.
+    94: [ARGACCES4] Function deftemplate-slot-defaultp expected exactly 2 argument(s)
+    94: CLIPS> (deftemplate-slot-defaultp yak)
+    95: CLIPS> (deftemplate-slot-defaultp yak)
+    95: [ARGACCES1] Function 'deftemplate-slot-defaultp' expected exactly 2 arguments.
+    96: [ARGACCES4] Function deftemplate-slot-defaultp expected exactly 2 argument(s)
+    96: CLIPS> (deftemplate-slot-defaultp huh)
+    97: CLIPS> (deftemplate-slot-defaultp huh)
+    97: [ARGACCES1] Function 'deftemplate-slot-defaultp' expected exactly 2 arguments.
+    98: [ARGACCES4] Function deftemplate-slot-defaultp expected exactly 2 argument(s)
+    98: CLIPS> (deftemplate-slot-defaultp yak x 3)
+    99: CLIPS> (deftemplate-slot-defaultp yak x 3)
+    99: [ARGACCES1] Function 'deftemplate-slot-defaultp' expected exactly 2 arguments.
+   100: [ARGACCES4] Function deftemplate-slot-defaultp expected exactly 2 argument(s)
+   100: CLIPS> (deftemplate-slot-defaultp foo zip)
+   101: CLIPS> (deftemplate-slot-defaultp foo zip)
+   101: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'foo'.
+   102: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate foo.
+   102: FALSE
+   103: FALSE
+   103: CLIPS> (deftemplate-slot-defaultp bar zip)
+   104: CLIPS> (deftemplate-slot-defaultp bar zip)
+   104: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'bar'.
+   105: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate bar.
+   105: FALSE
+   106: FALSE
+   106: CLIPS> (deftemplate-slot-defaultp yak zip)
+   107: CLIPS> (deftemplate-slot-defaultp yak zip)
+   107: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'yak'.
+   108: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate yak.
+   108: FALSE
+   109: FALSE
+   109: CLIPS> (deftemplate-slot-defaultp huh x)
+   110: CLIPS> (deftemplate-slot-defaultp huh x)
+   110: [PRNTUTIL1] Unable to find deftemplate 'huh'.
+   111: [PRNTUTIL1] Unable to find deftemplate huh.
+   111: FALSE
+   112: FALSE
+   112: CLIPS> (deftemplate-slot-defaultp foo implied)
+   113: CLIPS> (deftemplate-slot-defaultp foo implied)
+   113: static
+   114: static
+   114: CLIPS> (deftemplate-slot-defaultp yak x1)
+   115: CLIPS> (deftemplate-slot-defaultp yak x1)
+   115: static
+   116: static
+   116: CLIPS> (deftemplate-slot-defaultp yak x2)
+   117: CLIPS> (deftemplate-slot-defaultp yak x2)
+   117: dynamic
+   118: dynamic
+   118: CLIPS> (deftemplate-slot-defaultp yak x3)
+   119: CLIPS> (deftemplate-slot-defaultp yak x3)
+   119: FALSE
+   120: FALSE
+   120: CLIPS> (deftemplate-slot-defaultp yak y1)
+   121: CLIPS> (deftemplate-slot-defaultp yak y1)
+   121: static
+   122: static
+   122: CLIPS> (deftemplate-slot-defaultp yak y2)
+   123: CLIPS> (deftemplate-slot-defaultp yak y2)
+   123: dynamic
+   124: dynamic
+   124: CLIPS> (deftemplate-slot-defaultp yak y3)
+   125: CLIPS> (deftemplate-slot-defaultp yak y3)
+   125: FALSE
+   126: FALSE
+   126: CLIPS> (deftemplate-slot-singlep)
+   127: CLIPS> (deftemplate-slot-singlep)
+   127: [ARGACCES1] Function 'deftemplate-slot-singlep' expected exactly 2 arguments.
+   128: [ARGACCES4] Function deftemplate-slot-singlep expected exactly 2 argument(s)
+   128: CLIPS> (deftemplate-slot-singlep foo)
+   129: CLIPS> (deftemplate-slot-singlep foo)
+   129: [ARGACCES1] Function 'deftemplate-slot-singlep' expected exactly 2 arguments.
+   130: [ARGACCES4] Function deftemplate-slot-singlep expected exactly 2 argument(s)
+   130: CLIPS> (deftemplate-slot-singlep bar)
+   131: CLIPS> (deftemplate-slot-singlep bar)
+   131: [ARGACCES1] Function 'deftemplate-slot-singlep' expected exactly 2 arguments.
+   132: [ARGACCES4] Function deftemplate-slot-singlep expected exactly 2 argument(s)
+   132: CLIPS> (deftemplate-slot-singlep yak)
+   133: CLIPS> (deftemplate-slot-singlep yak)
+   133: [ARGACCES1] Function 'deftemplate-slot-singlep' expected exactly 2 arguments.
+   134: [ARGACCES4] Function deftemplate-slot-singlep expected exactly 2 argument(s)
+   134: CLIPS> (deftemplate-slot-singlep huh)
+   135: CLIPS> (deftemplate-slot-singlep huh)
+   135: [ARGACCES1] Function 'deftemplate-slot-singlep' expected exactly 2 arguments.
+   136: [ARGACCES4] Function deftemplate-slot-singlep expected exactly 2 argument(s)
+   136: CLIPS> (deftemplate-slot-singlep yak x 3)
+   137: CLIPS> (deftemplate-slot-singlep yak x 3)
+   137: [ARGACCES1] Function 'deftemplate-slot-singlep' expected exactly 2 arguments.
+   138: [ARGACCES4] Function deftemplate-slot-singlep expected exactly 2 argument(s)
+   138: CLIPS> (deftemplate-slot-singlep foo zip)
+   139: CLIPS> (deftemplate-slot-singlep foo zip)
+   139: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'foo'.
+   140: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate foo.
+   140: FALSE
+   141: FALSE
+   141: CLIPS> (deftemplate-slot-singlep bar zip)
+   142: CLIPS> (deftemplate-slot-singlep bar zip)
+   142: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'bar'.
+   143: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate bar.
+   143: FALSE
+   144: FALSE
+   144: CLIPS> (deftemplate-slot-singlep yak zip)
+   145: CLIPS> (deftemplate-slot-singlep yak zip)
+   145: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'yak'.
+   146: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate yak.
+   146: FALSE
+   147: FALSE
+   147: CLIPS> (deftemplate-slot-singlep huh x)
+   148: CLIPS> (deftemplate-slot-singlep huh x)
+   148: [PRNTUTIL1] Unable to find deftemplate 'huh'.
+   149: [PRNTUTIL1] Unable to find deftemplate huh.
+   149: FALSE
+   150: FALSE
+   150: CLIPS> (deftemplate-slot-singlep foo implied)
+   151: CLIPS> (deftemplate-slot-singlep foo implied)
+   151: FALSE
+   152: FALSE
+   152: CLIPS> (deftemplate-slot-singlep yak x1)
+   153: CLIPS> (deftemplate-slot-singlep yak x1)
+   153: TRUE
+   154: TRUE
+   154: CLIPS> (deftemplate-slot-singlep yak y1)
+   155: CLIPS> (deftemplate-slot-singlep yak y1)
+   155: FALSE
+   156: FALSE
+   156: CLIPS> (deftemplate-slot-multip)
+   157: CLIPS> (deftemplate-slot-multip)
+   157: [ARGACCES1] Function 'deftemplate-slot-multip' expected exactly 2 arguments.
+   158: [ARGACCES4] Function deftemplate-slot-multip expected exactly 2 argument(s)
+   158: CLIPS> (deftemplate-slot-multip foo)
+   159: CLIPS> (deftemplate-slot-multip foo)
+   159: [ARGACCES1] Function 'deftemplate-slot-multip' expected exactly 2 arguments.
+   160: [ARGACCES4] Function deftemplate-slot-multip expected exactly 2 argument(s)
+   160: CLIPS> (deftemplate-slot-multip bar)
+   161: CLIPS> (deftemplate-slot-multip bar)
+   161: [ARGACCES1] Function 'deftemplate-slot-multip' expected exactly 2 arguments.
+   162: [ARGACCES4] Function deftemplate-slot-multip expected exactly 2 argument(s)
+   162: CLIPS> (deftemplate-slot-multip yak)
+   163: CLIPS> (deftemplate-slot-multip yak)
+   163: [ARGACCES1] Function 'deftemplate-slot-multip' expected exactly 2 arguments.
+   164: [ARGACCES4] Function deftemplate-slot-multip expected exactly 2 argument(s)
+   164: CLIPS> (deftemplate-slot-multip huh)
+   165: CLIPS> (deftemplate-slot-multip huh)
+   165: [ARGACCES1] Function 'deftemplate-slot-multip' expected exactly 2 arguments.
+   166: [ARGACCES4] Function deftemplate-slot-multip expected exactly 2 argument(s)
+   166: CLIPS> (deftemplate-slot-multip yak x 3)
+   167: CLIPS> (deftemplate-slot-multip yak x 3)
+   167: [ARGACCES1] Function 'deftemplate-slot-multip' expected exactly 2 arguments.
+   168: [ARGACCES4] Function deftemplate-slot-multip expected exactly 2 argument(s)
+   168: CLIPS> (deftemplate-slot-multip foo zip)
+   169: CLIPS> (deftemplate-slot-multip foo zip)
+   169: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'foo'.
+   170: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate foo.
+   170: FALSE
+   171: FALSE
+   171: CLIPS> (deftemplate-slot-multip bar zip)
+   172: CLIPS> (deftemplate-slot-multip bar zip)
+   172: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'bar'.
+   173: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate bar.
+   173: FALSE
+   174: FALSE
+   174: CLIPS> (deftemplate-slot-multip yak zip)
+   175: CLIPS> (deftemplate-slot-multip yak zip)
+   175: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'yak'.
+   176: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate yak.
+   176: FALSE
+   177: FALSE
+   177: CLIPS> (deftemplate-slot-multip huh x)
+   178: CLIPS> (deftemplate-slot-multip huh x)
+   178: [PRNTUTIL1] Unable to find deftemplate 'huh'.
+   179: [PRNTUTIL1] Unable to find deftemplate huh.
+   179: FALSE
+   180: FALSE
+   180: CLIPS> (deftemplate-slot-multip foo implied)
+   181: CLIPS> (deftemplate-slot-multip foo implied)
+   181: TRUE
+   182: TRUE
+   182: CLIPS> (deftemplate-slot-multip yak x1)
+   183: CLIPS> (deftemplate-slot-multip yak x1)
+   183: FALSE
+   184: FALSE
+   184: CLIPS> (deftemplate-slot-multip yak y1)
+   185: CLIPS> (deftemplate-slot-multip yak y1)
+   185: TRUE
+   186: TRUE
+   186: CLIPS> (deftemplate-slot-existp)
+   187: CLIPS> (deftemplate-slot-existp)
+   187: [ARGACCES1] Function 'deftemplate-slot-existp' expected exactly 2 arguments.
+   188: [ARGACCES4] Function deftemplate-slot-existp expected exactly 2 argument(s)
+   188: CLIPS> (deftemplate-slot-existp foo)
+   189: CLIPS> (deftemplate-slot-existp foo)
+   189: [ARGACCES1] Function 'deftemplate-slot-existp' expected exactly 2 arguments.
+   190: [ARGACCES4] Function deftemplate-slot-existp expected exactly 2 argument(s)
+   190: CLIPS> (deftemplate-slot-existp bar)
+   191: CLIPS> (deftemplate-slot-existp bar)
+   191: [ARGACCES1] Function 'deftemplate-slot-existp' expected exactly 2 arguments.
+   192: [ARGACCES4] Function deftemplate-slot-existp expected exactly 2 argument(s)
+   192: CLIPS> (deftemplate-slot-existp yak)
+   193: CLIPS> (deftemplate-slot-existp yak)
+   193: [ARGACCES1] Function 'deftemplate-slot-existp' expected exactly 2 arguments.
+   194: [ARGACCES4] Function deftemplate-slot-existp expected exactly 2 argument(s)
+   194: CLIPS> (deftemplate-slot-existp huh)
+   195: CLIPS> (deftemplate-slot-existp huh)
+   195: [ARGACCES1] Function 'deftemplate-slot-existp' expected exactly 2 arguments.
+   196: [ARGACCES4] Function deftemplate-slot-existp expected exactly 2 argument(s)
+   196: CLIPS> (deftemplate-slot-existp yak x 3)
+   197: CLIPS> (deftemplate-slot-existp yak x 3)
+   197: [ARGACCES1] Function 'deftemplate-slot-existp' expected exactly 2 arguments.
+   198: [ARGACCES4] Function deftemplate-slot-existp expected exactly 2 argument(s)
+   198: CLIPS> (deftemplate-slot-existp foo zip)
+   199: CLIPS> (deftemplate-slot-existp foo zip)
+   199: FALSE
+   200: FALSE
+   200: CLIPS> (deftemplate-slot-existp bar zip)
+   201: CLIPS> (deftemplate-slot-existp bar zip)
+   201: FALSE
+   202: FALSE
+   202: CLIPS> (deftemplate-slot-existp yak zip)
+   203: CLIPS> (deftemplate-slot-existp yak zip)
+   203: FALSE
+   204: FALSE
+   204: CLIPS> (deftemplate-slot-existp huh x)
+   205: CLIPS> (deftemplate-slot-existp huh x)
+   205: [PRNTUTIL1] Unable to find deftemplate 'huh'.
+   206: [PRNTUTIL1] Unable to find deftemplate huh.
+   206: FALSE
+   207: FALSE
+   207: CLIPS> (deftemplate-slot-existp foo implied)
+   208: CLIPS> (deftemplate-slot-existp foo implied)
+   208: TRUE
+   209: TRUE
+   209: CLIPS> (deftemplate-slot-existp yak x1)
+   210: CLIPS> (deftemplate-slot-existp yak x1)
+   210: TRUE
+   211: TRUE
+   211: CLIPS> (deftemplate-slot-existp yak y1)
+   212: CLIPS> (deftemplate-slot-existp yak y1)
+   212: TRUE
+   213: TRUE
+   213: CLIPS> (deftemplate-slot-cardinality)
+   214: CLIPS> (deftemplate-slot-cardinality)
+   214: [ARGACCES1] Function 'deftemplate-slot-cardinality' expected exactly 2 arguments.
+   215: [ARGACCES4] Function deftemplate-slot-cardinality expected exactly 2 argument(s)
+   215: CLIPS> (deftemplate-slot-cardinality foo)
+   216: CLIPS> (deftemplate-slot-cardinality foo)
+   216: [ARGACCES1] Function 'deftemplate-slot-cardinality' expected exactly 2 arguments.
+   217: [ARGACCES4] Function deftemplate-slot-cardinality expected exactly 2 argument(s)
+   217: CLIPS> (deftemplate-slot-cardinality bar)
+   218: CLIPS> (deftemplate-slot-cardinality bar)
+   218: [ARGACCES1] Function 'deftemplate-slot-cardinality' expected exactly 2 arguments.
+   219: [ARGACCES4] Function deftemplate-slot-cardinality expected exactly 2 argument(s)
+   219: CLIPS> (deftemplate-slot-cardinality yak)
+   220: CLIPS> (deftemplate-slot-cardinality yak)
+   220: [ARGACCES1] Function 'deftemplate-slot-cardinality' expected exactly 2 arguments.
+   221: [ARGACCES4] Function deftemplate-slot-cardinality expected exactly 2 argument(s)
+   221: CLIPS> (deftemplate-slot-cardinality huh)
+   222: CLIPS> (deftemplate-slot-cardinality huh)
+   222: [ARGACCES1] Function 'deftemplate-slot-cardinality' expected exactly 2 arguments.
+   223: [ARGACCES4] Function deftemplate-slot-cardinality expected exactly 2 argument(s)
+   223: CLIPS> (deftemplate-slot-cardinality yak x 3)
+   224: CLIPS> (deftemplate-slot-cardinality yak x 3)
+   224: [ARGACCES1] Function 'deftemplate-slot-cardinality' expected exactly 2 arguments.
+   225: [ARGACCES4] Function deftemplate-slot-cardinality expected exactly 2 argument(s)
+   225: CLIPS> (deftemplate-slot-cardinality foo zip)
+   226: CLIPS> (deftemplate-slot-cardinality foo zip)
+   226: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'foo'.
+   227: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate foo.
+   227: ()
+   228: ()
+   228: CLIPS> (deftemplate-slot-cardinality bar zip)
+   229: CLIPS> (deftemplate-slot-cardinality bar zip)
+   229: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'bar'.
+   230: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate bar.
+   230: ()
+   231: ()
+   231: CLIPS> (deftemplate-slot-cardinality yak zip)
+   232: CLIPS> (deftemplate-slot-cardinality yak zip)
+   232: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'yak'.
+   233: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate yak.
+   233: ()
+   234: ()
+   234: CLIPS> (deftemplate-slot-cardinality huh x)
+   235: CLIPS> (deftemplate-slot-cardinality huh x)
+   235: [PRNTUTIL1] Unable to find deftemplate 'huh'.
+   236: [PRNTUTIL1] Unable to find deftemplate huh.
+   236: ()
+   237: ()
+   237: CLIPS> (deftemplate-slot-cardinality foo implied)
+   238: CLIPS> (deftemplate-slot-cardinality foo implied)
+   238: (0 +oo)
+   239: (0 +oo)
+   239: CLIPS> (deftemplate-slot-cardinality yak x1)
+   240: CLIPS> (deftemplate-slot-cardinality yak x1)
+   240: ()
+   241: ()
+   241: CLIPS> (deftemplate-slot-cardinality yak x2)
+   242: CLIPS> (deftemplate-slot-cardinality yak x2)
+   242: ()
+   243: ()
+   243: CLIPS> (deftemplate-slot-cardinality yak x3)
+   244: CLIPS> (deftemplate-slot-cardinality yak x3)
+   244: ()
+   245: ()
+   245: CLIPS> (deftemplate-slot-cardinality yak y1)
+   246: CLIPS> (deftemplate-slot-cardinality yak y1)
+   246: (1 +oo)
+   247: (1 +oo)
+   247: CLIPS> (deftemplate-slot-cardinality yak y2)
+   248: CLIPS> (deftemplate-slot-cardinality yak y2)
+   248: (0 3)
+   249: (0 3)
+   249: CLIPS> (deftemplate-slot-cardinality yak y3)
+   250: CLIPS> (deftemplate-slot-cardinality yak y3)
+   250: (0 +oo)
+   251: (0 +oo)
+   251: CLIPS> (deftemplate-slot-range)
+   252: CLIPS> (deftemplate-slot-range)
+   252: [ARGACCES1] Function 'deftemplate-slot-range' expected exactly 2 arguments.
+   253: [ARGACCES4] Function deftemplate-slot-range expected exactly 2 argument(s)
+   253: CLIPS> (deftemplate-slot-range foo)
+   254: CLIPS> (deftemplate-slot-range foo)
+   254: [ARGACCES1] Function 'deftemplate-slot-range' expected exactly 2 arguments.
+   255: [ARGACCES4] Function deftemplate-slot-range expected exactly 2 argument(s)
+   255: CLIPS> (deftemplate-slot-range bar)
+   256: CLIPS> (deftemplate-slot-range bar)
+   256: [ARGACCES1] Function 'deftemplate-slot-range' expected exactly 2 arguments.
+   257: [ARGACCES4] Function deftemplate-slot-range expected exactly 2 argument(s)
+   257: CLIPS> (deftemplate-slot-range yak)
+   258: CLIPS> (deftemplate-slot-range yak)
+   258: [ARGACCES1] Function 'deftemplate-slot-range' expected exactly 2 arguments.
+   259: [ARGACCES4] Function deftemplate-slot-range expected exactly 2 argument(s)
+   259: CLIPS> (deftemplate-slot-range huh)
+   260: CLIPS> (deftemplate-slot-range huh)
+   260: [ARGACCES1] Function 'deftemplate-slot-range' expected exactly 2 arguments.
+   261: [ARGACCES4] Function deftemplate-slot-range expected exactly 2 argument(s)
+   261: CLIPS> (deftemplate-slot-range yak x 3)
+   262: CLIPS> (deftemplate-slot-range yak x 3)
+   262: [ARGACCES1] Function 'deftemplate-slot-range' expected exactly 2 arguments.
+   263: [ARGACCES4] Function deftemplate-slot-range expected exactly 2 argument(s)
+   263: CLIPS> (deftemplate-slot-range foo zip)
+   264: CLIPS> (deftemplate-slot-range foo zip)
+   264: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'foo'.
+   265: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate foo.
+   265: ()
+   266: ()
+   266: CLIPS> (deftemplate-slot-range bar zip)
+   267: CLIPS> (deftemplate-slot-range bar zip)
+   267: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'bar'.
+   268: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate bar.
+   268: ()
+   269: ()
+   269: CLIPS> (deftemplate-slot-range yak zip)
+   270: CLIPS> (deftemplate-slot-range yak zip)
+   270: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'yak'.
+   271: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate yak.
+   271: ()
+   272: ()
+   272: CLIPS> (deftemplate-slot-range huh x)
+   273: CLIPS> (deftemplate-slot-range huh x)
+   273: [PRNTUTIL1] Unable to find deftemplate 'huh'.
+   274: [PRNTUTIL1] Unable to find deftemplate huh.
+   274: ()
+   275: ()
+   275: CLIPS> (deftemplate-slot-range foo implied)
+   276: CLIPS> (deftemplate-slot-range foo implied)
+   276: (-oo +oo)
+   277: (-oo +oo)
+   277: CLIPS> (deftemplate-slot-range yak x1)
+   278: CLIPS> (deftemplate-slot-range yak x1)
+   278: (-oo 10.5)
+   279: (-oo 10.5)
+   279: CLIPS> (deftemplate-slot-range yak x2)
+   280: CLIPS> (deftemplate-slot-range yak x2)
+   280: (20 +oo)
+   281: (20 +oo)
+   281: CLIPS> (deftemplate-slot-range yak x3)
+   282: CLIPS> (deftemplate-slot-range yak x3)
+   282: (-oo +oo)
+   283: (-oo +oo)
+   283: CLIPS> (deftemplate-slot-range yak y1)
+   284: CLIPS> (deftemplate-slot-range yak y1)
+   284: (-oo +oo)
+   285: (-oo +oo)
+   285: CLIPS> (deftemplate-slot-range yak y2)
+   286: CLIPS> (deftemplate-slot-range yak y2)
+   286: (-10 10)
+   287: (-10 10)
+   287: CLIPS> (deftemplate-slot-range yak y3)
+   288: CLIPS> (deftemplate-slot-range yak y3)
+   288: (-oo +oo)
+   289: (-oo +oo)
+   289: CLIPS> (deftemplate-slot-allowed-values)
+   290: CLIPS> (deftemplate-slot-allowed-values)
+   290: [ARGACCES1] Function 'deftemplate-slot-allowed-values' expected exactly 2 arguments.
+   291: [ARGACCES4] Function deftemplate-slot-allowed-values expected exactly 2 argument(s)
+   291: CLIPS> (deftemplate-slot-allowed-values foo)
+   292: CLIPS> (deftemplate-slot-allowed-values foo)
+   292: [ARGACCES1] Function 'deftemplate-slot-allowed-values' expected exactly 2 arguments.
+   293: [ARGACCES4] Function deftemplate-slot-allowed-values expected exactly 2 argument(s)
+   293: CLIPS> (deftemplate-slot-allowed-values bar)
+   294: CLIPS> (deftemplate-slot-allowed-values bar)
+   294: [ARGACCES1] Function 'deftemplate-slot-allowed-values' expected exactly 2 arguments.
+   295: [ARGACCES4] Function deftemplate-slot-allowed-values expected exactly 2 argument(s)
+   295: CLIPS> (deftemplate-slot-allowed-values yak)
+   296: CLIPS> (deftemplate-slot-allowed-values yak)
+   296: [ARGACCES1] Function 'deftemplate-slot-allowed-values' expected exactly 2 arguments.
+   297: [ARGACCES4] Function deftemplate-slot-allowed-values expected exactly 2 argument(s)
+   297: CLIPS> (deftemplate-slot-allowed-values huh)
+   298: CLIPS> (deftemplate-slot-allowed-values huh)
+   298: [ARGACCES1] Function 'deftemplate-slot-allowed-values' expected exactly 2 arguments.
+   299: [ARGACCES4] Function deftemplate-slot-allowed-values expected exactly 2 argument(s)
+   299: CLIPS> (deftemplate-slot-allowed-values yak x 3)
+   300: CLIPS> (deftemplate-slot-allowed-values yak x 3)
+   300: [ARGACCES1] Function 'deftemplate-slot-allowed-values' expected exactly 2 arguments.
+   301: [ARGACCES4] Function deftemplate-slot-allowed-values expected exactly 2 argument(s)
+   301: CLIPS> (deftemplate-slot-allowed-values foo zip)
+   302: CLIPS> (deftemplate-slot-allowed-values foo zip)
+   302: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'foo'.
+   303: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate foo.
+   303: ()
+   304: ()
+   304: CLIPS> (deftemplate-slot-allowed-values bar zip)
+   305: CLIPS> (deftemplate-slot-allowed-values bar zip)
+   305: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'bar'.
+   306: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate bar.
+   306: ()
+   307: ()
+   307: CLIPS> (deftemplate-slot-allowed-values yak zip)
+   308: CLIPS> (deftemplate-slot-allowed-values yak zip)
+   308: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'yak'.
+   309: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate yak.
+   309: ()
+   310: ()
+   310: CLIPS> (deftemplate-slot-allowed-values huh x)
+   311: CLIPS> (deftemplate-slot-allowed-values huh x)
+   311: [PRNTUTIL1] Unable to find deftemplate 'huh'.
+   312: [PRNTUTIL1] Unable to find deftemplate huh.
+   312: ()
+   313: ()
+   313: CLIPS> (deftemplate-slot-allowed-values foo implied)
+   314: CLIPS> (deftemplate-slot-allowed-values foo implied)
+   314: FALSE
+   315: FALSE
+   315: CLIPS> (deftemplate-slot-allowed-values yak x1)
+   316: CLIPS> (deftemplate-slot-allowed-values yak x1)
+   316: FALSE
+   317: FALSE
+   317: CLIPS> (deftemplate-slot-allowed-values yak x2)
+   318: CLIPS> (deftemplate-slot-allowed-values yak x2)
+   318: FALSE
+   319: FALSE
+   319: CLIPS> (deftemplate-slot-allowed-values yak x3)
+   320: CLIPS> (deftemplate-slot-allowed-values yak x3)
+   320: (a "b" [c] 1 3.2)
+   321: (a "b" [c] 1 3.2)
+   321: CLIPS> (deftemplate-slot-allowed-values yak y1)
+   322: CLIPS> (deftemplate-slot-allowed-values yak y1)
+   322: FALSE
+   323: FALSE
+   323: CLIPS> (deftemplate-slot-allowed-values yak y2)
+   324: CLIPS> (deftemplate-slot-allowed-values yak y2)
+   324: FALSE
+   325: FALSE
+   325: CLIPS> (deftemplate-slot-allowed-values yak y3)
+   326: CLIPS> (deftemplate-slot-allowed-values yak y3)
+   326: (a b c "a" "b" "c" [a] [b] [c] 3 4 5 10.5 8.9 3.2)
+   327: (a b c "a" "b" "c" [a] [b] [c] 3 4 5 10.5 8.9 3.2)
+   327: CLIPS> (deftemplate-slot-types)
+   328: CLIPS> (deftemplate-slot-types)
+   328: [ARGACCES1] Function 'deftemplate-slot-types' expected exactly 2 arguments.
+   329: [ARGACCES4] Function deftemplate-slot-types expected exactly 2 argument(s)
+   329: CLIPS> (deftemplate-slot-types foo)
+   330: CLIPS> (deftemplate-slot-types foo)
+   330: [ARGACCES1] Function 'deftemplate-slot-types' expected exactly 2 arguments.
+   331: [ARGACCES4] Function deftemplate-slot-types expected exactly 2 argument(s)
+   331: CLIPS> (deftemplate-slot-types bar)
+   332: CLIPS> (deftemplate-slot-types bar)
+   332: [ARGACCES1] Function 'deftemplate-slot-types' expected exactly 2 arguments.
+   333: [ARGACCES4] Function deftemplate-slot-types expected exactly 2 argument(s)
+   333: CLIPS> (deftemplate-slot-types yak)
+   334: CLIPS> (deftemplate-slot-types yak)
+   334: [ARGACCES1] Function 'deftemplate-slot-types' expected exactly 2 arguments.
+   335: [ARGACCES4] Function deftemplate-slot-types expected exactly 2 argument(s)
+   335: CLIPS> (deftemplate-slot-types huh)
+   336: CLIPS> (deftemplate-slot-types huh)
+   336: [ARGACCES1] Function 'deftemplate-slot-types' expected exactly 2 arguments.
+   337: [ARGACCES4] Function deftemplate-slot-types expected exactly 2 argument(s)
+   337: CLIPS> (deftemplate-slot-types yak x 3)
+   338: CLIPS> (deftemplate-slot-types yak x 3)
+   338: [ARGACCES1] Function 'deftemplate-slot-types' expected exactly 2 arguments.
+   339: [ARGACCES4] Function deftemplate-slot-types expected exactly 2 argument(s)
+   339: CLIPS> (deftemplate-slot-types foo zip)
+   340: CLIPS> (deftemplate-slot-types foo zip)
+   340: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'foo'.
+   341: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate foo.
+   341: ()
+   342: ()
+   342: CLIPS> (deftemplate-slot-types bar zip)
+   343: CLIPS> (deftemplate-slot-types bar zip)
+   343: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'bar'.
+   344: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate bar.
+   344: ()
+   345: ()
+   345: CLIPS> (deftemplate-slot-types yak zip)
+   346: CLIPS> (deftemplate-slot-types yak zip)
+   346: [TMPLTDEF1] Invalid slot 'zip' not defined in corresponding deftemplate 'yak'.
+   347: [TMPLTDEF1] Invalid slot zip not defined in corresponding deftemplate yak.
+   347: ()
+   348: ()
+   348: CLIPS> (deftemplate-slot-types huh x)
+   349: CLIPS> (deftemplate-slot-types huh x)
+   349: [PRNTUTIL1] Unable to find deftemplate 'huh'.
+   350: [PRNTUTIL1] Unable to find deftemplate huh.
+   350: ()
+   351: ()
+   351: CLIPS> (deftemplate-slot-types foo implied)
+   352: CLIPS> (deftemplate-slot-types foo implied)
+   352: (FLOAT INTEGER SYMBOL STRING EXTERNAL-ADDRESS FACT-ADDRESS INSTANCE-ADDRESS INSTANCE-NAME)
+   353: (FLOAT INTEGER SYMBOL STRING EXTERNAL-ADDRESS FACT-ADDRESS INSTANCE-ADDRESS INSTANCE-NAME)
+   353: CLIPS> (deftemplate-slot-types yak x1)
+   354: CLIPS> (deftemplate-slot-types yak x1)
+   354: (FLOAT INTEGER)
+   355: (FLOAT INTEGER)
+   355: CLIPS> (deftemplate-slot-types yak x2)
+   356: CLIPS> (deftemplate-slot-types yak x2)
+   356: (INTEGER SYMBOL STRING INSTANCE-ADDRESS INSTANCE-NAME)
+   357: (INTEGER SYMBOL STRING INSTANCE-ADDRESS INSTANCE-NAME)
+   357: CLIPS> (deftemplate-slot-types yak x3)
+   358: CLIPS> (deftemplate-slot-types yak x3)
+   358: (FLOAT INTEGER SYMBOL STRING EXTERNAL-ADDRESS FACT-ADDRESS INSTANCE-ADDRESS INSTANCE-NAME)
+   359: (FLOAT INTEGER SYMBOL STRING EXTERNAL-ADDRESS FACT-ADDRESS INSTANCE-ADDRESS INSTANCE-NAME)
+   359: CLIPS> (deftemplate-slot-types yak y1)
+   360: CLIPS> (deftemplate-slot-types yak y1)
+   360: (FLOAT STRING EXTERNAL-ADDRESS FACT-ADDRESS INSTANCE-NAME)
+   361: (FLOAT STRING EXTERNAL-ADDRESS FACT-ADDRESS INSTANCE-NAME)
+   361: CLIPS> (deftemplate-slot-types yak y2)
+   362: CLIPS> (deftemplate-slot-types yak y2)
+   362: (FLOAT INTEGER SYMBOL STRING INSTANCE-ADDRESS)
+   363: (FLOAT INTEGER SYMBOL STRING INSTANCE-ADDRESS)
+   363: CLIPS> (deftemplate-slot-types yak y3)
+   364: CLIPS> (deftemplate-slot-types yak y3)
+   364: (FLOAT INTEGER SYMBOL STRING EXTERNAL-ADDRESS FACT-ADDRESS INSTANCE-ADDRESS INSTANCE-NAME)
+   365: (FLOAT INTEGER SYMBOL STRING EXTERNAL-ADDRESS FACT-ADDRESS INSTANCE-ADDRESS INSTANCE-NAME)
+   365: CLIPS> 
+   366: CLIPS> 
+   366: (deftemplate woz 
+   367: (deftemplate woz 
+   367:    (multislot x)
+   368:    (multislot x)
+   368:    (multislot y (cardinality 3 5))
+   369:    (multislot y (cardinality 3 5))
+   369:    (multislot z (default-dynamic (gensym) (gensym))))
+   370:    (multislot z (default-dynamic (gensym) (gensym))))
+   370: CLIPS> (deftemplate-slot-default-value woz x)
+   371: CLIPS> (deftemplate-slot-default-value woz x)
+   371: ()
+   372: ()
+   372: CLIPS> (deftemplate-slot-default-value woz y)
+   373: CLIPS> (deftemplate-slot-default-value woz y)
+   373: (nil nil nil)
+   374: (nil nil nil)
+   374: CLIPS> (deftemplate-slot-default-value woz z)
+   375: CLIPS> (deftemplate-slot-default-value woz z)
+   375: (gen4 gen5)
+   376: (gen4 gen5)
+   376: CLIPS> (dribble-off)
+   Files do not have the same # of lines

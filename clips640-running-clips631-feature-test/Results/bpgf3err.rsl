@@ -1,0 +1,862 @@
+bpgf3err.bat differences are as follows:
+     6: [CSTRCPSR2] Missing name for defgeneric construct
+     6: [CSTRCPSR2] Missing name for defgeneric construct.
+    22: [PRCCODE3] Undefined variable a referenced in method.
+    22: [PRCCODE3] Undefined variable ?a referenced in method.
+    43: [EXPRNPSR3] Missing function declaration for fact.
+    43: [EXPRNPSR3] Missing function declaration for 'fact'.
+    52: [EXPRNPSR1] A function name must be a symbol
+    52: [EXPRNPSR1] A function name must be a symbol.
+    55: [EXPRNPSR3] Missing function declaration for xyz.
+    55: [EXPRNPSR3] Missing function declaration for 'xyz'.
+   126: [PRCCODE3] Undefined variable f referenced in RHS of defrule.
+   126: [PRCCODE3] Undefined variable ?f referenced in RHS of defrule.
+   134: [PRCCODE3] Undefined variable f referenced in RHS of defrule.
+   134: [PRCCODE3] Undefined variable ?f referenced in RHS of defrule.
+   206: [DEFAULT1] The default value for a single field slot must be a single field value
+   206: [DEFAULT1] The default value for a single field slot must be a single field value.
+   214: [TMPLTDEF2] The single field slot x can only contain a single field value.
+   214: [TMPLTDEF2] The single field slot 'x' can only contain a single field value.
+   217: [TMPLTDEF2] The single field slot x can only contain a single field value.
+   217: [TMPLTDEF2] The single field slot 'x' can only contain a single field value.
+   220: [TMPLTDEF2] The single field slot x can only contain a single field value.
+   220: [TMPLTDEF2] The single field slot 'x' can only contain a single field value.
+   229: [TMPLTDEF2] The single field slot x can only contain a single field value.
+   229: [TMPLTDEF2] The single field slot 'x' can only contain a single field value.
+   239: [TMPLTDEF2] The single field slot x can only contain a single field value.
+   239: [EXPRNPSR3] Missing function declaration for 'mv-append'.
+   243: [PRNTUTIL5] The slot x has already been parsed.
+   243: [PRNTUTIL5] The slot 'x' has already been parsed.
+   255: [TMPLTDEF1] Invalid slot z not defined in corresponding deftemplate example.
+   255: [TMPLTDEF1] Invalid slot 'z' not defined in corresponding deftemplate 'example'.
+   263: 
+   263: CLIPS> (deftemplate example (field x (type INTEGER)))
+   264: [TMPLTFUN1] Fact-indexes can only be used by modify as a top level command.
+   264: CLIPS> (defrule testit (example (x a)) =>)
+   266: ERROR:
+   266: [CSTRNCHK1] A literal restriction value found in CE #1 does not match the allowed types for slot 'x'.
+   267: (defrule MAIN::error
+   267: 
+   268:    =>
+   268: ERROR:
+   269:    (modify 1
+   269: (defrule MAIN::testit
+   270: CLIPS> (deftemplate example (field x (type INTEGER)))
+   270:    (example (x a))
+   271: CLIPS> (defrule testit (example (x a)) =>)
+   271:    =>)
+   272: 
+   272: CLIPS> (deftemplate example (field x (type INTEGER)))
+   273: [CSTRNCHK1] A literal restriction value found in CE #1
+   273: CLIPS> (assert (example (x =(float 3))))
+   274: does not match the allowed types for slot x.
+   274: 
+   275: 
+   275: [CSTRNCHK1] The function return value found in the 'assert' command does not match the allowed types for slot 'x'.
+   276: ERROR:
+   276: CLIPS> (deftemplate example (field x (allowed-integers 1 2 3)))
+   277: (defrule MAIN::testit
+   277: CLIPS> (defrule testit (example (x 4)) =>)
+   278:    (example (x a))
+   278: 
+   279:    =>)
+   279: [CSTRNCHK1] A literal restriction value found in CE #1 does not match the allowed values for slot 'x'.
+   280: CLIPS> (deftemplate example (field x (type INTEGER)))
+   280: 
+   281: CLIPS> (assert (example (x =(float 3))))
+   281: ERROR:
+   282: 
+   282: (defrule MAIN::testit
+   283: [CSTRNCHK1] The function return value found in the assert command
+   283:    (example (x 4))
+   284: does not match the allowed types for slot x.
+   284:    =>)
+   285: CLIPS> (deftemplate example (field x (allowed-integers 1 2 3)))
+   285: CLIPS> (deftemplate example (field x (range 1 3)))
+   286: CLIPS> (defrule testit (example (x 4)) =>)
+   286: CLIPS> (assert (example (x 4)))
+   288: [CSTRNCHK1] A literal restriction value found in CE #1
+   288: [CSTRNCHK1] A literal slot value found in the 'assert' command does not fall in the allowed range 1 to 3 for slot 'x'.
+   289: does not match the allowed values for slot x.
+   289: CLIPS> (deftemplate example1 (field x (type SYMBOL) 
+   290: 
+   290:                                       (allowed-integers 1 2 3)))
+   291: ERROR:
+   291: 
+   292: (defrule MAIN::testit
+   292: [CSTRNPSR1] The 'type' attribute conflicts with the 'allowed-integers/numbers' attribute.
+   293:    (example (x 4))
+   293: 
+   294:    =>)
+   294: ERROR:
+   295: CLIPS> (deftemplate example (field x (range 1 3)))
+   295: (deftemplate MAIN::example1
+   296: CLIPS> (assert (example (x 4)))
+   296:    (field x (type SYMBOL) (allowed-integers 1 2 3))
+   297: 
+   297: CLIPS> (deftemplate example2 (field x (range 1 3)
+   298: [CSTRNCHK1] A literal slot value found in the assert command
+   298:                                       (default 5)))
+   299: does not fall in the allowed range 1 to 3 for slot x.
+   299: 
+   300: CLIPS> (deftemplate example1 (field x (type SYMBOL) 
+   300: [CSTRNCHK1] An expression found in the default attribute does not fall in the allowed range 1 to 3 for slot 'x'.
+   301:                                       (allowed-integers 1 2 3)))
+   301: 
+   302: 
+   302: ERROR:
+   303: [CSTRNPSR1] The type attribute conflicts with the allowed-integers/numbers attribute.
+   303: (deftemplate MAIN::example2
+   304: 
+   304:    (field x (range 1 3) (default 5))
+   305: ERROR:
+   305: CLIPS> (deftemplate example3 (field x (type SYMBOL)
+   306: (deftemplate MAIN::example1
+   306:                                       (range 1 5)))
+   307:    (field x (type SYMBOL) (allowed-integers 1 2 3))
+   307: 
+   308: CLIPS> (deftemplate example2 (field x (range 1 3)
+   308: [CSTRNPSR1] The 'type' attribute conflicts with the 'range' attribute.
+   309:                                       (default 5)))
+   309: 
+   310: 
+   310: ERROR:
+   311: [CSTRNCHK1] An expression found in the default attribute
+   311: (deftemplate MAIN::example3
+   312: does not fall in the allowed range 1 to 3 for slot x.
+   312:    (field x (type SYMBOL) (range 1 5))
+   313: 
+   313: CLIPS> (deftemplate example (field x))
+   314: ERROR:
+   314: CLIPS> (defglobal ?*x* = (mv-append a b c))
+   315: (deftemplate MAIN::example2
+   315: 
+   316:    (field x (range 1 3) (default 5))
+   316: [EXPRNPSR3] Missing function declaration for 'mv-append'.
+   317: CLIPS> (deftemplate example3 (field x (type SYMBOL)
+   317: 
+   318:                                       (range 1 5)))
+   318: ERROR:
+   319: 
+   319: (defglobal MAIN ?*x* = (mv-append
+   320: [CSTRNPSR1] The type attribute conflicts with the range attribute.
+   320: CLIPS> (assert (example (x ?*x*)))
+   321: 
+   321: [GLOBLDEF1] Global variable ?*x* is unbound.
+   322: ERROR:
+   322: <Fact-1>
+   323: (deftemplate MAIN::example3
+   323: CLIPS> (deftemplate example (field x (allowed-values a b 2 3) 
+   324:    (field x (type SYMBOL) (range 1 5))
+   324:                                      (allowed-integers 4 5 6)))
+   325: CLIPS> (deftemplate example (field x))
+   325: 
+   326: CLIPS> (defglobal ?*x* = (mv-append a b c))
+   326: [CSTRCPSR4] Cannot redefine deftemplate 'example' while it is in use.
+   327: CLIPS> (assert (example (x ?*x*)))
+   327: 
+   328: 
+   328: ERROR:
+   329: [TMPLTFUN2] Attempted to assert a multifield value 
+   329: (deftemplate MAIN::example
+   330: into the single field slot x of deftemplate example.
+   330: CLIPS> (deftemplate example (field x (allowed-integers 1 2 3) 
+   331: FALSE
+   331:                                      (range 4 6)))
+   332: CLIPS> (deftemplate example (field x (allowed-values a b 2 3) 
+   332: 
+   333:                                      (allowed-integers 4 5 6)))
+   333: [CSTRCPSR4] Cannot redefine deftemplate 'example' while it is in use.
+   335: [CSTRNPSR3] The allowed-integers attribute cannot be used
+   335: ERROR:
+   336: in conjunction with the allowed-values attribute.
+   336: (deftemplate MAIN::example
+   337: 
+   337: CLIPS> (deftemplate example (field x (type ?VARIABLE INTEGER)))
+   338: ERROR:
+   338: 
+   339: (deftemplate MAIN::example
+   339: [CSTRCPSR4] Cannot redefine deftemplate 'example' while it is in use.
+   340:    (field x (allowed-values a b 2 3) (allowed-integers
+   340: 
+   341: CLIPS> (deftemplate example (field x (allowed-integers 1 2 3) 
+   341: ERROR:
+   342:                                      (range 4 6)))
+   342: (deftemplate MAIN::example
+   343: 
+   343: CLIPS> (deftemplate example (field x (type INTEGERFLOAT)))
+   344: [CSTRNPSR3] The range attribute cannot be used
+   344: 
+   345: in conjunction with the allowed-integers attribute.
+   345: [CSTRCPSR4] Cannot redefine deftemplate 'example' while it is in use.
+   349:    (field x (allowed-integers 1 2 3) (range
+   349: CLIPS> (deftemplate example (field x (allowed-integers 3.0)))
+   350: CLIPS> (deftemplate example (field x (type ?VARIABLE INTEGER)))
+   350: 
+   351: 
+   351: [CSTRCPSR4] Cannot redefine deftemplate 'example' while it is in use.
+   352: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for type attribute.
+   352: 
+   353: 
+   353: ERROR:
+   354: ERROR:
+   354: (deftemplate MAIN::example
+   355: (deftemplate MAIN::example
+   355: CLIPS> (deftemplate example 
+   356:    (field x (type ?VARIABLE INTEGER 
+   356:           (field x (min-number-of-elements 3)))
+   357: CLIPS> (deftemplate example (field x (type INTEGERFLOAT)))
+   357: 
+   358: 
+   358: [CSTRCPSR4] Cannot redefine deftemplate 'example' while it is in use.
+   359: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for type attribute.
+   359: 
+   360: 
+   360: ERROR:
+   361: ERROR:
+   361: (deftemplate MAIN::example
+   362: (deftemplate MAIN::example
+   362: CLIPS> (defglobal ?x = 3)
+   363:    (field x (type INTEGERFLOAT 
+   363: 
+   364: CLIPS> (deftemplate example (field x (allowed-integers 3.0)))
+   364: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defglobal.
+   366: [CSTRNPSR4] Value does not match the expected type for the allowed-integers attribute
+   366: ERROR:
+   367: 
+   367: (defglobal MAIN ?x
+   368: ERROR:
+   368: CLIPS> (deffunction defgeneric ())
+   369: (deftemplate MAIN::example
+   369: [DFFNXPSR1] Deffunctions are not allowed to replace constructs.
+   370:    (field x (allowed-integers 3.0 
+   370: 
+   371: CLIPS> (deftemplate example 
+   371: ERROR:
+   372:           (field x (min-number-of-elements 3)))
+   372: (deffunction MAIN::defgeneric
+   373: 
+   373:    (
+   374: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for slot attributes.
+   374: CLIPS> (deffunction + ())
+   375: 
+   375: [DFFNXPSR2] Deffunctions are not allowed to replace external functions.
+   376: ERROR:
+   376: 
+   377: (deftemplate MAIN::example
+   377: ERROR:
+   378:    (field x (min-number-of-elements
+   378: (deffunction MAIN::+
+   379: CLIPS> (defglobal ?x = 3)
+   379:    (
+   380: 
+   380: CLIPS> (defgeneric foo)
+   381: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defglobal.
+   381: CLIPS> (deffunction foo ())
+   382: 
+   382: [DFFNXPSR3] Deffunctions are not allowed to replace generic functions.
+   383: ERROR:
+   383: 
+   384: (defglobal MAIN ?x
+   384: ERROR:
+   385: CLIPS> (deffunction defgeneric ())
+   385: (deffunction MAIN::foo
+   386: [DFFNXPSR1] Deffunctions are not allowed to replace constructs.
+   386:    (
+   387: 
+   387: CLIPS> (clear)
+   388: ERROR:
+   388: CLIPS> (deffunction foo)
+   389: (deffunction MAIN::defgeneric
+   389: 
+   390:    (
+   390: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for parameter list.
+   391: CLIPS> (deffunction + ())
+   391: 
+   392: [DFFNXPSR2] Deffunctions are not allowed to replace external functions.
+   392: ERROR:
+   393: 
+   393: (deffunction MAIN::foo)
+   394: ERROR:
+   394: CLIPS> (deffunction foo (?a abc))
+   395: (deffunction MAIN::+
+   395: 
+   396:    (
+   396: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for parameter list.
+   397: CLIPS> (defgeneric foo)
+   397: 
+   398: CLIPS> (deffunction foo ())
+   398: ERROR:
+   399: [DFFNXPSR3] Deffunctions are not allowed to replace generic functions.
+   399: (deffunction MAIN::foo
+   400: 
+   400:    (?a abc
+   401: ERROR:
+   401: CLIPS> (deffunction foo () (build "(deffunction foo ())"))
+   402: (deffunction MAIN::foo
+   402: CLIPS> (foo)
+   403:    (
+   403: [DFFNXPSR4] Deffunction 'foo' may not be redefined while it is executing.
+   404: CLIPS> (clear)
+   404: 
+   405: CLIPS> (deffunction foo)
+   405: ERROR:
+   406: 
+   406: (deffunction MAIN::foo
+   407: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for parameter list.
+   407:    (
+   408: 
+   408: FALSE
+   409: ERROR:
+   409: CLIPS> (defgeneric deffunction)
+   410: (deffunction MAIN::foo)
+   410: [GENRCPSR3] Defgenerics are not allowed to replace constructs.
+   411: CLIPS> (deffunction foo (?a abc))
+   411: 
+   412: 
+   412: ERROR:
+   413: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for parameter list.
+   413: (defgeneric MAIN::deffunction)
+   414: 
+   414: CLIPS> (clear)
+   415: ERROR:
+   415: CLIPS> (deffunction foo ())
+   416: (deffunction MAIN::foo
+   416: CLIPS> (defgeneric foo)
+   417:    (?a abc
+   417: [GENRCPSR5] Defgenerics are not allowed to replace deffunctions.
+   418: CLIPS> (deffunction foo () (build "(deffunction foo ())"))
+   418: 
+   419: CLIPS> (foo)
+   419: ERROR:
+   420: [DFNXPSR4] Deffunction foo may not be redefined while it is executing.
+   420: (defgeneric MAIN::foo)
+   421: 
+   421: CLIPS> (clear)
+   422: ERROR:
+   422: CLIPS> (defgeneric foo ())
+   423: (deffunction MAIN::foo
+   423: [GENRCPSR1] Expected ')' to complete defgeneric.
+   424:    (
+   424: 
+   425: FALSE
+   425: ERROR:
+   426: CLIPS> (defgeneric deffunction)
+   426: (defgeneric MAIN::foo
+   427: [GENRCPSR3] Defgenerics are not allowed to replace constructs.
+   427:    (
+   428: 
+   428: CLIPS> (defgeneric)
+   429: ERROR:
+   429: 
+   430: (defgeneric MAIN::deffunction)
+   430: [CSTRCPSR2] Missing name for defgeneric construct.
+   431: CLIPS> (clear)
+   431: 
+   432: CLIPS> (deffunction foo ())
+   432: ERROR:
+   433: CLIPS> (defgeneric foo)
+   433: (defgeneric )
+   434: [GENRCPSR5] Defgenerics are not allowed to replace deffunctions.
+   434: CLIPS> (clear)
+   435: 
+   435: CLIPS> (defmethod foo 1 ((?a INTEGER)))
+   436: ERROR:
+   436: CLIPS> (defmethod foo 2 ((?a INTEGER)))
+   437: (defgeneric MAIN::foo)
+   437: [GENRCPSR2] New method #2 would be indistinguishable from method #1.
+   438: CLIPS> (clear)
+   438: 
+   439: CLIPS> (defgeneric foo ())
+   439: ERROR:
+   440: [GENRCPSR1] Expected ')' to complete defgeneric.
+   440: (defmethod MAIN::foo 2
+   441: 
+   441:    ((?a INTEGER))
+   442: ERROR:
+   442:    
+   443: (defgeneric MAIN::foo
+   443: CLIPS> (clear)
+   444:    (
+   444: CLIPS> (defmethod foo 0 ())
+   445: CLIPS> (defgeneric)
+   445: [GENRCPSR6] Method index out of range.
+   447: [CSTRCPSR2] Missing name for defgeneric construct
+   447: ERROR:
+   448: 
+   448: (defmethod MAIN::foo 0
+   449: ERROR:
+   449: CLIPS> (clear)
+   450: (defgeneric )
+   450: CLIPS> (defmethod foo)
+   451: CLIPS> (clear)
+   451: [GENRCPSR7] Expected a '(' to begin method parameter restrictions.
+   452: CLIPS> (defmethod foo 1 ((?a INTEGER)))
+   452: 
+   453: CLIPS> (defmethod foo 2 ((?a INTEGER)))
+   453: ERROR:
+   454: [GENRCPSR2] New method #2 would be indistinguishable from method #1.
+   454: (defmethod MAIN::foo)
+   455: 
+   455: CLIPS> (clear)
+   456: ERROR:
+   456: CLIPS> (defmethod foo (abc))
+   457: (defmethod MAIN::foo 2
+   457: [GENRCPSR9] Expected a variable or '(' for parameter specification.
+   458:    ((?a INTEGER))
+   458: 
+   459:    
+   459: ERROR:
+   460: CLIPS> (clear)
+   460: (defmethod MAIN::foo
+   461: CLIPS> (defmethod foo 0 ())
+   461:    (abc
+   462: [GENRCPSR6] Method index out of range.
+   462: CLIPS> (clear)
+   463: 
+   463: CLIPS> (defmethod foo ((abc)))
+   464: ERROR:
+   464: [GENRCPSR8] Expected a variable for parameter specification.
+   465: (defmethod MAIN::foo 0
+   465: 
+   466: CLIPS> (clear)
+   466: ERROR:
+   467: CLIPS> (defmethod foo)
+   467: (defmethod MAIN::foo
+   468: [GENRCPSR7] Expected a '(' to begin method parameter restrictions.
+   468:    ((abc
+   469: 
+   469: CLIPS> (clear)
+   470: ERROR:
+   470: CLIPS> (defmethod foo ((?a (< ?a 1) INTEGER)))
+   471: (defmethod MAIN::foo)
+   471: [GENRCPSR10] Query must be last in parameter restriction.
+   472: CLIPS> (clear)
+   472: 
+   473: CLIPS> (defmethod foo (abc))
+   473: ERROR:
+   474: [GENRCPSR9] Expected a variable or '(' for parameter specification.
+   474: (defmethod MAIN::foo
+   475: 
+   475:    ((?a (< ?a 1) INTEGER
+   476: ERROR:
+   476: CLIPS> (clear)
+   477: (defmethod MAIN::foo
+   477: CLIPS> (defmethod foo ((?a INTEGER INTEGER)))
+   478:    (abc
+   478: [GENRCPSR11] Duplicate classes not allowed in parameter restriction.
+   479: CLIPS> (clear)
+   479: 
+   480: CLIPS> (defmethod foo ((abc)))
+   480: ERROR:
+   481: [GENRCPSR8] Expected a variable for parameter specification.
+   481: (defmethod MAIN::foo
+   482: 
+   482:    ((?a INTEGER INTEGER
+   483: ERROR:
+   483: CLIPS> (clear)
+   484: (defmethod MAIN::foo
+   484: CLIPS> (defmethod foo ((?a INTEGER NUMBER)))
+   485:    ((abc
+   485: [GENRCPSR15] Class 'INTEGER' is redundant.
+   486: CLIPS> (clear)
+   486: 
+   487: CLIPS> (defmethod foo ((?a (< ?a 1) INTEGER)))
+   487: ERROR:
+   488: [GENRCPSR10] Query must be last in parameter restriction.
+   488: (defmethod MAIN::foo
+   489: 
+   489:    ((?a INTEGER NUMBER
+   490: ERROR:
+   490: CLIPS> (clear)
+   491: (defmethod MAIN::foo
+   491: CLIPS> (defmethod foo ((?a (bind ?b 1))))
+   492:    ((?a (< ?a 1) INTEGER
+   492: [GENRCPSR12] Binds are not allowed in query expressions.
+   493: CLIPS> (clear)
+   493: 
+   494: CLIPS> (defmethod foo ((?a INTEGER INTEGER)))
+   494: ERROR:
+   495: [GENRCPSR11] Duplicate classes not allowed in parameter restriction.
+   495: (defmethod MAIN::foo
+   496: 
+   496:    ((?a (bind ?b 1)
+   497: ERROR:
+   497: CLIPS> (clear)
+   498: (defmethod MAIN::foo
+   498: CLIPS> (defmethod foo ((?a 34)))
+   499:    ((?a INTEGER INTEGER
+   499: [GENRCPSR13] Expected a valid class name or query.
+   500: CLIPS> (clear)
+   500: 
+   501: CLIPS> (defmethod foo ((?a INTEGER NUMBER)))
+   501: ERROR:
+   502: [GENRCPSR15] INTEGER class is redundant.
+   502: (defmethod MAIN::foo
+   503: 
+   503:    ((?a 34
+   504: ERROR:
+   504: CLIPS> (clear)
+   505: (defmethod MAIN::foo
+   505: CLIPS> (defmethod foo ((?a bogus-class)))
+   506:    ((?a INTEGER NUMBER
+   506: [GENRCPSR14] Unknown class in method.
+   507: CLIPS> (clear)
+   507: 
+   508: CLIPS> (defmethod foo ((?a (bind ?b 1))))
+   508: ERROR:
+   509: [GENRCPSR12] Binds are not allowed in query expressions.
+   509: (defmethod MAIN::foo
+   510: 
+   510:    ((?a bogus-class
+   511: ERROR:
+   511: CLIPS> (clear)
+   512: (defmethod MAIN::foo
+   512: CLIPS> (defclass A (is-a USER))
+   513:    ((?a (bind ?b 1)
+   513: CLIPS> (defmethod foo ((?a A LEXEME)))
+   514: CLIPS> (clear)
+   514: CLIPS> (defclass A (is-a OBJECT)))
+   515: CLIPS> (defmethod foo ((?a 34)))
+   515: [CLASSPSR3] Class 'A' cannot be redefined while outstanding references to it still exist.
+   516: [GENRCPSR13] Expected a valid class name or query.
+   516: 
+   517: 
+   517: ERROR:
+   518: ERROR:
+   518: (defclass MAIN::A
+   519: (defmethod MAIN::foo
+   519:    (
+   520:    ((?a 34
+   520: CLIPS> (clear)
+   521: CLIPS> (clear)
+   521: CLIPS> (defclass STRING (is-a NUMBER))
+   522: CLIPS> (defmethod foo ((?a bogus-class)))
+   522: [CLASSPSR2] Cannot redefine a predefined system class.
+   523: [GENRCPSR14] Unknown class in method.
+   523: 
+   524: 
+   524: ERROR:
+   525: ERROR:
+   525: (defclass MAIN::STRING
+   526: (defmethod MAIN::foo
+   526:    (
+   527:    ((?a bogus-class
+   527: CLIPS> (clear)
+   528: CLIPS> (clear)
+   528: CLIPS> (defclass A (is-a A))
+   529: CLIPS> (defclass A (is-a USER))
+   529: [INHERPSR1] A class may not have itself as a superclass.
+   530: CLIPS> (defmethod foo ((?a A LEXEME)))
+   530: 
+   531: CLIPS> (defclass A (is-a OBJECT)))
+   531: ERROR:
+   532: [CLASSPSR3] A class cannot be redefined while
+   532: (defclass MAIN::A
+   533:     outstanding references to it still exist.
+   533:    (is-a A
+   534: 
+   534: CLIPS> (clear)
+   535: ERROR:
+   535: CLIPS> (defclass A (is-a USER USER))
+   536: (defclass MAIN::A
+   536: [INHERPSR2] A class may inherit from a superclass only once.
+   537:    (
+   537: 
+   538: CLIPS> (clear)
+   538: ERROR:
+   539: CLIPS> (defclass STRING (is-a NUMBER))
+   539: (defclass MAIN::A
+   540: [CLASSPSR2] Cannot redefine a predefined system class.
+   540:    (is-a USER USER
+   541: 
+   541: CLIPS> (clear)
+   542: ERROR:
+   542: CLIPS> (defclass B (is-a A))
+   543: (defclass MAIN::STRING
+   543: [INHERPSR3] A class must be defined after all its superclasses.
+   544:    (
+   544: 
+   545: CLIPS> (clear)
+   545: ERROR:
+   546: CLIPS> (defclass A (is-a A))
+   546: (defclass MAIN::B
+   547: [INHERPSR1] A class may not have itself as a superclass.
+   547:    (is-a A
+   548: 
+   548: CLIPS> (clear)
+   549: ERROR:
+   549: CLIPS> (defclass A (is-a USER))
+   550: (defclass MAIN::A
+   550: CLIPS> (defclass B (is-a A))
+   551:    (is-a A
+   551: CLIPS> (defclass C (is-a B))
+   552: CLIPS> (clear)
+   552: CLIPS> (defclass A (is-a C))
+   553: CLIPS> (defclass A (is-a USER USER))
+   553: [INHERPSR5] Partial precedence list formed: A
+   554: [INHERPSR2] A class may inherit from a superclass only once.
+   554: Precedence loop in superclasses: A B C A
+   558:    (is-a USER USER
+   558:    (is-a C)
+   560: CLIPS> (defclass B (is-a A))
+   560: CLIPS> (defclass A (is-a))
+   561: [INHERPSR3] A class must be defined after all its superclasses.
+   561: [INHERPSR4] A class must have at least one superclass.
+   564: (defclass MAIN::B
+   564: (defclass MAIN::A
+   565:    (is-a A
+   565:    (is-a )
+   566: CLIPS> (clear)
+   566: CLIPS> (defclass A (is-a USER)
+   567: CLIPS> (defclass A (is-a USER))
+   567:   (role abstract)
+   568: CLIPS> (defclass B (is-a A))
+   568:   (role concrete))
+   569: CLIPS> (defclass C (is-a B))
+   569: [CLASSPSR4] The 'role' class attribute is already specified.
+   570: CLIPS> (defclass A (is-a C))
+   570: 
+   571: [INHERPSR5] Partial precedence list formed: A
+   571: ERROR:
+   572: Precedence loop in superclasses: A B C A
+   572: (defclass MAIN::A
+   573: 
+   573:    (is-a USER)
+   574: ERROR:
+   574:    (role abstract)
+   575: (defclass MAIN::A
+   575:    (role
+   576:    (is-a C)
+   576: CLIPS> (defclass A (is-a USER)
+   577: CLIPS> (clear)
+   577:   (slot foo (default 1)
+   578: CLIPS> (defclass A (is-a))
+   578:             (default 2)))
+   579: [INHERPSR4] Must have at least one superclass.
+   579: [CLSLTPSR2] The 'default' facet for slot 'foo' is already specified.
+   583:    (is-a )
+   583:    (is-a USER)
+   584: CLIPS> (defclass A (is-a USER)
+   584:    (slot foo
+   585:   (role abstract)
+   585:       (default 1)
+   586:   (role concrete))
+   586:       (default
+   587: [CLASSPSR4] Class role already declared.
+   587: CLIPS> (defclass A (is-a USER)
+   588: 
+   588:   (slot foo (access read-only)
+   589: ERROR:
+   589:             (access initialize-only)))
+   590: (defclass MAIN::A
+   590: [CLSLTPSR2] The 'access' facet for slot 'foo' is already specified.
+   591:    (is-a USER)
+   591: 
+   592:    (role abstract)
+   592: ERROR:
+   593:    (role
+   593: (defclass MAIN::A
+   594: CLIPS> (defclass A (is-a USER)
+   594:    (is-a USER)
+   595:   (slot foo (default 1)
+   595:    (slot foo
+   596:             (default 2)))
+   596:       (access read-only)
+   597: [CLSLTPSR2] default facet already specified.
+   597:       (access
+   598: 
+   598: CLIPS> (defclass A (is-a USER)
+   599: ERROR:
+   599:   (slot foo (default 1 2 3 4)))
+   600: (defclass MAIN::A
+   600: [INSFUN7] The value (1 2 3 4) is illegal for single-field slot 'foo' found in the 'default' facet.
+   601:    (is-a USER)
+   601: 
+   602:    (slot foo
+   602: ERROR:
+   603:       (default 1)
+   603: (defclass MAIN::A
+   604:       (default
+   604:    (is-a USER)
+   605: CLIPS> (defclass A (is-a USER)
+   605:    (slot foo
+   606:   (slot foo (access read-only)
+   606:       (default 1 2 3 4))
+   607:             (access initialize-only)))
+   607: CLIPS> (defclass A (is-a USER)
+   608: [CLSLTPSR2] access facet already specified.
+   608:   (slot foo)
+   609: 
+   609:   (slot foo))
+   610: ERROR:
+   610: [CLSLTPSR1] The 'foo' slot for class 'A' is already specified.
+   611: (defclass MAIN::A
+   611: 
+   612:    (is-a USER)
+   612: ERROR:
+   613:    (slot foo
+   613: (defclass MAIN::A
+   614:       (access read-only)
+   614:    (is-a USER)
+   615:       (access
+   615:    (slot foo)
+   616: CLIPS> (defclass A (is-a USER)
+   616:    (slot foo
+   617:   (slot foo (default 1 2 3 4)))
+   617: CLIPS> (defclass A (is-a OBJECT USER))
+   618: [INSFUN7] (1 2 3 4) illegal for single-field slot foo found in slot default value.
+   618: [INHERPSR5] Partial precedence list formed:
+   619: 
+   619: Precedence loop in superclasses: OBJECT USER OBJECT
+   620: ERROR:
+   620: 
+   621: (defclass MAIN::A
+   621: ERROR:
+   622:    (is-a USER)
+   622: (defclass MAIN::A
+   623:    (slot foo
+   623:    (is-a OBJECT USER)
+   624:       (default 1 2 3 4))
+   624: CLIPS> (defmessage-handler bogus-class foo ())
+   625: CLIPS> (defclass A (is-a USER)
+   625: [MSGPSR1] A class must be defined before its message-handlers.
+   626:   (slot foo)
+   626: 
+   627:   (slot foo))
+   627: ERROR:
+   628: [CLSLTPSR1] Duplicate slots not allowed.
+   628: (defmessage-handler MAIN::bogus-class
+   629: 
+   629:    foo
+   630: ERROR:
+   630: CLIPS> (defclass A (is-a USER) (role concrete))
+   631: (defclass MAIN::A
+   631: CLIPS> (make-instance a of A)
+   632:    (is-a USER)
+   632: [a]
+   633:    (slot foo)
+   633: CLIPS> (defmessage-handler A build-new ()
+   634:    (slot foo
+   634:   (build "(defmessage-handler A new ())"))
+   635: CLIPS> (defclass A (is-a OBJECT USER))
+   635: CLIPS> (send [a] build-new)
+   636: [INHERPSR5] Partial precedence list formed:
+   636: [MSGPSR2] Cannot (re)define message-handlers during execution of other message-handlers for the same class.
+   637: Precedence loop in superclasses: OBJECT USER OBJECT
+   637: 
+   638: 
+   638: ERROR:
+   639: ERROR:
+   639: (defmessage-handler MAIN::A
+   640: (defclass MAIN::A
+   640:    new
+   641:    (is-a OBJECT USER)
+   641: FALSE
+   642: CLIPS> (defmessage-handler bogus-class foo ())
+   642: CLIPS> (defmessage-handler USER init ())
+   643: [MSGPSR1] A class must be defined before its message-handlers.
+   643: [MSGPSR3] System message-handlers may not be modified.
+   646: (defmessage-handler MAIN::bogus-class
+   646: (defmessage-handler MAIN::USER init
+   647:    foo
+   647:    (
+   648: CLIPS> (defclass A (is-a USER) (role concrete))
+   648: CLIPS> (clear)
+   649: CLIPS> (make-instance a of A)
+   649: CLIPS> (defclass A (is-a USER)
+   650: [a]
+   650:   (slot foo (create-accessor read-write)))
+   651: CLIPS> (defmessage-handler A build-new ()
+   651: CLIPS> (defmessage-handler A get-foo ())
+   652:   (build "(defmessage-handler A new ())"))
+   652: [MSGPSR3] System message-handlers may not be modified.
+   653: CLIPS> (send [a] build-new)
+   653: 
+   654: [MSGPSR2] Cannot (re)define message-handlers during execution of 
+   654: ERROR:
+   655:   other message-handlers for the same class.
+   655: (defmessage-handler MAIN::A get-foo
+   656: 
+   656:    (
+   657: ERROR:
+   657: CLIPS> (defmessage-handler USER foo (?self:bar))
+   658: (defmessage-handler MAIN::A
+   658: [MSGPSR4] Illegal slot reference in parameter list.
+   659:    new
+   659: 
+   660: FALSE
+   660: ERROR:
+   661: CLIPS> (defmessage-handler USER init ())
+   661: (defmessage-handler MAIN::USER foo
+   662: [MSGPSR3] System message-handlers may not be modified.
+   662:    (?self:bar
+   663: 
+   663: CLIPS> (defmessage-handler USER foo ()
+   664: ERROR:
+   664:   (bind ?self 1))
+   665: (defmessage-handler MAIN::USER init
+   665: [MSGPSR5] Active instance parameter cannot be changed.
+   666:    (
+   666: 
+   667: CLIPS> (clear)
+   667: ERROR:
+   668: CLIPS> (defclass A (is-a USER)
+   668: (defmessage-handler MAIN::USER foo
+   669:   (slot foo (create-accessor read-write)))
+   669:    ()
+   670: CLIPS> (defmessage-handler A get-foo ())
+   670:    (bind ?self 1)
+   671: [MSGPSR3] System message-handlers may not be modified.
+   671:    )
+   672: 
+   672: CLIPS> (defmessage-handler USER foo ()
+   673: ERROR:
+   673:   (dynamic-put bar 1))
+   674: (defmessage-handler MAIN::A get-foo
+   674: CLIPS> (clear)
+   675:    (
+   675: CLIPS> (defclass A (is-a USER) (role concrete)
+   676: CLIPS> (defmessage-handler USER foo (?self:bar))
+   676:   (slot foo (create-accessor write)))
+   677: [MSGPSR4] Illegal slot reference in parameter list.
+   677: CLIPS> (definstances A-objects
+   678: 
+   678:   (a of A 
+   679: ERROR:
+   679:     (foo (build "(definstances A-objects (b of A))"))))
+   680: (defmessage-handler MAIN::USER foo
+   680: CLIPS> (reset)
+   681:    (?self:bar
+   681: 
+   682: CLIPS> (defmessage-handler USER foo ()
+   682: [CSTRCPSR4] Cannot redefine definstances 'A-objects' while it is in use.
+   683:   (bind ?self 1))
+   683: 
+   684: [MSGPSR5] Active instance parameter cannot be changed.
+   684: ERROR:
+   685: 
+   685: (definstances MAIN::A-objects
+   686: ERROR:
+   686: CLIPS> (any-instancep ((?a OBJECT) (?a OBJECT)) TRUE)
+   687: (defmessage-handler MAIN::USER foo
+   687: [INSQYPSR1] Duplicate instance member variable name in function 'any-instancep'.
+   688:    ()
+   688: CLIPS> (any-instancep ((?a OBJECT) (?b OBJECT)) 
+   689:    (bind ?self 1)
+   689:   (bind ?c 1))
+   690:    )
+   690: [INSQYPSR2] Binds are not allowed in instance-set query in function 'any-instancep'.
+   691: CLIPS> (defmessage-handler USER foo ()
+   691: CLIPS> (do-for-all-instances ((?a USER)) 
+   692:   (dynamic-put bar 1))
+   692:   (if (slot-existp ?a age) then
+   693: CLIPS> (clear)
+   693:      (> ?a:age 30))
+   694: CLIPS> (defclass A (is-a USER) (role concrete)
+   694:   (bind ?a (send ?a get-brother)))
+   695:   (slot foo (create-accessor write)))
+   695: [INSQYPSR3] Cannot rebind instance-set member variable ?a in function 'do-for-all-instances'.
+   696: CLIPS> (definstances A-objects
+   696: CLIPS> (dribble-off)
+   Files do not have the same # of lines

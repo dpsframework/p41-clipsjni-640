@@ -1,0 +1,696 @@
+chksyntx.bat differences are as follows:
+     6: [ARGACCES4] Function check-syntax expected exactly 1 argument(s)
+     6: [ARGACCES1] Function 'check-syntax' expected exactly 1 argument.
+     8: [ARGACCES4] Function check-syntax expected exactly 1 argument(s)
+     8: [ARGACCES1] Function 'check-syntax' expected exactly 1 argument.
+    10: [ARGACCES5] Function check-syntax expected argument #1 to be of type string
+    10: [ARGACCES2] Function 'check-syntax' expected argument #1 to be of type string.
+    12: [ARGACCES5] Function check-syntax expected argument #1 to be of type string
+    12: [ARGACCES2] Function 'check-syntax' expected argument #1 to be of type string.
+    14: [ARGACCES5] Function check-syntax expected argument #1 to be of type string
+    14: [ARGACCES2] Function 'check-syntax' expected argument #1 to be of type string.
+    16: [ARGACCES5] Function check-syntax expected argument #1 to be of type string
+    16: [ARGACCES2] Function 'check-syntax' expected argument #1 to be of type string.
+    18: [ARGACCES5] Function check-syntax expected argument #1 to be of type string
+    18: [ARGACCES2] Function 'check-syntax' expected argument #1 to be of type string.
+    36: FALSE
+    36: ("
+    37: CLIPS> (check-syntax "(+ 3 (* 4 5))")   
+    37: [EXPRNPSR3] Missing function declaration for 'mv-append'.
+    38: FALSE
+    38: " FALSE)
+    39: CLIPS> (check-syntax "(+ a b)")
+    39: CLIPS> (check-syntax "(+ 3 (* 4 5))")   
+    40: ("[ARGACCES5] Function + expected argument #1 to be of type integer or float
+    40: FALSE
+    41: " FALSE)
+    41: CLIPS> (check-syntax "(+ a b)")
+    42: CLIPS> (check-syntax "(+ 3 4")
+    42: ("[ARGACCES2] Function '+' expected argument #1 to be of type integer or float.
+    43: ("
+    43: " FALSE)
+    44: [EXPRNPSR2] Expected a constant, variable, or expression.
+    44: CLIPS> (check-syntax "(+ 3 4")
+    45: " FALSE)
+    45: ("
+    46: CLIPS> (check-syntax "(assert (x y z))")
+    46: [EXPRNPSR2] Expected a constant, variable, or expression.
+    47: FALSE
+    47: " FALSE)
+    48: CLIPS> (check-syntax "(+ 3 4) x")
+    48: CLIPS> (check-syntax "(assert (x y z))")
+    49: EXTRANEOUS-INPUT-AFTER-LAST-PARENTHESIS
+    49: FALSE
+    50: CLIPS> (check-syntax "(defrule foo =>) x")
+    50: CLIPS> (check-syntax "(+ 3 4) x")
+    52: CLIPS> (deffacts a1 (x y z))
+    52: CLIPS> (check-syntax "(defrule foo =>) x")
+    53: CLIPS> (deftemplate a2 (slot r) (multislot s))
+    53: EXTRANEOUS-INPUT-AFTER-LAST-PARENTHESIS
+    54: CLIPS> (defrule a3 (x y z) =>)
+    54: CLIPS> (deffacts a1 (x y z))
+    55: CLIPS> (defglobal ?*a4* = 9)
+    55: CLIPS> (deftemplate a2 (slot r) (multislot s))
+    56: CLIPS> (defmodule MAIN (export ?ALL))
+    56: CLIPS> (defrule a3 (x y z) =>)
+    57: CLIPS> (defmodule a5 (import MAIN ?ALL))
+    57: CLIPS> (defglobal ?*a4* = 9)
+    58: CLIPS> (set-current-module MAIN)
+    58: CLIPS> (defmodule MAIN (export ?ALL))
+    59: a5
+    59: CLIPS> (defmodule a5 (import MAIN ?ALL))
+    60: CLIPS> (deffunction a6 (?x) (* 2 ?x))
+    60: CLIPS> (set-current-module MAIN)
+    61: CLIPS> (defgeneric a7)
+    61: a5
+    62: CLIPS> (defmethod a8 ((?x INTEGER)) (* 7 ?x))
+    62: CLIPS> (deffunction a6 (?x) (* 2 ?x))
+    63: CLIPS> 
+    63: CLIPS> (defgeneric a7)
+    64: (defclass a9 (is-a USER) 
+    64: CLIPS> (defmethod a8 ((?x INTEGER)) (* 7 ?x))
+    65:    (role concrete)
+    65: CLIPS> 
+    66:    (slot q (create-accessor read-write)))
+    66: (defclass a9 (is-a USER) 
+    67: CLIPS> (definstances a10 (a10i of a9 (q 54)))
+    67:    (role concrete)
+    68: CLIPS> (defmessage-handler a9 a11 (?u) (* ?self:q 3))
+    68:    (slot q (create-accessor read-write)))
+    69: CLIPS> (bsave "Temp//chksyntx.bin")
+    69: CLIPS> (definstances a10 (a10i of a9 (q 54)))
+    70: [CSTRNBIN1] WARNING: Constraints are not saved with a binary image
+    70: CLIPS> (defmessage-handler a9 a11 (?u) (* ?self:q 3))
+    71:   when dynamic constraint checking is disabled.
+    71: CLIPS> (bsave "Temp//chksyntx.bin")
+    72: TRUE
+    72: [CSTRNBIN1] WARNING: Constraints are not saved with a binary image
+    73: CLIPS> (check-syntax "(deffacts a1 (foo))")
+    73:   when dynamic constraint checking is disabled.
+    74: FALSE
+    74: TRUE
+    75: CLIPS> (check-syntax "(deftemplate a2 (slot g))")
+    75: CLIPS> (check-syntax "(deffacts a1 (foo))")
+    77: CLIPS> (check-syntax "(defrule a3 =>)")
+    77: CLIPS> (check-syntax "(deftemplate a2 (slot g))")
+    79: CLIPS> (check-syntax "(defglobal ?*a4* = 10)")
+    79: CLIPS> (check-syntax "(defrule a3 =>)")
+    81: CLIPS> (check-syntax "(defmodule a5)")
+    81: CLIPS> (check-syntax "(defglobal ?*a4* = 10)")
+    83: CLIPS> (check-syntax "(deffunction a6 (?x) (* 6 ?x))")
+    83: CLIPS> (check-syntax "(defmodule a5)")
+    85: CLIPS> (check-syntax "(defgeneric a7)")
+    85: CLIPS> (check-syntax "(deffunction a6 (?x) (* 6 ?x))")
+    87: CLIPS> (check-syntax "(defmethod a8 ((?x INTEGER)) (* 9 ?x))")
+    87: CLIPS> (check-syntax "(defgeneric a7)")
+    89: CLIPS> (check-syntax " (defclass a9 (is-a USER) 
+    89: CLIPS> (check-syntax "(defmethod a8 ((?x INTEGER)) (* 9 ?x))")
+    90:    (role concrete)
+    90: FALSE
+    91:    (slot w (create-accessor read-write)))")
+    91: CLIPS> (check-syntax " (defclass a9 (is-a USER) 
+    92: FALSE
+    92:    (role concrete)
+    93: CLIPS> (check-syntax "(definstances a10 (b10i of a9 (q 54)))")
+    93:    (slot w (create-accessor read-write)))")
+    95: CLIPS> (check-syntax "(defmessage-handler a9 a11 (?u) (* ?self:q 10))")
+    95: CLIPS> (check-syntax "(definstances a10 (b10i of a9 (q 54)))")
+    97: CLIPS> (reset)
+    97: CLIPS> (check-syntax "(defmessage-handler a9 a11 (?u) (* ?self:q 10))")
+    98: CLIPS> (facts)
+    98: FALSE
+    99: f-0     (initial-fact)
+    99: CLIPS> (reset)
+   100: f-1     (x y z)
+   100: CLIPS> (facts)
+   101: For a total of 2 facts.
+   101: f-1     (x y z)
+   102: CLIPS> (agenda)
+   102: For a total of 1 fact.
+   103: 0      a3: f-1
+   103: CLIPS> (agenda)
+   104: For a total of 1 activation.
+   104: 0      a3: f-1
+   105: CLIPS> (assert (a2 (r 2) (s 1 3)))
+   105: For a total of 1 activation.
+   106: <Fact-2>
+   106: CLIPS> (assert (a2 (r 2) (s 1 3)))
+   107: CLIPS> (instances)
+   107: <Fact-2>
+   108: [initial-object] of INITIAL-OBJECT
+   108: CLIPS> (instances)
+   110: For a total of 2 instances.
+   110: For a total of 1 instance.
+   235: initial-fact
+   235: a1
+   236: a1
+   236: For a total of 1 deffacts.
+   237: For a total of 2 deffacts.
+   237: CLIPS> (list-deftemplates)
+   238: CLIPS> (list-deftemplates)
+   238: x
+   239: initial-fact
+   239: a2
+   240: x
+   240: For a total of 2 deftemplates.
+   241: a2
+   241: CLIPS> (list-defrules)
+   242: For a total of 3 deftemplates.
+   242: a3
+   243: CLIPS> (list-defrules)
+   243: For a total of 1 defrule.
+   244: a3
+   244: CLIPS> (list-defglobals)
+   245: For a total of 1 defrule.
+   245: a4
+   246: CLIPS> (list-defglobals)
+   246: For a total of 1 defglobal.
+   247: a4
+   247: CLIPS> (list-defmodules)
+   248: For a total of 1 defglobal.
+   248: MAIN
+   249: CLIPS> (list-defmodules)
+   249: a5
+   250: MAIN
+   250: For a total of 2 defmodules.
+   251: a5
+   251: CLIPS> (list-deffunctions)
+   252: For a total of 2 defmodules.
+   252: a6
+   253: CLIPS> (list-deffunctions)
+   253: For a total of 1 deffunction.
+   254: a6
+   254: CLIPS> (list-defgenerics)
+   255: For a total of 1 deffunction.
+   255: a7
+   256: CLIPS> (list-defgenerics)
+   256: a8
+   257: a7
+   257: For a total of 2 defgenerics.
+   258: a8
+   258: CLIPS> (list-defmethods)
+   259: For a total of 2 defgenerics.
+   259: 
+   260: CLIPS> (list-defmethods)
+   260: a8 #1  (INTEGER)
+   261: 
+   261: For a total of 1 method.
+   262: a8 #1  (INTEGER)
+   262: CLIPS> (list-defclasses)
+   263: For a total of 1 method.
+   263: FLOAT
+   264: CLIPS> (list-defclasses)
+   264: INTEGER
+   265: FLOAT
+   265: SYMBOL
+   266: INTEGER
+   266: STRING
+   267: SYMBOL
+   267: MULTIFIELD
+   268: STRING
+   268: EXTERNAL-ADDRESS
+   269: MULTIFIELD
+   269: FACT-ADDRESS
+   270: EXTERNAL-ADDRESS
+   270: INSTANCE-ADDRESS
+   271: FACT-ADDRESS
+   271: INSTANCE-NAME
+   272: INSTANCE-ADDRESS
+   272: OBJECT
+   273: INSTANCE-NAME
+   273: PRIMITIVE
+   274: OBJECT
+   274: NUMBER
+   275: PRIMITIVE
+   275: LEXEME
+   276: NUMBER
+   276: ADDRESS
+   277: LEXEME
+   277: INSTANCE
+   278: ADDRESS
+   278: USER
+   279: INSTANCE
+   279: a9
+   280: USER
+   280: For a total of 17 defclasses.
+   281: INITIAL-OBJECT
+   281: CLIPS> (list-definstances)
+   282: a9
+   282: a10
+   283: For a total of 18 defclasses.
+   283: For a total of 1 definstances.
+   284: CLIPS> (list-definstances)
+   284: CLIPS> (list-defmessage-handlers)
+   285: initial-object
+   285: init primary in class USER
+   286: a10
+   286: delete primary in class USER
+   287: For a total of 2 definstances.
+   287: create primary in class USER
+   288: CLIPS> (list-defmessage-handlers)
+   288: print primary in class USER
+   289: init primary in class USER
+   289: direct-modify primary in class USER
+   290: delete primary in class USER
+   290: message-modify primary in class USER
+   291: create primary in class USER
+   291: direct-duplicate primary in class USER
+   292: print primary in class USER
+   292: message-duplicate primary in class USER
+   293: direct-modify primary in class USER
+   293: get-q primary in class a9
+   294: message-modify primary in class USER
+   294: put-q primary in class a9
+   295: direct-duplicate primary in class USER
+   295: a11 primary in class a9
+   296: message-duplicate primary in class USER
+   296: For a total of 11 message-handlers.
+   297: get-q primary in class a9
+   297: CLIPS> (clear)
+   298: put-q primary in class a9
+   298: CLIPS> (bload "Temp//chksyntx.bin")
+   299: a11 primary in class a9
+   299: TRUE
+   300: For a total of 11 message-handlers.
+   300: CLIPS> (check-syntax "(deffacts a1 (foo))")
+   301: CLIPS> (clear)
+   301: FALSE
+   302: CLIPS> (bload "Temp//chksyntx.bin")
+   302: CLIPS> (check-syntax "(deftemplate a2 (slot g))")
+   303: TRUE
+   303: FALSE
+   304: CLIPS> (check-syntax "(deffacts a1 (foo))")
+   304: CLIPS> (check-syntax "(defrule a3 =>)")
+   306: CLIPS> (check-syntax "(deftemplate a2 (slot g))")
+   306: CLIPS> (check-syntax "(defglobal ?*a4* = 10)")
+   308: CLIPS> (check-syntax "(defrule a3 =>)")
+   308: CLIPS> (check-syntax "(defmodule a5)")
+   310: CLIPS> (check-syntax "(defglobal ?*a4* = 10)")
+   310: CLIPS> (check-syntax "(deffunction a6 (?x) (* 6 ?x))")
+   312: CLIPS> (check-syntax "(defmodule a5)")
+   312: CLIPS> (check-syntax "(defgeneric a7)")
+   314: CLIPS> (check-syntax "(deffunction a6 (?x) (* 6 ?x))")
+   314: CLIPS> (check-syntax "(defmethod a8 ((?x INTEGER)) (* 9 ?x))")
+   316: CLIPS> (check-syntax "(defgeneric a7)")
+   316: CLIPS> (check-syntax " (defclass a9 (is-a USER) 
+   317: FALSE
+   317:    (role concrete)
+   318: CLIPS> (check-syntax "(defmethod a8 ((?x INTEGER)) (* 9 ?x))")
+   318:    (slot w (create-accessor read-write)))")
+   320: CLIPS> (check-syntax " (defclass a9 (is-a USER) 
+   320: CLIPS> (check-syntax "(definstances a10 (b10i of a9 (q 54)))")
+   321:    (role concrete)
+   321: FALSE
+   322:    (slot w (create-accessor read-write)))")
+   322: CLIPS> (check-syntax "(defmessage-handler a9 a11 (?u) (* ?self:q 10))")
+   324: CLIPS> (check-syntax "(definstances a10 (b10i of a9 (q 54)))")
+   324: CLIPS> (reset)
+   325: FALSE
+   325: CLIPS> (facts)
+   326: CLIPS> (check-syntax "(defmessage-handler a9 a11 (?u) (* ?self:q 10))")
+   326: f-1     (x y z)
+   327: FALSE
+   327: For a total of 1 fact.
+   328: CLIPS> (reset)
+   328: CLIPS> (agenda)
+   329: CLIPS> (facts)
+   329: 0      a3: f-1
+   330: f-0     (initial-fact)
+   330: For a total of 1 activation.
+   331: f-1     (x y z)
+   331: CLIPS> (assert (a2 (r 2) (s 1 3)))
+   332: For a total of 2 facts.
+   332: <Fact-2>
+   333: CLIPS> (agenda)
+   333: CLIPS> (instances)
+   334: 0      a3: f-1
+   334: [a10i] of a9
+   335: For a total of 1 activation.
+   335: For a total of 1 instance.
+   336: CLIPS> (assert (a2 (r 2) (s 1 3)))
+   336: CLIPS> ?*a4*
+   337: <Fact-2>
+   337: 9
+   338: CLIPS> (instances)
+   338: CLIPS> (list-deftemplates a5)
+   339: [initial-object] of INITIAL-OBJECT
+   339: CLIPS> (a6 2)
+   340: [a10i] of a9
+   340: 4
+   341: For a total of 2 instances.
+   341: CLIPS> (a8 3)
+   342: CLIPS> ?*a4*
+   342: 21
+   343: 9
+   343: CLIPS> (send [a10i] a11 3)
+   344: CLIPS> (list-deftemplates a5)
+   344: 162
+   345: CLIPS> (a6 2)
+   345: CLIPS> (check-syntax "(deffacts b1 (foo))")
+   346: 4
+   346: FALSE
+   347: CLIPS> (a8 3)
+   347: CLIPS> (check-syntax "(deftemplate b2 (slot g))")
+   348: 21
+   348: FALSE
+   349: CLIPS> (send [a10i] a11 3)
+   349: CLIPS> (check-syntax "(defrule b3 =>)")
+   350: 162
+   350: FALSE
+   351: CLIPS> (check-syntax "(deffacts b1 (foo))")
+   351: CLIPS> (check-syntax "(defglobal ?*b4* = 10)")
+   353: CLIPS> (check-syntax "(deftemplate b2 (slot g))")
+   353: CLIPS> (check-syntax "(defmodule b5)")
+   355: CLIPS> (check-syntax "(defrule b3 =>)")
+   355: CLIPS> (check-syntax "(deffunction b6 (?x) (* 6 ?x))")
+   357: CLIPS> (check-syntax "(defglobal ?*b4* = 10)")
+   357: CLIPS> (check-syntax "(defgeneric b7)")
+   359: CLIPS> (check-syntax "(defmodule b5)")
+   359: CLIPS> (check-syntax "(defmethod b8 ((?x INTEGER)) (* 9 ?x))")
+   361: CLIPS> (check-syntax "(deffunction b6 (?x) (* 6 ?x))")
+   361: CLIPS> 
+   362: FALSE
+   362: (check-syntax " (defclass b9 (is-a USER) 
+   363: CLIPS> (check-syntax "(defgeneric b7)")
+   363:    (role concrete)
+   364: FALSE
+   364:    (slot w (create-accessor read-write)))")
+   365: CLIPS> (check-syntax "(defmethod b8 ((?x INTEGER)) (* 9 ?x))")
+   365: FALSE
+   366: FALSE
+   366: CLIPS> (check-syntax "(definstances b10 (c10i of a9 (q 54)))")
+   367: CLIPS> 
+   367: FALSE
+   368: (check-syntax " (defclass b9 (is-a USER) 
+   368: CLIPS> (check-syntax "(defmessage-handler a9 b11 (?u) (* ?self:q 10))")
+   369:    (role concrete)
+   369: FALSE
+   370:    (slot w (create-accessor read-write)))")
+   370: CLIPS> 
+   371: FALSE
+   371: (check-syntax "(deffacts c1 foo))")
+   372: CLIPS> (check-syntax "(definstances b10 (c10i of a9 (q 54)))")
+   372: ("
+   373: FALSE
+   373: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for RHS patterns.
+   374: CLIPS> (check-syntax "(defmessage-handler a9 b11 (?u) (* ?self:q 10))")
+   374: 
+   375: FALSE
+   375: ERROR:
+   376: CLIPS> 
+   376: (deffacts MAIN::c1
+   377: (check-syntax "(deffacts c1 foo))")
+   377:    foo
+   378: ("
+   378: " FALSE)
+   379: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for RHS patterns.
+   379: CLIPS> (check-syntax "(deftemplate c2 slot g))")
+   380: 
+   380: ("
+   381: ERROR:
+   381: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for deftemplate.
+   382: (deffacts MAIN::c1
+   382: 
+   383:    foo
+   383: ERROR:
+   384: " FALSE)
+   384: (deftemplate MAIN::c2
+   385: CLIPS> (check-syntax "(deftemplate c2 slot g))")
+   385:    slot
+   386: ("
+   386: " FALSE)
+   387: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for deftemplate.
+   387: CLIPS> (check-syntax "(defrule c3)")
+   388: 
+   388: ("
+   389: ERROR:
+   389: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defrule.
+   390: (deftemplate MAIN::c2
+   390: 
+   391:    slot
+   391: ERROR:
+   392: " FALSE)
+   392: (defrule MAIN::c3)
+   393: CLIPS> (check-syntax "(defrule c3)")
+   393: " FALSE)
+   394: ("
+   394: CLIPS> (check-syntax "(defglobal ?*c4* 10)")
+   395: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defrule.
+   395: ("
+   396: 
+   396: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defglobal.
+   397: ERROR:
+   397: 
+   398: (defrule MAIN::c3)
+   398: ERROR:
+   399: " FALSE)
+   399: (defglobal MAIN ?*c4* 10
+   400: CLIPS> (check-syntax "(defglobal ?*c4* 10)")
+   400: " FALSE)
+   401: ("
+   401: CLIPS> (check-syntax "(defmodule c5 (x))")
+   402: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defglobal.
+   402: ("
+   403: 
+   403: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defmodule.
+   404: ERROR:
+   404: 
+   405: (defglobal MAIN ?*c4* 10
+   405: ERROR:
+   406: " FALSE)
+   406: (defmodule c5
+   407: CLIPS> (check-syntax "(defmodule c5 (x))")
+   407:    (x
+   408: ("
+   408: " FALSE)
+   409: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defmodule.
+   409: CLIPS> (check-syntax "(deffunction c6 (?x (* 6 ?x))")
+   410: 
+   410: ("
+   411: ERROR:
+   411: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for parameter list.
+   412: (defmodule c5
+   412: 
+   413:    (x
+   413: ERROR:
+   414: " FALSE)
+   414: (deffunction MAIN::c6
+   415: CLIPS> (check-syntax "(deffunction c6 (?x (* 6 ?x))")
+   415:    (?x (
+   416: ("
+   416: " FALSE)
+   417: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for parameter list.
+   417: CLIPS> (check-syntax "(defgeneric c7 (y))")
+   418: 
+   418: ("[GENRCPSR1] Expected ')' to complete defgeneric.
+   419: ERROR:
+   419: 
+   420: (deffunction MAIN::c6
+   420: ERROR:
+   421:    (?x (
+   421: (defgeneric MAIN::c7
+   422: " FALSE)
+   422:    (
+   423: CLIPS> (check-syntax "(defgeneric c7 (y))")
+   423: " FALSE)
+   424: ("[GENRCPSR1] Expected ')' to complete defgeneric.
+   424: CLIPS> (check-syntax "(defmethod c8 (?x INTEGER)) (* 9 ?x))")
+   425: 
+   425: ("[GENRCPSR9] Expected a variable or '(' for parameter specification.
+   426: ERROR:
+   426: 
+   427: (defgeneric MAIN::c7
+   427: ERROR:
+   428:    (
+   428: (defmethod MAIN::c8
+   429: " FALSE)
+   429:    (?x
+   430: CLIPS> (check-syntax "(defmethod c8 (?x INTEGER)) (* 9 ?x))")
+   430:     INTEGER
+   431: ("[GENRCPSR9] Expected a variable or '(' for parameter specification.
+   431: " FALSE)
+   432: 
+   432: CLIPS> 
+   433: ERROR:
+   433: (check-syntax " (defclass c9 (is-a USER) 
+   434: (defmethod MAIN::c8
+   434:    (role bogus)
+   435:    (?x
+   435:    (slot w (create-accessor read-write)))")
+   436:     INTEGER
+   436: ("
+   437: " FALSE)
+   437: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defclass.
+   438: CLIPS> 
+   438: 
+   439: (check-syntax " (defclass c9 (is-a USER) 
+   439: ERROR:
+   440:    (role bogus)
+   440: (defclass MAIN::c9
+   441:    (slot w (create-accessor read-write)))")
+   441:    (is-a USER)
+   442: ("
+   442:    (role bogus
+   443: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defclass.
+   443: " FALSE)
+   444: 
+   444: CLIPS> (check-syntax "(definstances c10 c10i of a9 (q 54)))")
+   445: ERROR:
+   445: ("
+   446: (defclass MAIN::c9
+   446: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for definstances.
+   447:    (is-a USER)
+   447: 
+   448:    (role bogus
+   448: ERROR:
+   449: " FALSE)
+   449: (definstances MAIN::c10
+   450: CLIPS> (check-syntax "(definstances c10 c10i of a9 (q 54)))")
+   450:    c10i
+   451: ("
+   451: " FALSE)
+   452: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for definstances.
+   452: CLIPS> (check-syntax "(defmessage-handler a9 c11 ?u) (* ?self:q 10))")
+   453: 
+   453: ("
+   454: ERROR:
+   454: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defmessage-handler.
+   455: (definstances MAIN::c10
+   455: 
+   456:    c10i
+   456: ERROR:
+   457: " FALSE)
+   457: (defmessage-handler MAIN::a9 c11 ?u 
+   458: CLIPS> (check-syntax "(defmessage-handler a9 c11 ?u) (* ?self:q 10))")
+   458: " FALSE)
+   459: ("
+   459: CLIPS> (list-deffacts)
+   460: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defmessage-handler.
+   460: a1
+   461: 
+   461: For a total of 1 deffacts.
+   462: ERROR:
+   462: CLIPS> (list-deftemplates)
+   463: (defmessage-handler MAIN::a9 c11 ?u 
+   463: x
+   464: " FALSE)
+   464: a2
+   465: CLIPS> (list-deffacts)
+   465: For a total of 2 deftemplates.
+   466: initial-fact
+   466: CLIPS> (list-defrules)
+   467: a1
+   467: a3
+   468: For a total of 2 deffacts.
+   468: For a total of 1 defrule.
+   469: CLIPS> (list-deftemplates)
+   469: CLIPS> (list-defglobals)
+   470: initial-fact
+   470: a4
+   471: x
+   471: For a total of 1 defglobal.
+   472: a2
+   472: CLIPS> (list-defmodules)
+   473: For a total of 3 deftemplates.
+   473: MAIN
+   474: CLIPS> (list-defrules)
+   474: a5
+   475: a3
+   475: For a total of 2 defmodules.
+   476: For a total of 1 defrule.
+   476: CLIPS> (list-deffunctions)
+   477: CLIPS> (list-defglobals)
+   477: a6
+   478: a4
+   478: For a total of 1 deffunction.
+   479: For a total of 1 defglobal.
+   479: CLIPS> (list-defgenerics)
+   480: CLIPS> (list-defmodules)
+   480: a7
+   481: MAIN
+   481: a8
+   482: a5
+   482: For a total of 2 defgenerics.
+   483: For a total of 2 defmodules.
+   483: CLIPS> (list-defmethods)
+   484: CLIPS> (list-deffunctions)
+   484: 
+   485: a6
+   485: a8 #1  (INTEGER)
+   486: For a total of 1 deffunction.
+   486: For a total of 1 method.
+   487: CLIPS> (list-defgenerics)
+   487: CLIPS> (list-defclasses)
+   488: a7
+   488: FLOAT
+   489: a8
+   489: INTEGER
+   490: For a total of 2 defgenerics.
+   490: SYMBOL
+   491: CLIPS> (list-defmethods)
+   491: STRING
+   492: 
+   492: MULTIFIELD
+   493: a8 #1  (INTEGER)
+   493: EXTERNAL-ADDRESS
+   494: For a total of 1 method.
+   494: FACT-ADDRESS
+   495: CLIPS> (list-defclasses)
+   495: INSTANCE-ADDRESS
+   496: FLOAT
+   496: INSTANCE-NAME
+   497: INTEGER
+   497: OBJECT
+   498: SYMBOL
+   498: PRIMITIVE
+   499: STRING
+   499: NUMBER
+   500: MULTIFIELD
+   500: LEXEME
+   501: EXTERNAL-ADDRESS
+   501: ADDRESS
+   502: FACT-ADDRESS
+   502: INSTANCE
+   503: INSTANCE-ADDRESS
+   503: USER
+   504: INSTANCE-NAME
+   504: a9
+   505: OBJECT
+   505: For a total of 17 defclasses.
+   506: PRIMITIVE
+   506: CLIPS> (list-definstances)
+   507: NUMBER
+   507: a10
+   508: LEXEME
+   508: For a total of 1 definstances.
+   509: ADDRESS
+   509: CLIPS> (list-defmessage-handlers)
+   510: INSTANCE
+   510: init primary in class USER
+   511: USER
+   511: delete primary in class USER
+   512: INITIAL-OBJECT
+   512: create primary in class USER
+   513: a9
+   513: print primary in class USER
+   514: For a total of 18 defclasses.
+   514: direct-modify primary in class USER
+   515: CLIPS> (list-definstances)
+   515: message-modify primary in class USER
+   516: initial-object
+   516: direct-duplicate primary in class USER
+   517: a10
+   517: message-duplicate primary in class USER
+   518: For a total of 2 definstances.
+   518: get-q primary in class a9
+   519: CLIPS> (list-defmessage-handlers)
+   519: put-q primary in class a9
+   520: init primary in class USER
+   520: a11 primary in class a9
+   521: delete primary in class USER
+   521: For a total of 11 message-handlers.
+   522: create primary in class USER
+   522: CLIPS> (clear)
+   523: print primary in class USER
+   523: CLIPS> (dribble-off)
+   Files do not have the same # of lines

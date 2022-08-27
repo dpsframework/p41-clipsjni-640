@@ -1,0 +1,13 @@
+dfnxcmd.bat differences are as follows:
+    12: [PRNTUTIL1] Unable to find deffunction bad.
+    12: [PRNTUTIL1] Unable to find deffunction 'bad'.
+    14: [ARGACCES5] Function ppdeffunction expected argument #1 to be of type symbol
+    14: [ARGACCES2] Function 'ppdeffunction' expected argument #1 to be of type symbol.
+    16: [ARGACCES4] Function ppdeffunction expected exactly 1 argument(s)
+    16: [ARGACCES1] Function 'ppdeffunction' expected at least 1 argument.
+    26: [PRNTUTIL1] Unable to find deffunction bad.
+    26: [PRNTUTIL1] Unable to find deffunction 'bad'.
+    28: [ARGACCES5] Function undeffunction expected argument #1 to be of type symbol
+    28: [ARGACCES2] Function 'undeffunction' expected argument #1 to be of type symbol.
+    30: [ARGACCES4] Function undeffunction expected exactly 1 argument(s)
+    30: [ARGACCES1] Function 'undeffunction' expected exactly 1 argument.

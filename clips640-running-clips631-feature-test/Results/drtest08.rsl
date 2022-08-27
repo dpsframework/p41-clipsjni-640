@@ -1,0 +1,1378 @@
+drtest08.bat differences are as follows:
+     7: [ARGACCES5] Function = expected argument #2 to be of type integer or float
+     7: [ARGACCES2] Function '=' expected argument #2 to be of type integer or float.
+    17: 2
+    17: 1
+    20: [initial-object] of INITIAL-OBJECT
+    20: CLIPS> (load-instances "Temp//bogus.tmp")
+    21: For a total of 1 instance.
+    21: 1
+    22: CLIPS> (load-instances "Temp//bogus.tmp")
+    22: CLIPS> (send [a] print)
+    23: 2
+    23: [a] of A
+    24: CLIPS> (send [a] print)
+    24: (foo ""This is a string"")
+    25: [a] of A
+    25: CLIPS> (clear) ;; DR0713
+    26: (foo ""This is a string"")
+    26: CLIPS> 
+    27: CLIPS> (clear) ;; DR0713
+    27: (defclass TEST
+    28: CLIPS> 
+    28:   (is-a USER)
+    29: (defclass TEST
+    29:   (role concrete)
+    30:   (is-a USER)
+    30:   (slot item (create-accessor write)))
+    31:   (role concrete)
+    31: CLIPS> (make-instance a of TEST)
+    32:   (slot item (create-accessor write)))
+    32: [a]
+    33: CLIPS> (make-instance a of TEST)
+    33: CLIPS> (message-modify-instance [a] (item 3))
+    34: [a]
+    34: TRUE
+    35: CLIPS> (message-modify-instance [a] (item 3))
+    35: CLIPS> (clear)                   ; DR0724
+    36: TRUE
+    36: CLIPS> [x]
+    37: CLIPS> (clear)                   ; DR0724
+    37: [x]
+    38: CLIPS> [x]
+    38: CLIPS> (clear)                   ; DRO725
+    39: [x]
+    39: CLIPS> 
+    40: CLIPS> (clear)                   ; DRO725
+    40: (defrule should-be-ok
+    41: CLIPS> 
+    41:    (message $?first)
+    42: (defrule should-be-ok
+    42:    (test (length$ ?first))
+    43:    (message $?first)
+    43:    (translation $?first)
+    44:    (test (length$ ?first))
+    44:    =>)
+    45:    (translation $?first)
+    45: CLIPS> (clear)                   ; DR0726
+    46:    =>)
+    46: CLIPS> 
+    47: CLIPS> (clear)                   ; DR0726
+    47: (defrule bar
+    48: CLIPS> 
+    48:    (not (and (c ?x) (d ?y&:(> ?y 3))))
+    49: (defrule bar
+    49:    =>)
+    50:    (not (and (c ?x) (d ?y&:(> ?y 3))))
+    50: CLIPS> (reset)
+    51:    =>)
+    51: CLIPS> (assert (c 1) (d a)) ; should not hang
+    52: CLIPS> (reset)
+    52: [ARGACCES2] Function '>' expected argument #1 to be of type integer or float.
+    53: CLIPS> (assert (c 1) (d a)) ; should not hang
+    53: 
+    54: [ARGACCES5] Function > expected argument #1 to be of type integer or float
+    54: [FACTMCH1] This error occurred in the fact pattern network.
+    55: 
+    55:    Currently active fact: (d a)
+    56: [FACTMCH1] This error occurred in the fact pattern network
+    56:    Problem resides in field #1
+    57:    Currently active fact: (d a)
+    57:       Of pattern #2 in rule bar
+    58:    Problem resides in field #1
+    58: 
+    59:       Of pattern #2 in rule bar
+    59: FALSE
+    60: 
+    60: CLIPS> (clear)                   ; DR0727
+    61: FALSE
+    61: CLIPS> 
+    62: CLIPS> (clear)                   ; DR0727
+    62: (defrule foo
+    63: CLIPS> 
+    63:    (not (and (a) (b) (c)))
+    64: (defrule foo
+    64:    (d ?x&:(> ?x 3))
+    65:    (not (and (a) (b) (c)))
+    65:    =>)
+    66:    (d ?x&:(> ?x 3))
+    66: CLIPS> (reset)
+    67:    =>)
+    67: CLIPS> (assert (d a)) ; Error should be for pattern 5
+    68: CLIPS> (reset)
+    68: [ARGACCES2] Function '>' expected argument #1 to be of type integer or float.
+    69: CLIPS> (assert (d a)) ; Error should be for pattern 5
+    69: 
+    70: [ARGACCES5] Function > expected argument #1 to be of type integer or float
+    70: [FACTMCH1] This error occurred in the fact pattern network.
+    71: 
+    71:    Currently active fact: (d a)
+    72: [FACTMCH1] This error occurred in the fact pattern network
+    72:    Problem resides in field #1
+    73:    Currently active fact: (d a)
+    73:       Of pattern #4 in rule foo
+    74:    Problem resides in field #1
+    74: 
+    75:       Of pattern #4 in rule foo
+    75: <Fact-1>
+    76: 
+    76: CLIPS> (clear)                   ; DR0728
+    77: <Fact-1>
+    77: CLIPS> 
+    78: CLIPS> (clear)                   ; DR0728
+    78: (deftemplate attempt
+    79: CLIPS> 
+    79:    (multifield numbers (default 7 7 3 3))
+    80: (deftemplate attempt
+    80:    (multifield rpn))
+    81:    (multifield numbers (default 7 7 3 3))
+    81: CLIPS> 
+    82:    (multifield rpn))
+    82: (deffacts initial-info
+    83: CLIPS> 
+    83:    (attempt)
+    84: (deffacts initial-info
+    84:    (operator *)
+    85:    (attempt)
+    85:    (operator /)
+    86:    (operator *)
+    86:    (operator -)
+    87:    (operator /)
+    87:    (operator +))
+    88:    (operator -)
+    88: CLIPS> 
+    89:    (operator +))
+    89: (defrule do-first
+    90: CLIPS> 
+    90:    ?f <- (attempt (numbers $?b ?n1 $?m ?n2 $?e)
+    91: (defrule do-first
+    91:                   (rpn))
+    92:    ?f <- (attempt (numbers $?b ?n1 $?m ?n2 $?e)
+    92:    (operator ?o)
+    93:                   (rpn))
+    93:    =>
+    94:    (operator ?o)
+    94:    (duplicate ?f (numbers ?b ?m ?e)
+    95:    =>
+    95:                  (rpn ?n1 ?n2 ?o)))
+    96:    (duplicate ?f (numbers ?b ?m ?e)
+    96: CLIPS> 
+    97:                  (rpn ?n1 ?n2 ?o)))
+    97: (defrule do-next
+    98: CLIPS> 
+    98:    ?f <- (attempt (numbers $?b ?n $?e)
+    99: (defrule do-next
+    99:                   (rpn ?f $?rest))
+   100:    ?f <- (attempt (numbers $?b ?n $?e)
+   100:    (operator ?o)
+   101:                   (rpn ?f $?rest))
+   101:    =>
+   102:    (operator ?o)
+   102:    (duplicate ?f (numbers ?b ?e)
+   103:    =>
+   103:                  (rpn ?f ?rest ?n ?o)))
+   104:    (duplicate ?f (numbers ?b ?e)
+   104: CLIPS> (reset)
+   105:                  (rpn ?f ?rest ?n ?o)))
+   105: CLIPS> (run) ; should not hang or crash
+   106: CLIPS> (reset)
+   106: CLIPS> (clear)                   ; DR0729
+   107: CLIPS> (run) ; should not hang or crash
+   107: CLIPS> (get-salience-evaluation)
+   108: CLIPS> (clear)                   ; DR0729
+   108: when-defined
+   109: CLIPS> (get-salience-evaluation)
+   109: CLIPS> (set-salience-evaluation every-cycle) ; should return when-defined
+   111: CLIPS> (set-salience-evaluation every-cycle) ; should return when-defined
+   111: CLIPS> (set-salience-evaluation when-defined) ; should return every-cycle
+   112: when-defined
+   112: every-cycle
+   113: CLIPS> (set-salience-evaluation when-defined) ; should return every-cycle
+   113: CLIPS> (clear)                   ; DR0730
+   114: every-cycle
+   114: CLIPS> (get-salience-evaluation)
+   115: CLIPS> (clear)                   ; DR0730
+   115: when-defined
+   116: CLIPS> (get-salience-evaluation)
+   116: CLIPS> (defmodule A)
+   117: when-defined
+   117: CLIPS> (refresh-agenda *)
+   118: CLIPS> (defmodule A)
+   118: CLIPS> (get-salience-evaluation) ; should be when-defined
+   119: CLIPS> (refresh-agenda *)
+   119: when-defined
+   120: CLIPS> (get-salience-evaluation) ; should be when-defined
+   120: CLIPS> (clear)                   ; DR0731
+   121: when-defined
+   121: CLIPS> (unwatch all)
+   122: CLIPS> (clear)                   ; DR0731
+   122: CLIPS> (defrule zoiks =>)
+   123: CLIPS> (unwatch all)
+   123: CLIPS> (reset)
+   124: CLIPS> (defrule zoiks =>)
+   124: CLIPS> (watch rules)
+   125: CLIPS> (reset)
+   125: CLIPS> (defrule zoiks =>) ; activation should not be printed
+   126: CLIPS> (watch rules)
+   126: CLIPS> (unwatch all)
+   127: CLIPS> (defrule zoiks =>) ; activation should not be printed
+   127: CLIPS> (clear)                   ; DR0734
+   128: CLIPS> (unwatch all)
+   128: CLIPS> (defmodule MAIN (export ?ALL))
+   129: CLIPS> (clear)                   ; DR0734
+   129: CLIPS> (defglobal MAIN ?*proximity* = 9)
+   130: CLIPS> (defmodule MAIN (export ?ALL))
+   130: CLIPS> (defmodule SCORE (import MAIN ?ALL))
+   131: CLIPS> (defglobal MAIN ?*proximity* = 9)
+   131: CLIPS> 
+   132: CLIPS> (defmodule SCORE (import MAIN ?ALL))
+   132: (defrule SCORE::should-be-ok
+   133: CLIPS> 
+   133:    (attempt1)
+   134: (defrule SCORE::should-be-ok
+   134:    (test (<= 3 ?*proximity*))
+   135:    (attempt1)
+   135:    =>)
+   136:    (test (<= 3 ?*proximity*))
+   136: CLIPS> (clear)                  ; DR0736
+   137:    =>)
+   137: CLIPS> 
+   138: CLIPS> (clear)                  ; DR0736
+   138: (deftemplate where
+   139: CLIPS> 
+   139:    (multislot x (type SYMBOL)))
+   140: (deftemplate where
+   140: CLIPS> 
+   141:    (multislot x (type SYMBOL)))
+   141: (defrule yak ; This should be OK
+   142: CLIPS> 
+   142:    (where (x $?pds&:(member$ x ?pds)))
+   143: (defrule yak ; This should be OK
+   143:    =>)
+   144:    (where (x $?pds&:(member$ x ?pds)))
+   144: CLIPS> (clear)
+   145:    =>)
+   145: CLIPS> 
+   146: CLIPS> (clear)
+   146: (defrule foo ; This should fail
+   147: CLIPS> 
+   147:    (bbb ?x&:(member a ?x))
+   148: (defrule foo ; This should fail
+   148:    =>)
+   149:    (bbb ?x&:(member a ?x))
+   149: 
+   150:    =>)
+   150: [EXPRNPSR3] Missing function declaration for 'member'.
+   152: [RULECSTR2] Previous variable bindings of ?x caused the type restrictions
+   152: ERROR:
+   153: for argument #2 of the expression (member a ?x)
+   153: (defrule MAIN::foo
+   154: found in CE #1 field #1 to be violated.
+   154:    (bbb ?x&:(member
+   155: 
+   155: CLIPS> (clear)
+   156: ERROR:
+   156: CLIPS> 
+   157: (defrule MAIN::foo
+   157: (deftemplate this
+   158:    (bbb ?x&:(member a ?x))
+   158:    (slot x)
+   159:    =>)
+   159:    (slot y (type INTEGER))
+   160: CLIPS> (clear)
+   160:    (multislot z (type STRING)))
+   162: (deftemplate this
+   162: (defrule this-1 ; This should fail
+   163:    (slot x)
+   163:    (this (x ?x))
+   164:    (slot y (type INTEGER))
+   164:    =>
+   165:    (multislot z (type STRING)))
+   165:    (member$ a ?x))
+   166: CLIPS> 
+   166: 
+   167: (defrule this-1 ; This should fail
+   167: [RULECSTR3] Previous variable bindings of ?x caused the type restrictions
+   168:    (this (x ?x))
+   168: for argument #2 of the expression (member$ a ?x) found in the rule's RHS to be violated.
+   169:    =>
+   169: 
+   170:    (member$ a ?x))
+   170: ERROR:
+   171: 
+   171: (defrule MAIN::this-1
+   172: [RULECSTR3] Previous variable bindings of ?x caused the type restrictions
+   172:    (this (x ?x))
+   173: for argument #2 of the expression (member$ a ?x)
+   173:    =>
+   174: found in the rule's RHS to be violated.
+   174:    (member$ a ?x))
+   175: 
+   175: CLIPS> (clear)                   ; DR0737
+   176: ERROR:
+   176: CLIPS> 
+   177: (defrule MAIN::this-1
+   177: (defrule fd-1 ; This should be ok
+   178:    (this (x ?x))
+   178:    (a)
+   179:    =>
+   179:    (not (and (b)
+   180:    (member$ a ?x))
+   180:              (or (c)
+   181: CLIPS> (clear)                   ; DR0737
+   181:                  (d))))
+   182: CLIPS> 
+   182:    =>)
+   183: (defrule fd-1 ; This should be ok
+   183: CLIPS>    
+   184:    (a)
+   184: (defrule fd-2 ; this should be ok
+   185:    (not (and (b)
+   185:    (a)
+   186:              (or (c)
+   186:    (exists (b)
+   187:                  (d))))
+   187:            (or (and (c))
+   188:    =>)
+   188:                (d)))
+   189: CLIPS>    
+   189:    =>)
+   190: (defrule fd-2 ; this should be ok
+   190: CLIPS> 
+   191:    (a)
+   191: (defrule fd-3 ; this should be ok
+   192:    (exists (b)
+   192:    (a)
+   193:            (or (and (c))
+   193:    (not (and (b)
+   194:                (d)))
+   194:              (or (and (c) (e))
+   195:    =>)
+   195:                  (d))))
+   196: CLIPS> 
+   196:    =>)
+   197: (defrule fd-3 ; this should be ok
+   197: CLIPS> 
+   198:    (a)
+   198: (defrule fd-4 ; this should be ok
+   199:    (not (and (b)
+   199:    (a)
+   200:              (or (and (c) (e))
+   200:    (exists (b)
+   201:                  (d))))
+   201:            (or (c)         
+   202:    =>)
+   202:                (d)))
+   203: CLIPS> 
+   203:    =>)
+   204: (defrule fd-4 ; this should be ok
+   204: CLIPS> (clear)
+   205:    (a)
+   205: CLIPS> 
+   206:    (exists (b)
+   206: (defrule foo-1
+   207:            (or (c)         
+   207:    (not (or (a) (b)))
+   208:                (d)))
+   208:    =>)
+   209:    =>)
+   209: CLIPS> 
+   210: CLIPS> (clear)
+   210: (defrule foo-2
+   211: CLIPS> 
+   211:    (not (not (or (a) (b))))
+   212: (defrule foo-1
+   212:    =>)
+   213:    (not (or (a) (b)))
+   213: CLIPS> 
+   214:    =>)
+   214: (defrule foo-3
+   215: CLIPS> 
+   215:    (not (and (not (a))
+   216: (defrule foo-2
+   216:              (not (b))))
+   217:    (not (not (or (a) (b))))
+   217:    =>)
+   218:    =>)
+   218: CLIPS> (reset)
+   219: CLIPS> 
+   219: CLIPS> (agenda)
+   220: (defrule foo-3
+   220: 0      foo-1: *,*
+   221:    (not (and (not (a))
+   221: For a total of 1 activation.
+   222:              (not (b))))
+   222: CLIPS> (assert (a))
+   223:    =>)
+   223: <Fact-1>
+   224: CLIPS> (reset)
+   224: CLIPS> (agenda)
+   225: CLIPS> (agenda)
+   225: 0      foo-2: *
+   226: 0      foo-1: *,*
+   226: 0      foo-3: *
+   227: For a total of 1 activation.
+   227: For a total of 2 activations.
+   228: CLIPS> (assert (a))
+   228: CLIPS> (assert (b))
+   229: <Fact-1>
+   229: <Fact-2>
+   234: CLIPS> (assert (b))
+   234: CLIPS> (clear)                   ; DR0738
+   235: <Fact-2>
+   235: CLIPS> 
+   236: CLIPS> (agenda)
+   236: (deffacts f1
+   237: 0      foo-2: *
+   237:    (s 1)
+   238: 0      foo-3: *
+   238:    (s 2)
+   239: For a total of 2 activations.
+   239:    (s 3)
+   240: CLIPS> (clear)                   ; DR0738
+   240:    (c)
+   241: CLIPS> 
+   241:    (a 1))
+   242: (deffacts f1
+   242: CLIPS> 
+   243:    (s 1)
+   243: (defrule r1 ; SHOULD activate, but doesn't
+   244:    (s 2)
+   244:    (s 1)
+   245:    (s 3)
+   245:    (exists (or (and (a ?x)
+   246:    (c)
+   246:                     (d)
+   247:    (a 1))
+   247:                     (test (> 16 10)))
+   248: CLIPS> 
+   248:                (and (a ?x)
+   249: (defrule r1 ; SHOULD activate, but doesn't
+   249:                     (c))))
+   250:    (s 1)
+   250:    =>)
+   251:    (exists (or (and (a ?x)
+   251: CLIPS>    
+   252:                     (d)
+   252: (defrule r2 ; SHOULD activate, but doesn't
+   253:                     (test (> 16 10)))
+   253:    (s 2)
+   254:                (and (a ?x)
+   254:    (not (and (not (and (a ?x)
+   255:                     (c))))
+   255:                        (d)
+   256:    =>)
+   256:                        (test (> 16 10))))
+   257: CLIPS>    
+   257:               (not (and (a ?x)
+   258: (defrule r2 ; SHOULD activate, but doesn't
+   258:                         (c)))))
+   259:    (s 2)
+   259:    =>)
+   260:    (not (and (not (and (a ?x)
+   260: CLIPS> 
+   261:                        (d)
+   261: (defrule r3 ; SHOULD NOT activate, but does
+   262:                        (test (> 16 10))))
+   262:    (s 3)
+   263:               (not (and (a ?x)
+   263:    (not (and (a ?x)
+   264:                         (c)))))
+   264:              (d)
+   265:    =>)
+   265:              (test (> 16 10))))
+   266: CLIPS> 
+   266:    (not (and (a ?x)
+   267: (defrule r3 ; SHOULD NOT activate, but does
+   267:              (c)))
+   268:    (s 3)
+   268:    =>)
+   269:    (not (and (a ?x)
+   269: CLIPS> (reset)
+   270:              (d)
+   270: CLIPS> (agenda)
+   271:              (test (> 16 10))))
+   271: 0      r1: f-1,*
+   272:    (not (and (a ?x)
+   272: 0      r2: f-2,*
+   273:              (c)))
+   273: For a total of 2 activations.
+   274:    =>)
+   274: CLIPS> (clear)                    ; DR0740
+   275: CLIPS> (reset)
+   275: CLIPS> 
+   276: CLIPS> (agenda)
+   276: (deffunction bug (?list ?a ?b)
+   277: 0      r1: f-1,*
+   277:    (while TRUE (return (subseq$ ?list ?a ?b))))
+   278: 0      r2: f-2,*
+   278: CLIPS> (bug (create$ a b c) 1 2) ; Should return (a b)
+   279: For a total of 2 activations.
+   279: (a b)
+   280: CLIPS> (clear)                    ; DR0740
+   280: CLIPS> 
+   281: CLIPS> 
+   281: (deffunction bug (?list ?a ?b)
+   282: (deffunction bug (?list ?a ?b)
+   282:    (loop-for-count 1 (return (subseq$ ?list ?a ?b))))
+   283:    (while TRUE (return (subseq$ ?list ?a ?b))))
+   283: CLIPS> (bug (create$ a b c) 1 2) ; Should return (a b)
+   284: CLIPS> (bug (create$ a b c) 1 2) ; Should return (a b)
+   284: (a b)
+   285: (a b)
+   285: CLIPS> (clear)                   ; DR0742 - should have no error
+   286: CLIPS> 
+   286: CLIPS> (deftemplate TREATMENT
+   287: (deffunction bug (?list ?a ?b)
+   287:    (multislot values
+   288:    (loop-for-count 1 (return (subseq$ ?list ?a ?b))))
+   288:    (type INTEGER)
+   289: CLIPS> (bug (create$ a b c) 1 2) ; Should return (a b)
+   289:    (range 0 19)
+   290: (a b)
+   290:    (cardinality 0 20)))
+   291: CLIPS> (clear)                   ; DR0742 - should have no error
+   291: CLIPS> (assert (TREATMENT (values (create$))))
+   292: CLIPS> (deftemplate TREATMENT
+   292: <Fact-1>
+   293:    (multislot values
+   293: CLIPS> (clear)                  ; DR0743 - should have no error
+   294:    (type INTEGER)
+   294: CLIPS> (defglobal ?*x* = 3)
+   295:    (range 0 19)
+   295: CLIPS> (bsave "Temp//mytest.bin")
+   296:    (cardinality 0 20)))
+   296: TRUE
+   297: CLIPS> (assert (TREATMENT (values (create$))))
+   297: CLIPS> (clear)
+   298: <Fact-1>
+   298: CLIPS> (watch all)
+   299: CLIPS> (clear)                  ; DR0743 - should have no error
+   299: CLIPS> (bload "Temp//mytest.bin")
+   300: CLIPS> (defglobal ?*x* = 3)
+   300: <== Focus MAIN
+   301: CLIPS> (bsave "Temp//mytest.bin")
+   301: :== ?*x* ==> 3 <== 
+   303: CLIPS> (clear)
+   303: CLIPS> (unwatch all)
+   304: CLIPS> (watch all)
+   304: CLIPS> (clear)                 ; DR0745
+   305: CLIPS> (bload "Temp//mytest.bin")
+   305: CLIPS> (unwatch all)
+   306: MSG >> delete ED:1 (<Instance-initial-object>)
+   306: CLIPS> (defclass A (is-a USER)
+   307: HND >> delete primary in class USER
+   307:   (role concrete)
+   308:        ED:1 (<Instance-initial-object>)
+   308:   (pattern-match reactive)
+   309: <== instance [initial-object] of INITIAL-OBJECT
+   309:   (slot x (create-accessor write))
+   310: HND << delete primary in class USER
+   310:   (slot y (create-accessor write)))
+   311:        ED:1 (<Stale Instance-initial-object>)
+   311: CLIPS> (defrule bug
+   312: MSG << delete ED:1 (<Stale Instance-initial-object>)
+   312:   (object (is-a A)
+   313: <== f-0     (initial-fact)
+   313:           (y 100)
+   314: <== Focus MAIN
+   314:           (x 100))
+   315: :== ?*x* ==> 3 <== 
+   315:   =>)
+   316: TRUE
+   316: CLIPS> (agenda) ; should be no activations
+   317: CLIPS> (unwatch all)
+   317: CLIPS> (make-instance a of A)
+   318: CLIPS> (clear)                 ; DR0745
+   318: [a]
+   319: CLIPS> (unwatch all)
+   319: CLIPS> (watch activations)
+   320: CLIPS> (defclass A (is-a USER)
+   320: CLIPS> (object-pattern-match-delay ; should have only one activation arrow
+   321:   (role concrete)
+   321:    (send [a] put-y 100)
+   322:   (pattern-match reactive)
+   322:    (send [a] put-x 100))
+   323:   (slot x (create-accessor write))
+   323: ==> Activation 0      bug: [a]
+   324:   (slot y (create-accessor write)))
+   324: 100
+   325: CLIPS> (defrule bug
+   325: CLIPS> (unwatch all)
+   326:   (object (is-a A)
+   326: CLIPS> (clear)                 ; DR0747
+   327:           (y 100)
+   327: CLIPS> 
+   328:           (x 100))
+   328: (defclass A (is-a USER)
+   329:   =>)
+   329:    (slot foo (type INSTANCE-NAME)))
+   330: CLIPS> (agenda) ; should be no activations
+   330: CLIPS> (slot-types A foo) ; Should be just instance-name
+   331: CLIPS> (make-instance a of A)
+   331: (INSTANCE-NAME)
+   332: [a]
+   332: CLIPS> (clear)                ; DR0748 - Should have no error from print message
+   333: CLIPS> (watch activations)
+   333: CLIPS> (defmodule MAIN (export ?ALL))
+   334: CLIPS> (object-pattern-match-delay ; should have only one activation arrow
+   334: CLIPS> (defclass TEST (is-a USER)
+   335:    (send [a] put-y 100)
+   335:   (role concrete))
+   336:    (send [a] put-x 100))
+   336: CLIPS> (defmodule TEST (import MAIN ?ALL))
+   337: ==> Activation 0      bug: [a]
+   337: CLIPS> (make-instance test of TEST)
+   338: 100
+   338: [test]
+   339: CLIPS> (unwatch all)
+   339: CLIPS> (do-for-instance ((?t TEST)) TRUE
+   340: CLIPS> (clear)                 ; DR0747
+   340:   (send ?t print))
+   341: CLIPS> 
+   341: [test] of TEST
+   342: (defclass A (is-a USER)
+   342: CLIPS> (clear)                ; DR0749
+   343:    (slot foo (type INSTANCE-NAME)))
+   343: CLIPS> (defclass A (is-a USER)
+   344: CLIPS> (slot-types A foo) ; Should be just instance-name
+   344:    (slot foo (access read-only) (create-accessor ?NONE)))
+   345: (INSTANCE-NAME)
+   345: CLIPS> (slot-facets A foo) ; facet should be SHR and not LCL
+   346: CLIPS> (clear)                ; DR0748 - Should have no error from print message
+   346: (SGL STC INH R SHR RCT EXC PRV NIL NIL)
+   347: CLIPS> (defmodule MAIN (export ?ALL))
+   347: CLIPS> (clear)                ; DR0750 - Should not crash
+   348: CLIPS> (defclass TEST (is-a USER)
+   348: CLIPS> (defclass FOO (is-a USER) (slot x))
+   349:   (role concrete))
+   349: CLIPS> (slot-cardinality FOO x)
+   350: CLIPS> (defmodule TEST (import MAIN ?ALL))
+   350: ()
+   351: CLIPS> (make-instance test of TEST)
+   351: CLIPS> (clear)                ; DR0752 - Should return "a"
+   352: [test]
+   352: CLIPS> (deffunction y ()
+   353: CLIPS> (do-for-instance ((?t TEST)) TRUE
+   353:    (progn$ (?x (create$ "a" "b" "c"))
+   354:   (send ?t print))
+   354:       (return ?x))
+   355: [test] of TEST
+   355:    (return "hello"))
+   356: CLIPS> (clear)                ; DR0749
+   356: CLIPS> (y)
+   357: CLIPS> (defclass A (is-a USER)
+   357: "a"
+   358:    (slot foo (access read-only) (create-accessor ?NONE)))
+   358: CLIPS> (clear)                ; DR0753
+   359: CLIPS> (slot-facets A foo) ; facet should be SHR and not LCL
+   359: CLIPS> 
+   360: (SGL STC INH R SHR RCT EXC PRV NIL NIL)
+   360: (defmodule MAIN (export ?ALL))
+   361: CLIPS> (clear)                ; DR0750 - Should not crash
+   361: CLIPS> 
+   362: CLIPS> (defclass FOO (is-a USER) (slot x))
+   362: (defrule MAIN::foo
+   363: CLIPS> (slot-cardinality FOO x)
+   363:   =>
+   364: ()
+   364:   (assert (a))
+   365: CLIPS> (clear)                ; DR0752 - Should return "a"
+   365:   (focus B)
+   366: CLIPS> (deffunction y ()
+   366:   (return))
+   367:    (progn$ (?x (create$ "a" "b" "c"))
+   367: CLIPS> 
+   368:       (return ?x))
+   368: (defrule MAIN::bar
+   369:    (return "hello"))
+   369:   (a)
+   370: CLIPS> (y)
+   370:   =>
+   371: "a"
+   371:   (focus B)
+   372: CLIPS> (clear)                ; DR0753
+   372:   (return))
+   374: (defmodule MAIN (export ?ALL))
+   374: (defmodule B (import MAIN ?ALL))
+   376: (defrule MAIN::foo
+   376: (defrule B::yak
+   377:   =>
+   377:   =>)
+   378:   (assert (a))
+   378: CLIPS> (reset)
+   379:   (focus B)
+   379: CLIPS> (run 1)
+   380:   (return))
+   380: CLIPS> (list-focus-stack) ; Just B should be on stack
+   381: CLIPS> 
+   381: B
+   382: (defrule MAIN::bar
+   382: CLIPS> (reset)
+   383:   (a)
+   383: CLIPS> (focus MAIN B)
+   384:   =>
+   384: TRUE
+   385:   (focus B)
+   385: CLIPS> (list-focus-stack) ; Should be MAIN B MAIN
+   386:   (return))
+   386: MAIN
+   387: CLIPS> 
+   387: B
+   388: (defmodule B (import MAIN ?ALL))
+   388: MAIN
+   389: CLIPS> 
+   389: CLIPS> (run 1)
+   390: (defrule B::yak
+   390: CLIPS> (list-focus-stack) ; Should be B B MAIN
+   391:   =>)
+   391: B
+   392: CLIPS> (reset)
+   392: B
+   393: CLIPS> (run 1)
+   393: MAIN
+   394: CLIPS> (list-focus-stack) ; Just B should be on stack
+   394: CLIPS> (clear)                ; DR0754
+   395: B
+   395: CLIPS> 
+   396: CLIPS> (reset)
+   396: (defclass A (is-a USER)
+   397: CLIPS> (focus MAIN B)
+   397:   (role concrete)
+   398: TRUE
+   398:   (pattern-match reactive)
+   399: CLIPS> (list-focus-stack) ; Should be MAIN B MAIN
+   399:   (slot foo (create-accessor read-write)))
+   400: MAIN
+   400: CLIPS> 
+   401: B
+   401: (defclass B (is-a A)
+   402: MAIN
+   402:   (pattern-match non-reactive))
+   403: CLIPS> (run 1)
+   403: CLIPS> 
+   404: CLIPS> (list-focus-stack) ; Should be B B MAIN
+   404: (defrule foo
+   405: B
+   405:   (i-f)
+   406: B
+   406:   (test (send [b] put-foo blah))
+   407: MAIN
+   407:   =>)
+   408: CLIPS> (clear)                ; DR0754
+   408: CLIPS> (make-instance b of B)
+   409: CLIPS> 
+   409: [b]
+   410: (defclass A (is-a USER)
+   410: CLIPS> (assert (i-f)) ; Should not generate error
+   411:   (role concrete)
+   411: <Fact-1>
+   412:   (pattern-match reactive)
+   412: CLIPS> (clear)                ; DR0756 - Should not crash
+   413:   (slot foo (create-accessor read-write)))
+   413: CLIPS> (defclass A (is-a USER) (role concrete))
+   414: CLIPS> 
+   414: CLIPS> (make-instance a of A)
+   415: (defclass B (is-a A)
+   415: [a]
+   416:   (pattern-match non-reactive))
+   416: CLIPS> (any-instancep ((?long-var A)) ?long-var:)
+   417: CLIPS> 
+   417: [EVALUATN1] Variable ?long-var: is unbound.
+   418: (defrule foo
+   418: FALSE
+   419:   (i-f)
+   419: CLIPS> (clear)                ; DR0757 - Error ID should be [INSMNGR11]
+   420:   (test (send [b] put-foo blah))
+   420: CLIPS> (defclass A (is-a USER) (role concrete))
+   421:   =>)
+   421: CLIPS> (make-instance BOGUS::A of A)
+   422: CLIPS> (make-instance b of B)
+   422: 
+   423: [b]
+   423: [INSMNGR11] Invalid module specifier in new instance name.
+   424: CLIPS> (assert (i-f)) ; Should not generate error
+   424: FALSE
+   425: <Fact-1>
+   425: CLIPS> (clear)                ; DR0758
+   426: CLIPS> (clear)                ; DR0756 - Should not crash
+   426: CLIPS> 
+   427: CLIPS> (defclass A (is-a USER) (role concrete))
+   427: (defclass A (is-a USER)
+   428: CLIPS> (make-instance a of A)
+   428:   (role concrete))
+   429: [a]
+   429: CLIPS> 
+   430: CLIPS> (any-instancep ((?long-var A)) ?long-var:)
+   430: (defglobal ?*x* = (assert (foo))
+   431: [EVALUATN1] Variable long-var: is unbound
+   431:            ?*y* = (make-instance [a] of A))
+   432: FALSE
+   432: CLIPS> (reset)
+   433: CLIPS> (clear)                ; DR0757 - Error ID should be [INSMNGR11]
+   433: CLIPS> (facts)
+   434: CLIPS> (defclass A (is-a USER) (role concrete))
+   434: f-1     (foo)
+   435: CLIPS> (make-instance BOGUS::A of A)
+   435: For a total of 1 fact.
+   436: 
+   436: CLIPS> (instances)
+   437: [INSMNGR11] Invalid module specifier in new instance name.
+   437: [a] of A
+   438: FALSE
+   438: For a total of 1 instance.
+   439: CLIPS> (clear)                ; DR0758
+   439: CLIPS> (clear)                ; DR0759
+   441: (defclass A (is-a USER)
+   441: (deftemplate A
+   442:   (role concrete))
+   442:    (slot foo (type INTEGER)
+   443: CLIPS> 
+   443:              (allowed-instance-names [a])))
+   444: (defglobal ?*x* = (assert (foo))
+   444: 
+   445:            ?*y* = (make-instance [a] of A))
+   445: [CSTRNPSR1] The 'type' attribute conflicts with the 'allowed-instance-names' attribute.
+   446: CLIPS> (reset)
+   446: 
+   447: CLIPS> (facts)
+   447: ERROR:
+   448: f-0     (foo)
+   448: (deftemplate MAIN::A
+   449: f-1     (initial-fact)
+   449:    (slot foo (type INTEGER) (allowed-instance-names [a]))
+   450: For a total of 2 facts.
+   450: CLIPS> (clear)                ; DR0763
+   451: CLIPS> (instances)
+   451: CLIPS> 
+   452: [a] of A
+   452: (deffunction bug (?state)
+   453: [initial-object] of INITIAL-OBJECT
+   453:    (switch ?state
+   454: For a total of 2 instances.
+   454:      (case instance then TRUE)
+   455: CLIPS> (clear)                ; DR0759
+   455:      (case logical then TRUE)
+   456: CLIPS> 
+   456:      (default (return error))))
+   457: (deftemplate A
+   457: CLIPS> (bsave "Temp//foo.bin")
+   458:    (slot foo (type INTEGER)
+   458: TRUE
+   459:              (allowed-instance-names [a])))
+   459: CLIPS> (clear)                ; DR0765
+   460: 
+   460: CLIPS> 
+   461: [CSTRNPSR1] The type attribute conflicts with the allowed-instance-names attribute.
+   461: (deftemplate bar
+   462: 
+   462:    (slot foo (type INTEGER)
+   463: ERROR:
+   463:              (allowed-values abc def)))
+   464: (deftemplate MAIN::A
+   464: 
+   465:    (slot foo (type INTEGER) (allowed-instance-names [a]))
+   465: [CSTRNPSR1] The 'type' attribute conflicts with the 'allowed-values' attribute.
+   466: CLIPS> (clear)                ; DR0763
+   466: 
+   467: CLIPS> 
+   467: ERROR:
+   468: (deffunction bug (?state)
+   468: (deftemplate MAIN::bar
+   469:    (switch ?state
+   469:    (slot foo (type INTEGER) (allowed-values abc def))
+   470:      (case instance then TRUE)
+   470: CLIPS> (clear)                ; DR0766
+   471:      (case logical then TRUE)
+   471: CLIPS> 
+   472:      (default (return error))))
+   472: (deftemplate temp
+   473: CLIPS> (bsave "Temp//foo.bin")
+   473:    (multislot foofoo (type INTEGER LEXEME))
+   474: TRUE
+   474:    (slot after-foo (type STRING)))
+   475: CLIPS> (clear)                ; DR0765
+   475: CLIPS> (set-dynamic-constraint-checking TRUE)
+   476: CLIPS> 
+   476: FALSE
+   477: (deftemplate bar
+   477: CLIPS> (assert (temp (foofoo 11)))
+   478:    (slot foo (type INTEGER)
+   478: <Fact-1>
+   479:              (allowed-values abc def)))
+   479: CLIPS> 
+   480: 
+   480: (deftemplate temp2
+   481: [CSTRNPSR1] The type attribute conflicts with the allowed-values attribute.
+   481:    (multislot foofoo (type INTEGER LEXEME)))
+   482: 
+   482: CLIPS> (assert (temp2 (foofoo (progn 3.4))))
+   483: ERROR:
+   483: 
+   484: (deftemplate MAIN::bar
+   484: [CSTRNCHK1] Slot value (3.4) found in fact f-2 does not match the allowed types for slot 'foofoo'.
+   485:    (slot foo (type INTEGER) (allowed-values abc def))
+   485: <Fact-2>
+   486: CLIPS> (clear)                ; DR0766
+   486: CLIPS> (set-dynamic-constraint-checking FALSE)
+   487: CLIPS> 
+   487: TRUE
+   488: (deftemplate temp
+   488: CLIPS> (clear)                ; DR0770
+   489:    (multislot foofoo (type INTEGER LEXEME))
+   489: CLIPS> 
+   490:    (slot after-foo (type STRING)))
+   490: (defclass A (is-a USER)
+   491: CLIPS> (set-dynamic-constraint-checking TRUE)
+   491:   (role concrete)
+   492: FALSE
+   492:   (pattern-match reactive)
+   493: CLIPS> (assert (temp (foofoo 11)))
+   493:   (multislot foo (default x)))
+   494: <Fact-1>
+   494: CLIPS> 
+   495: CLIPS> 
+   495: (defrule bomb
+   496: (deftemplate temp2
+   496:   (object (foo $? x $?))
+   497:    (multislot foofoo (type INTEGER LEXEME)))
+   497:   (object (foo $? ? $?))
+   498: CLIPS> (assert (temp2 (foofoo (progn 3.4))))
+   498: =>)
+   499: 
+   499: CLIPS> (make-instance a of A)
+   500: [CSTRNCHK1] Slot value (3.4) found in fact f-2     
+   500: [a]
+   501: does not match the allowed types for slot foofoo.
+   501: CLIPS> (clear)                ; DR0778
+   502: <Fact-2>
+   502: CLIPS> 
+   503: CLIPS> (set-dynamic-constraint-checking FALSE)
+   503: (deffacts example
+   504: TRUE
+   504:    (a b c d e d c b a a a a a a a a a a a a))
+   505: CLIPS> (clear)                ; DR0770
+   505: CLIPS> 
+   506: CLIPS> 
+   506: (defrule foo
+   507: (defclass A (is-a USER)
+   507:    (a ?x $?y d $?z ?x)
+   508:   (role concrete)
+   508:    =>
+   509:   (pattern-match reactive)
+   509:    (printout t "x = " ?x " y = " ?y " z = " ?z crlf))
+   510:   (multislot foo (default x)))
+   510: CLIPS> (reset)
+   511: CLIPS> 
+   511: CLIPS> (agenda)
+   512: (defrule bomb
+   512: CLIPS> (clear)               ; DR0782
+   513:   (object (foo $? x $?))
+   513: CLIPS> (set-strategy breadth)
+   514:   (object (foo $? ? $?))
+   514: depth
+   515: =>)
+   515: CLIPS> (set-strategy depth)
+   516: CLIPS> (make-instance a of A)
+   516: breadth
+   517: [a]
+   517: CLIPS> (deftemplate t1       ; DR0783
+   518: CLIPS> (clear)                ; DR0778
+   518:   (field code)
+   519: CLIPS> 
+   519:   (field a))
+   520: (deffacts example
+   520: CLIPS> (deftemplate t2
+   521:    (a b c d e d c b a a a a a a a a a a a a))
+   521:   (field code)
+   522: CLIPS> 
+   522:   (field a))
+   523: (defrule foo
+   523: CLIPS> (deftemplate t1
+   524:    (a ?x $?y d $?z ?x)
+   524:   (field code)
+   525:    =>
+   525:   (field a))
+   526:    (printout t "x = " ?x " y = " ?y " z = " ?z crlf))
+   526: CLIPS> (deftemplate t2
+   527: CLIPS> (reset)
+   527:   (field code)
+   528: CLIPS> (agenda)
+   528:   (field b))
+   529: CLIPS> (clear)               ; DR0782
+   529: CLIPS> (clear)
+   530: CLIPS> (set-strategy breadth)
+   530: CLIPS> 
+   531: depth
+   531: (defclass fifty (is-a USER)     
+   532: CLIPS> (set-strategy depth)
+   532:   (role   concrete)       
+   533: breadth
+   533:   (pattern-match  reactive)
+   534: CLIPS> (deftemplate t1       ; DR0783
+   534:   (slot   s1      (type   SYMBOL))
+   535:   (field code)
+   535:   (slot   s2      (type   INTEGER))
+   536:   (field a))
+   536:   (slot   s3      (type   SYMBOL))
+   537: CLIPS> (deftemplate t2
+   537:   (slot   s4      (type   INTEGER))
+   538:   (field code)
+   538:   (slot   s5      (type   SYMBOL))
+   539:   (field a))
+   539:   (slot   s6      (type   INTEGER))
+   540: CLIPS> (deftemplate t1
+   540:   (slot   s7      (type   SYMBOL))
+   541:   (field code)
+   541:   (slot   s8      (type   INTEGER))
+   542:   (field a))
+   542:   (slot   s9      (type   SYMBOL))
+   543: CLIPS> (deftemplate t2
+   543:   (slot   s10     (type   INTEGER))
+   544:   (field code)
+   544:   (slot   s11     (type   SYMBOL))
+   545:   (field b))
+   545:   (slot   s12     (type   INTEGER))
+   546: CLIPS> (clear)
+   546:   (slot   s13     (type   SYMBOL))
+   547: CLIPS> 
+   547:   (slot   s14     (type   INTEGER))
+   548: (defclass fifty (is-a USER)     
+   548:   (slot   s15     (type   SYMBOL))
+   549:   (role   concrete)       
+   549:   (slot   s16     (type   INTEGER))
+   550:   (pattern-match  reactive)
+   550:   (slot   s17     (type   SYMBOL))
+   551:   (slot   s1      (type   SYMBOL))
+   551:   (slot   s18     (type   INTEGER))
+   552:   (slot   s2      (type   INTEGER))
+   552:   (slot   s19     (type   SYMBOL))
+   553:   (slot   s3      (type   SYMBOL))
+   553:   (slot   s20     (type   INTEGER))
+   554:   (slot   s4      (type   INTEGER))
+   554:   (slot   s21     (type   SYMBOL))
+   555:   (slot   s5      (type   SYMBOL))
+   555:   (slot   s22     (type   INTEGER))
+   556:   (slot   s6      (type   INTEGER))
+   556:   (slot   s23     (type   SYMBOL))
+   557:   (slot   s7      (type   SYMBOL))
+   557:   (slot   s24     (type   INTEGER))
+   558:   (slot   s8      (type   INTEGER))
+   558:   (slot   s25     (type   SYMBOL))
+   559:   (slot   s9      (type   SYMBOL))
+   559:   (slot   s26     (type   INTEGER))
+   560:   (slot   s10     (type   INTEGER))
+   560:   (slot   s27     (type   SYMBOL))
+   561:   (slot   s11     (type   SYMBOL))
+   561:   (slot   s28     (type   INTEGER))
+   562:   (slot   s12     (type   INTEGER))
+   562:   (slot   s29     (type   SYMBOL))
+   563:   (slot   s13     (type   SYMBOL))
+   563:   (slot   s30     (type   INTEGER))
+   564:   (slot   s14     (type   INTEGER))
+   564:   (slot   s31     (type   SYMBOL))
+   565:   (slot   s15     (type   SYMBOL))
+   565:   (slot   s32     (type   INTEGER))
+   566:   (slot   s16     (type   INTEGER))
+   566:   (slot   s33     (type   SYMBOL))
+   567:   (slot   s17     (type   SYMBOL))
+   567:   (slot   s34     (type   INTEGER))
+   568:   (slot   s18     (type   INTEGER))
+   568:   (slot   s35     (type   SYMBOL))
+   569:   (slot   s19     (type   SYMBOL))
+   569:   (slot   s36     (type   INTEGER))
+   570:   (slot   s20     (type   INTEGER))
+   570:   (slot   s37     (type   SYMBOL))
+   571:   (slot   s21     (type   SYMBOL))
+   571:   (slot   s38     (type   INTEGER))
+   572:   (slot   s22     (type   INTEGER))
+   572:   (slot   s39     (type   SYMBOL))
+   573:   (slot   s23     (type   SYMBOL))
+   573:   (slot   s40     (type   INTEGER))
+   574:   (slot   s24     (type   INTEGER))
+   574:   (slot   s41     (type   SYMBOL))
+   575:   (slot   s25     (type   SYMBOL))
+   575:   (slot   s42     (type   INTEGER))
+   576:   (slot   s26     (type   INTEGER))
+   576:   (slot   s43     (type   SYMBOL))
+   577:   (slot   s27     (type   SYMBOL))
+   577:   (slot   s44     (type   INTEGER))
+   578:   (slot   s28     (type   INTEGER))
+   578:   (slot   s45     (type   SYMBOL))
+   579:   (slot   s29     (type   SYMBOL))
+   579:   (slot   s46     (type   INTEGER))
+   580:   (slot   s30     (type   INTEGER))
+   580:   (slot   s47     (type   SYMBOL))
+   581:   (slot   s31     (type   SYMBOL))
+   581:   (slot   s48     (type   INTEGER))
+   582:   (slot   s32     (type   INTEGER))
+   582:   (slot   s49     (type   SYMBOL))
+   583:   (slot   s33     (type   SYMBOL))
+   583:   (slot   s50     (type   INTEGER)))
+   584:   (slot   s34     (type   INTEGER))
+   584: CLIPS> 
+   585:   (slot   s35     (type   SYMBOL))
+   585: (deffunction f(?limit ?class)
+   586:   (slot   s36     (type   INTEGER))
+   586:    (reset)
+   587:   (slot   s37     (type   SYMBOL))
+   587:    (loop-for-count (?i 1 ?limit)
+   588:   (slot   s38     (type   INTEGER))
+   588:       (bind ?t (time))
+   589:   (slot   s39     (type   SYMBOL))
+   589:       (loop-for-count (?j 1 500) (make-instance of ?class))
+   590:   (slot   s40     (type   INTEGER))
+   590:       (printout t ?i crlf)))
+   591:   (slot   s41     (type   SYMBOL))
+   591: CLIPS> (f 3 fifty)
+   592:   (slot   s42     (type   INTEGER))
+   592: 1
+   593:   (slot   s43     (type   SYMBOL))
+   593: 2
+   594:   (slot   s44     (type   INTEGER))
+   594: 3
+   595:   (slot   s45     (type   SYMBOL))
+   595: FALSE
+   596:   (slot   s46     (type   INTEGER))
+   596: CLIPS> (clear)               ; DR0784
+   597:   (slot   s47     (type   SYMBOL))
+   597: CLIPS> 
+   598:   (slot   s48     (type   INTEGER))
+   598: (defrule testing
+   599:   (slot   s49     (type   SYMBOL))
+   599:    ?f1<-(orders $?first&:(> (length$ ?first) 0))
+   600:   (slot   s50     (type   INTEGER)))
+   600:    ?f2<-(orders $?others&:(subsetp ?first ?others))
+   601: CLIPS> 
+   601:    =>)
+   602: (deffunction f(?limit ?class)
+   602: CLIPS> 
+   603:    (reset)
+   603: (defrule testing
+   604:    (loop-for-count (?i 1 ?limit)
+   604:    (orders $?first&:(implode$ ?first)
+   605:       (bind ?t (time))
+   605:                    :(implode$ ?first))
+   606:       (loop-for-count (?j 1 500) (make-instance of ?class))
+   606:    =>)
+   607:       (printout t ?i crlf)))
+   607: CLIPS> (clear)               ; DR0785
+   608: CLIPS> (f 3 fifty)
+   608: CLIPS> (defglobal ?*x* = 0)
+   609: 1
+   609: CLIPS> (defmodule MAIN (export ?ALL))
+   610: 2
+   610: CLIPS> (defmodule FOO (import MAIN ?ALL))
+   611: 3
+   611: CLIPS> (defclass FOO (is-a USER) (role concrete))
+   612: FALSE
+   612: CLIPS> (bind ?*x* (instance-address (make-instance foo of FOO)))
+   613: CLIPS> (clear)               ; DR0784
+   613: <Instance-foo>
+   614: CLIPS> 
+   614: CLIPS> (focus MAIN)
+   615: (defrule testing
+   615: TRUE
+   616:    ?f1<-(orders $?first&:(> (length$ ?first) 0))
+   616: CLIPS> (send [FOO::foo] print)
+   617:    ?f2<-(orders $?others&:(subsetp ?first ?others))
+   617: [foo] of FOO::FOO
+   618:    =>)
+   618: CLIPS> (send ?*x* print)
+   619: CLIPS> 
+   619: [foo] of FOO::FOO
+   620: (defrule testing
+   620: CLIPS> (clear)               ; DR0786
+   621:    (orders $?first&:(implode$ ?first)
+   621: CLIPS> 
+   622:                    :(implode$ ?first))
+   622: (deftemplate nanu
+   623:    =>)
+   623:    (slot a (type INTEGER))
+   624: CLIPS> (clear)               ; DR0785
+   624:    (slot b (type FLOAT)))
+   625: CLIPS> (defglobal ?*x* = 0)
+   625: CLIPS> (assert (nanu))
+   626: CLIPS> (defmodule MAIN (export ?ALL))
+   626: <Fact-1>
+   627: CLIPS> (defmodule FOO (import MAIN ?ALL))
+   627: CLIPS> (modify 1 (c 4))
+   628: CLIPS> (defclass FOO (is-a USER) (role concrete))
+   628: 
+   629: CLIPS> (bind ?*x* (instance-address (make-instance foo of FOO)))
+   629: [TMPLTDEF1] Invalid slot 'c' not defined in corresponding deftemplate 'nanu'.
+   630: <Instance-foo>
+   630: FALSE
+   631: CLIPS> (focus MAIN)
+   631: CLIPS> (clear)               ; DR0788
+   632: TRUE
+   632: CLIPS> 
+   633: CLIPS> (send [FOO::foo] print)
+   633: (defrule r1 
+   634: [foo] of FOO::FOO
+   634:    (or (P1 p1) (P2 p2)) 
+   635: CLIPS> (send ?*x* print)
+   635:    =>)
+   636: [foo] of FOO::FOO
+   636: CLIPS> (reset)
+   637: CLIPS> (clear)               ; DR0786
+   637: CLIPS> (bsave "Temp//r1.bin")
+   638: CLIPS> 
+   638: TRUE
+   639: (deftemplate nanu
+   639: CLIPS> (clear)
+   640:    (slot a (type INTEGER))
+   640: CLIPS> (bload "Temp//r1.bin")
+   641:    (slot b (type FLOAT)))
+   641: TRUE
+   642: CLIPS> (assert (nanu))
+   642: CLIPS> (reset)
+   643: <Fact-1>
+   643: CLIPS> (watch all)
+   644: CLIPS> (modify 1 (c 4))
+   644: CLIPS> (unwatch all)
+   645: 
+   645: CLIPS> (clear)               ; DR0789
+   646: [TMPLTDEF1] Invalid slot c not defined in corresponding deftemplate nanu.
+   646: CLIPS> (deffacts MAIN:: the-suit-list)
+   647: FALSE
+   647: 
+   648: CLIPS> (clear)               ; DR0788
+   648: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for construct name.
+   649: CLIPS> 
+   649: 
+   650: (defrule r1 
+   650: ERROR:
+   651:    (or (P1 p1) (P2 p2)) 
+   651: (deffacts MAIN::
+   652:    =>)
+   652: CLIPS> (clear)               ; DR0790
+   653: CLIPS> (reset)
+   653: CLIPS> 
+   654: CLIPS> (bsave "Temp//r1.bin")
+   654: (defrule init
+   655: TRUE
+   655:    =>
+   656: CLIPS> (clear)
+   656:   (assert (p 1)))
+   657: CLIPS> (bload "Temp//r1.bin")
+   657: CLIPS> 
+   658: TRUE
+   658: (defrule crash
+   659: CLIPS> (reset)
+   659:   (p ?X)
+   660: CLIPS> (watch all)
+   660:   (not (test (eq ?X 1)))
+   661: CLIPS> (unwatch all)
+   661:   (p ?Y)
+   662: CLIPS> (clear)               ; DR0789
+   662:   (not (and (test (neq ?Y 20))(test (neq ?Y 30))))
+   663: CLIPS> (deffacts MAIN:: the-suit-list)
+   663:   =>)
+   664: 
+   664: CLIPS> (reset)
+   665: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for construct name.
+   665: CLIPS> (run)
+   666: 
+   666: CLIPS> (clear)               ; DR0791
+   667: ERROR:
+   667: CLIPS> 
+   668: (deffacts MAIN::
+   668: (defrule autorule2_B2
+   669: CLIPS> (clear)               ; DR0790
+   669:   (or (foo ?st_B1)
+   670: CLIPS> 
+   670:       (bpc-newdata))
+   671: (defrule init
+   671:   =>
+   672:    =>
+   672:   ?st_B1)
+   673:   (assert (p 1)))
+   673: 
+   674: CLIPS> 
+   674: [PRCCODE3] Undefined variable ?st_B1 referenced in RHS of defrule.
+   675: (defrule crash
+   675: 
+   676:   (p ?X)
+   676: ERROR:
+   677:   (not (test (eq ?X 1)))
+   677: (defrule MAIN::autorule2_B2
+   678:   (p ?Y)
+   678:    (or  (foo ?st_B1)
+   679:   (not (and (test (neq ?Y 20))(test (neq ?Y 30))))
+   679:         (bpc-newdata))
+   680:   =>)
+   680:    =>
+   681: CLIPS> (reset)
+   681:    ?st_B1)
+   682: CLIPS> (run)
+   682: CLIPS> (clear)                   ; DR0793
+   683: CLIPS> (clear)               ; DR0791
+   683: CLIPS> (load bug793.clp)
+   684: CLIPS> 
+   684: ###!!
+   685: (defrule autorule2_B2
+   685: TRUE
+   686:   (or (foo ?st_B1)
+   686: CLIPS> (BEeditInit streamout)
+   687:       (bpc-newdata))
+   687: TRUE
+   688:   =>
+   688: CLIPS> (BECPMIn bug793.ins)
+   689:   ?st_B1)
+   689: 24
+   690: 
+   690: CLIPS> (clear)                   ; DR0795
+   691: [PRCCODE3] Undefined variable st_B1 referenced in RHS of defrule.
+   691: CLIPS> 
+   692: 
+   692: (defrule rule-1
+   693: ERROR:
+   693:   (blah $?y)
+   694: (defrule MAIN::autorule2_B2
+   694:   =>
+   695:    (or  (foo ?st_B1)
+   695:   (progn$ (?x ?y) (printout t ?x)))
+   696:         (bpc-newdata))
+   696: CLIPS> (ppdefrule rule-1)
+   697:    =>
+   697: (defrule MAIN::rule-1
+   698:    ?st_B1)
+   698:    (blah $?y)
+   699: CLIPS> (clear)                   ; DR0793
+   699:    =>
+   700: CLIPS> (load bug793.clp)
+   700:    (progn$ (?x ?y) 
+   701: ###!!
+   701:       (printout t ?x)))
+   702: TRUE
+   702: CLIPS> (clear)                   ; DR0798
+   703: CLIPS> (BEeditInit streamout)
+   703: CLIPS> (reset)
+   704: TRUE
+   704: CLIPS> (assert (a))
+   705: CLIPS> (BECPMIn bug793.ins)
+   705: <Fact-1>
+   706: 24
+   706: CLIPS> (assert (b))
+   707: CLIPS> (clear)                   ; DR0795
+   707: <Fact-2>
+   708: CLIPS> 
+   708: CLIPS> (defrule t1 (b) (a) =>)
+   709: (defrule rule-1
+   709: CLIPS> (defrule t2 (a) (or (b) (b)) =>)
+   710:   (blah $?y)
+   710: CLIPS> (agenda)
+   711:   =>
+   711: 0      t2: f-1,f-2
+   712:   (progn$ (?x ?y) (printout t ?x)))
+   712: 0      t2: f-1,f-2
+   713: CLIPS> (ppdefrule rule-1)
+   713: 0      t1: f-2,f-1
+   714: (defrule MAIN::rule-1
+   714: For a total of 3 activations.
+   715:    (blah $?y)
+   715: CLIPS> (clear)
+   716:    =>
+   716: CLIPS> (dribble-off)
+   Files do not have the same # of lines

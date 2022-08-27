@@ -1,0 +1,264 @@
+drtest01.bat differences are as follows:
+    10: [ARGACCES4] Function >= expected at least 2 argument(s)
+    10: [ARGACCES1] Function '>=' expected at least 2 arguments.
+    12: [ARGACCES4] Function >= expected at least 2 argument(s)
+    12: [ARGACCES1] Function '>=' expected at least 2 arguments.
+    35: [ARGACCES4] Function = expected at least 2 argument(s)
+    35: [ARGACCES1] Function '=' expected at least 2 arguments.
+    37: [ARGACCES4] Function = expected at least 2 argument(s)
+    37: [ARGACCES1] Function '=' expected at least 2 arguments.
+    68: [ARGACCES4] Function system expected at least 1 argument(s)
+    68: 1
+    84: [IOFUN2] Logical name name already in use.
+    84: [IOFUN2] Logical name 'name' already in use.
+    96: [ARGACCES5] Function format expected argument #3 to be of type symbol or string
+    96: [ARGACCES2] Function 'format' expected argument #3 to be of type symbol or string.
+    97: [PRCCODE4] Execution halted during the actions of defrule a.
+    97: [PRCCODE4] Execution halted during the actions of defrule 'a'.
+   132: [ARGACCES5] Function oddp expected argument #1 to be of type integer
+   132: [ARGACCES2] Function 'oddp' expected argument #1 to be of type integer.
+   134: [ARGACCES5] Function oddp expected argument #1 to be of type integer
+   134: [ARGACCES2] Function 'oddp' expected argument #1 to be of type integer.
+   136: [ARGACCES5] Function evenp expected argument #1 to be of type integer
+   136: [ARGACCES2] Function 'evenp' expected argument #1 to be of type integer.
+   138: [ARGACCES5] Function evenp expected argument #1 to be of type integer
+   138: [ARGACCES2] Function 'evenp' expected argument #1 to be of type integer.
+   152: CLIPS> (assert (data foo a b here d))    ; DR0063
+   152: 
+   153: <Fact-1>
+   153: [EXPRNPSR3] Missing function declaration for 'nth'.
+   154: CLIPS> (run)                             ; DR0063
+   154: 
+   155: here
+   155: ERROR:
+   156: CLIPS> (retract ?f)                      ; DR0067
+   156: (defrule MAIN::foo
+   157: [EVALUATN1] Variable f is unbound
+   157:    (data foo $?x)
+   158: [ARGACCES5] Function retract expected argument #1 to be of type fact-address, fact-index, or the symbol *
+   158:    =>
+   159: CLIPS> (clear)                           ; DR0068
+   159:    (printout t (nth
+   160: CLIPS> (defrule foo =>)                  ; DR0068
+   160: CLIPS> (assert (data foo a b here d))    ; DR0063
+   161: CLIPS> (reset)                           ; DR0068
+   161: <Fact-1>
+   162: CLIPS> (agenda)                          ; DR0068
+   162: CLIPS> (run)                             ; DR0063
+   163: 0      foo: *
+   163: CLIPS> (retract ?f)                      ; DR0067
+   164: For a total of 1 activation.
+   164: [EVALUATN1] Variable ?f is unbound.
+   165: CLIPS> (undefrule foo)                   ; DR0068
+   165: CLIPS> (clear)                           ; DR0068
+   166: CLIPS> (agenda)                          ; DR0068
+   166: CLIPS> (defrule foo =>)                  ; DR0068
+   167: CLIPS> (clear)                           ; DR0069
+   167: CLIPS> (reset)                           ; DR0068
+   168: CLIPS> (defrule foo ?f (fact) =>)        ; DR0069
+   168: CLIPS> (agenda)                          ; DR0068
+   169: 
+   169: 0      foo: *
+   170: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for binding patterns.
+   170: For a total of 1 activation.
+   171: 
+   171: CLIPS> (undefrule foo)                   ; DR0068
+   172: ERROR:
+   172: CLIPS> (agenda)                          ; DR0068
+   173: (defrule MAIN::foo
+   173: CLIPS> (clear)                           ; DR0069
+   174:    ?f (
+   174: CLIPS> (defrule foo ?f (fact) =>)        ; DR0069
+   175: CLIPS> (defrule foo ?f <- fact)          ; DR0069
+   175: 
+   176: 
+   176: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for binding patterns.
+   177: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for binding patterns.
+   177: 
+   178: 
+   178: ERROR:
+   179: ERROR:
+   179: (defrule MAIN::foo
+   180: (defrule MAIN::foo
+   180:    ?f (
+   181:    ?f <- fact
+   181: CLIPS> (defrule foo ?f <- fact)          ; DR0069
+   182: CLIPS> (deffacts info (fact 1) fact 2)   ; DR0070
+   182: 
+   183: 
+   183: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for binding patterns.
+   184: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for RHS patterns.
+   184: 
+   185: 
+   185: ERROR:
+   186: ERROR:
+   186: (defrule MAIN::foo
+   187: (deffacts MAIN::info
+   187:    ?f <- fact
+   188:    (fact 1)
+   188: CLIPS> (deffacts info (fact 1) fact 2)   ; DR0070
+   189:    fact
+   189: 
+   190: CLIPS> (** 3 2)                          ; DR0074
+   190: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for RHS patterns.
+   191: 9.0
+   191: 
+   192: CLIPS> (clear)                           ; DR0075
+   192: ERROR:
+   193: CLIPS> (assert (a~b))                    ; DR0075
+   193: (deffacts MAIN::info
+   194: 
+   194:    (fact 1)
+   195: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for RHS patterns.
+   195:    fact
+   196: CLIPS> (facts)                           ; DR0075
+   196: CLIPS> (** 3 2)                          ; DR0074
+   197: f-0     (initial-fact)
+   197: 9.0
+   198: For a total of 1 fact.
+   198: CLIPS> (clear)                           ; DR0075
+   199: CLIPS> (print-region t "f.f")            ; DR0077
+   199: CLIPS> (assert (a~b))                    ; DR0075
+   200: FALSE
+   200: 
+   201: CLIPS> (printout q)                      ; DR0080
+   201: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for RHS patterns.
+   202: [ROUTER1] Logical name q was not recognized by any routers
+   202: CLIPS> (facts)                           ; DR0075
+   203: CLIPS> (eq)                              ; DR0082
+   203: CLIPS> (print-region t "f.f")            ; DR0077
+   204: [ARGACCES4] Function eq expected at least 2 argument(s)
+   204: FALSE
+   205: CLIPS> (neq)                             ; DR0082
+   205: CLIPS> (printout q)                      ; DR0080
+   206: [ARGACCES4] Function neq expected at least 2 argument(s)
+   206: [ROUTER1] Logical name 'q' was not recognized by any routers.
+   207: CLIPS> (neq 1 1 2)                       ; DR0082
+   207: CLIPS> (eq)                              ; DR0082
+   208: FALSE
+   208: [ARGACCES1] Function 'eq' expected at least 2 arguments.
+   209: CLIPS> (!= 1 1 2)                        ; DR0082
+   209: CLIPS> (neq)                             ; DR0082
+   210: FALSE
+   210: [ARGACCES1] Function 'neq' expected at least 2 arguments.
+   211: CLIPS> (and)                             ; DR0083
+   211: CLIPS> (neq 1 1 2)                       ; DR0082
+   212: [ARGACCES4] Function and expected at least 2 argument(s)
+   212: FALSE
+   213: CLIPS> (or)                              ; DR0083
+   213: CLIPS> (!= 1 1 2)                        ; DR0082
+   214: [ARGACCES4] Function or expected at least 2 argument(s)
+   214: FALSE
+   215: CLIPS> (not)                             ; DR0083
+   215: CLIPS> (and)                             ; DR0083
+   216: [ARGACCES4] Function not expected exactly 1 argument(s)
+   216: [ARGACCES1] Function 'and' expected at least 2 arguments.
+   217: CLIPS> (clear)                           ; DR0087
+   217: CLIPS> (or)                              ; DR0083
+   218: CLIPS> (defrule a                        ; DR0087
+   218: [ARGACCES1] Function 'or' expected at least 2 arguments.
+   219:   (x $?y) 
+   219: CLIPS> (not)                             ; DR0083
+   220:   => 
+   220: [ARGACCES1] Function 'not' expected exactly 1 argument.
+   221:   (assert (z ?y)))
+   221: CLIPS> (clear)                           ; DR0087
+   222: CLIPS> (assert (x q))                    ; DR0087
+   222: CLIPS> (defrule a                        ; DR0087
+   223: <Fact-1>
+   223:   (x $?y) 
+   224: CLIPS> (run)                             ; DR0087
+   224:   => 
+   225: CLIPS> (facts)                           ; DR0087
+   225:   (assert (z ?y)))
+   226: f-0     (initial-fact)
+   226: CLIPS> (assert (x q))                    ; DR0087
+   227: f-1     (x q)
+   227: <Fact-1>
+   228: f-2     (z q)
+   228: CLIPS> (run)                             ; DR0087
+   229: For a total of 3 facts.
+   229: CLIPS> (facts)                           ; DR0087
+   230: CLIPS> (subseq$ a 2 4)                 ; DR0090
+   230: f-1     (x q)
+   231: [ARGACCES5] Function subseq$ expected argument #1 to be of type multifield
+   231: f-2     (z q)
+   232: CLIPS> (sub-string)                      ; DR0092
+   232: For a total of 2 facts.
+   233: [ARGACCES4] Function sub-string expected exactly 3 argument(s)
+   233: CLIPS> (subseq$ a 2 4)                 ; DR0090
+   234: CLIPS> (str-explode "a b c")             ; DR0093
+   234: [ARGACCES2] Function 'subseq$' expected argument #1 to be of type multifield.
+   235: (a b c)
+   235: CLIPS> (sub-string)                      ; DR0092
+   236: CLIPS> (length (str-explode "a b c"))    ; DR0093
+   236: [ARGACCES1] Function 'sub-string' expected exactly 3 arguments.
+   237: 3
+   237: CLIPS> (str-explode "a b c")             ; DR0093
+   238: CLIPS> (tan 0)                           ; DR0096
+   238: 
+   239: 0.0
+   239: [EXPRNPSR3] Missing function declaration for 'str-explode'.
+   240: CLIPS> (sec 0)                           ; DR0096
+   240: CLIPS> (length (str-explode "a b c"))    ; DR0093
+   241: 1.0
+   241: 
+   242: CLIPS> (/ 1 0)                           ; DR0097
+   242: [EXPRNPSR3] Missing function declaration for 'length'.
+   243: [PRNTUTIL7] Attempt to divide by zero in / function.
+   243: CLIPS> (tan 0)                           ; DR0096
+   244: 1.0
+   244: 0.0
+   245: CLIPS> (/ 1.0 0.0)                       ; DR0097 
+   245: CLIPS> (sec 0)                           ; DR0096
+   246: [PRNTUTIL7] Attempt to divide by zero in / function.
+   246: 1.0
+   247: 1.0
+   247: CLIPS> (/ 1 0)                           ; DR0097
+   248: CLIPS> (** 0 0)                          ; DR0098
+   248: [PRNTUTIL7] Attempt to divide by zero in '/' function.
+   249: [EMATHFUN1] Domain error for ** function.
+   249: 1.0
+   250: 0.0
+   250: CLIPS> (/ 1.0 0.0)                       ; DR0097 
+   251: CLIPS> (** 0 -.5)                        ; DR0098
+   251: [PRNTUTIL7] Attempt to divide by zero in '/' function.
+   252: [EMATHFUN1] Domain error for ** function.
+   252: 1.0
+   253: 0.0
+   253: CLIPS> (** 0 0)                          ; DR0098
+   254: CLIPS> (** -2 .5)                        ; DR0098 
+   254: [EMATHFUN1] Domain error for '**' function.
+   255: [EMATHFUN1] Domain error for ** function.
+   255: 0.0
+   256: 0.0
+   256: CLIPS> (** 0 -.5)                        ; DR0098
+   257: CLIPS> (** 0.0 0.0)                      ; DR0098
+   257: [EMATHFUN1] Domain error for '**' function.
+   258: [EMATHFUN1] Domain error for ** function.
+   258: 0.0
+   259: 0.0
+   259: CLIPS> (** -2 .5)                        ; DR0098 
+   260: CLIPS> (** 0.0 -.5)                      ; DR0098
+   260: [EMATHFUN1] Domain error for '**' function.
+   261: [EMATHFUN1] Domain error for ** function.
+   261: 0.0
+   262: 0.0
+   262: CLIPS> (** 0.0 0.0)                      ; DR0098
+   263: CLIPS> (** -2.0 .5)                      ; DR0098
+   263: [EMATHFUN1] Domain error for '**' function.
+   264: [EMATHFUN1] Domain error for ** function.
+   264: 0.0
+   265: 0.0
+   265: CLIPS> (** 0.0 -.5)                      ; DR0098
+   266: CLIPS> (** -3 2)                         ; DR0098
+   266: [EMATHFUN1] Domain error for '**' function.
+   267: 9.0
+   267: 0.0
+   268: CLIPS> (** -3 2.2)                       ; DR0098
+   268: CLIPS> (** -2.0 .5)                      ; DR0098
+   269: [EMATHFUN1] Domain error for ** function.
+   269: [EMATHFUN1] Domain error for '**' function.
+   271: CLIPS> (dribble-off)
+   271: CLIPS> (** -3 2)                         ; DR0098
+   Files do not have the same # of lines

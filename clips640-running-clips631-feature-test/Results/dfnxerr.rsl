@@ -1,0 +1,76 @@
+dfnxerr.bat differences are as follows:
+     6: [ARGACCES4] Function test-args expected exactly 2 argument(s)
+     6: [ARGACCES1] Function 'test-args' expected exactly 2 arguments.
+     8: [ARGACCES4] Function test-args expected exactly 2 argument(s)
+     8: [ARGACCES1] Function 'test-args' expected exactly 2 arguments.
+    11: [ARGACCES4] Function test-args expected at least 2 argument(s)
+    11: [ARGACCES1] Function 'test-args' expected at least 2 arguments.
+    21: [PRCCODE3] Undefined variable a referenced in deffunction.
+    21: [PRCCODE3] Undefined variable ?a referenced in deffunction.
+    69: [DFNXPSR4] Deffunction weird may not be redefined while it is executing.
+    69: [DFFNXPSR4] Deffunction 'weird' may not be redefined while it is executing.
+    77: [CSTRCPSR2] Missing name for deffunction construct
+    77: [CSTRCPSR2] Missing name for deffunction construct.
+    83: [ARGACCES4] Function foo expected exactly 1 argument(s)
+    83: [ARGACCES1] Function 'foo' expected exactly 1 argument.
+    91: [EXPRNPSR3] Missing function declaration for globble.
+    91: [EXPRNPSR3] Missing function declaration for 'globble'.
+    94: [ARGACCES4] Function foo expected exactly 1 argument(s)
+    94: [ARGACCES1] Function 'foo' expected exactly 1 argument.
+    95: [PRCCODE4] Execution halted during the actions of deffunction globble.
+    95: [PRCCODE4] Execution halted during the actions of deffunction 'globble'.
+    98: [ARGACCES5] Function + expected argument #1 to be of type integer or float
+    98: [ARGACCES2] Function '+' expected argument #1 to be of type integer or float.
+    99: [PRCCODE6] This error occurred while evaluating arguments for the deffunction foo.
+    99: [PRCCODE6] This error occurred while evaluating arguments for the deffunction 'foo'.
+   102: [initial-object] of INITIAL-OBJECT
+   102: [PRCCODE2] Functions without a return value are illegal as deffunction arguments.
+   103: For a total of 1 instance.
+   103: [PRCCODE6] This error occurred while evaluating arguments for the deffunction 'foo'.
+   104: [PRCCODE2] Functions without a return value are illegal as deffunction arguments.
+   104: FALSE
+   105: [PRCCODE6] This error occurred while evaluating arguments for the deffunction foo.
+   105: CLIPS> (deffunction foo ()
+   106: FALSE
+   106:   (+ ?a 2)
+   107: CLIPS> (deffunction foo ()
+   107:   (bind ?a 1))
+   108:   (+ ?a 2)
+   108: CLIPS> (foo)
+   109:   (bind ?a 1))
+   109: [PRCCODE5] Variable ?a unbound in deffunction 'foo'.
+   110: CLIPS> (foo)
+   110: [ARGACCES2] Function '+' expected argument #1 to be of type integer or float.
+   111: [PRCCODE5] Variable a unbound in deffunction foo.
+   111: [PRCCODE4] Execution halted during the actions of deffunction 'foo'.
+   112: [ARGACCES5] Function + expected argument #1 to be of type integer or float
+   112: FALSE
+   113: [PRCCODE4] Execution halted during the actions of deffunction foo.
+   113: CLIPS> (deffunction foo ()
+   114: FALSE
+   114:   (printout t "Hello world!" crlf))
+   115: CLIPS> (deffunction foo ()
+   115: CLIPS> (deffunction bar ()
+   116:   (printout t "Hello world!" crlf))
+   116:   (foo)
+   117: CLIPS> (deffunction bar ()
+   117:   (undeffunction *))
+   118:   (foo)
+   118: CLIPS> (bar)
+   119:   (undeffunction *))
+   119: Hello world!
+   120: CLIPS> (bar)
+   120: [PRNTUTIL4] Unable to delete deffunction 'bar'.
+   121: Hello world!
+   121: [DFFNXFUN1] WARNING: Deffunction 'foo' only partially deleted due to usage by other constructs.
+   122: [PRNTUTIL4] Unable to delete deffunction bar.
+   122: CLIPS> (list-deffunctions)
+   123: [DFFNXFUN1] WARNING: Deffunction foo only partially deleted due to usage by other constructs.
+   123: foo
+   124: CLIPS> (list-deffunctions)
+   124: bar
+   125: foo
+   125: For a total of 2 deffunctions.
+   126: bar
+   126: CLIPS> (dribble-off)
+   Files do not have the same # of lines

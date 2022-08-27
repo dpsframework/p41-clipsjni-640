@@ -1,0 +1,598 @@
+dyobjcst.bat differences are as follows:
+     5: ####[CSTRNCHK1] 36 for slot float found in slot default value
+     5: ####[CSTRNCHK1] dyobjcst.clp, Line 47: The value 36 for slot 'float' found in the 'default' facet does not match the allowed types.
+     6: does not match the allowed types.
+     6: 
+     7: 
+     7: ERROR:
+     8: ERROR:
+     8: (defclass MAIN::ERROR-1
+     9: (defclass MAIN::ERROR-1
+     9:    (is-a BASE)
+    10:    (is-a BASE)
+    10:    (slot float
+    11:    (slot float
+    11:       (source composite)
+    12:       (source composite)
+    12:       (default 36))
+    13:       (default 36))
+    13: #[CSTRNCHK1] dyobjcst.clp, Line 50: Expression for slot 'float' found in dynamic default value does not match the allowed types.
+    14: #[CSTRNCHK1] Expression for slot float found in dynamic default value
+    14: 
+    15: does not match the allowed types.
+    15: ERROR:
+    16: 
+    16: (defclass MAIN::ERROR-2
+    17: ERROR:
+    17:    (is-a BASE)
+    18: (defclass MAIN::ERROR-2
+    18:    (slot float
+    19:    (is-a BASE)
+    19:       (source composite)
+    20:    (slot float
+    20:       (default-dynamic (sym-cat abc)))
+    21:       (source composite)
+    21: #[CSTRNCHK1] dyobjcst.clp, Line 54: The value 36.0 for slot 'float' found in the 'default' facet does not match the allowed values.
+    22:       (default-dynamic (sym-cat abc)))
+    22: 
+    23: #[CSTRNCHK1] 36.0 for slot float found in slot default value
+    23: ERROR:
+    24: does not match the allowed values.
+    24: (defclass MAIN::ERROR-3
+    25: 
+    25:    (is-a DERIVE-1-2)
+    26: ERROR:
+    26:    (slot float
+    27: (defclass MAIN::ERROR-3
+    27:       (source composite)
+    28:    (is-a DERIVE-1-2)
+    28:       (default 36.0))
+    29:    (slot float
+    29: #[CSTRNCHK1] dyobjcst.clp, Line 58: The value () for slot 'any' found in the 'default' facet does not satisfy the cardinality restrictions.
+    30:       (source composite)
+    30: 
+    31:       (default 36.0))
+    31: ERROR:
+    32: #[CSTRNCHK1] () for slot any found in slot default value
+    32: (defclass MAIN::ERROR-4
+    33: does not satisfy the cardinality restrictions.
+    33:    (is-a DERIVE-1-2)
+    34: 
+    34:    (slot any
+    35: ERROR:
+    35:       (source composite)
+    36: (defclass MAIN::ERROR-4
+    36:       (default))
+    37:    (is-a DERIVE-1-2)
+    37: @
+    38:    (slot any
+    38: FALSE
+    39:       (source composite)
+    39: CLIPS> (describe-class BASE)
+    40:       (default))
+    40: ================================================================================
+    41: @
+    41: ********************************************************************************
+    42: FALSE
+    42: Concrete: direct instances of this class can be created.
+    43: CLIPS> (describe-class BASE)
+    43: Non-reactive: direct instances of this class cannot match defrule patterns.
+    44: ================================================================================
+    44: 
+    45: ********************************************************************************
+    45: Direct Superclasses: USER
+    46: Concrete: direct instances of this class can be created.
+    46: Inheritance Precedence: BASE USER OBJECT
+    47: Non-reactive: direct instances of this class cannot match defrule patterns.
+    47: Direct Subclasses: DERIVE-1-1 DERIVE-1-2
+    48: 
+    48: --------------------------------------------------------------------------------
+    49: Direct Superclasses: USER
+    49: SLOTS            : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG     SOURCE(S)
+    50: Inheritance Precedence: BASE USER OBJECT
+    50: any              : SGL STC INH RW  LCL RCT EXC PRV  W  put-any      BASE
+    51: Direct Subclasses: DERIVE-1-1 DERIVE-1-2
+    51: symbol           : SGL STC INH RW  LCL RCT EXC PRV  W  put-symbol   BASE
+    52: --------------------------------------------------------------------------------
+    52: string           : SGL STC INH RW  LCL RCT EXC PRV  W  put-string   BASE
+    53: SLOTS            : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG     SOURCE(S)
+    53: lexeme           : SGL STC INH RW  LCL RCT EXC PRV  W  put-lexeme   BASE
+    54: any              : SGL STC INH RW  LCL RCT EXC PRV  W  put-any      BASE
+    54: integer          : SGL STC INH RW  LCL RCT EXC PRV  W  put-integer  BASE
+    55: symbol           : SGL STC INH RW  LCL RCT EXC PRV  W  put-symbol   BASE
+    55: float            : SGL STC INH RW  LCL RCT EXC PRV  W  put-float    BASE
+    56: string           : SGL STC INH RW  LCL RCT EXC PRV  W  put-string   BASE
+    56: number           : SGL STC INH RW  LCL RCT EXC PRV  W  put-number   BASE
+    57: lexeme           : SGL STC INH RW  LCL RCT EXC PRV  W  put-lexeme   BASE
+    57: instance-name    : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+    58: integer          : SGL STC INH RW  LCL RCT EXC PRV  W  put-integer  BASE
+    58: instance-address : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+    59: float            : SGL STC INH RW  LCL RCT EXC PRV  W  put-float    BASE
+    59: instance         : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+    60: number           : SGL STC INH RW  LCL RCT EXC PRV  W  put-number   BASE
+    60: external-address : SGL STC INH RW  LCL RCT EXC PRV  W  put-external BASE
+    61: instance-name    : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+    61: fact-address     : SGL STC INH RW  LCL RCT EXC PRV  W  put-fact-add BASE
+    62: instance-address : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+    62: address          : SGL STC INH RW  LCL RCT EXC PRV  W  put-address  BASE
+    63: instance         : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+    63: 
+    64: external-address : SGL STC INH RW  LCL RCT EXC PRV  W  put-external BASE
+    64: Constraint information for slots:
+    65: fact-address     : SGL STC INH RW  LCL RCT EXC PRV  W  put-fact-add BASE
+    65: 
+    66: address          : SGL STC INH RW  LCL RCT EXC PRV  W  put-address  BASE
+    66: SLOTS            : SYM STR INN INA EXA FTA INT FLT
+    67: 
+    67: any              :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+    68: Constraint information for slots:
+    68: symbol           :  +                              
+    69: 
+    69: string           :      +                          
+    70: SLOTS            : SYM STR INN INA EXA FTA INT FLT
+    70: lexeme           :  +   +                          
+    71: any              :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+    71: integer          :                          +      RNG:[-oo..+oo] 
+    72: symbol           :  +                              
+    72: float            :                              +  RNG:[-oo..+oo] 
+    73: string           :      +                          
+    73: number           :                          +   +  RNG:[-oo..+oo] 
+    74: lexeme           :  +   +                          
+    74: instance-name    :          +                      
+    75: integer          :                          +      RNG:[-oo..+oo] 
+    75: instance-address :              +                  
+    76: float            :                              +  RNG:[-oo..+oo] 
+    76: instance         :          +   +                  
+    77: number           :                          +   +  RNG:[-oo..+oo] 
+    77: external-address :                  +              
+    78: instance-name    :          +                      
+    78: fact-address     :                      +          
+    79: instance-address :              +                  
+    79: address          :              +   +   +          
+    80: instance         :          +   +                  
+    80: --------------------------------------------------------------------------------
+    81: external-address :                  +              
+    81: Recognized message-handlers:
+    82: fact-address     :                      +          
+    82: init primary in class USER
+    83: address          :              +   +   +          
+    83: delete primary in class USER
+    84: --------------------------------------------------------------------------------
+    84: create primary in class USER
+    85: Recognized message-handlers:
+    85: print primary in class USER
+    86: init primary in class USER
+    86: direct-modify primary in class USER
+    87: delete primary in class USER
+    87: message-modify primary in class USER
+    88: create primary in class USER
+    88: direct-duplicate primary in class USER
+    89: print primary in class USER
+    89: message-duplicate primary in class USER
+    90: direct-modify primary in class USER
+    90: put-any primary in class BASE
+    91: message-modify primary in class USER
+    91: put-symbol primary in class BASE
+    92: direct-duplicate primary in class USER
+    92: put-string primary in class BASE
+    93: message-duplicate primary in class USER
+    93: put-lexeme primary in class BASE
+    94: put-any primary in class BASE
+    94: put-integer primary in class BASE
+    95: put-symbol primary in class BASE
+    95: put-float primary in class BASE
+    96: put-string primary in class BASE
+    96: put-number primary in class BASE
+    97: put-lexeme primary in class BASE
+    97: put-instance-name primary in class BASE
+    98: put-integer primary in class BASE
+    98: put-instance-address primary in class BASE
+    99: put-float primary in class BASE
+    99: put-instance primary in class BASE
+   100: put-number primary in class BASE
+   100: put-external-address primary in class BASE
+   101: put-instance-name primary in class BASE
+   101: put-fact-address primary in class BASE
+   102: put-instance-address primary in class BASE
+   102: put-address primary in class BASE
+   103: put-instance primary in class BASE
+   103: ********************************************************************************
+   104: put-external-address primary in class BASE
+   104: ================================================================================
+   105: put-fact-address primary in class BASE
+   105: CLIPS> (describe-class DERIVE-1-1)
+   106: put-address primary in class BASE
+   106: ================================================================================
+   108: ================================================================================
+   108: Concrete: direct instances of this class can be created.
+   109: CLIPS> (describe-class DERIVE-1-1)
+   109: Non-reactive: direct instances of this class cannot match defrule patterns.
+   110: ================================================================================
+   110: 
+   111: ********************************************************************************
+   111: Direct Superclasses: BASE
+   112: Concrete: direct instances of this class can be created.
+   112: Inheritance Precedence: DERIVE-1-1 BASE USER OBJECT
+   113: Non-reactive: direct instances of this class cannot match defrule patterns.
+   113: Direct Subclasses:
+   114: 
+   114: --------------------------------------------------------------------------------
+   115: Direct Superclasses: BASE
+   115: SLOTS            : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG     SOURCE(S)
+   116: Inheritance Precedence: DERIVE-1-1 BASE USER OBJECT
+   116: symbol           : SGL STC INH RW  LCL RCT EXC PRV  W  put-symbol   BASE
+   117: Direct Subclasses:
+   117: string           : SGL STC INH RW  LCL RCT EXC PRV  W  put-string   BASE
+   118: --------------------------------------------------------------------------------
+   118: lexeme           : SGL STC INH RW  LCL RCT EXC PRV  W  put-lexeme   BASE
+   119: SLOTS            : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG     SOURCE(S)
+   119: integer          : SGL STC INH RW  LCL RCT EXC PRV  W  put-integer  BASE
+   120: symbol           : SGL STC INH RW  LCL RCT EXC PRV  W  put-symbol   BASE
+   120: float            : SGL STC INH RW  LCL RCT EXC PRV  W  put-float    BASE
+   121: string           : SGL STC INH RW  LCL RCT EXC PRV  W  put-string   BASE
+   121: number           : SGL STC INH RW  LCL RCT EXC PRV  W  put-number   BASE
+   122: lexeme           : SGL STC INH RW  LCL RCT EXC PRV  W  put-lexeme   BASE
+   122: instance-name    : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+   123: integer          : SGL STC INH RW  LCL RCT EXC PRV  W  put-integer  BASE
+   123: instance-address : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+   124: float            : SGL STC INH RW  LCL RCT EXC PRV  W  put-float    BASE
+   124: instance         : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+   125: number           : SGL STC INH RW  LCL RCT EXC PRV  W  put-number   BASE
+   125: external-address : SGL STC INH RW  LCL RCT EXC PRV  W  put-external BASE
+   126: instance-name    : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+   126: fact-address     : SGL STC INH RW  LCL RCT EXC PRV  W  put-fact-add BASE
+   127: instance-address : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+   127: any              : SGL STC INH RW  LCL RCT CMP PRV  W  put-any      BASE DERIVE-1-1
+   128: instance         : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+   128: address          : MLT STC INH RW  LCL RCT CMP PRV  W  put-address  BASE DERIVE-1-1
+   129: external-address : SGL STC INH RW  LCL RCT EXC PRV  W  put-external BASE
+   129: 
+   130: fact-address     : SGL STC INH RW  LCL RCT EXC PRV  W  put-fact-add BASE
+   130: Constraint information for slots:
+   131: any              : SGL STC INH RW  LCL RCT CMP PRV  W  put-any      BASE DERIVE-1-1
+   131: 
+   132: address          : MLT STC INH RW  LCL RCT CMP PRV  W  put-address  BASE DERIVE-1-1
+   132: SLOTS            : SYM STR INN INA EXA FTA INT FLT
+   133: 
+   133: symbol           :  +                              
+   134: Constraint information for slots:
+   134: string           :      +                          
+   135: 
+   135: lexeme           :  +   +                          
+   136: SLOTS            : SYM STR INN INA EXA FTA INT FLT
+   136: integer          :                          +      RNG:[-oo..+oo] 
+   137: symbol           :  +                              
+   137: float            :                              +  RNG:[-oo..+oo] 
+   138: string           :      +                          
+   138: number           :                          +   +  RNG:[-oo..+oo] 
+   139: lexeme           :  +   +                          
+   139: instance-name    :          +                      
+   140: integer          :                          +      RNG:[-oo..+oo] 
+   140: instance-address :              +                  
+   141: float            :                              +  RNG:[-oo..+oo] 
+   141: instance         :          +   +                  
+   142: number           :                          +   +  RNG:[-oo..+oo] 
+   142: external-address :                  +              
+   143: instance-name    :          +                      
+   143: fact-address     :                      +          
+   144: instance-address :              +                  
+   144: any              :  #   #   #   #   #   #   #   #  RNG:[-oo..+oo] 
+   145: instance         :          +   +                  
+   145: address          :              +   +   +          CRD:[2..3]
+   146: external-address :                  +              
+   146: --------------------------------------------------------------------------------
+   147: fact-address     :                      +          
+   147: Recognized message-handlers:
+   148: any              :  #   #   #   #   #   #   #   #  RNG:[-oo..+oo] 
+   148: init primary in class USER
+   149: address          :              +   +   +          CRD:[2..3]
+   149: delete primary in class USER
+   150: --------------------------------------------------------------------------------
+   150: create primary in class USER
+   151: Recognized message-handlers:
+   151: print primary in class USER
+   152: init primary in class USER
+   152: direct-modify primary in class USER
+   153: delete primary in class USER
+   153: message-modify primary in class USER
+   154: create primary in class USER
+   154: direct-duplicate primary in class USER
+   155: print primary in class USER
+   155: message-duplicate primary in class USER
+   156: direct-modify primary in class USER
+   156: put-any primary in class BASE
+   157: message-modify primary in class USER
+   157: put-symbol primary in class BASE
+   158: direct-duplicate primary in class USER
+   158: put-string primary in class BASE
+   159: message-duplicate primary in class USER
+   159: put-lexeme primary in class BASE
+   160: put-any primary in class BASE
+   160: put-integer primary in class BASE
+   161: put-symbol primary in class BASE
+   161: put-float primary in class BASE
+   162: put-string primary in class BASE
+   162: put-number primary in class BASE
+   163: put-lexeme primary in class BASE
+   163: put-instance-name primary in class BASE
+   164: put-integer primary in class BASE
+   164: put-instance-address primary in class BASE
+   165: put-float primary in class BASE
+   165: put-instance primary in class BASE
+   166: put-number primary in class BASE
+   166: put-external-address primary in class BASE
+   167: put-instance-name primary in class BASE
+   167: put-fact-address primary in class BASE
+   168: put-instance-address primary in class BASE
+   168: put-address primary in class BASE
+   169: put-instance primary in class BASE
+   169: put-any primary in class DERIVE-1-1
+   170: put-external-address primary in class BASE
+   170: put-address primary in class DERIVE-1-1
+   171: put-fact-address primary in class BASE
+   171: ********************************************************************************
+   172: put-address primary in class BASE
+   172: ================================================================================
+   173: put-any primary in class DERIVE-1-1
+   173: CLIPS> (describe-class DERIVE-1-2)
+   174: put-address primary in class DERIVE-1-1
+   174: ================================================================================
+   176: ================================================================================
+   176: Concrete: direct instances of this class can be created.
+   177: CLIPS> (describe-class DERIVE-1-2)
+   177: Non-reactive: direct instances of this class cannot match defrule patterns.
+   178: ================================================================================
+   178: 
+   179: ********************************************************************************
+   179: Direct Superclasses: BASE
+   180: Concrete: direct instances of this class can be created.
+   180: Inheritance Precedence: DERIVE-1-2 BASE USER OBJECT
+   181: Non-reactive: direct instances of this class cannot match defrule patterns.
+   181: Direct Subclasses:
+   182: 
+   182: --------------------------------------------------------------------------------
+   183: Direct Superclasses: BASE
+   183: SLOTS            : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG     SOURCE(S)
+   184: Inheritance Precedence: DERIVE-1-2 BASE USER OBJECT
+   184: symbol           : SGL STC INH RW  LCL RCT EXC PRV  W  put-symbol   BASE
+   185: Direct Subclasses:
+   185: string           : SGL STC INH RW  LCL RCT EXC PRV  W  put-string   BASE
+   186: --------------------------------------------------------------------------------
+   186: lexeme           : SGL STC INH RW  LCL RCT EXC PRV  W  put-lexeme   BASE
+   187: SLOTS            : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG     SOURCE(S)
+   187: integer          : SGL STC INH RW  LCL RCT EXC PRV  W  put-integer  BASE
+   188: symbol           : SGL STC INH RW  LCL RCT EXC PRV  W  put-symbol   BASE
+   188: number           : SGL STC INH RW  LCL RCT EXC PRV  W  put-number   BASE
+   189: string           : SGL STC INH RW  LCL RCT EXC PRV  W  put-string   BASE
+   189: instance-name    : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+   190: lexeme           : SGL STC INH RW  LCL RCT EXC PRV  W  put-lexeme   BASE
+   190: instance-address : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+   191: integer          : SGL STC INH RW  LCL RCT EXC PRV  W  put-integer  BASE
+   191: instance         : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+   192: number           : SGL STC INH RW  LCL RCT EXC PRV  W  put-number   BASE
+   192: external-address : SGL STC INH RW  LCL RCT EXC PRV  W  put-external BASE
+   193: instance-name    : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+   193: fact-address     : SGL STC INH RW  LCL RCT EXC PRV  W  put-fact-add BASE
+   194: instance-address : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+   194: address          : SGL STC INH RW  LCL RCT EXC PRV  W  put-address  BASE
+   195: instance         : SGL STC INH RW  LCL RCT EXC PRV  W  put-instance BASE
+   195: any              : MLT STC INH RW  LCL RCT CMP PRV  W  put-any      BASE DERIVE-1-2
+   196: external-address : SGL STC INH RW  LCL RCT EXC PRV  W  put-external BASE
+   196: float            : SGL STC INH RW  LCL RCT CMP PRV  W  put-float    BASE DERIVE-1-2
+   197: fact-address     : SGL STC INH RW  LCL RCT EXC PRV  W  put-fact-add BASE
+   197: 
+   198: address          : SGL STC INH RW  LCL RCT EXC PRV  W  put-address  BASE
+   198: Constraint information for slots:
+   199: any              : MLT STC INH RW  LCL RCT CMP PRV  W  put-any      BASE DERIVE-1-2
+   199: 
+   200: float            : SGL STC INH RW  LCL RCT CMP PRV  W  put-float    BASE DERIVE-1-2
+   200: SLOTS            : SYM STR INN INA EXA FTA INT FLT
+   201: 
+   201: symbol           :  +                              
+   202: Constraint information for slots:
+   202: string           :      +                          
+   203: 
+   203: lexeme           :  +   +                          
+   204: SLOTS            : SYM STR INN INA EXA FTA INT FLT
+   204: integer          :                          +      RNG:[-oo..+oo] 
+   205: symbol           :  +                              
+   205: number           :                          +   +  RNG:[-oo..+oo] 
+   206: string           :      +                          
+   206: instance-name    :          +                      
+   207: lexeme           :  +   +                          
+   207: instance-address :              +                  
+   208: integer          :                          +      RNG:[-oo..+oo] 
+   208: instance         :          +   +                  
+   209: number           :                          +   +  RNG:[-oo..+oo] 
+   209: external-address :                  +              
+   210: instance-name    :          +                      
+   210: fact-address     :                      +          
+   211: instance-address :              +                  
+   211: address          :              +   +   +          
+   212: instance         :          +   +                  
+   212: any              :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] CRD:[3..5]
+   213: external-address :                  +              
+   213: float            :                              #  RNG:[-oo..+oo] 
+   214: fact-address     :                      +          
+   214: --------------------------------------------------------------------------------
+   215: address          :              +   +   +          
+   215: Recognized message-handlers:
+   216: any              :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] CRD:[3..5]
+   216: init primary in class USER
+   217: float            :                              #  RNG:[-oo..+oo] 
+   217: delete primary in class USER
+   218: --------------------------------------------------------------------------------
+   218: create primary in class USER
+   219: Recognized message-handlers:
+   219: print primary in class USER
+   220: init primary in class USER
+   220: direct-modify primary in class USER
+   221: delete primary in class USER
+   221: message-modify primary in class USER
+   222: create primary in class USER
+   222: direct-duplicate primary in class USER
+   223: print primary in class USER
+   223: message-duplicate primary in class USER
+   224: direct-modify primary in class USER
+   224: put-any primary in class BASE
+   225: message-modify primary in class USER
+   225: put-symbol primary in class BASE
+   226: direct-duplicate primary in class USER
+   226: put-string primary in class BASE
+   227: message-duplicate primary in class USER
+   227: put-lexeme primary in class BASE
+   228: put-any primary in class BASE
+   228: put-integer primary in class BASE
+   229: put-symbol primary in class BASE
+   229: put-float primary in class BASE
+   230: put-string primary in class BASE
+   230: put-number primary in class BASE
+   231: put-lexeme primary in class BASE
+   231: put-instance-name primary in class BASE
+   232: put-integer primary in class BASE
+   232: put-instance-address primary in class BASE
+   233: put-float primary in class BASE
+   233: put-instance primary in class BASE
+   234: put-number primary in class BASE
+   234: put-external-address primary in class BASE
+   235: put-instance-name primary in class BASE
+   235: put-fact-address primary in class BASE
+   236: put-instance-address primary in class BASE
+   236: put-address primary in class BASE
+   237: put-instance primary in class BASE
+   237: put-any primary in class DERIVE-1-2
+   238: put-external-address primary in class BASE
+   238: put-float primary in class DERIVE-1-2
+   239: put-fact-address primary in class BASE
+   239: ********************************************************************************
+   240: put-address primary in class BASE
+   240: ================================================================================
+   241: put-any primary in class DERIVE-1-2
+   241: CLIPS> (reset)
+   242: put-float primary in class DERIVE-1-2
+   242: CLIPS> (defglobal ?*iaddress* = (instance-address [base]))
+   243: ********************************************************************************
+   243: CLIPS> (send [base] put-symbol 34)
+   244: ================================================================================
+   244: [CSTRNCHK1] The value 34 for slot 'symbol' of instance [base] found in 'put-symbol' primary in class 'BASE' does not match the allowed types.
+   245: CLIPS> (reset)
+   245: [PRCCODE4] Execution halted during the actions of message-handler 'put-symbol' primary in class 'BASE'
+   246: CLIPS> (defglobal ?*iaddress* = (instance-address [base]))
+   246: FALSE
+   247: CLIPS> (send [base] put-symbol 34)
+   247: CLIPS> (send [base] put-fact-address ?*iaddress*)
+   248: [CSTRNCHK1] 34 for slot symbol of instance [base] found in put-symbol primary in class BASE
+   248: [CSTRNCHK1] The value <Instance-base> for slot 'fact-address' of instance [base] found in 'put-fact-address' primary in class 'BASE' does not match the allowed types.
+   249: does not match the allowed types.
+   249: [PRCCODE4] Execution halted during the actions of message-handler 'put-fact-address' primary in class 'BASE'
+   250: [PRCCODE4] Execution halted during the actions of message-handler put-symbol primary in class BASE
+   250: FALSE
+   251: FALSE
+   251: CLIPS> (set-dynamic-constraint-checking FALSE)
+   252: CLIPS> (send [base] put-fact-address ?*iaddress*)
+   252: TRUE
+   253: [CSTRNCHK1] <Instance-base> for slot fact-address of instance [base] found in put-fact-address primary in class BASE
+   253: CLIPS> (send [base] put-fact-address ?*iaddress*)
+   254: does not match the allowed types.
+   254: <Instance-base>
+   255: [PRCCODE4] Execution halted during the actions of message-handler put-fact-address primary in class BASE
+   255: CLIPS> (set-dynamic-constraint-checking TRUE)
+   257: CLIPS> (set-dynamic-constraint-checking FALSE)
+   257: CLIPS> (send [base] put-instance-address ?*iaddress*)
+   258: TRUE
+   258: <Instance-base>
+   259: CLIPS> (send [base] put-fact-address ?*iaddress*)
+   259: CLIPS> (send [base] put-external-address ?*iaddress*)
+   260: <Instance-base>
+   260: [CSTRNCHK1] The value <Instance-base> for slot 'external-address' of instance [base] found in 'put-external-address' primary in class 'BASE' does not match the allowed types.
+   261: CLIPS> (set-dynamic-constraint-checking TRUE)
+   261: [PRCCODE4] Execution halted during the actions of message-handler 'put-external-address' primary in class 'BASE'
+   263: CLIPS> (send [base] put-instance-address ?*iaddress*)
+   263: CLIPS> (send [base] put-address ?*iaddress*)
+   265: CLIPS> (send [base] put-external-address ?*iaddress*)
+   265: CLIPS> (send [derive-1-1] put-address)
+   266: [CSTRNCHK1] <Instance-base> for slot external-address of instance [base] found in put-external-address primary in class BASE
+   266: [CSTRNCHK1] The value () for slot 'address' of instance [derive-1-1] found in 'put-address' primary in class 'DERIVE-1-1' does not satisfy the cardinality restrictions.
+   267: does not match the allowed types.
+   267: [PRCCODE4] Execution halted during the actions of message-handler 'put-address' primary in class 'DERIVE-1-1'
+   268: [PRCCODE4] Execution halted during the actions of message-handler put-external-address primary in class BASE
+   268: FALSE
+   269: FALSE
+   269: CLIPS> (send [derive-1-1] put-address ?*iaddress*)
+   270: CLIPS> (send [base] put-address ?*iaddress*)
+   270: [CSTRNCHK1] The value (<Instance-base>) for slot 'address' of instance [derive-1-1] found in 'put-address' primary in class 'DERIVE-1-1' does not satisfy the cardinality restrictions.
+   271: <Instance-base>
+   271: [PRCCODE4] Execution halted during the actions of message-handler 'put-address' primary in class 'DERIVE-1-1'
+   272: CLIPS> (send [derive-1-1] put-address)
+   272: FALSE
+   273: [CSTRNCHK1] () for slot address of instance [derive-1-1] found in put-address primary in class DERIVE-1-1
+   273: CLIPS> (send [derive-1-1] put-address ?*iaddress* ?*iaddress*)
+   274: does not satisfy the cardinality restrictions.
+   274: (<Instance-base> <Instance-base>)
+   275: [PRCCODE4] Execution halted during the actions of message-handler put-address primary in class DERIVE-1-1
+   275: CLIPS> (send [derive-1-1] put-address ?*iaddress* ?*iaddress* ?*iaddress*)
+   276: FALSE
+   276: (<Instance-base> <Instance-base> <Instance-base>)
+   277: CLIPS> (send [derive-1-1] put-address ?*iaddress*)
+   277: CLIPS> (send [derive-1-1] put-address ?*iaddress* ?*iaddress* ?*iaddress* ?*iaddress*)
+   278: [CSTRNCHK1] (<Instance-base>) for slot address of instance [derive-1-1] found in put-address primary in class DERIVE-1-1
+   278: [CSTRNCHK1] The value (<Instance-base> <Instance-base> <Instance-base> <Instance-base>) for slot 'address' of instance [derive-1-1] found in 'put-address' primary in class 'DERIVE-1-1' does not satisfy the cardinality restrictions.
+   279: does not satisfy the cardinality restrictions.
+   279: [PRCCODE4] Execution halted during the actions of message-handler 'put-address' primary in class 'DERIVE-1-1'
+   280: [PRCCODE4] Execution halted during the actions of message-handler put-address primary in class DERIVE-1-1
+   280: FALSE
+   281: FALSE
+   281: CLIPS> (send [derive-1-1] put-any 45)
+   282: CLIPS> (send [derive-1-1] put-address ?*iaddress* ?*iaddress*)
+   282: [CSTRNCHK1] The value 45 for slot 'any' of instance [derive-1-1] found in 'put-any' primary in class 'DERIVE-1-1' does not match the allowed values.
+   283: (<Instance-base> <Instance-base>)
+   283: [PRCCODE4] Execution halted during the actions of message-handler 'put-any' primary in class 'DERIVE-1-1'
+   284: CLIPS> (send [derive-1-1] put-address ?*iaddress* ?*iaddress* ?*iaddress*)
+   284: FALSE
+   285: (<Instance-base> <Instance-base> <Instance-base>)
+   285: CLIPS> (send [derive-1-1] put-any 123 123)
+   286: CLIPS> (send [derive-1-1] put-address ?*iaddress* ?*iaddress* ?*iaddress* ?*iaddress*)
+   286: [INSFUN7] The value (123 123) is illegal for single-field slot 'any' of instance [derive-1-1] found in 'put-any' primary in class 'DERIVE-1-1'.
+   287: [CSTRNCHK1] (<Instance-base> <Instance-base> <Instance-base> <Instance-base>) for slot address of instance [derive-1-1] found in put-address primary in class DERIVE-1-1
+   287: [PRCCODE4] Execution halted during the actions of message-handler 'put-any' primary in class 'DERIVE-1-1'
+   288: does not satisfy the cardinality restrictions.
+   288: FALSE
+   289: [PRCCODE4] Execution halted during the actions of message-handler put-address primary in class DERIVE-1-1
+   289: CLIPS> (send [derive-1-1] put-any 7.34)
+   290: FALSE
+   290: [CSTRNCHK1] The value 7.34 for slot 'any' of instance [derive-1-1] found in 'put-any' primary in class 'DERIVE-1-1' does not match the allowed values.
+   291: CLIPS> (send [derive-1-1] put-any 45)
+   291: [PRCCODE4] Execution halted during the actions of message-handler 'put-any' primary in class 'DERIVE-1-1'
+   292: [CSTRNCHK1] 45 for slot any of instance [derive-1-1] found in put-any primary in class DERIVE-1-1
+   292: FALSE
+   293: does not match the allowed values.
+   293: CLIPS> (send [derive-1-1] put-any def)
+   294: [PRCCODE4] Execution halted during the actions of message-handler put-any primary in class DERIVE-1-1
+   294: [CSTRNCHK1] The value def for slot 'any' of instance [derive-1-1] found in 'put-any' primary in class 'DERIVE-1-1' does not match the allowed values.
+   295: FALSE
+   295: [PRCCODE4] Execution halted during the actions of message-handler 'put-any' primary in class 'DERIVE-1-1'
+   296: CLIPS> (send [derive-1-1] put-any 123 123)
+   296: FALSE
+   297: [INSFUN7] (123 123) illegal for single-field slot any of instance [derive-1-1] found in put-any primary in class DERIVE-1-1.
+   297: CLIPS> (send [derive-1-1] put-any "abc")
+   298: [PRCCODE4] Execution halted during the actions of message-handler put-any primary in class DERIVE-1-1
+   298: [CSTRNCHK1] The value "abc" for slot 'any' of instance [derive-1-1] found in 'put-any' primary in class 'DERIVE-1-1' does not match the allowed values.
+   299: FALSE
+   299: [PRCCODE4] Execution halted during the actions of message-handler 'put-any' primary in class 'DERIVE-1-1'
+   300: CLIPS> (send [derive-1-1] put-any 7.34)
+   300: FALSE
+   301: [CSTRNCHK1] 7.34 for slot any of instance [derive-1-1] found in put-any primary in class DERIVE-1-1
+   301: CLIPS> (send [derive-1-1] put-any "def")
+   302: does not match the allowed values.
+   302: "def"
+   303: [PRCCODE4] Execution halted during the actions of message-handler put-any primary in class DERIVE-1-1
+   303: CLIPS> (send [derive-1-1] put-any 5.0)
+   304: FALSE
+   304: 5.0
+   305: CLIPS> (send [derive-1-1] put-any def)
+   305: CLIPS> (send [derive-1-1] put-any 123)
+   306: [CSTRNCHK1] def for slot any of instance [derive-1-1] found in put-any primary in class DERIVE-1-1
+   306: 123
+   307: does not match the allowed values.
+   307: CLIPS> (dribble-off)
+   Files do not have the same # of lines

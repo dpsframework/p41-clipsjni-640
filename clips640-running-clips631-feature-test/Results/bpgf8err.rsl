@@ -1,0 +1,470 @@
+bpgf8err.bat differences are as follows:
+     5: [ROUTER1] Logical name Hello was not recognized by any routers
+     5: [ROUTER1] Logical name 'Hello' was not recognized by any routers.
+     9: [ARGACCES5] Function + expected argument #1 to be of type integer or float
+     9: [ARGACCES2] Function '+' expected argument #1 to be of type integer or float.
+    10: [PRCCODE6] This error occurred while evaluating arguments for the deffunction foo.
+    10: [PRCCODE6] This error occurred while evaluating arguments for the deffunction 'foo'.
+    15: [initial-object] of INITIAL-OBJECT
+    15: [PRCCODE2] Functions without a return value are illegal as generic function arguments.
+    16: For a total of 1 instance.
+    16: [PRCCODE6] This error occurred while evaluating arguments for the generic function 'foo'.
+    17: [PRCCODE2] Functions without a return value are illegal as generic function arguments.
+    17: FALSE
+    18: [PRCCODE6] This error occurred while evaluating arguments for the generic function foo.
+    18: CLIPS> (clear)
+    19: FALSE
+    19: CLIPS> (deffunction foo ()
+    20: CLIPS> (clear)
+    20:   (+ ?a 2)
+    21: CLIPS> (deffunction foo ()
+    21:   (bind ?a 1))
+    22:   (+ ?a 2)
+    22: CLIPS> (foo)
+    23:   (bind ?a 1))
+    23: [PRCCODE5] Variable ?a unbound in deffunction 'foo'.
+    24: CLIPS> (foo)
+    24: [ARGACCES2] Function '+' expected argument #1 to be of type integer or float.
+    25: [PRCCODE5] Variable a unbound in deffunction foo.
+    25: [PRCCODE4] Execution halted during the actions of deffunction 'foo'.
+    26: [ARGACCES5] Function + expected argument #1 to be of type integer or float
+    26: FALSE
+    27: [PRCCODE4] Execution halted during the actions of deffunction foo.
+    27: CLIPS> (clear)
+    28: FALSE
+    28: CLIPS> (deffunction foo ()
+    29: CLIPS> (clear)
+    29:   (printout t "Hi there!" crlf))
+    30: CLIPS> (deffunction foo ()
+    30: CLIPS> (deffunction bar ()
+    31:   (printout t "Hi there!" crlf))
+    31:   (foo)
+    32: CLIPS> (deffunction bar ()
+    32:   (undeffunction *))
+    33:   (foo)
+    33: CLIPS> (bar)
+    34:   (undeffunction *))
+    34: Hi there!
+    35: CLIPS> (bar)
+    35: [PRNTUTIL4] Unable to delete deffunction 'bar'.
+    36: Hi there!
+    36: [DFFNXFUN1] WARNING: Deffunction 'foo' only partially deleted due to usage by other constructs.
+    37: [PRNTUTIL4] Unable to delete deffunction bar.
+    37: CLIPS> (clear)
+    38: [DFFNXFUN1] WARNING: Deffunction foo only partially deleted due to usage by other constructs.
+    38: CLIPS> (defmethod foo ()
+    39: CLIPS> (clear)
+    39:   (undefmethod foo *))
+    40: CLIPS> (defmethod foo ()
+    40: CLIPS> (foo)
+    41:   (undefmethod foo *))
+    41: [GENRCFUN1] Defgeneric 'foo' cannot be modified while one of its methods is executing.
+    42: CLIPS> (foo)
+    42: CLIPS> (clear)
+    43: [GENRCFUN1] Defgeneric foo cannot be modified while one of its methods is executing.
+    43: CLIPS> (defmethod foo 1 ())
+    44: CLIPS> (clear)
+    44: CLIPS> (ppdefmethod foo 2)
+    45: CLIPS> (defmethod foo 1 ())
+    45: [GENRCFUN2] Unable to find method 'foo' #2 in function 'ppdefmethod'.
+    46: CLIPS> (ppdefmethod foo 2)
+    46: CLIPS> (clear)
+    47: [GENRCFUN2] Unable to find method foo #2 in function ppdefmethod.
+    47: CLIPS> (defgeneric foo)
+    48: CLIPS> (clear)
+    48: CLIPS> (undefmethod foo junk)
+    49: CLIPS> (defgeneric foo)
+    49: [GENRCCOM2] Expected a valid method index in function undefmethod.
+    50: CLIPS> (undefmethod foo junk)
+    50: CLIPS> (clear)
+    51: [GENRCCOM2] Expected a valid method index in function undefmethod.
+    51: CLIPS> (defmethod foo ()
+    52: CLIPS> (clear)
+    52:   (+ ?a 2)
+    53: CLIPS> (defmethod foo ()
+    53:   (bind ?a 1))
+    54:   (+ ?a 2)
+    54: CLIPS> (foo)
+    55:   (bind ?a 1))
+    55: [PRCCODE5] Variable ?a unbound in generic function 'foo' method #1.
+    56: CLIPS> (foo)
+    56: [ARGACCES2] Function '+' expected argument #1 to be of type integer or float.
+    57: [PRCCODE5] Variable a unbound in generic function foo method #1.
+    57: [PRCCODE4] Execution halted during the actions of generic function 'foo' method #1.
+    58: [ARGACCES5] Function + expected argument #1 to be of type integer or float
+    58: FALSE
+    59: [PRCCODE4] Execution halted during the actions of generic function foo method #1.
+    59: CLIPS> (clear)
+    60: FALSE
+    60: CLIPS> (defmethod foo ())
+    61: CLIPS> (clear)
+    61: CLIPS> (foo 1 2)
+    62: CLIPS> (defmethod foo ())
+    62: [GENRCEXE1] No applicable methods for 'foo'.
+    63: CLIPS> (foo 1 2)
+    63: FALSE
+    64: [GENRCEXE1] No applicable methods for foo.
+    64: CLIPS> (clear)
+    65: FALSE
+    65: CLIPS> (call-next-method)
+    66: CLIPS> (clear)
+    66: [GENRCEXE2] Shadowed methods not applicable in current context.
+    67: CLIPS> (call-next-method)
+    67: FALSE
+    68: [GENRCEXE2] Shadowed methods not applicable in current context.
+    68: CLIPS> (clear)
+    69: FALSE
+    69: CLIPS> (defmethod foo ((?a INTEGER)))
+    70: CLIPS> (clear)
+    70: CLIPS> (foo [bogus-instance])
+    71: CLIPS> (defmethod foo ((?a INTEGER)))
+    71: [GENRCEXE3] Unable to determine class of [bogus-instance] in generic function 'foo'.
+    72: CLIPS> (foo [bogus-instance])
+    72: FALSE
+    73: [GENRCEXE3] Unable to determine class of [bogus-instance] in generic function foo.
+    73: CLIPS> (clear)
+    74: FALSE
+    74: CLIPS> (undefmethod * 1)
+    75: CLIPS> (clear)
+    75: [GENRCCOM3] Incomplete method specification for deletion.
+    76: CLIPS> (undefmethod * 1)
+    76: CLIPS> (clear)
+    77: [GENRCCOM3] Incomplete method specification for deletion.
+    77: CLIPS> (instance-address [bogus-instance])
+    78: CLIPS> (clear)
+    78: [INSFUN2] No such instance [bogus-instance] in function 'instance-address'.
+    79: CLIPS> (instance-address [bogus-instance])
+    79: FALSE
+    80: [INSFUN2] No such instance bogus-instance in function instance-address.
+    80: CLIPS> (clear)
+    81: FALSE
+    81: CLIPS> (defclass A (is-a USER) (role concrete))
+    82: CLIPS> (clear)
+    82: CLIPS> (make-instance a of A)
+    83: CLIPS> (defclass A (is-a USER) (role concrete))
+    83: [a]
+    84: CLIPS> (make-instance a of A)
+    84: CLIPS> (defglobal ?*x* = (instance-address a))
+    85: [a]
+    85: CLIPS> (make-instance a of A)
+    86: CLIPS> (defglobal ?*x* = (instance-address a))
+    86: [a]
+    87: CLIPS> (make-instance a of A)
+    87: CLIPS> (class ?*x*)
+    88: [a]
+    88: [INSFUN4] Invalid instance-address in function 'class'.
+    89: CLIPS> (class ?*x*)
+    89: FALSE
+    90: [INSFUN4] Invalid instance-address in function class.
+    90: CLIPS> (clear)
+    91: FALSE
+    91: CLIPS> (defclass A (is-a USER) (role concrete))
+    92: CLIPS> (clear)
+    92: CLIPS> (make-instance a of A)
+    93: CLIPS> (defclass A (is-a USER) (role concrete))
+    93: [a]
+    94: CLIPS> (make-instance a of A)
+    94: CLIPS> (clear)
+    95: [a]
+    95: CLIPS> (initialize-instance 34)
+    96: CLIPS> (clear)
+    96: [INSFUN1] Expected a valid instance in function 'initialize-instance'.
+    97: CLIPS> (initialize-instance 34)
+    97: FALSE
+    98: [INSFUN1] Expected a valid instance in function initialize-instance.
+    98: CLIPS> (clear)
+    99: FALSE
+    99: CLIPS> (defclass A (is-a USER) (role concrete)
+   100: CLIPS> (clear)
+   100:   (multislot foo (create-accessor write)))
+   101: CLIPS> (defclass A (is-a USER) (role concrete)
+   101: CLIPS> (make-instance a of A)
+   102:   (multislot foo (create-accessor write)))
+   102: [a]
+   103: CLIPS> (make-instance a of A)
+   103: CLIPS> (mv-slot-insert a foo 1 (instances))
+   104: [a]
+   104: 
+   105: CLIPS> (mv-slot-insert a foo 1 (instances))
+   105: [EXPRNPSR3] Missing function declaration for 'mv-slot-insert'.
+   106: [initial-object] of INITIAL-OBJECT
+   106: CLIPS> (clear)
+   107: [a] of A
+   107: CLIPS> (defclass A (is-a USER) (role concrete)
+   108: For a total of 2 instances.
+   108:   (slot foo (create-accessor write)))
+   109: ()
+   109: CLIPS> (make-instance a of A)
+   110: CLIPS> (clear)
+   110: [a]
+   111: CLIPS> (defclass A (is-a USER) (role concrete)
+   111: CLIPS> (mv-slot-insert a foo 1 abc def)
+   112:   (slot foo (create-accessor write)))
+   112: 
+   113: CLIPS> (make-instance a of A)
+   113: [EXPRNPSR3] Missing function declaration for 'mv-slot-insert'.
+   114: [a]
+   114: CLIPS> (clear)
+   115: CLIPS> (mv-slot-insert a foo 1 abc def)
+   115: CLIPS> (ppdefmessage-handler USER foo around)
+   116: [INSMULT1] Function slot-insert$ cannot be used on single-field slot foo in instance a.
+   116: [MSGCOM2] Unable to find message-handler 'foo' around for class 'USER' in function 'ppdefmessage-handler'.
+   117: FALSE
+   117: CLIPS> (clear)
+   118: CLIPS> (clear)
+   118: CLIPS> (defclass A (is-a USER) (role concrete))
+   119: CLIPS> (ppdefmessage-handler USER foo around)
+   119: CLIPS> (make-instance a of A)
+   120: [MSGCOM2] Unable to find message-handler foo around for class USER in function ppdefmessage-handler.
+   120: [a]
+   121: CLIPS> (clear)
+   121: CLIPS> (defmessage-handler A foo ()
+   122: CLIPS> (defclass A (is-a USER) (role concrete))
+   122:   (+ ?a 2)
+   123: CLIPS> (make-instance a of A)
+   123:   (bind ?a 1))
+   124: [a]
+   124: CLIPS> (send [a] foo)
+   125: CLIPS> (defmessage-handler A foo ()
+   125: [PRCCODE5] Variable ?a unbound in message-handler 'foo' primary in class 'A'
+   126:   (+ ?a 2)
+   126: [ARGACCES2] Function '+' expected argument #1 to be of type integer or float.
+   127:   (bind ?a 1))
+   127: [PRCCODE4] Execution halted during the actions of message-handler 'foo' primary in class 'A'
+   128: CLIPS> (send [a] foo)
+   128: FALSE
+   129: [PRCCODE5] Variable a unbound in message-handler foo primary in class A
+   129: CLIPS> (clear)
+   130: [ARGACCES5] Function + expected argument #1 to be of type integer or float
+   130: CLIPS> (defclass A (is-a USER) (role concrete)
+   131: [PRCCODE4] Execution halted during the actions of message-handler foo primary in class A
+   131:   (slot foo (default ?NONE) (create-accessor write)))
+   132: FALSE
+   132: CLIPS> (make-instance a of A)
+   133: CLIPS> (clear)
+   133: [INSMNGR14] Override required for slot 'foo' in instance [a].
+   134: CLIPS> (defclass A (is-a USER) (role concrete)
+   134: [PRCCODE4] Execution halted during the actions of message-handler 'init' primary in class 'USER'
+   135:   (slot foo (default ?NONE) (create-accessor write)))
+   135: [INSMNGR8] An error occurred during the initialization of instance [a].
+   136: CLIPS> (make-instance a of A)
+   136: FALSE
+   137: [INSMNGR14] Override required for slot foo in instance a.
+   137: CLIPS> (clear)
+   138: [PRCCODE4] Execution halted during the actions of message-handler init primary in class USER
+   138: CLIPS> (defclass A (is-a USER) (role concrete)
+   139: [INSMNGR8] An error occurred during the initialization of instance a.
+   139:   (slot foo (default 100)
+   140: FALSE
+   140:             (access read-only)))
+   141: CLIPS> (clear)
+   141: CLIPS> (make-instance a of A)
+   142: CLIPS> (defclass A (is-a USER) (role concrete)
+   142: [a]
+   143:   (slot foo (default 100)
+   143: CLIPS> (send [a] put-foo)
+   144:             (access read-only)))
+   144: [MSGFUN1] No applicable primary message-handlers found for 'put-foo'.
+   145: CLIPS> (make-instance a of A)
+   145: FALSE
+   146: [a]
+   146: CLIPS> (clear)
+   147: CLIPS> (send [a] put-foo)
+   147: CLIPS> (ppinstance)
+   148: [MSGFUN1] No applicable primary message-handlers found for put-foo.
+   148: [MSGFUN4] The function 'ppinstance' may only be called from within message-handlers.
+   149: FALSE
+   149: CLIPS> (clear)
+   150: CLIPS> (clear)
+   150: CLIPS> (defmessage-handler INTEGER print ()
+   151: CLIPS> (ppinstance)
+   151:   (ppinstance))
+   152: [MSGFUN4] ppinstance may only be called from within message-handlers.
+   152: CLIPS> (send 34 print)
+   153: CLIPS> (clear)
+   153: [MSGFUN5] The function 'ppinstance' operates only on instances.
+   154: CLIPS> (defmessage-handler INTEGER print ()
+   154: [PRCCODE4] Execution halted during the actions of message-handler 'print' primary in class 'INTEGER'
+   155:   (ppinstance))
+   155: FALSE
+   156: CLIPS> (send 34 print)
+   156: CLIPS> (clear)
+   157: [MSGFUN5] ppinstance operates only on instances.
+   157: CLIPS> (call-next-handler)
+   158: [PRCCODE4] Execution halted during the actions of message-handler print primary in class INTEGER
+   158: [MSGPASS1] Shadowed message-handlers not applicable in current context.
+   161: CLIPS> (call-next-handler)
+   161: CLIPS> (defclass A (is-a USER) (role concrete))
+   162: [MSGPASS1] Shadowed message-handlers not applicable in current context.
+   162: CLIPS> (make-instance a of A)
+   163: FALSE
+   163: [a]
+   164: CLIPS> (clear)
+   164: CLIPS> (send [a] bogus-message)
+   165: CLIPS> (defclass A (is-a USER) (role concrete))
+   165: [MSGFUN1] No applicable primary message-handlers found for 'bogus-message'.
+   166: CLIPS> (make-instance a of A)
+   166: FALSE
+   167: [a]
+   167: CLIPS> (clear)
+   168: CLIPS> (send [a] bogus-message)
+   168: CLIPS> (defclass A (is-a USER) (role concrete))
+   169: [MSGFUN1] No applicable primary message-handlers found for bogus-message.
+   169: CLIPS> (defmessage-handler USER foo (?a ?b))
+   170: FALSE
+   170: CLIPS> (make-instance a of A)
+   171: CLIPS> (clear)
+   171: [a]
+   172: CLIPS> (defclass A (is-a USER) (role concrete))
+   172: CLIPS> (send [a] foo)
+   173: CLIPS> (defmessage-handler USER foo (?a ?b))
+   173: [MSGFUN2] Message-handler 'foo' primary in class 'USER' expected exactly 2 arguments.
+   174: CLIPS> (make-instance a of A)
+   174: FALSE
+   175: [a]
+   175: CLIPS> (clear)
+   176: CLIPS> (send [a] foo)
+   176: CLIPS> (make-instance 34 of A)
+   177: [MSGFUN2] Message-handler foo primary in class USER expected exactly 2 argument(s).
+   177: [PRNTUTIL1] Unable to find class 'A'.
+   178: FALSE
+   178: CLIPS> (clear)
+   179: CLIPS> (clear)
+   179: CLIPS> (defclass A (is-a USER) (role abstract))
+   181: [PRNTUTIL1] Unable to find class A.
+   181: [INSMNGR3] Cannot create instances of abstract class 'A'.
+   183: CLIPS> (defclass A (is-a USER) (role abstract))
+   183: CLIPS> (defclass A (is-a USER) (role concrete))
+   185: [INSMNGR3] Cannot create instances of abstract class A.
+   185: [INSMNGR1] Expected a valid name for new instance.
+   186: CLIPS> (clear)
+   186: FALSE
+   187: CLIPS> (defclass A (is-a USER) (role concrete))
+   187: CLIPS> (clear)
+   188: CLIPS> (make-instance 34 of A)
+   188: CLIPS> (make-instance a of 34)
+   189: [INSMNGR1] Expected a valid name for new instance.
+   189: [INSMNGR2] Expected a valid class name for new instance.
+   192: CLIPS> (make-instance a of 34)
+   192: CLIPS> (defclass A (is-a USER) (role concrete))
+   193: [INSMNGR2] Expected a valid class name for new instance.
+   193: CLIPS> (make-instance a of A (34 override-value))
+   194: FALSE
+   194: [INSMNGR9] Expected a valid slot name for slot-override.
+   195: CLIPS> (clear)
+   195: FALSE
+   196: CLIPS> (defclass A (is-a USER) (role concrete))
+   196: CLIPS> (clear)
+   197: CLIPS> (make-instance a of A (34 override-value))
+   197: CLIPS> (make-instance [foo] of USER)
+   198: [INSMNGR9] Expected a valid slot name for slot-override.
+   198: [INSMNGR3] Cannot create instances of abstract class 'USER'.
+   199: FALSE
+   199: CLIPS> (clear)
+   200: CLIPS> (clear)
+   200: CLIPS> (defclass A (is-a USER) (role concrete)
+   201: CLIPS> (make-instance [foo] of USER)
+   201:   (slot foo (create-accessor write)))
+   202: [INSMNGR3] Cannot create instances of abstract class USER.
+   202: CLIPS> (make-instance a of A (foo 1 2 3 4))
+   203: CLIPS> (clear)
+   203: [INSFUN7] The value (1 2 3 4) is illegal for single-field slot 'foo' of instance [a] found in 'put-foo' primary in class 'A'.
+   204: CLIPS> (defclass A (is-a USER) (role concrete)
+   204: [PRCCODE4] Execution halted during the actions of message-handler 'put-foo' primary in class 'A'
+   205:   (slot foo (create-accessor write)))
+   205: FALSE
+   206: CLIPS> (make-instance a of A (foo 1 2 3 4))
+   206: CLIPS> (clear)
+   207: [INSFUN7] (1 2 3 4) illegal for single-field slot foo of instance [a] found in put-foo primary in class A.
+   207: CLIPS> (defclass A (is-a USER) (role concrete))
+   208: [PRCCODE4] Execution halted during the actions of message-handler put-foo primary in class A
+   208: CLIPS> (defmessage-handler A delete around ()
+   209: FALSE
+   209:   (if (neq (instance-name ?self) [a]) then
+   210: CLIPS> (clear)
+   210:     (call-next-handler)))
+   211: CLIPS> (defclass A (is-a USER) (role concrete))
+   211: CLIPS> (make-instance a of A)
+   212: CLIPS> (defmessage-handler A delete around ()
+   212: [a]
+   213:   (if (neq (instance-name ?self) [a]) then
+   213: CLIPS> (make-instance a of A)
+   214:     (call-next-handler)))
+   214: [INSMNGR5] Unable to delete old instance [a].
+   215: CLIPS> (make-instance a of A)
+   215: FALSE
+   216: [a]
+   216: CLIPS> (undefmessage-handler A delete around)
+   217: CLIPS> (make-instance a of A)
+   217: CLIPS> (clear)
+   218: [INSMNGR5] Unable to delete old instance a.
+   218: CLIPS> (defclass A (is-a USER) (role concrete))
+   219: FALSE
+   219: CLIPS> (make-instance a of A)
+   220: CLIPS> (undefmessage-handler A delete around)
+   220: [a]
+   221: CLIPS> (clear)
+   221: CLIPS> (defmessage-handler A init after ()
+   222: CLIPS> (defclass A (is-a USER) (role concrete))
+   222:    (initialize-instance ?self))
+   223: CLIPS> (make-instance a of A)
+   223: CLIPS> (initialize-instance a)
+   224: [a]
+   224: [INSMNGR7] Instance [a] is already being initialized.
+   225: CLIPS> (defmessage-handler A init after ()
+   225: [PRCCODE4] Execution halted during the actions of message-handler 'init' after in class 'A'
+   226:    (initialize-instance ?self))
+   226: [INSMNGR8] An error occurred during the initialization of instance [a].
+   227: CLIPS> (initialize-instance a)
+   227: FALSE
+   228: [INSMNGR7] Instance a is already being initialized.
+   228: CLIPS> (clear)
+   229: [PRCCODE4] Execution halted during the actions of message-handler init after in class A
+   229: CLIPS> (defclass A (is-a USER) (role concrete)
+   230: [INSMNGR8] An error occurred during the initialization of instance a.
+   230:   (slot foo (create-accessor write)))
+   231: FALSE
+   231: CLIPS> (defmessage-handler A put-foo after ($?any)
+   232: CLIPS> (clear)
+   232:   (delete-instance))
+   233: CLIPS> (defclass A (is-a USER) (role concrete)
+   233: CLIPS> (make-instance a of A (foo 2))
+   234:   (slot foo (create-accessor write)))
+   234: [INSMNGR6] Cannot delete instance [a] during initialization.
+   235: CLIPS> (defmessage-handler A put-foo after ($?any)
+   235: [PRCCODE4] Execution halted during the actions of message-handler 'put-foo' after in class 'A'
+   236:   (delete-instance))
+   236: FALSE
+   237: CLIPS> (make-instance a of A (foo 2))
+   237: CLIPS> (clear)
+   238: [INSMNGR6] Cannot delete instance a during initialization.
+   238: CLIPS> (defclass A (is-a USER) (role concrete)
+   239: [PRCCODE4] Execution halted during the actions of message-handler put-foo after in class A
+   239:   (slot foo (create-accessor write)))
+   240: FALSE
+   240: CLIPS> (make-instance a of A (foo (make-instance a of A)))
+   241: CLIPS> (clear)
+   241: [INSMNGR4] The instance [a] has a slot-value which depends on the instance definition.
+   242: CLIPS> (defclass A (is-a USER) (role concrete)
+   242: [PRCCODE6] This error occurred while evaluating arguments for the message 'put-foo'.
+   243:   (slot foo (create-accessor write)))
+   243: FALSE
+   244: CLIPS> (make-instance a of A (foo (make-instance a of A)))
+   244: CLIPS> (clear)
+   245: [INSMNGR4] The instance a has a slot-value which depends on the instance definition.
+   245: CLIPS> (defclass A (is-a USER))
+   246: [PRCCODE6] This error occurred while evaluating arguments for the message put-foo.
+   246: CLIPS> (defrule no-class (object (is-a BOGUS)) =>)
+   247: FALSE
+   247: [OBJRTBLD5] Undefined class 'BOGUS' in object pattern.
+   248: CLIPS> (clear)
+   248: 
+   249: CLIPS> (defclass A (is-a USER))
+   249: ERROR:
+   250: CLIPS> (defrule no-class (object (is-a BOGUS)) =>)
+   250: (defrule MAIN::no-class
+   251: [OBJRTBLD5] Undefined class 'BOGUS' in object pattern.
+   251:    (object (is-a BOGUS)
+   252: 
+   252: CLIPS> (dribble-off)
+   Files do not have the same # of lines
