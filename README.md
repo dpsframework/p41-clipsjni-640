@@ -24,6 +24,199 @@
 - [x]  \(9) Eliminación de declaraciones estáticas. Cambios en los objetos: ExternalAddressValue, InstanceAddresValue, Router, y creación del objeto Shell.
 
 
+## Apéndice B: Guía de programación básica de CLIPS 6.40
+
+### Actualizaciones de la versión 6.40
+
+
+Los siguientes cambios se introdujeron en la versión 6.4 de CLIPS.
+
+-  Initial Fact – The initial-fact deftemplate and deffacts are no longer supported.
+
+-  Initial Object – The INITIAL-OBJECT defclass and initial-object definstances are no
+longer supported.
+
+-  Object Pattern Performance Improvements – Rule performance has been improved for
+object patterns particularly in situations with a large number of class slots.
+
+-  New Functions and Commands - Several new functions and commands have been added.
+They are:
+
+-  str-replace (see section 12.3.13)
+
+-  print (see section 12.4.3)
+
+-  println (see section 12.4.3)
+
+-  unget-char (see section 12.4.10)
+
+-  flush (see section 12.4.13)
+
+-  rewind (see section 12.4.14)
+
+-  tell (see section 12.4.15)
+
+-  seek (see section 12.4.16)
+
+-  chdir (see section 12.4.17)
+
+-  atan2 (see section 12.5.11.1)
+
+-  local-time (see section 12.7.12)
+
+-  gm-time (see section 12.7.13)
+
+-  get-error (see section 12.7.14)
+
+-  clear-error (see section 12.7.15)
+
+-  set-error (see section 12.7.16)
+
+
+
+-  void (see section 12.7.17)
+
+-  bsave-facts (see section 13.4.4)
+
+-  bload-facts (see section 13.4.6)
+
+-  Command and Function Changes - The following commands and functions have been
+changed:
+
+-  assert (see section 12.9.1). When a duplicate fact is asserted, the return value of the
+assert command is the originally asserted fact. The symbol false is only returned by the
+assert command if an error occurs.
+
+-  bsave-instances (see section 13.14.3). The bsave-instances function now returns -1 if
+an error occurs.
+
+-  duplicate (see section 12.9.4). The return value of a function call can be used to specify
+the fact being duplicated. Specifying the fact using a fact-index is no longer limited to
+top-level commands.
+
+-  eval (see section 12.3.5). When executed from the command prompt, the eval function
+can access previously bound local variables. The eval function is now available in
+binary-load only and run-time CLIPS configurations.
+
+-  explode$ (see section 12.2.6). The explode$ function now returns symbols for tokens
+that are not primitive values.
+
+-  funcall (see section 12.7.9). A module specifier can be used as part of the function name
+when referencing a deffunction or defgeneric that is exported by a module.
+
+-  open (see section 12.4.1). The r+, w+, and a+ modes and their binary counterparts are
+now supported.
+
+-  length$ (see section 12.2.13). The length$ function no longer accepts strings or symbols
+as arguments.
+
+-  load (see section 13.1.1). The file name and line number are now printed for each error/
+warning message generated during execution of this command.
+
+-  load-facts (see section 13.4.5). The load-facts command now returns the number of
+facts loaded.
+
+-  modify (see section 12.9.3). The modify command now preserves the fact-index and
+fact-address of the fact being modified. Modifying a fact without changing any slots no
+longer retracts and reasserts the original fact. If facts are being watched, only changed
+slots are displayed when a fact is being modified. The return value of a function call can
+
+
+-  void (see section 12.7.17)
+
+-  bsave-facts (see section 13.4.4)
+
+-  bload-facts (see section 13.4.6)
+
+-  Command and Function Changes - The following commands and functions have been
+changed:
+
+-  assert (see section 12.9.1). When a duplicate fact is asserted, the return value of the
+assert command is the originally asserted fact. The symbol false is only returned by the
+assert command if an error occurs.
+
+-  bsave-instances (see section 13.14.3). The bsave-instances function now returns -1 if
+an error occurs.
+
+-  duplicate (see section 12.9.4). The return value of a function call can be used to specify
+the fact being duplicated. Specifying the fact using a fact-index is no longer limited to
+top-level commands.
+
+-  eval (see section 12.3.5). When executed from the command prompt, the eval function
+can access previously bound local variables. The eval function is now available in
+binary-load only and run-time CLIPS configurations.
+
+-  explode$ (see section 12.2.6). The explode$ function now returns symbols for tokens
+that are not primitive values.
+
+-  funcall (see section 12.7.9). A module specifier can be used as part of the function name
+when referencing a deffunction or defgeneric that is exported by a module.
+
+-  open (see section 12.4.1). The r+, w+, and a+ modes and their binary counterparts are
+now supported.
+
+-  length$ (see section 12.2.13). The length$ function no longer accepts strings or symbols
+as arguments.
+
+-  load (see section 13.1.1). The file name and line number are now printed for each error/
+warning message generated during execution of this command.
+
+-  load-facts (see section 13.4.5). The load-facts command now returns the number of
+facts loaded.
+
+-  modify (see section 12.9.3). The modify command now preserves the fact-index and
+fact-address of the fact being modified. Modifying a fact without changing any slots no
+longer retracts and reasserts the original fact. If facts are being watched, only changed
+slots are displayed when a fact is being modified. The return value of a function call can
+be used to specify the fact being modified. Specifying the fact using a fact-index is no
+longer limited to top-level commands. If all slot changes specified in the modify
+command match the current values of the fact to be modified, no action is taken.
+
+-  pointerp. The pointerp function is deprecated. The external-addressp function (see
+section 12.1.10) should be used instead.
+
+-  Pretty Print Commands – The ppdefclass, ppdeffacts, ppdeffunction, ppdefgeneric,
+ppdefglobal, ppdefinstances, ppdefmessage-handler, ppdefmethod, ppdefmodule,
+ppdefrule, and ppdeftemplate commands now accept an optional logical name
+argument. The logical name nil can be used to return the source text as the command
+return value rather than sending it to an output destination. The ppfact command now
+returns the source text of a fact when the logical name nil is specified.
+
+-  read (see section 12.4.4). The read function now returns symbols for tokens that are not
+primitive values. For example, the token ?var is returned as the symbol ?var and not the
+string "?var". If an error occurs, the read function now returns the symbol FALSE and
+the get-error function can be used to determine the error that occurred.
+
+-  readline (see section 12.4.5). If an error occurs, the readline function now returns the
+symbol FALSE.
+
+-  read-number (see section 12.4.11). If an error occurs, the read-number function now
+returns the symbol FALSE.
+
+-  round (see section 12.5.22). If the argument to the round function is exactly between
+two integers, it is now rounded away from zero.
+
+-  save-facts (see section 13.4.3). The save-facts command now returns the number of
+facts saved.
+
+-  save-instances (see section 13.14.3). The save-instances function now returns -1 if an
+error occurs.
+
+-  system (see section 13.1.12). The system function now returns an integer completion
+status.
+
+-  str-index (see section 12.3.4). The str-index function now returns 1 if the search string
+is the empty string "".
+
+-  string-to-field (see section 12.3.12). The string-to-field function now returns symbols
+for tokens that are not primitive values.
+
+-  watch (see section 13.2.3). The compilations watch flag now defaults to off.
+
+
+
+
+
 
 
 
