@@ -1,0 +1,3434 @@
+Common subdirectories: clips_feature_tests_631/Actual and clips_feature_tests_640/Actual
+Common subdirectories: clips_feature_tests_631/Docs and clips_feature_tests_640/Docs
+Common subdirectories: clips_feature_tests_631/Expected and clips_feature_tests_640/Expected
+Common subdirectories: clips_feature_tests_631/Results and clips_feature_tests_640/Results
+Common subdirectories: clips_feature_tests_631/Temp and clips_feature_tests_640/Temp
+diff -bup clips_feature_tests_631/bpgf3err.bat clips_feature_tests_640/bpgf3err.bat
+--- clips_feature_tests_631/bpgf3err.bat	2019-07-03 18:54:34.000000000 +0200
++++ clips_feature_tests_640/bpgf3err.bat	2021-03-29 18:57:52.000000000 +0200
+@@ -38,7 +38,7 @@
+ (defrule error ?f <- (example) => (modify ?f (x)))
+ (defrule error ?f <- (example) => (modify ?f (x 3 4)))
+ (deftemplate example (field x))
+-(assert (example (x =(mv-append a b c))))
++(assert (example (x =(create$ a b c))))
+ (deftemplate example (field x))
+ (assert (example (x a) (x b)))
+ (deftemplate example (field x))
+@@ -63,7 +63,7 @@
+ (deftemplate example3 (field x (type SYMBOL)
+                                       (range 1 5)))
+ (deftemplate example (field x))
+-(defglobal ?*x* = (mv-append a b c))
++(defglobal ?*x* = (create$ a b c))
+ (assert (example (x ?*x*)))
+ (deftemplate example (field x (allowed-values a b 2 3) 
+                                      (allowed-integers 4 5 6)))
+diff -bup clips_feature_tests_631/bpgf8err.bat clips_feature_tests_640/bpgf8err.bat
+--- clips_feature_tests_631/bpgf8err.bat	2019-07-03 19:05:16.000000000 +0200
++++ clips_feature_tests_640/bpgf8err.bat	2021-03-29 18:57:52.000000000 +0200
+@@ -59,12 +59,12 @@
+ (defclass A (is-a USER) (role concrete)
+   (multislot foo (create-accessor write)))
+ (make-instance a of A)
+-(mv-slot-insert a foo 1 (instances))
++(slot-insert$ a foo 1 (instances))
+ (clear)
+ (defclass A (is-a USER) (role concrete)
+   (slot foo (create-accessor write)))
+ (make-instance a of A)
+-(mv-slot-insert a foo 1 abc def)
++(slot-insert$ a foo 1 abc def)
+ (clear)
+ (ppdefmessage-handler USER foo around)
+ (clear)
+diff -bup clips_feature_tests_631/chksyntx.bat clips_feature_tests_640/chksyntx.bat
+--- clips_feature_tests_631/chksyntx.bat	2019-07-03 18:54:34.000000000 +0200
++++ clips_feature_tests_640/chksyntx.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -14,7 +14,7 @@
+ (check-syntax "?*x*")      
+ (check-syntax "(facts)")                   
+ (check-syntax "(+ 3 4)")                
+-(check-syntax "(mv-append a b c)")         
++(check-syntax "(create$ a b c)")         
+ (check-syntax "(+ 3 (* 4 5))")   
+ (check-syntax "(+ a b)")
+ (check-syntax "(+ 3 4")
+diff -bup clips_feature_tests_631/class.bat clips_feature_tests_640/class.bat
+--- clips_feature_tests_631/class.bat	2019-07-03 18:54:34.000000000 +0200
++++ clips_feature_tests_640/class.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -17,7 +17,7 @@
+ (send [a21] print)
+ (send [a22] print)
+ (make-instance a3 of A3)
+-(nth 2 (send [a3] get-foo))
++(nth$ 2 (send [a3] get-foo))
+ (send [a3] put-bar 45)
+ (send [a3] get-bar)
+ (make-instance a4 of A4)
+diff -bup clips_feature_tests_631/class.clp clips_feature_tests_640/class.clp
+--- clips_feature_tests_631/class.clp	2019-07-03 18:54:34.000000000 +0200
++++ clips_feature_tests_640/class.clp	2021-03-29 18:57:54.000000000 +0200
+@@ -15,7 +15,7 @@
+ (defclass A3 (is-a USER) (role concrete)
+   (multislot foo  (create-accessor read-write)
+             (default abc def ghi))
+-  (single-slot bar (create-accessor read-write)))
++  (slot bar (create-accessor read-write)))
+ (defclass A4 (is-a USER) (role concrete))
+ (defclass A4 (is-a USER) (role concrete))
+ (defclass A4 (is-a USER) (role concrete))
+diff -bup clips_feature_tests_631/classerr.bat clips_feature_tests_640/classerr.bat
+--- clips_feature_tests_631/classerr.bat	2019-07-03 18:54:34.000000000 +0200
++++ clips_feature_tests_640/classerr.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -62,7 +62,7 @@
+   (slot bad (default) (default-dynamic (time))))
+ (defclass JUNK (is-a USER)
+   (multislot bad)
+-  (single-slot bad))
++  (slot bad))
+ (defclass JUNK (is-a USER)
+   (slot bad (storage shared) (storage local)))
+ (defclass JUNK (is-a USER)
+@@ -89,7 +89,7 @@
+ (defclass JUNK (is-a USER)
+    (slot bad (default abc def)))
+ (defclass JUNK (is-a USER)
+-   (slot bad (default (mv-append))))
++   (slot bad (default (create$))))
+ (defclass GOOD2 (is-a USER) (role concrete)
+    (slot bad (default-dynamic abc def)))
+ (make-instance gd2 of GOOD2)
+diff -bup clips_feature_tests_631/cnstrsn.bat clips_feature_tests_640/cnstrsn.bat
+--- clips_feature_tests_631/cnstrsn.bat	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/cnstrsn.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -12,8 +12,8 @@
+ (get-defgeneric-list)
+ (list-defmethods)
+ (get-defmethod-list)
+-(list-defmethods (nth 1 (get-defmethod-list)))
+-(get-defmethod-list (nth 1 (get-defmethod-list)))
++(list-defmethods (nth$ 1 (get-defmethod-list)))
++(get-defmethod-list (nth$ 1 (get-defmethod-list)))
+ (get-method-restrictions oof 50)
+ (get-method-restrictions rab 1)
+ (list-defclasses)
+diff -bup clips_feature_tests_631/conres.clp clips_feature_tests_640/conres.clp
+--- clips_feature_tests_631/conres.clp	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/conres.clp	2021-03-29 18:57:54.000000000 +0200
+@@ -57,12 +57,12 @@
+ 
+ (deffunction print-order ($?x)
+   (bind ?s (get-strategy))
+-  (if (eq ?s depth) then (bind ?r (nth 1 ?x)))
+-  (if (eq ?s breadth) then (bind ?r (nth 2 ?x)))
+-  (if (eq ?s simplicity) then (bind ?r (nth 3 ?x)))
+-  (if (eq ?s complexity) then (bind ?r (nth 4 ?x)))
+-  (if (eq ?s lex) then (bind ?r (nth 5 ?x)))
+-  (if (eq ?s mea) then (bind ?r (nth 6 ?x)))
++  (if (eq ?s depth) then (bind ?r (nth$ 1 ?x)))
++  (if (eq ?s breadth) then (bind ?r (nth$ 2 ?x)))
++  (if (eq ?s simplicity) then (bind ?r (nth$ 3 ?x)))
++  (if (eq ?s complexity) then (bind ?r (nth$ 4 ?x)))
++  (if (eq ?s lex) then (bind ?r (nth$ 5 ?x)))
++  (if (eq ?s mea) then (bind ?r (nth$ 6 ?x)))
+   (printout t "This rule should fire " ?r crlf))
+ 
+ ;;;************************
+diff -bup clips_feature_tests_631/coolcmd.bat clips_feature_tests_640/coolcmd.bat
+--- clips_feature_tests_631/coolcmd.bat	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/coolcmd.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -5,6 +5,9 @@
+ (ppdefclass USER)
+ (ppdefclass BOGUS)
+ (ppdefclass PP-TEST)
++(ppdefclass PP-TEST stdout)
++(ppdefclass PP-TEST bogus)
++(ppdefclass PP-TEST nil)
+ (list-defclasses)
+ (defclass TEST (is-a USER) (role concrete))
+ (defclass ANOTHER-TEST (is-a TEST))
+@@ -12,7 +15,6 @@
+ (undefclass BOGUS)
+ (undefclass *)
+ (undefclass OBJECT)
+-(undefclass USER)
+ (undefclass PRIMITIVE)
+ (undefclass MULTIFIELD)
+ (undefclass EXTERNAL-ADDRESS)
+@@ -64,6 +66,9 @@
+ (ppdefmessage-handler USER init)
+ (ppdefmessage-handler BOY play)
+ (ppdefmessage-handler BOY play primary)
++(ppdefmessage-handler BOY play primary stdout)
++(ppdefmessage-handler BOY play primary bogus)
++(ppdefmessage-handler BOY play primary nil)
+ (ppdefmessage-handler USER init around)
+ (ppdefmessage-handler USER init before)
+ (ppdefmessage-handler USER init after)
+@@ -110,6 +115,9 @@
+ (ppdefinstances BOGUS)
+ (ppdefinstances 34)
+ (ppdefinstances TEST-CASES)
++(ppdefinstances TEST-CASES stdout)
++(ppdefinstances TEST-CASES bogus)
++(ppdefinstances TEST-CASES nil)
+ (list-definstances)
+ (reset)
+ (instances)
+@@ -137,7 +145,7 @@
+ (save-instances)
+ (save-instances 34)
+ (send [t2] put-z (instance-address t1))
+-(mv-slot-replace t1 y 2 2 (instance-address t2))
++(slot-replace$ t1 y 2 2 (instance-address t2))
+ (save-instances "Actual//coolcmd2.out")
+ (reset)
+ (load-instances "Actual//coolcmd2.out")
+diff -bup clips_feature_tests_631/coolfnx.bat clips_feature_tests_640/coolfnx.bat
+--- clips_feature_tests_631/coolfnx.bat	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/coolfnx.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -122,11 +122,11 @@
+ (send [junk] my-put x a b c d e)
+ (send [junk] my-get x)
+ (send [junk] my-get y)
+-(mv-slot-replace junk x 2 4 2 3 4)
++(slot-replace$ junk x 2 4 2 3 4)
+ (send [junk] get-x)
+-(mv-slot-insert junk x 2 4 2 3 4)
++(slot-insert$ junk x 2 4 2 3 4)
+ (send [junk] get-x)
+-(mv-slot-delete junk x 2 4)
++(slot-delete$ junk x 2 4)
+ (send [junk] get-x)
+ (send [junk] put-x a b c d e)
+ (send [junk] my-replace x 2 4 2 3 4)
+@@ -136,15 +136,15 @@
+ (send [junk] my-delete x 2 4)
+ (send [junk] get-x)
+ (send [junk] put-x)
+-(mv-slot-insert junk x 1 abc)
+-(mv-slot-insert)
+-(mv-slot-delete)
+-(mv-slot-replace)
+-(mv-slot-replace bogus x 1 2 abc)
+-(mv-slot-replace junk bogus 1 2 abc)
+-(mv-slot-replace junk x 1 100 abc)
++(slot-insert$ junk x 1 abc)
++(slot-insert$)
++(slot-delete$)
++(slot-replace$)
++(slot-replace$ bogus x 1 2 abc)
++(slot-replace$ junk bogus 1 2 abc)
++(slot-replace$ junk x 1 100 abc)
+ (send [junk] my-replace x 1 100 abc)
+-(mv-slot-replace junk y 1 2 def)
++(slot-replace$ junk y 1 2 def)
+ (class-existp)
+ (class-existp 34)
+ (class-existp abc def)
+diff -bup clips_feature_tests_631/coolfnx.clp clips_feature_tests_640/coolfnx.clp
+--- clips_feature_tests_631/coolfnx.clp	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/coolfnx.clp	2021-03-29 18:57:54.000000000 +0200
+@@ -13,7 +13,7 @@
+ (defmessage-handler A2 print-args ($?any)
+   (printout t "A2: " ?any crlf)
+   (if (next-handlerp) then
+-     (override-next-handler (subseq$ ?any 2 (length ?any)))))
++     (override-next-handler (subseq$ ?any 2 (length$ ?any)))))
+ (defclass B1 (is-a A1 A2))
+ (defmessage-handler USER print-args ($?any)
+   (printout t "USER: " ?any crlf))
+@@ -33,11 +33,11 @@
+ (defmessage-handler JUNK my-get (?slot)
+    (get ?slot))
+ (defmessage-handler JUNK my-replace (?slot ?b ?e $?args)
+-   (direct-mv-replace ?slot ?b ?e ?args))
++   (slot-direct-replace$ ?slot ?b ?e ?args))
+ (defmessage-handler JUNK my-insert (?slot ?i $?args)
+-   (direct-mv-insert ?slot ?i ?args))
++   (slot-direct-insert$ ?slot ?i ?args))
+ (defmessage-handler JUNK my-delete (?slot ?b ?e)
+-   (direct-mv-delete ?slot ?b ?e))
++   (slot-direct-delete$ ?slot ?b ?e))
+ (defclass WOZBANG (is-a INTEGER FLOAT) (role concrete) (slot z (create-accessor ?NONE)))
+ (defclass BOOGLE (is-a WOZBANG)
+   (slot z (propagation no-inherit) (default ?NONE) (create-accessor write)))
+diff -bup clips_feature_tests_631/dffctcmd.bat clips_feature_tests_640/dffctcmd.bat
+--- clips_feature_tests_631/dffctcmd.bat	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/dffctcmd.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -10,6 +10,9 @@
+ (list-deffacts d6)
+ (list-deffacts)
+ (ppdeffacts d1)
++(ppdeffacts d1 stdout)
++(ppdeffacts d1 bogus)
++(ppdeffacts d1 nil)
+ (ppdeffacts d2)
+ (ppdeffacts d3)
+ (ppdeffacts d4)
+diff -bup clips_feature_tests_631/dfgblcmd.bat clips_feature_tests_640/dfgblcmd.bat
+--- clips_feature_tests_631/dfgblcmd.bat	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/dfgblcmd.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -9,6 +9,9 @@
+ (list-defglobals d6)
+ (list-defglobals)
+ (ppdefglobal d1)
++(ppdefglobal d1 stdout)
++(ppdefglobal d1 bogus)
++(ppdefglobal d1 nil)
+ (ppdefglobal d2)
+ (ppdefglobal d3)
+ (ppdefglobal d4)
+diff -bup clips_feature_tests_631/dfnxcmd.bat clips_feature_tests_640/dfnxcmd.bat
+--- clips_feature_tests_631/dfnxcmd.bat	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/dfnxcmd.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -2,6 +2,9 @@
+    (printout t "Random action" crlf))
+ (deffunction bogus2 ())
+ (ppdeffunction bogus)
++(ppdeffunction bogus stdout)
++(ppdeffunction bogus bogus)
++(ppdeffunction bogus nil)
+ (ppdeffunction bad)
+ (ppdeffunction 1)
+ (ppdeffunction)
+diff -bup clips_feature_tests_631/dfnxexe.bat clips_feature_tests_640/dfnxexe.bat
+--- clips_feature_tests_631/dfnxexe.bat	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/dfnxexe.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -1,8 +1,8 @@
+ (deffunction print-args (?a ?b $?c)
+-   (printout t ?a " " ?b " and " (length ?c) " extras: " ?c crlf))
++   (printout t ?a " " ?b " and " (length$ ?c) " extras: " ?c crlf))
+ (print-args 1 2)
+ (print-args 1 2 3 4)
+-(print-args 1 2 (mv-append a b c) (mv-append d e f) 1 2 3 4)
++(print-args 1 2 (create$ a b c) (create$ d e f) 1 2 3 4)
+ (deffunction test-return ()
+    (+ (eval "(gensym)") 2)
+    TRUE)
+diff -bup clips_feature_tests_631/dfrulcmd.bat clips_feature_tests_640/dfrulcmd.bat
+--- clips_feature_tests_631/dfrulcmd.bat	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/dfrulcmd.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -9,6 +9,9 @@
+ (list-defrules d6)
+ (rules)
+ (ppdefrule r1)
++(ppdefrule r1 stdout)
++(ppdefrule r1 bogus)
++(ppdefrule r1 nil)
+ (ppdefrule r2)
+ (ppdefrule r3)
+ (ppdefrule r4)
+@@ -192,18 +195,6 @@
+ (set-salience-evaluation when-defined)
+ (clear) ; refresh-agenda command
+ (refresh-agenda 10)
+-(clear) ; incremental-reset command
+-(set-incremental-reset TRUE)
+-(get-incremental-reset)
+-(set-incremental-reset)
+-(get-incremental-reset)
+-(get-incremental-reset 20)
+-(set-incremental-reset 10)
+-(get-incremental-reset)
+-(set-incremental-reset FALSE)
+-(get-incremental-reset)
+-(set-incremental-reset TRUE)
+-(get-incremental-reset)
+ (clear) ; Some new 6.0 features
+ (defrule BOGUS::d5 =>)
+ (defmodule FOO)
+diff -bup clips_feature_tests_631/dftmpcmd.bat clips_feature_tests_640/dftmpcmd.bat
+--- clips_feature_tests_631/dftmpcmd.bat	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/dftmpcmd.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -17,6 +17,9 @@
+ (list-deftemplates d6)
+ (list-deftemplates)
+ (ppdeftemplate d1)
++(ppdeftemplate d1 stdout)
++(ppdeftemplate d1 bogus)
++(ppdeftemplate d1 nil)
+ (ppdeftemplate d2)
+ (ppdeftemplate d3)
+ (ppdeftemplate d4)
+diff -bup clips_feature_tests_631/dilemma1.clp clips_feature_tests_640/dilemma1.clp
+--- clips_feature_tests_631/dilemma1.clp	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/dilemma1.clp	2021-03-29 18:57:54.000000000 +0200
+@@ -6,13 +6,16 @@
+ ;;;     missionary) in agricultural terms. The point is
+ ;;;     to get the farmer, the fox the cabbage and the
+ ;;;     goat across a stream.
++;;;
+ ;;;     But the boat only holds 2 items. If left 
+ ;;;     alone with the goat, the fox will eat it. If
+ ;;;     left alone with the cabbage, the goat will eat
+ ;;;     it.
+-;;;     This example uses rules to solve the problem.
+ ;;;
+-;;;     CLIPS Version 6.0 Example
++;;;     This example uses rules and fact pattern 
++;;;     matching to solve the problem.
++;;;
++;;;     CLIPS Version 6.4 Example
+ ;;;
+ ;;;     To execute, merely load, reset and run.
+ ;;;======================================================
+@@ -181,16 +184,17 @@
+   ?mv <- (moves (id no-parent) (moves-list no-move $?m))
+   =>
+   (retract ?mv)
+-  (printout t crlf "Solution found: " crlf crlf)
+-  (bind ?length (length ?m))
++  (println crlf "Solution found: " crlf)
++  (bind ?length (length$ ?m))
+   (bind ?i 1)
+   (bind ?shore shore-2)
+   (while (<= ?i ?length)
+-     (bind ?thing (nth ?i ?m))
++     (bind ?thing (nth$ ?i ?m))
+      (if (eq ?thing alone)
+-        then (printout t "Farmer moves alone to " ?shore "." crlf)
+-        else (printout t "Farmer moves with " ?thing " to " ?shore "." crlf))
++        then (println "Farmer moves alone to " ?shore ".")
++        else (println "Farmer moves with " ?thing " to " ?shore "."))
+      (if (eq ?shore shore-1)
+         then (bind ?shore shore-2)
+         else (bind ?shore shore-1))
+-     (bind ?i (+ 1 ?i))))
++     (bind ?i (+ 1 ?i)))
++  (println))
+diff -bup clips_feature_tests_631/dilemma2.clp clips_feature_tests_640/dilemma2.clp
+--- clips_feature_tests_631/dilemma2.clp	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/dilemma2.clp	2021-03-29 18:57:54.000000000 +0200
+@@ -5,13 +5,16 @@
+ ;;;     missionary) in agricultural terms. The point is
+ ;;;     to get the farmer, the fox the cabbage and the
+ ;;;     goat across a stream.
++;;;
+ ;;;     But the boat only holds 2 items. If left 
+ ;;;     alone with the goat, the fox will eat it. If
+ ;;;     left alone with the cabbage, the goat will eat
+ ;;;     it.
+-;;;     This example uses COOL to solve the problem.
+ ;;;
+-;;;     CLIPS Version 6.0 Example
++;;;     This example uses COOL classes and 
++;;;     message-handlers to solve the problem.
++;;;
++;;;     CLIPS Version 6.4 Example
+ ;;; 
+ ;;;     To execute, merely load and enter (solve-dilemma).
+ ;;;======================================================
+@@ -178,19 +181,18 @@
+       (bind ?move-dest (dynamic-get ?self:last-move))
+       (if (eq ?self:last-move farmer)
+          then
+-         (printout t "Farmer moves alone to " ?move-dest "." crlf)
++         (println "Farmer moves alone to " ?move-dest ".")
+          else
+-         (printout t "Farmer moves with " ?self:last-move " to " ?move-dest "." crlf))))
++         (println "Farmer moves with " ?self:last-move " to " ?move-dest "."))))
+ 
+ (defmessage-handler status solution?
+    ()
+    (if (and (eq ?self:farmer shore-2) (eq ?self:fox shore-2) 
+             (eq ?self:goat shore-2) (eq ?self:cabbage shore-2))
+       then
+-      (printout t crlf "Solution found:" crlf crlf)
++      (println crlf "Solution found:" crlf)
+       (send ?self print-solution)
++      (println)
+       TRUE
+       else
+       FALSE))
+-
+-
+diff -bup clips_feature_tests_631/dr0872-1.clp clips_feature_tests_640/dr0872-1.clp
+--- clips_feature_tests_631/dr0872-1.clp	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/dr0872-1.clp	2021-03-29 20:08:16.000000000 +0200
+@@ -1 +1,2 @@
+-(deffunction testUnmatched ()  (+ 3 4) 
+\ No newline at end of file
++(deffunction testUnmatched ()
++  (+ 3 4)
+\ No newline at end of file
+diff -bup clips_feature_tests_631/drtest01.bat clips_feature_tests_640/drtest01.bat
+--- clips_feature_tests_631/drtest01.bat	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/drtest01.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -32,7 +32,7 @@ a b
+ (close blah)                      ; DR0037
+ (deffacts a ())                   ; DR0039
+ (assert ())                       ; DR0039
+-(system)                          ; DR0043
++(system)                          ; DR0043 Should be non-zero if command processor available
+ (clear)                           ; DR0047
+ (defrule a (= 5 7) =>)            ; DR0047
+ (assert (= 5 7))                  ; DR0047
+@@ -78,7 +78,7 @@ a b
+ (defrule foo                      ; DR0063
+   (data foo $?x)
+   =>
+-  (printout t (nth 3 ?x) crlf))  ; DR0063
++  (printout t (nth$ 3 ?x) crlf))  ; DR0063
+ (assert (data foo a b here d))    ; DR0063
+ (run)                             ; DR0063
+ (retract ?f)                      ; DR0067
+@@ -115,8 +115,8 @@ a b
+ (facts)                           ; DR0087
+ (subseq$ a 2 4)                 ; DR0090
+ (sub-string)                      ; DR0092
+-(str-explode "a b c")             ; DR0093
+-(length (str-explode "a b c"))    ; DR0093
++(explode$ "a b c")                ; DR0093
++(length$ (explode$ "a b c"))      ; DR0093
+ (tan 0)                           ; DR0096
+ (sec 0)                           ; DR0096
+ (/ 1 0)                           ; DR0097
+diff -bup clips_feature_tests_631/drtest02.bat clips_feature_tests_640/drtest02.bat
+--- clips_feature_tests_631/drtest02.bat	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/drtest02.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -1,12 +1,12 @@
+ (str-index "" "")                 ; DR0103 - 1
+ (str-index "" "a")                ; DR0103 - 2
+-(str-explode "")                  ; DR0104 - ()
++(explode$ "")                     ; DR0104 - ()
+ (sub-string 1 2 "a")              ; DR0105 - "a"
+ (sub-string 2 2 "a")              ; DR0105 - ""
+ (subseq$ (create$ a) 2 2)     ; DR0106 - ()
+ (subseq$ (create$ a) 1 2)     ; DR0106 - (a)
+ (str-index "a" "aba")             ; DR0109 - 1
+-(str-implode)                     ; DR0112 - Error
++(implode$)                        ; DR0112 - Error
+ (sub-string 1 3 "abc")            ; DR0113 - memory loss
+ (sub-string 1 3 "abc")            ; DR0113 - memory loss
+ (setgen 1)                        ; DR0114 - Error
+@@ -27,13 +27,13 @@
+ (defrule a 
+    (x ?string) 
+    => 
+-   (bind ?m (str-explode ?string)) 
+-   (bind ?str (str-implode ?m))
++   (bind ?m (explode$ ?string)) 
++   (bind ?str (implode$ ?m))
+    (printout t ?m " " ?str crlf))
+ (defrule b 
+    => 
+-   (bind ?m (str-explode "a b c 1 2 3"))
+-   (bind ?s (str-implode ?m))
++   (bind ?m (explode$ "a b c 1 2 3"))
++   (bind ?s (implode$ ?m))
+    (printout t ?m " " ?s crlf))
+ (reset)                           ; DR0120
+ (assert (x "a b c 1 2 3"))        ; DR0120
+diff -bup clips_feature_tests_631/drtest03.bat clips_feature_tests_640/drtest03.bat
+--- clips_feature_tests_631/drtest03.bat	2019-07-03 18:54:36.000000000 +0200
++++ clips_feature_tests_640/drtest03.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -21,8 +21,10 @@
+ (run)                              ; DR0202
+ (unwatch rules)                    ; DR0202
+ (clear)                            ; DR0204
++(deffacts initial (factoid))
++(reset)
+ (defrule test
+-   ?fact <- (initial-fact)
++   ?fact <- (factoid)
+    =>
+    (printout t "any thing" crlf)
+    (retract ?fact))
+@@ -108,7 +110,7 @@
+    (not (auto (mane nil)))
+    =>
+    (modify ?f1 (name any)))
+-(str-implode (create$))          ; DR0256
++(implode$ (create$))               ; DR0256
+ (clear)                            ; DR0257
+ (defrule foo                       ; DR0257
+    ?f1 <- (a 1) 
+diff -bup clips_feature_tests_631/drtest05.bat clips_feature_tests_640/drtest05.bat
+--- clips_feature_tests_631/drtest05.bat	2019-07-03 18:54:38.000000000 +0200
++++ clips_feature_tests_640/drtest05.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -11,7 +11,7 @@
+ (defrule foo                       ; DR0411
+    (fact ?x)
+    (fact $?y)
+-   (test (eq ?y (str-explode ?x)))
++   (test (eq ?y (explode$ ?x)))
+    =>)
+ (reset)                            ; DR0411
+ (assert (fact "a b c"))            ; DR0411
+@@ -109,7 +109,7 @@
+ (make-instance foo of FOO)         ; DR0479 - [foo]
+ (send [foo] put-BAR a b c)         ; DR0479 - TRUE
+ (find-instance ((?x FOO))          ; DR0479
+-    (member d (send ?x get-BAR)))  ; DR0479 - ()
++    (member$ d (send ?x get-BAR))) ; DR0479 - ()
+ (clear)                            ; DR0480
+ (defclass mineral (is-a USER)      ; DR0480
+    (role concrete)
+diff -bup clips_feature_tests_631/drtest06.bat clips_feature_tests_640/drtest06.bat
+--- clips_feature_tests_631/drtest06.bat	2019-07-03 18:54:38.000000000 +0200
++++ clips_feature_tests_640/drtest06.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -19,10 +19,10 @@
+ (defclass a (is-a USER) (slot bar (create-accessor ?NONE))) ;; Update 1/1/93
+ (list-defmessage-handlers a)       ; DR0502 - None
+ (clear)                            ; DR0503
+-(defglobal ?*global-list* = (mv-append 1 2 3 4))
++(defglobal ?*global-list* = (create$ 1 2 3 4))
+ (defrule foo                       ; DR0503
+    (items $?list)
+-   (test (subset ?list ?*global-list*))
++   (test (subsetp ?list ?*global-list*))
+    =>
+    (printout t "Success!" crlf))
+ (assert (items 2 3))               ; DR0503
+@@ -46,7 +46,7 @@
+ (defrule test-member               ; DR0508
+    (list $?list)
+    =>
+-   (printout t "position=" (member i2 ?list) crlf))
++   (printout t "position=" (member$ i2 ?list) crlf))
+ (reset)                            ; DR0508
+ (run)                              ; DR0508 - position=4
+ (clear)                            ; DR0511
+@@ -75,7 +75,7 @@
+ (assert (r (yours this-is-a-word)))
+ (modify 1 (mine "string"))         ; DR0517
+ (modify 2 (yours wordie))          ; DR0517
+-(modify 4 (yours is-mine))         ; DR0517
++(modify 2 (yours is-mine))         ; DR0517
+ (unwatch facts)                    ; DR0517
+ (clear)                            ; DR0519
+ (deftemplate result                ; DR0519
+@@ -100,10 +100,10 @@
+ (print-region 3 "foo.lis" ROOT SUBTOPIC)    
+ (print-region t 3 ROOT SUBTOPIC)   ; DR0524 - Error
+ (deffunction mftest ()             ; DR0525
+-   (bind ?result (mv-append))
++   (bind ?result (create$))
+    (bind ?i 140)
+    (while (> ?i 0) do
+-      (bind ?result (mv-append ?i ?result))
++      (bind ?result (create$ ?i ?result))
+       (bind ?i (- ?i 1)))
+    ?result)
+ (mftest)                           ; DR0525
+@@ -114,10 +114,10 @@
+    (if (and (< ?a 0.000245)  (>=  ?a 0.000244))
+        then (assert (DR0384 OK))))
+ (seed (5))                         ; DR0527
+-(sym-cat (str-explode "a s d g e f")) ; DR0528 - Error
++(sym-cat (explode$ "a s d g e f")) ; DR0528 - Error
+ (str-length                        ; DR0529 - Error
+-   (str-implode ((mv-append 1 2 3 4)
+-						           (mv-append 4 3 2 1))))
++   (implode$ ((create$ 1 2 3 4)
++			  (create$ 4 3 2 1))))
+ (deg-grad 90)                      ; DR0532 - 100.0
+ (* 3.6 15.0)                       ; DR0533 - 54.0
+ (* 3.0 15.0)                       ; DR0533 - 45.0
+@@ -142,13 +142,6 @@
+ (clear)                            ; DR0543
+ (deffunction blah () (if a b))     ; DR0543 - Error
+ (blah)                             ; DR0543 - Undefined
+-(clear)                            ; DR0548
+-(set-incremental-reset FALSE)      ; DR0548
+-(defrule foo (not (a)) =>)         ; DR0548
+-(reset)                            ; DR0548
+-(agenda)                           ; DR0548 - 1 Activation
+-(clear)                            ; DR0548
+-(set-incremental-reset TRUE)       ; DR0548
+ (clear)                            ; DR0549
+ (defclass A (is-a USER) (role concrete) (slot xy (create-accessor read-write)))
+ (make-instance a of A 
+diff -bup clips_feature_tests_631/drtest07.bat clips_feature_tests_640/drtest07.bat
+--- clips_feature_tests_631/drtest07.bat	2019-07-03 18:54:38.000000000 +0200
++++ clips_feature_tests_640/drtest07.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -1,7 +1,7 @@
+ (clear)                            ; DR0602
+-(subset (mv-append bar)            ; DR0602
+-        (mv-append "bar"))         ; DR0602 - FALSE
+-(member fox (mv-append "fox"))     ; DR0602 - FALSE
++(subsetp (create$ bar)             ; DR0602
++         (create$ "bar"))          ; DR0602 - FALSE
++(member$ fox (create$ "fox"))      ; DR0602 - FALSE
+ (clear)                            ; DR0604
+ (defrule foo => (assert (x)))      ; DR0604
+ (bsave "Temp//foo.bin")            ; DR0604
+@@ -65,9 +65,9 @@
+ (clear)                            ; DR0617
+ (progn (release-mem) TRUE)         ; DR0617 - Memory Loss
+ (clear)                            ; DR0619
+-(str-explode "")                   ; DR0619
++(explode$ "")                      ; DR0619
+ (deftemplate foo (field x) (field y))
+-(str-explode "foo")                ; DR0619
++(explode$ "foo")                   ; DR0619
+ (format t "%s"                     ; DR0621
+    "The allowed-values attribute cannot be used in conjunction with
+                       other value restriction attributes")
+@@ -109,7 +109,7 @@
+    (bind ?a (send ?ins get-foo))
+    (printout t ?a " ")
+    (printout t (send ?ins get-foo) " ")
+-   (mv-slot-replace ?ins foo 1 1 1)
++   (slot-replace$ ?ins foo 1 1 1)
+    (printout t ?a " ")
+    (printout t (send ?ins get-foo) crlf))
+ (make-instance a of A)             ; DR0629
+@@ -130,19 +130,11 @@
+    =>)
+ (facts)                            ; DR0630
+ (agenda)                           ; DR0630
+-(clear)                            ; DR0633
+-(set-incremental-reset FALSE)      ; DR0633
+-(defrule not-fire (not (color)) =>)
+-(agenda)                           ; DR0633
+-(assert (color))                   ; DR0633
+-(agenda)                           ; DR0633
+-(clear)                            ; DR0633
+-(set-incremental-reset TRUE)       ; DR0633
+ (clear)                            ; DR0634
+ (deffunction foo ()                ; DR0634
+    (bind ?i 1000)                  ; DR0634
+    (while (> ?i 0) do              ; DR0634
+-      (bind ?a (mv-append))        ; DR0634
++      (bind ?a (create$))          ; DR0634
+       (bind ?i (- ?i 1))))         ; DR0634
+ (foo)                              ; DR0634
+ (clear)                            ; DR0635
+@@ -151,7 +143,7 @@
+ (defrule blah (fact $?x here $?x) =>)
+ (assert (fact 1 2 here 3 4))       ; DR0636
+ (agenda)                           ; DR0636
+-(subsetp (mv-append a a b) (mv-append a b)) ; DR0637
++(subsetp (create$ a a b) (create$ a b)) ; DR0637
+ (clear)                            ; DR0639
+ (defrule foo (or (a) (b) (c)) =>)  ; DR0639
+ (assert (a) (b) (c))               ; DR0639
+@@ -177,7 +169,7 @@
+    (result $?input # $?response)
+    =>
+    (while (neq ?response (create$)) do
+-      (nth 1 ?response)
++      (nth$ 1 ?response)
+       (bind ?response (create$))))
+ (reset)                            ; DR0645
+ (run)                              ; DR0645
+@@ -228,7 +220,7 @@
+ (clear)                            ; DR0658
+ (defclass A (is-a USER) (role concrete) (multislot x (create-accessor read-write)))
+ (make-instance a of A)             ; DR0658
+-(mv-slot-insert [a] x 1 abc)       ; DR0658
++(slot-insert$ [a] x 1 abc)         ; DR0658
+ (clear)                            ; DR0659
+ (defclass a (is-a USER) ())        ; DR0659
+ (defclass b (is-a USER) (slot))    ; DR0659
+@@ -286,11 +278,12 @@
+    (printout t ?y " " ?*x* crlf))
+ (foo)                              ; DR0672
+ (clear)
++(deffacts initial (factoid))
+ (reset)                   ; DR0675
+-(defrule foo (initial-fact) (test (> 4 3)) =>)
++(defrule foo (factoid) (test (> 4 3)) =>)
+ (agenda)
+ (assert (a))
+-(defrule bar (initial-fact) (or (test (> 5 3)) (a)) =>)
++(defrule bar (factoid) (or (test (> 5 3)) (a)) =>)
+ (agenda)
+ (reset)
+ (assert (a))
+@@ -396,7 +389,7 @@
+ (make-instance fribban of A)
+ (make-instance quoxnar of A)
+ (send [quoxnar] put-foo (instance-address [fribban]))
+-(send [quoxnar] put-bar (mv-append))
++(send [quoxnar] put-bar (create$))
+ (unmake-instance [fribban])
+ (send (send [quoxnar] get-foo) print)
+ (save-instances "Temp//badfile.tmp")
+@@ -406,7 +399,7 @@
+ (clear)
+ (defglobal ?*x* = 0) ;; DR0698 and DR0701
+ (deffunction create-number-2 ()
+-  (bind ?*x* (nth 1 (str-explode "2.0")))
++  (bind ?*x* (nth$ 1 (explode$ "2.0")))
+   BOGUS)
+ (deffunction create-number ()
+   (create-number-2))
+@@ -415,7 +408,7 @@
+   (while (< ?i 10000) do
+     (gensym*)
+     (bind ?i (+ ?i 1))))
+-(mv-append (create-number) ?*x* (bind ?*x* 0)
++(create$ (create-number) ?*x* (bind ?*x* 0)
+   (force-garbage-collection) (float (random))
+      (float (random)))
+ (clear)
+@@ -428,7 +421,7 @@
+ (ppdeffunction foo)
+ (clear) ;; DR0700
+ (defclass A (is-a USER) (role concrete) (multislot foo (create-accessor read-write)))
+-(make-instance a of A (foo (mv-append)))
++(make-instance a of A (foo (create$)))
+ (send [a] print)
+ (save-instances "Temp//ins.tmp")
+ (unmake-instance [a])
+diff -bup clips_feature_tests_631/drtest08.bat clips_feature_tests_640/drtest08.bat
+--- clips_feature_tests_631/drtest08.bat	2019-07-03 18:54:38.000000000 +0200
++++ clips_feature_tests_640/drtest08.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -108,7 +108,7 @@ Whatever
+ (clear)
+ 
+ (defrule foo ; This should fail
+-   (bbb ?x&:(member a ?x))
++   (bbb ?x&:(member$ a ?x))
+    =>)
+ (clear)
+ 
+diff -bup clips_feature_tests_631/drtest09.bat clips_feature_tests_640/drtest09.bat
+--- clips_feature_tests_631/drtest09.bat	2019-07-03 18:54:38.000000000 +0200
++++ clips_feature_tests_640/drtest09.bat	2021-03-29 18:57:54.000000000 +0200
+@@ -14,6 +14,7 @@
+ (defmessage-handler A delete before ()
+   (if (instance-existp ?self:container) then
+      (unmake-instance ?self:container)))
++(defclass INITIAL-OBJECT (is-a USER))
+      
+ (defrule A-rule
+   (logical ?obj <- (object (is-a A) (match yes)))
+@@ -92,6 +93,7 @@
+ (matches rule1)
+ (clear)                   ; DR0806
+ (setgen 1)
++(defclass INITIAL-OBJECT (is-a USER))     
+ 
+ (defclass A (is-a INITIAL-OBJECT)
+    (multislot foo))
+@@ -120,6 +122,8 @@
+ (make-instance a of A)
+ (send [a] pins)
+ (clear)                   ; DR0810
++(defclass INITIAL-OBJECT (is-a USER))     
++
+ (deffunction MAIN::foo
+    (?garbage)
+    (setgen 1)
+@@ -133,6 +137,7 @@
+ (foo 100)
+ (foo 500)
+ (clear)                   ; DR0813
++(defclass INITIAL-OBJECT (is-a USER))     
+ 
+ (defclass A (is-a INITIAL-OBJECT)
+    (multislot foo (create-accessor read-write)))
+@@ -242,6 +247,7 @@
+ (defclass B (is-a USER))
+ (defmethod B::foo ((?arg B)))
+ (clear)                   ; DR0819
++(defclass INITIAL-OBJECT (is-a USER))     
+ 
+ (defclass A 
+    (is-a INITIAL-OBJECT)
+@@ -273,7 +279,6 @@
+    (printout t "2nd output line: iii = " (send [a] get-iii) crlf))
+ 
+ (defrule test
+-   (initial-fact)
+    =>
+    (make-instance [a] of A)
+    (make-instance [b] of B))
+diff -bup clips_feature_tests_631/drtest10.bat clips_feature_tests_640/drtest10.bat
+--- clips_feature_tests_631/drtest10.bat	2019-07-03 19:02:30.000000000 +0200
++++ clips_feature_tests_640/drtest10.bat	2021-03-29 19:41:16.000000000 +0200
+@@ -390,6 +390,10 @@
+     )
+    =>)
+ (assert (C (x 1)))
++(clear) ; Memory leak
++(deftemplate TAG (multislot attributes)))
++(assert (TAG))
++(modify 1 (attributes (create$)))
+ (clear) ; Load Crash
+ 
+ (defrule bug
+@@ -592,6 +596,46 @@
+ (watch activations)
+ (run 1)
+ (unwatch all)
++(clear) ; Funcall module specifier #1
++
++(defmodule M
++  (export deffunction ?ALL))
++(deffunction foo (?x) (printout t ?x " in M" crlf))
++(defmodule MAIN)
++(deffunction foo (?x) (printout t ?x " in MAIN" crlf))
++(funcall foo bar)
++(funcall M::foo baz)
++(funcall MAIN::foo baz)
++(clear) ; Funcall module specifier #2
++
++(defmodule M
++  (export deffunction ?ALL))
++(deffunction foo (?x) (funcall ?x))
++(deffunction bar () (printout t "bar in M" crlf))
++(defmodule MAIN (export deffunction ?ALL))
++(deffunction bar () (printout t "bar in MAIN" crlf))
++(M::foo bar)
++(M::foo MAIN::bar)
++(M::foo M::bar)
++(clear) ; Funcall module specifier #3
++
++(defmodule M
++  (export deffunction ?ALL))
++(deffunction foo (?x) (funcall ?x))
++(deffunction bar () (printout t "bar in M" crlf))
++(defmodule MAIN)
++(deffunction bar () (printout t "bar in MAIN" crlf))
++(M::foo bar)
++(M::foo MAIN::bar)
++(M::foo M::bar)
++(clear) ; Foreach bug
++(foreach ?a (create$ a b c)
++            (foreach ?b (create$ x y) (printout t ?a " " ?b crlf)))
++(progn$ (?a (create$ a b c)) 
++            (progn$ (?b (create$ x y)) (printout t ?a " " ?b crlf)))
++(clear)
++(defglobal ?*crash* = (create$ 1 2 3 etc))
++(bind ?*crash* (rest$ ?*crash*))
+ (clear) ; SourceForge Ticket #49
+ (::)
+ (clear) ; SourceForge Ticket #54 Extraneous Module Specifier
+@@ -629,7 +673,7 @@
+   
+ (deffacts hellos
+    (hello))
+-(clear) ; Source Ticket #56
++(clear) ; SourceForge Ticket #56
+ 
+ (deftemplate maze
+    (multislot open-list)
+@@ -649,4 +693,237 @@
+    (maze (open-list) 
+          (goal ~nil))
+    =>)
++(clear) ; SourceForge Ticket #58
++
++(defclass FOO (is-a USER)
++  (slot ins (type INSTANCE-ADDRESS)))
++(make-instance [foo] of FOO)
++(timetag (send [foo] get-ins))
++
++(deftemplate foo
++  (slot fct (type FACT-ADDRESS)))
++(assert (foo))   
++(timetag (fact-slot-value 1 fct))
++(clear) ; 2 variable comparison from right memory
++
++(deftemplate manifest
++   (slot origin)
++   (slot destination)) 
++
++(deftemplate shipzone
++    (slot zonename)
++    (multislot cities)
++    (slot city1)
++    (slot city2))
++
++(deffacts fact-data
++    (manifest (origin CHI) (destination WAS)) 
++    (manifest (origin HOU) (destination ATL)) 
++    (shipzone (cities CHI WAS BOS) (city1 CHI) (city2 WAS))
++    (shipzone (cities BOS HOU ATL)))
++
++(defclass MANIFEST
++   (is-a USER)
++   (slot origin)
++   (slot destination)) 
++
++(defclass SHIPZONE
++   (is-a USER)
++   (slot zonename)
++   (multislot cities)
++   (slot city1)
++   (slot city2))
++
++(definstances instance-data
++    (m1 of MANIFEST (origin CHI) (destination WAS)) 
++    (m2 of MANIFEST (origin HOU) (destination ATL)) 
++    (s1 of SHIPZONE (cities CHI WAS BOS) (city1 CHI) (city2 WAS))
++    (s2 of SHIPZONE (cities BOS HOU ATL)))
++
++(defrule city-group-f1
++    (manifest (origin ?x1) (destination ?x2))
++    (shipzone (city1 ?x3&?x1|?x2) (city2 ~?x3&?x1|?x2))
++    =>)
++
++(defrule city-group-f2
++    (manifest (origin ?x1) (destination ?x2))
++    (shipzone (cities $? ?x3&?x1|?x2 ~?x3&?x1|?x2))
++    =>)
++
++(defrule city-group-f3
++    (manifest (origin ?x1) (destination ?x2))
++    (shipzone (cities $? ?x3&?x1|?x2 ~?x3&?x1|?x2 $?))
++    =>)
++
++(defrule city-group-f4
++    (manifest (origin ?x1) (destination ?x2))
++    (shipzone (cities $? ?x3&?x1|?x2 $?) (city1 ~?x3&?x1|?x2))
++    =>)
++
++(defrule city-group-i1
++    (object (is-a MANIFEST) (origin ?x1) (destination ?x2))
++    (object (is-a SHIPZONE) (city1 ?x3&?x1|?x2) (city2 ~?x3&?x1|?x2))
++    =>)
++    
++(defrule city-group-i2 
++    (object (is-a MANIFEST) (origin ?x1) (destination ?x2))
++    (object (is-a SHIPZONE) (cities $? ?x3&?x1|?x2 ~?x3&?x1|?x2))
++    =>)
++
++(defrule city-group-i3
++    (object (is-a MANIFEST) (origin ?x1) (destination ?x2))
++    (object (is-a SHIPZONE) (cities $? ?x3&?x1|?x2 ~?x3&?x1|?x2 $?))
++    =>)
++    
++(defrule city-group-i4 
++    (object (is-a MANIFEST) (origin ?x1) (destination ?x2))
++    (object (is-a SHIPZONE) (cities $? ?x3&?x1|?x2 $?) (city1 ~?x3&?x1|?x2))
++    =>)
++(reset)
++(agenda)
++(clear) ; Error line count issue
++(load line_error_crlf.clp)
++(clear)
++(load line_error_lf.clp)
++(clear) ; CLIPSESG https://groups.google.com/forum/#!topic/CLIPSESG/j4fmacgmAZY
++
++(deftemplate example
++   (slot value
++      (type SYMBOL)
++      (allowed-symbols FALSE TRUE)))
++
++(defrule attempt-to-construct-example
++   ?f <- (line ?line)
++   =>
++   (retract ?f)
++   (assert (example (value (eq ?line "")))))
++(clear) ; CLIPSESG https://groups.google.com/forum/#!topic/CLIPSESG/YaNnNF1xg5w
++
++(defclass OAV
++   (is-a USER)
++   (slot object)
++   (slot attribute)
++   (multislot values))
++
++(make-instance oav1 of OAV
++   (object Fred)
++   (attribute hobbies)
++   (values reading hiking chess))
++(bsave-instances "Temp//drins.bin")
++(reset)
++(bload-instances "Temp//drins.bin")
++(send [oav1] print)
++(clear) ; Object pattern matching underflow
++
++(deftemplate range
++   (slot start)
++   (slot finish))
++             
++(deftemplate sequence
++   (multislot elements))
++(defclass container
++   (is-a USER)
++   (multislot contents))
++
++(deffacts defranges
++   (range (start 2) (finish 11))
++   (range (start 12) (finish 19)))
++          
++(deffacts defsequences
++   (sequence (elements 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19)))
++
++(definstances containers
++   (of container 
++      (contents 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19))
++   (of container
++      (contents)))
++
++(defrule eliminate-entire-range
++   (range (start ?start) 
++          (finish ?finish))
++   (sequence (elements ?start $? ?finish))
++   (object (is-a container)
++           (contents $?before ?start $? ?finish $?after)
++           (name ?name))
++   =>
++   (modify-instance ?name
++      (contents $?before 
++      $?after)))
++(reset)
++(run)
++(clear) ; SourceForge Ticket #61
++(defclass FOO (is-a USER))
++(deftemplate FOO)
++
++(deffunction test1()
++  (bind ?ins (make-instance of FOO))
++  (delayed-do-for-all-instances ((?f FOO)) TRUE
++    (str-cat "abc" "def")))
++
++(deffunction test2()
++  (assert(FOO))
++  (delayed-do-for-all-facts ((?f FOO)) TRUE
++    (str-cat "uvw" "xyz")))
++
++(deffunction test3()
++  (bind ?ins (make-instance of FOO))
++  (do-for-all-instances ((?f FOO)) TRUE
++    (str-cat "abc" "def")))
++
++(deffunction test4()
++  (assert(FOO))
++  (do-for-all-facts ((?f FOO)) TRUE
++    (str-cat "uvw" "xyz")))
++(test1)
++(test2)
++(test3)
++(test4)
++(clear) ; SourceForge Ticket #64
++
++(deftemplate adrs
++   (slot ia (type INSTANCE-ADDRESS))
++   (slot fa (type FACT-ADDRESS))
++   (slot ea (type EXTERNAL-ADDRESS)))
++
++(defclass ADRS (is-a USER)
++   (slot ia (type INSTANCE-ADDRESS))
++   (slot fa (type FACT-ADDRESS))
++   (slot ea (type EXTERNAL-ADDRESS)))
++
++(deffacts start
++   (adrs))
++   
++(definstances start
++   ([adrs] of ADRS))
++(bsave "Temp//ea1.bin")
++(set-dynamic-constraint-checking TRUE)
++(bsave "Temp//ea2.bin")
++(clear)
++(bload "Temp//ea1.bin")
++(assert (adrs))
++(make-instance [adrs] of ADRS)
++(ppfact 1)
++(send [adrs] print)
++(reset)
++(ppfact 1)
++(send [adrs] print)
++(clear)
++(bload "Temp//ea2.bin")
++(assert (adrs))
++(make-instance [adrs] of ADRS)
++(ppfact 1)
++(send [adrs] print)
++(reset)
++(ppfact 1)
++(send [adrs] print)
++(set-dynamic-constraint-checking FALSE)
++(clear) ; SourceForge Ticket #65
++(ppdefclass undefined nil)
++(ppdeftemplate undefined nil)
++(ppdefrule undefined nil)
++(ppdeffacts undefined nil)
++(ppdefinstances undefined nil)
++(ppdeffunction undefined nil)
++(ppdefgeneric undefined nil)
++(ppdefglobal undefined nil)
+ (clear)
+diff -bup clips_feature_tests_631/dynsal.clp clips_feature_tests_640/dynsal.clp
+--- clips_feature_tests_631/dynsal.clp	2019-07-03 18:54:38.000000000 +0200
++++ clips_feature_tests_640/dynsal.clp	2021-03-29 18:57:56.000000000 +0200
+@@ -31,9 +31,9 @@
+ 
+ (deffunction print-order ($?x)
+   (bind ?s (get-salience-evaluation))
+-  (if (eq ?s when-defined) then (bind ?r (nth 1 ?x)))
+-  (if (eq ?s when-activated) then (bind ?r (nth 2 ?x)))
+-  (if (eq ?s every-cycle) then (bind ?r (nth 3 ?x)))
++  (if (eq ?s when-defined) then (bind ?r (nth$ 1 ?x)))
++  (if (eq ?s when-activated) then (bind ?r (nth$ 2 ?x)))
++  (if (eq ?s every-cycle) then (bind ?r (nth$ 3 ?x)))
+   (printout t "This rule should fire " ?r crlf))
+ 
+ (defglobal ?*x* = 0)
+diff -bup clips_feature_tests_631/electrnc.clp clips_feature_tests_640/electrnc.clp
+--- clips_feature_tests_631/electrnc.clp	2019-07-03 18:54:38.000000000 +0200
++++ clips_feature_tests_640/electrnc.clp	2021-03-29 18:57:56.000000000 +0200
+@@ -323,7 +323,7 @@
+   (bind ?*sources* (find-all-instances ((?x SOURCE)) TRUE))
+   (do-for-all-instances ((?x SOURCE)) TRUE
+      (bind ?*gray-code* (create$ ?*gray-code* 0)))
+-  (bind ?*max-iterations* (round (** 2 (length ?*sources*))))
++  (bind ?*max-iterations* (round (** 2 (length$ ?*sources*))))
+   ;; Do the first response.
+   (assert (current-iteration 0)))
+ 
+@@ -333,7 +333,7 @@
+    ;; Set all of the sources to zero.
+    (do-for-all-instances ((?source SOURCE)) TRUE (send ?source put-output-1 0))
+    ;; Determine the initial LED response.
+-   (assert (result ?*gray-code* =(str-implode (LED-response))))
++   (assert (result ?*gray-code* =(implode$ (LED-response))))
+    ;; Begin the iteration process of looping through the gray code combinations.
+    (retract ?f)
+    (assert (current-iteration 1)))
+@@ -343,12 +343,12 @@
+    =>
+    ;; Change the gray code, saving the changed bit value.
+    (bind ?pos (change-which-bit ?n))
+-   (bind ?nv (- 1 (nth ?pos ?*gray-code*)))
++   (bind ?nv (- 1 (nth$ ?pos ?*gray-code*)))
+    (bind ?*gray-code* (replace$ ?*gray-code* ?pos ?pos ?nv))
+    ;; Change the single changed source
+-   (send (nth ?pos ?*sources*) put-output-1 ?nv)   
++   (send (nth$ ?pos ?*sources*) put-output-1 ?nv)   
+    ;; Determine the LED response to the input.
+-   (assert (result ?*gray-code* =(str-implode (LED-response))))
++   (assert (result ?*gray-code* =(implode$ (LED-response))))
+    ;; Assert the new iteration fact
+    (retract ?f)
+    (assert (current-iteration =(+ ?n 1))))
+@@ -382,12 +382,12 @@
+    (retract ?f)
+    ;; Print the input from the sources.
+    (while (neq ?input (create$)) do
+-      (printout t "  " (nth 1 ?input) "  ")
++      (printout t "  " (nth$ 1 ?input) "  ")
+       (bind ?input (rest$ ?input)))
+    ;; Print the output from the LEDs.
+    (printout t " | ")
+-   (bind ?response (str-explode ?response))
++   (bind ?response (explode$ ?response))
+    (while (neq ?response (create$)) do
+-      (printout t "  " (nth 1 ?response) "  ")
++      (printout t "  " (nth$ 1 ?response) "  ")
+       (bind ?response (rest$ ?response)))
+    (printout t crlf))
+diff -bup clips_feature_tests_631/electrnc3.clp clips_feature_tests_640/electrnc3.clp
+--- clips_feature_tests_631/electrnc3.clp	2019-07-03 18:54:38.000000000 +0200
++++ clips_feature_tests_640/electrnc3.clp	2021-03-29 18:57:56.000000000 +0200
+@@ -1 +1 @@
+-;;;======================================================;;;   Circuit Input/Output Simplification Expert System;;;;;;     This program simplifies the boolean decision ;;;     table for a circuit consisting of inputs (SOURCES) ;;;     and outputs (LEDs). ;;;;;;     The simplification procedure works as follows:;;;     1) The connections between components of the;;;        circuit are initialized.;;;     2) The response of the circuit when all SOURCEs;;;        are set to zero is determined.;;;     3) Source input values are changed one at a time;;;        and the response of the circuit is determined.;;;        All possible input combinations are iterated;;;        through using a gray code (a number representation;;;        system using binary digits in which successive;;;        integers differ by exactly one binary digit).;;;        For example, the gray code for the numbers 0 to 7;;;        is 0 = 000, 1 = 001, 2 = 011, 3 = 010, 4 = 110,;;;        5 = 111, 6 = 101, 7 = 100. By using a gray code,;;;        only one SOURCE has to be changed at a time to;;;        determine the next response in the decision ;;;        table (minimizing execution time).;;;     4) As responses are determined, a rule checks to;;;        see if any two sets of inputs with the same;;;        response differ if a single input. If so, then;;;        the single input can be replaced with a * ;;;        (indicating that it does not matter what the;;;        value of the input is given the other inputs).;;;        For example,  if the input 0 1 0 gave a response;;;        of 1 0 and the input 0 0 0 gave the same response,;;;        then the decision table can be simplified by;;;        indicating that 0 * 0 gives a response of 1 0.;;;     5) Once all responses and simplifications have been;;;        determined, the decision table for the circuit is;;;        printed.;;;        ;;;     This example illustrates the use of most of the;;;     constructs available in CLIPS 5.0 and also shows how;;;     COOL can be effectively integrated with rules.;;;     Generic functions are used to connect the components;;;     of the circuit during initialization. Classes,;;;     message-handlers, and deffunctions are used to;;;     determine the response of the circuit to a set of;;;     inputs. Rules, deffunctions, and global variables;;;     are used to control execution, iterate through all;;;     possible input combinations, simplify the boolean;;;     decision tree, and print out the simplified decision;;;     tree.;;;;;;     CLIPS Version 6.0 Example;;; ;;;     To execute, load this file, load one of the circuit;;;     files (circuit1.clp, circuit2.clp, or circuit3.clp), ;;;     reset, and run.;;;======================================================;;;***********;;; DEFCLASSES;;;***********(defclass COMPONENT  (is-a USER)  (slot ID# (create-accessor write)))(defclass NO-OUTPUT  (is-a USER)  (slot number-of-outputs (access read-only) (default 0)   (create-accessor read)))(defmessage-handler NO-OUTPUT compute-output ())(defclass ONE-OUTPUT  (is-a NO-OUTPUT)  (slot number-of-outputs (access read-only) (default 1)    (create-accessor read))  (slot output-1 (default UNDEFINED) (create-accessor write))  (slot output-1-link (default GROUND) (create-accessor write))  (slot output-1-link-pin (default 1) (create-accessor write)))(defmessage-handler ONE-OUTPUT put-output-1 after (?value)   (send ?self:output-1-link          (sym-cat put-input- ?self:output-1-link-pin)         ?value))(defclass TWO-OUTPUT  (is-a ONE-OUTPUT)  (slot number-of-outputs (access read-only) (default 2)     (create-accessor read))  (slot output-2 (default UNDEFINED) (create-accessor write))  (slot output-2-link (default GROUND) (create-accessor write))  (slot output-2-link-pin (default 1) (create-accessor write)))(defmessage-handler TWO-OUTPUT put-output-1 after (?value)   (send ?self:output-2-link          (sym-cat put-input- ?self:output-2-link-pin)         ?value))(defclass NO-INPUT  (is-a USER)  (slot number-of-inputs (access read-only) (default 0)     (create-accessor read)))(defclass ONE-INPUT  (is-a NO-INPUT)  (slot number-of-inputs (access read-only) (default 1)     (create-accessor read))  (slot input-1 (default UNDEFINED) (visibility public)     (create-accessor read-write))  (slot input-1-link (default GROUND) (create-accessor write))  (slot input-1-link-pin (default 1) (create-accessor write)))(defmessage-handler ONE-INPUT put-input-1 after (?value)   (send ?self compute-output))(defclass TWO-INPUT  (is-a ONE-INPUT)  (slot number-of-inputs (access read-only) (default 2)     (create-accessor read))  (slot input-2 (default UNDEFINED) (visibility public)     (create-accessor write))  (slot input-2-link (default GROUND) (create-accessor write))  (slot input-2-link-pin (default 1) (create-accessor write)))(defmessage-handler TWO-INPUT put-input-2 after (?value)   (send ?self compute-output)) (defclass SOURCE  (is-a NO-INPUT ONE-OUTPUT COMPONENT)  (role concrete)  (slot output-1 (default UNDEFINED) (create-accessor write)))(defclass SINK  (is-a ONE-INPUT NO-OUTPUT COMPONENT)  (role concrete)  (slot input-1 (default UNDEFINED) (create-accessor read-write)));;;*******************;;; NOT GATE COMPONENT;;;*******************(defclass NOT-GATE  (is-a ONE-INPUT ONE-OUTPUT COMPONENT)  (role concrete))(deffunction not# (?x) (- 1 ?x))(defmessage-handler NOT-GATE compute-output ()   (if (integerp ?self:input-1) then       (send ?self put-output-1 (not# ?self:input-1))));;;*******************;;; AND GATE COMPONENT;;;*******************(defclass AND-GATE  (is-a TWO-INPUT ONE-OUTPUT COMPONENT)  (role concrete))(deffunction and# (?x ?y)   (if (and (!= ?x 0) (!= ?y 0)) then 1 else 0))(defmessage-handler AND-GATE compute-output ()   (if (and (integerp ?self:input-1)             (integerp ?self:input-2)) then       (send ?self put-output-1 (and# ?self:input-1 ?self:input-2))));;;******************;;; OR GATE COMPONENT;;;******************(defclass OR-GATE  (is-a TWO-INPUT ONE-OUTPUT COMPONENT)  (role concrete))(deffunction or# (?x ?y)   (if (or (!= ?x 0) (!= ?y 0)) then 1 else 0))(defmessage-handler OR-GATE compute-output ()   (if (and (integerp ?self:input-1)             (integerp ?self:input-2)) then       (send ?self put-output-1 (or# ?self:input-1 ?self:input-2))));;;********************;;; NAND GATE COMPONENT;;;********************(defclass NAND-GATE  (is-a TWO-INPUT ONE-OUTPUT COMPONENT)  (role concrete))(deffunction nand# (?x ?y)   (if (not (and (!= ?x 0) (!= ?y 0))) then 1 else 0))(defmessage-handler NAND-GATE compute-output ()   (if (and (integerp ?self:input-1)             (integerp ?self:input-2)) then       (send ?self put-output-1 (nand# ?self:input-1 ?self:input-2))));;;*******************;;; XOR GATE COMPONENT;;;*******************(defclass XOR-GATE  (is-a TWO-INPUT ONE-OUTPUT COMPONENT)  (role concrete))(deffunction xor# (?x ?y)   (if (or (and (= ?x 1) (= ?y 0))          (and (= ?x 0) (= ?y 1))) then 1 else 0))(defmessage-handler XOR-GATE compute-output ()   (if (and (integerp ?self:input-1)             (integerp ?self:input-2)) then       (send ?self put-output-1 (xor# ?self:input-1 ?self:input-2))));;;*******************;;; SPLITTER COMPONENT;;;*******************(defclass SPLITTER  (is-a ONE-INPUT TWO-OUTPUT COMPONENT)  (role concrete))(defmessage-handler SPLITTER compute-output ()   (if (integerp ?self:input-1) then       (send ?self put-output-1 ?self:input-1)       (send ?self put-output-2 ?self:input-1)));;;**************;;; LED COMPONENT;;;**************(defclass LED  (is-a ONE-INPUT NO-OUTPUT COMPONENT)  (role concrete));;; Returns the current value of each LED ;;; instance in a multifield value.(deffunction LED-response ()   (bind ?response (create$))   (do-for-all-instances ((?led LED)) TRUE      (bind ?response (create$ ?response (send ?led get-input-1))))   ?response);;;***************************;;; DEFGENERICS AND DEFMETHODS;;;***************************(defgeneric connect);;; Connects a one output component to a one input component.(defmethod connect ((?out ONE-OUTPUT) (?in ONE-INPUT))    (send ?out put-output-1-link ?in)    (send ?out put-output-1-link-pin 1)   (send ?in  put-input-1-link ?out)   (send ?in  put-input-1-link-pin 1));;; Connects a one output component to one pin of a two input component.(defmethod connect ((?out ONE-OUTPUT) (?in TWO-INPUT) (?in-pin INTEGER))    (send ?out put-output-1-link ?in)   (send ?out put-output-1-link-pin ?in-pin)   (send ?in  (sym-cat put-input- ?in-pin -link) ?out)   (send ?in  (sym-cat put-input- ?in-pin -link-pin) 1));;; Connects one pin of a two output component to a one input component.(defmethod connect ((?out TWO-OUTPUT) (?out-pin INTEGER) (?in ONE-INPUT))    (send ?out (sym-cat put-output- ?out-pin -link) ?in)   (send ?out (sym-cat put-output- ?out-pin -link-pin) 1)   (send ?in put-input-1-link ?out)   (send ?in put-input-1-link-pin ?out-pin));;; Connects one pin of a two output component ;;; to one pin of a two input component.(defmethod connect ((?out TWO-OUTPUT) (?out-pin INTEGER)                    (?in TWO-INPUT) (?in-pin INTEGER))    (send ?out (sym-cat put-output- ?out-pin -link) ?in)   (send ?out (sym-cat put-output- ?out-pin -link-pin) ?in-pin)   (send ?in  (sym-cat put-input- ?in-pin -link) ?out)   (send ?in  (sym-cat put-input- ?in-pin -link-pin) ?out-pin));;;****************************;;; DEFGLOBALS AND DEFFUNCTIONS ;;;****************************(defglobal ?*gray-code* = (create$)           ?*sources* = (create$)           ?*max-iterations* = 0);;; Given the current iteration, determines the next ;;; bit in the gray code to change. ;;; Algorithm courtesy of John R. Kennedy (The BitMan).(deffunction change-which-bit (?x)   (bind ?i 1)   (while (and (evenp ?x) (!= ?x 0)) do       (bind ?x (div ?x 2))      (bind ?i (+ ?i 1)))   ?i);;; Forward declaration since the initial configuration;;; is stored in a separate file.(deffunction connect-circuit ());;;*********;;; DEFRULES;;;*********(defrule startup  =>  ;; Initialize the circuit by connecting the components  (connect-circuit)   ;; Setup the globals.   (bind ?*sources* (find-all-instances ((?x SOURCE)) TRUE))  (do-for-all-instances ((?x SOURCE)) TRUE     (bind ?*gray-code* (create$ ?*gray-code* 0)))  (bind ?*max-iterations* (round (** 2 (length ?*sources*))))  ;; Do the first response.  (assert (current-iteration 0)))(defrule compute-response-1st-time   ?f <- (current-iteration 0)   =>   ;; Set all of the sources to zero.   (do-for-all-instances ((?source SOURCE)) TRUE (send ?source put-output-1 0))   ;; Determine the initial LED response.   (assert (result ?*gray-code* =(str-implode (LED-response))))   ;; Begin the iteration process of looping through the gray code combinations.   (retract ?f)   (assert (current-iteration 1)))(defrule compute-response-other-times   ?f <- (current-iteration ?n&~0&:(< ?n ?*max-iterations*))   =>   ;; Change the gray code, saving the changed bit value.   (bind ?pos (change-which-bit ?n))   (bind ?nv (- 1 (nth ?pos ?*gray-code*)))   (bind ?*gray-code* (replace$ ?*gray-code* ?pos ?pos ?nv))   ;; Change the single changed source   (send (nth ?pos ?*sources*) put-output-1 ?nv)      ;; Determine the LED response to the input.   (assert (result ?*gray-code* =(str-implode (LED-response))))   ;; Assert the new iteration fact   (retract ?f)   (assert (current-iteration =(+ ?n 1))))(defrule merge-responses   (declare (salience 10))   ?f1 <- (result $?b  ?x $?e ?response)   ?f2 <- (result $?b ~?x $?e ?response)   =>   (retract ?f1 ?f2)   (assert (result $?b * $?e ?response)))(defrule print-header   (declare (salience -10))   =>   (assert (print-results))   (do-for-all-instances ((?x SOURCE)) TRUE (format t " %3s " (sym-cat ?x)))   (printout t " | ")   (do-for-all-instances ((?x LED)) TRUE (format t " %3s " (sym-cat ?x)))   (format t "%n")   (do-for-all-instances ((?x SOURCE)) TRUE (printout t "-----"))   (printout t "-+-")   (do-for-all-instances ((?x LED)) TRUE (printout t "-----"))   (format t "%n"))      (defrule print-result   (print-results)   ?f <- (result $?input ?response)   (not (result $?input-2 ?response-2&:(< (str-compare ?response-2 ?response) 0)))   =>   (retract ?f)   ;; Print the input from the sources.   (while (neq ?input (create$)) do      (printout t "  " (nth 1 ?input) "  ")      (bind ?input (rest$ ?input)))   ;; Print the output from the LEDs.   (printout t " | ")   (bind ?response (str-explode ?response))   (while (neq ?response (create$)) do      (printout t "  " (nth 1 ?response) "  ")      (bind ?response (rest$ ?response)))   (printout t crlf));;;======================================================;;;   Example Circuit #3;;;;;;     An example circuit to be loaded for use with;;;     the "electronic.clp" example program.;;;;;; LEGEND;;; ------------;;; S = Source;;; P = Splitter;;; N = NOT Gate;;; A = AND Gate;;; D = NAND Gate;;; O = OR Gate;;; X = XOR Gate;;; L = LED;;; ;;;;;;          /----------\           ;;; S1>--P1>-|           O1>-------------\           /--N3>--L1;;;          |      /---/                 X2>----P4>-|;;;          |      |                /---/           \-------L2;;;          \------)----N1>---\     |      ;;;                 |           X1>--/;;;          /--N2>-/  /-------/;;; S2>--P2>-|         |    ;;;          \---------)-------\;;;                    |        A1>---------\;;;          /---------/  /----/            |;;; S3>--P3>-|            |                 |        ;;;          \------------)----\            \---\;;;                       |     D1>------\       D2>---------L3;;; S4>-------------------/    /          O2>---/;;;                            |   /-----/;;; S5>------------------------/   |;;;                                |;;; S6>----------------------------/    ;;;;;;======================================================(definstances circuit  (S-1 of SOURCE)  (S-2 of SOURCE)  (S-3 of SOURCE)  (S-4 of SOURCE)  (S-5 of SOURCE)  (S-6 of SOURCE)  (P-1 of SPLITTER)  (P-2 of SPLITTER)  (P-3 of SPLITTER)  (P-4 of SPLITTER)  (N-1 of NOT-GATE)  (N-2 of NOT-GATE)  (N-3 of NOT-GATE)  (O-1 of OR-GATE)  (O-2 of OR-GATE)  (X-1 of XOR-GATE)  (X-2 of XOR-GATE)  (A-1 of AND-GATE)  (D-1 of NAND-GATE)  (D-2 of NAND-GATE)  (L-1 of LED)  (L-2 of LED)  (L-3 of LED))(deffunction connect-circuit ()  (connect [S-1] [P-1])  (connect [S-2] [P-2])  (connect [S-3] [P-3])  (connect [S-4] [A-1] 2)  (connect [S-5] [D-1] 2)  (connect [S-6] [O-2] 2)  (connect [P-1] 1 [O-1] 1)  (connect [P-1] 2 [N-1])  (connect [P-2] 1 [N-2])  (connect [P-2] 2 [A-1] 1)  (connect [P-3] 1 [X-1] 2)  (connect [P-3] 2 [D-1] 1)  (connect [N-1] [X-1] 1)  (connect [N-2] [O-1] 2)  (connect [O-1] [X-2] 1)  (connect [X-1] [X-2] 2)  (connect [A-1] [D-2] 1)  (connect [D-1] [O-2] 1)  (connect [X-2] [P-4])  (connect [O-2] [D-2] 2)  (connect [P-4] 1 [N-3])  (connect [P-4] 2 [L-2])  (connect [D-2] [L-3])  (connect [N-3] [L-1]))
+\ No newline at end of file
++;;;======================================================;;;   Circuit Input/Output Simplification Expert System;;;;;;     This program simplifies the boolean decision ;;;     table for a circuit consisting of inputs (SOURCES) ;;;     and outputs (LEDs). ;;;;;;     The simplification procedure works as follows:;;;     1) The connections between components of the;;;        circuit are initialized.;;;     2) The response of the circuit when all SOURCEs;;;        are set to zero is determined.;;;     3) Source input values are changed one at a time;;;        and the response of the circuit is determined.;;;        All possible input combinations are iterated;;;        through using a gray code (a number representation;;;        system using binary digits in which successive;;;        integers differ by exactly one binary digit).;;;        For example, the gray code for the numbers 0 to 7;;;        is 0 = 000, 1 = 001, 2 = 011, 3 = 010, 4 = 110,;;;        5 = 111, 6 = 101, 7 = 100. By using a gray code,;;;        only one SOURCE has to be changed at a time to;;;        determine the next response in the decision ;;;        table (minimizing execution time).;;;     4) As responses are determined, a rule checks to;;;        see if any two sets of inputs with the same;;;        response differ if a single input. If so, then;;;        the single input can be replaced with a * ;;;        (indicating that it does not matter what the;;;        value of the input is given the other inputs).;;;        For example,  if the input 0 1 0 gave a response;;;        of 1 0 and the input 0 0 0 gave the same response,;;;        then the decision table can be simplified by;;;        indicating that 0 * 0 gives a response of 1 0.;;;     5) Once all responses and simplifications have been;;;        determined, the decision table for the circuit is;;;        printed.;;;        ;;;     This example illustrates the use of most of the;;;     constructs available in CLIPS 5.0 and also shows how;;;     COOL can be effectively integrated with rules.;;;     Generic functions are used to connect the components;;;     of the circuit during initialization. Classes,;;;     message-handlers, and deffunctions are used to;;;     determine the response of the circuit to a set of;;;     inputs. Rules, deffunctions, and global variables;;;     are used to control execution, iterate through all;;;     possible input combinations, simplify the boolean;;;     decision tree, and print out the simplified decision;;;     tree.;;;;;;     CLIPS Version 6.0 Example;;; ;;;     To execute, load this file, load one of the circuit;;;     files (circuit1.clp, circuit2.clp, or circuit3.clp), ;;;     reset, and run.;;;======================================================;;;***********;;; DEFCLASSES;;;***********(defclass COMPONENT  (is-a USER)  (slot ID# (create-accessor write)))(defclass NO-OUTPUT  (is-a USER)  (slot number-of-outputs (access read-only) (default 0)   (create-accessor read)))(defmessage-handler NO-OUTPUT compute-output ())(defclass ONE-OUTPUT  (is-a NO-OUTPUT)  (slot number-of-outputs (access read-only) (default 1)    (create-accessor read))  (slot output-1 (default UNDEFINED) (create-accessor write))  (slot output-1-link (default GROUND) (create-accessor write))  (slot output-1-link-pin (default 1) (create-accessor write)))(defmessage-handler ONE-OUTPUT put-output-1 after (?value)   (send ?self:output-1-link          (sym-cat put-input- ?self:output-1-link-pin)         ?value))(defclass TWO-OUTPUT  (is-a ONE-OUTPUT)  (slot number-of-outputs (access read-only) (default 2)     (create-accessor read))  (slot output-2 (default UNDEFINED) (create-accessor write))  (slot output-2-link (default GROUND) (create-accessor write))  (slot output-2-link-pin (default 1) (create-accessor write)))(defmessage-handler TWO-OUTPUT put-output-1 after (?value)   (send ?self:output-2-link          (sym-cat put-input- ?self:output-2-link-pin)         ?value))(defclass NO-INPUT  (is-a USER)  (slot number-of-inputs (access read-only) (default 0)     (create-accessor read)))(defclass ONE-INPUT  (is-a NO-INPUT)  (slot number-of-inputs (access read-only) (default 1)     (create-accessor read))  (slot input-1 (default UNDEFINED) (visibility public)     (create-accessor read-write))  (slot input-1-link (default GROUND) (create-accessor write))  (slot input-1-link-pin (default 1) (create-accessor write)))(defmessage-handler ONE-INPUT put-input-1 after (?value)   (send ?self compute-output))(defclass TWO-INPUT  (is-a ONE-INPUT)  (slot number-of-inputs (access read-only) (default 2)     (create-accessor read))  (slot input-2 (default UNDEFINED) (visibility public)     (create-accessor write))  (slot input-2-link (default GROUND) (create-accessor write))  (slot input-2-link-pin (default 1) (create-accessor write)))(defmessage-handler TWO-INPUT put-input-2 after (?value)   (send ?self compute-output)) (defclass SOURCE  (is-a NO-INPUT ONE-OUTPUT COMPONENT)  (role concrete)  (slot output-1 (default UNDEFINED) (create-accessor write)))(defclass SINK  (is-a ONE-INPUT NO-OUTPUT COMPONENT)  (role concrete)  (slot input-1 (default UNDEFINED) (create-accessor read-write)));;;*******************;;; NOT GATE COMPONENT;;;*******************(defclass NOT-GATE  (is-a ONE-INPUT ONE-OUTPUT COMPONENT)  (role concrete))(deffunction not# (?x) (- 1 ?x))(defmessage-handler NOT-GATE compute-output ()   (if (integerp ?self:input-1) then       (send ?self put-output-1 (not# ?self:input-1))));;;*******************;;; AND GATE COMPONENT;;;*******************(defclass AND-GATE  (is-a TWO-INPUT ONE-OUTPUT COMPONENT)  (role concrete))(deffunction and# (?x ?y)   (if (and (!= ?x 0) (!= ?y 0)) then 1 else 0))(defmessage-handler AND-GATE compute-output ()   (if (and (integerp ?self:input-1)             (integerp ?self:input-2)) then       (send ?self put-output-1 (and# ?self:input-1 ?self:input-2))));;;******************;;; OR GATE COMPONENT;;;******************(defclass OR-GATE  (is-a TWO-INPUT ONE-OUTPUT COMPONENT)  (role concrete))(deffunction or# (?x ?y)   (if (or (!= ?x 0) (!= ?y 0)) then 1 else 0))(defmessage-handler OR-GATE compute-output ()   (if (and (integerp ?self:input-1)             (integerp ?self:input-2)) then       (send ?self put-output-1 (or# ?self:input-1 ?self:input-2))));;;********************;;; NAND GATE COMPONENT;;;********************(defclass NAND-GATE  (is-a TWO-INPUT ONE-OUTPUT COMPONENT)  (role concrete))(deffunction nand# (?x ?y)   (if (not (and (!= ?x 0) (!= ?y 0))) then 1 else 0))(defmessage-handler NAND-GATE compute-output ()   (if (and (integerp ?self:input-1)             (integerp ?self:input-2)) then       (send ?self put-output-1 (nand# ?self:input-1 ?self:input-2))));;;*******************;;; XOR GATE COMPONENT;;;*******************(defclass XOR-GATE  (is-a TWO-INPUT ONE-OUTPUT COMPONENT)  (role concrete))(deffunction xor# (?x ?y)   (if (or (and (= ?x 1) (= ?y 0))          (and (= ?x 0) (= ?y 1))) then 1 else 0))(defmessage-handler XOR-GATE compute-output ()   (if (and (integerp ?self:input-1)             (integerp ?self:input-2)) then       (send ?self put-output-1 (xor# ?self:input-1 ?self:input-2))));;;*******************;;; SPLITTER COMPONENT;;;*******************(defclass SPLITTER  (is-a ONE-INPUT TWO-OUTPUT COMPONENT)  (role concrete))(defmessage-handler SPLITTER compute-output ()   (if (integerp ?self:input-1) then       (send ?self put-output-1 ?self:input-1)       (send ?self put-output-2 ?self:input-1)));;;**************;;; LED COMPONENT;;;**************(defclass LED  (is-a ONE-INPUT NO-OUTPUT COMPONENT)  (role concrete));;; Returns the current value of each LED ;;; instance in a multifield value.(deffunction LED-response ()   (bind ?response (create$))   (do-for-all-instances ((?led LED)) TRUE      (bind ?response (create$ ?response (send ?led get-input-1))))   ?response);;;***************************;;; DEFGENERICS AND DEFMETHODS;;;***************************(defgeneric connect);;; Connects a one output component to a one input component.(defmethod connect ((?out ONE-OUTPUT) (?in ONE-INPUT))    (send ?out put-output-1-link ?in)    (send ?out put-output-1-link-pin 1)   (send ?in  put-input-1-link ?out)   (send ?in  put-input-1-link-pin 1));;; Connects a one output component to one pin of a two input component.(defmethod connect ((?out ONE-OUTPUT) (?in TWO-INPUT) (?in-pin INTEGER))    (send ?out put-output-1-link ?in)   (send ?out put-output-1-link-pin ?in-pin)   (send ?in  (sym-cat put-input- ?in-pin -link) ?out)   (send ?in  (sym-cat put-input- ?in-pin -link-pin) 1));;; Connects one pin of a two output component to a one input component.(defmethod connect ((?out TWO-OUTPUT) (?out-pin INTEGER) (?in ONE-INPUT))    (send ?out (sym-cat put-output- ?out-pin -link) ?in)   (send ?out (sym-cat put-output- ?out-pin -link-pin) 1)   (send ?in put-input-1-link ?out)   (send ?in put-input-1-link-pin ?out-pin));;; Connects one pin of a two output component ;;; to one pin of a two input component.(defmethod connect ((?out TWO-OUTPUT) (?out-pin INTEGER)                    (?in TWO-INPUT) (?in-pin INTEGER))    (send ?out (sym-cat put-output- ?out-pin -link) ?in)   (send ?out (sym-cat put-output- ?out-pin -link-pin) ?in-pin)   (send ?in  (sym-cat put-input- ?in-pin -link) ?out)   (send ?in  (sym-cat put-input- ?in-pin -link-pin) ?out-pin));;;****************************;;; DEFGLOBALS AND DEFFUNCTIONS ;;;****************************(defglobal ?*gray-code* = (create$)           ?*sources* = (create$)           ?*max-iterations* = 0);;; Given the current iteration, determines the next ;;; bit in the gray code to change. ;;; Algorithm courtesy of John R. Kennedy (The BitMan).(deffunction change-which-bit (?x)   (bind ?i 1)   (while (and (evenp ?x) (!= ?x 0)) do       (bind ?x (div ?x 2))      (bind ?i (+ ?i 1)))   ?i);;; Forward declaration since the initial configuration;;; is stored in a separate file.(deffunction connect-circuit ());;;*********;;; DEFRULES;;;*********(defrule startup  =>  ;; Initialize the circuit by connecting the components  (connect-circuit)   ;; Setup the globals.   (bind ?*sources* (find-all-instances ((?x SOURCE)) TRUE))  (do-for-all-instances ((?x SOURCE)) TRUE     (bind ?*gray-code* (create$ ?*gray-code* 0)))  (bind ?*max-iterations* (round (** 2 (length$ ?*sources*))))  ;; Do the first response.  (assert (current-iteration 0)))(defrule compute-response-1st-time   ?f <- (current-iteration 0)   =>   ;; Set all of the sources to zero.   (do-for-all-instances ((?source SOURCE)) TRUE (send ?source put-output-1 0))   ;; Determine the initial LED response.   (assert (result ?*gray-code* =(implode$ (LED-response))))   ;; Begin the iteration process of looping through the gray code combinations.   (retract ?f)   (assert (current-iteration 1)))(defrule compute-response-other-times   ?f <- (current-iteration ?n&~0&:(< ?n ?*max-iterations*))   =>   ;; Change the gray code, saving the changed bit value.   (bind ?pos (change-which-bit ?n))   (bind ?nv (- 1 (nth$ ?pos ?*gray-code*)))   (bind ?*gray-code* (replace$ ?*gray-code* ?pos ?pos ?nv))   ;; Change the single changed source   (send (nth$ ?pos ?*sources*) put-output-1 ?nv)      ;; Determine the LED response to the input.   (assert (result ?*gray-code* =(implode$ (LED-response))))   ;; Assert the new iteration fact   (retract ?f)   (assert (current-iteration =(+ ?n 1))))(defrule merge-responses   (declare (salience 10))   ?f1 <- (result $?b  ?x $?e ?response)   ?f2 <- (result $?b ~?x $?e ?response)   =>   (retract ?f1 ?f2)   (assert (result $?b * $?e ?response)))(defrule print-header   (declare (salience -10))   =>   (assert (print-results))   (do-for-all-instances ((?x SOURCE)) TRUE (format t " %3s " (sym-cat ?x)))   (printout t " | ")   (do-for-all-instances ((?x LED)) TRUE (format t " %3s " (sym-cat ?x)))   (format t "%n")   (do-for-all-instances ((?x SOURCE)) TRUE (printout t "-----"))   (printout t "-+-")   (do-for-all-instances ((?x LED)) TRUE (printout t "-----"))   (format t "%n"))      (defrule print-result   (print-results)   ?f <- (result $?input ?response)   (not (result $?input-2 ?response-2&:(< (str-compare ?response-2 ?response) 0)))   =>   (retract ?f)   ;; Print the input from the sources.   (while (neq ?input (create$)) do      (printout t "  " (nth$ 1 ?input) "  ")      (bind ?input (rest$ ?input)))   ;; Print the output from the LEDs.   (printout t " | ")   (bind ?response (explode$ ?response))   (while (neq ?response (create$)) do      (printout t "  " (nth$ 1 ?response) "  ")      (bind ?response (rest$ ?response)))   (printout t crlf));;;======================================================;;;   Example Circuit #3;;;;;;     An example circuit to be loaded for use with;;;     the "electronic.clp" example program.;;;;;; LEGEND;;; ------------;;; S = Source;;; P = Splitter;;; N = NOT Gate;;; A = AND Gate;;; D = NAND Gate;;; O = OR Gate;;; X = XOR Gate;;; L = LED;;; ;;;;;;          /----------\           ;;; S1>--P1>-|           O1>-------------\           /--N3>--L1;;;          |      /---/                 X2>----P4>-|;;;          |      |                /---/           \-------L2;;;          \------)----N1>---\     |      ;;;                 |           X1>--/;;;          /--N2>-/  /-------/;;; S2>--P2>-|         |    ;;;          \---------)-------\;;;                    |        A1>---------\;;;          /---------/  /----/            |;;; S3>--P3>-|            |                 |        ;;;          \------------)----\            \---\;;;                       |     D1>------\       D2>---------L3;;; S4>-------------------/    /          O2>---/;;;                            |   /-----/;;; S5>------------------------/   |;;;                                |;;; S6>----------------------------/    ;;;;;;======================================================(definstances circuit  (S-1 of SOURCE)  (S-2 of SOURCE)  (S-3 of SOURCE)  (S-4 of SOURCE)  (S-5 of SOURCE)  (S-6 of SOURCE)  (P-1 of SPLITTER)  (P-2 of SPLITTER)  (P-3 of SPLITTER)  (P-4 of SPLITTER)  (N-1 of NOT-GATE)  (N-2 of NOT-GATE)  (N-3 of NOT-GATE)  (O-1 of OR-GATE)  (O-2 of OR-GATE)  (X-1 of XOR-GATE)  (X-2 of XOR-GATE)  (A-1 of AND-GATE)  (D-1 of NAND-GATE)  (D-2 of NAND-GATE)  (L-1 of LED)  (L-2 of LED)  (L-3 of LED))(deffunction connect-circuit ()  (connect [S-1] [P-1])  (connect [S-2] [P-2])  (connect [S-3] [P-3])  (connect [S-4] [A-1] 2)  (connect [S-5] [D-1] 2)  (connect [S-6] [O-2] 2)  (connect [P-1] 1 [O-1] 1)  (connect [P-1] 2 [N-1])  (connect [P-2] 1 [N-2])  (connect [P-2] 2 [A-1] 1)  (connect [P-3] 1 [X-1] 2)  (connect [P-3] 2 [D-1] 1)  (connect [N-1] [X-1] 1)  (connect [N-2] [O-1] 2)  (connect [O-1] [X-2] 1)  (connect [X-1] [X-2] 2)  (connect [A-1] [D-2] 1)  (connect [D-1] [O-2] 1)  (connect [X-2] [P-4])  (connect [O-2] [D-2] 2)  (connect [P-4] 1 [N-3])  (connect [P-4] 2 [L-2])  (connect [D-2] [L-3])  (connect [N-3] [L-1]))
+\ No newline at end of file
+diff -bup clips_feature_tests_631/factsav.bat clips_feature_tests_640/factsav.bat
+--- clips_feature_tests_631/factsav.bat	2019-07-03 18:54:38.000000000 +0200
++++ clips_feature_tests_640/factsav.bat	2021-03-29 19:41:32.000000000 +0200
+@@ -11,6 +11,18 @@
+ (load-facts blah.tmp bogus)
+ (remove blah.tmp)
+ (load-facts blah.tmp)
++(bsave-facts)
++(bsave-facts 7)
++(bsave-facts blah.tmp 7)
++(bsave-facts blah.tmp hello)
++(bsave-facts blah.tmp local bogus)
++(remove blah.tmp)
++(bsave-facts blah.tmp)
++(bload-facts)
++(bload-facts 7)
++(bload-facts blah.tmp bogus)
++(remove blah.tmp)
++(bload-facts blah.tmp)
+ (clear) ; Test Saving and Reloading
+ (load factsav.clp)
+ (reset)
+@@ -25,18 +37,26 @@
+ (facts)
+ (save-facts "Temp//fctsav1.fct" visible)
+ (save-facts "Temp//fctsav2.fct" local A)
++(bsave-facts "Temp//fctsavb1.fct" visible)
++(bsave-facts "Temp//fctsavb2.fct" local A)
+ (set-current-module BAR)
+ (facts)
+ (save-facts "Temp//fctsav3.fct" local C)
+ (save-facts "Temp//fctsav4.fct" visible B E)
++(bsave-facts "Temp//fctsavb3.fct" local C)
++(bsave-facts "Temp//fctsavb4.fct" visible B E)
+ (set-current-module WOZ)
+ (facts)
+ (save-facts "Temp//fctsav5.fct" local)
+ (save-facts "Temp//fctsav6.fct" visible F G E)
++(bsave-facts "Temp//fctsavb5.fct" local)
++(bsave-facts "Temp//fctsavb6.fct" visible F G E)
+ (set-current-module FOO)
+ (facts)
+ (save-facts "Temp//fctsav7.fct" local)
+ (save-facts "Temp//fctsav8.fct" visible)
++(bsave-facts "Temp//fctsavb7.fct" local)
++(bsave-facts "Temp//fctsavb8.fct" visible)
+ (reset)
+ (set-current-module MAIN)
+ (load-facts "Temp//fctsav1.fct")
+@@ -69,3 +89,85 @@
+ (load-facts "Temp//fctsav8.fct")
+ (facts *)
+ (retract *)
++(set-current-module MAIN)
++(bload-facts "Temp//fctsavb1.fct")
++(facts *)
++(retract *)
++(bload-facts "Temp//fctsavb2.fct")
++(facts *)
++(retract *)
++(bload-facts "Temp//fctsavb3.fct")
++(facts *)
++(retract *)
++(set-current-module BAR)
++(bload-facts "Temp//fctsavb3.fct")
++(facts *)
++(retract *)
++(bload-facts "Temp//fctsavb4.fct")
++(facts *)
++(retract *)
++(set-current-module WOZ)
++(bload-facts "Temp//fctsavb5.fct")
++(facts *)
++(retract *)
++(bload-facts "Temp//fctsavb6.fct")
++(facts *)
++(retract *)
++(set-current-module FOO)
++(bload-facts "Temp//fctsavb7.fct")
++(facts *)
++(retract *)
++(bload-facts "Temp//fctsavb8.fct")
++(facts *)
++(retract *)
++(clear)
++
++(deftemplate person 
++   (multislot name)
++   (multislot hobbies)
++   (slot age (type INTEGER))
++   (slot gender (allowed-values male female)))
++(assert (factoid))
++(assert (types a "bc" [def] 1 2.3))
++(assert (colors red green blue))
++(assert (people frank sally joe))
++(assert (person (name Roger Downs) (age 33) (gender male) (hobbies reading running)))
++(assert (person (name Jenny Smith) (age 25) (gender female) (hobbies movies softball)))
++(bsave-facts "Temp//fctsavb9.fct")
++(clear)
++
++(deftemplate person 
++   (multislot name)
++   (multislot hobbies)
++   (slot age (type INTEGER))
++   (slot gender (allowed-values male female)))
++(assert (people susan howard jane))
++(bload-facts "Temp//fctsavb9.fct")
++(facts)
++(clear)
++
++(deftemplate stuff
++   (slot fa (type FACT-ADDRESS))
++   (slot ea (type EXTERNAL-ADDRESS))
++   (slot ia (type INSTANCE-ADDRESS)))
++(assert (stuff))
++(facts)
++(defclass THING (is-a USER))
++(make-instance t1 of THING)
++(assert (stuff (fa (assert (colors red green blue))) (ia (instance-address [t1]))))
++(facts)
++(bsave-facts "Temp//fctsavb10.fct")
++(reset)
++(bload-facts "Temp//fctsavb10.fct")
++(facts)
++(clear)
++(deftemplate cp (multislot v) (multislot a))
++
++(assert (cp (v) (a))
++        (cp (v 1) (a x))
++        (cp (v 2 3) (a))
++        (cp (v) (a y z)))
++(bsave-facts "Temp//fctsavb11.fct")
++(reset)
++(bload-facts "Temp//fctsavb11.fct")
++(facts)
+diff -bup clips_feature_tests_631/factscmd.bat clips_feature_tests_640/factscmd.bat
+--- clips_feature_tests_631/factscmd.bat	2019-07-03 19:04:22.000000000 +0200
++++ clips_feature_tests_640/factscmd.bat	2021-03-29 18:57:56.000000000 +0200
+@@ -88,12 +88,16 @@
+ (ppfact)
+ (ppfact a)
+ (ppfact 2)
+-(assert (foo a b c d))
++(deftemplate person (slot name)(slot age (default 0)))
++(assert (person (name Me)))
+ (ppfact 1)
++(ppfact 1 bogus)
+ (ppfact 1 nil)
+ (ppfact 1 t)
+ (ppfact 1 t FALSE)
+ (ppfact 1 t TRUE)
++(ppfact 1 nil FALSE)
++(ppfact 1 nil TRUE)
+ 
+ (deftemplate bar
+    (slot w)
+diff -bup clips_feature_tests_631/factsfun.bat clips_feature_tests_640/factsfun.bat
+--- clips_feature_tests_631/factsfun.bat	2019-07-03 19:04:14.000000000 +0200
++++ clips_feature_tests_640/factsfun.bat	2021-03-29 19:41:52.000000000 +0200
+@@ -17,6 +17,15 @@
+ (fact-existp -1)
+ (fact-existp a)
+ (fact-existp 1 2)
++(fact-addressp)
++(fact-addressp 1)
++(fact-addressp 1 2)
++(fact-addressp ?*w*)
++(fact-addressp ?*y*)
++(fact-addressp [x])
++(fact-addressp 1.2)
++(fact-addressp "a")
++(fact-addressp b)
+ (clear)
+ (reset)
+ (deftemplate foo (slot x) (slot y))
+diff -bup clips_feature_tests_631/fctquery.bat clips_feature_tests_640/fctquery.bat
+--- clips_feature_tests_631/fctquery.bat	2019-07-03 19:04:06.000000000 +0200
++++ clips_feature_tests_640/fctquery.bat	2021-03-29 18:57:56.000000000 +0200
+@@ -64,8 +64,8 @@
+ (any-factp ((?b A)))
+ (any-factp ((?b BOGUS)) TRUE)
+ (any-factp ((?b 34)) TRUE)
+-(any-factp ((?b (mv-append BOGUS USER))) TRUE)
+-(any-factp ((?b (mv-append USER 34))) TRUE)
++(any-factp ((?b (create$ BOGUS USER))) TRUE)
++(any-factp ((?b (create$ USER 34))) TRUE)
+ (any-factp ((?b A)) (progn (bind ?b 1) TRUE))
+ (find-fact)
+ (find-fact TRUE)
+@@ -74,8 +74,8 @@
+ (find-fact ((?b A)))
+ (find-fact ((?b BOGUS)) TRUE)
+ (find-fact ((?b 34)) TRUE)
+-(find-fact ((?b (mv-append BOGUS USER))) TRUE)
+-(find-fact ((?b (mv-append USER 34))) TRUE)
++(find-fact ((?b (create$ BOGUS USER))) TRUE)
++(find-fact ((?b (create$ USER 34))) TRUE)
+ (find-fact ((?b A)) (progn (bind ?b 1) TRUE))
+ (find-all-facts)
+ (find-all-facts TRUE)
+@@ -84,8 +84,8 @@
+ (find-all-facts ((?b A)))
+ (find-all-facts ((?b BOGUS)) TRUE)
+ (find-all-facts ((?b 34)) TRUE)
+-(find-all-facts ((?b (mv-append BOGUS USER))) TRUE)
+-(find-all-facts ((?b (mv-append USER 34))) TRUE)
++(find-all-facts ((?b (create$ BOGUS USER))) TRUE)
++(find-all-facts ((?b (create$ USER 34))) TRUE)
+ (find-all-facts ((?b A)) (progn (bind ?b 1) TRUE))
+ (do-for-fact)
+ (do-for-fact TRUE)
+@@ -95,8 +95,8 @@
+ (do-for-fact ((?b BOGUS)) TRUE)
+ (do-for-fact ((?b A)) (progn (bind ?b 1) TRUE))
+ (do-for-fact ((?b 34)) TRUE abc)
+-(do-for-fact ((?b (mv-append BOGUS USER))) TRUE abc)
+-(do-for-fact ((?b (mv-append USER 34))) TRUE abc)
++(do-for-fact ((?b (create$ BOGUS USER))) TRUE abc)
++(do-for-fact ((?b (create$ USER 34))) TRUE abc)
+ (do-for-fact ((?b MALE)) TRUE (bind ?b 1))
+ (do-for-all-facts)
+ (do-for-all-facts TRUE)
+@@ -106,8 +106,8 @@
+ (do-for-all-facts ((?b BOGUS)) TRUE)
+ (do-for-all-facts ((?b A)) (progn (bind ?b 1) TRUE))
+ (do-for-all-facts ((?b 34)) TRUE abc)
+-(do-for-all-facts ((?b (mv-append BOGUS USER))) TRUE abc)
+-(do-for-all-facts ((?b (mv-append USER 34))) TRUE abc)
++(do-for-all-facts ((?b (create$ BOGUS USER))) TRUE abc)
++(do-for-all-facts ((?b (create$ USER 34))) TRUE abc)
+ (do-for-all-facts ((?b MALE)) TRUE (bind ?b 1))
+ (delayed-do-for-all-facts)
+ (delayed-do-for-all-facts TRUE)
+@@ -117,26 +117,27 @@
+ (delayed-do-for-all-facts ((?b BOGUS)) TRUE)
+ (delayed-do-for-all-facts ((?b A)) (progn (bind ?b 1) TRUE))
+ (delayed-do-for-all-facts ((?b 34)) TRUE abc)
+-(delayed-do-for-all-facts ((?b (mv-append BOGUS USER))) TRUE abc)
+-(delayed-do-for-all-facts ((?b (mv-append USER 34))) TRUE abc)
++(delayed-do-for-all-facts ((?b (create$ BOGUS USER))) TRUE abc)
++(delayed-do-for-all-facts ((?b (create$ USER 34))) TRUE abc)
+ (delayed-do-for-all-facts ((?b MALE)) TRUE (bind ?b 1))
+ (assert (V (name [v])))
+ (assert (W (name [w])))
+ (assert (X (name [x])))
+ (assert (Y (name [y])))
+ (assert (Z (name [z]))))
+-(do-for-all-facts ((?ins1 ?*list* X (mv-append Y Z)) 
+-                       (?ins2 X (mv-append Y Z) ?*list*))
++(do-for-all-facts ((?ins1 ?*list* X (create$ Y Z)) 
++                       (?ins2 X (create$ Y Z) ?*list*))
+   TRUE
+   (printout t ?ins1:name " " ?ins2:name crlf))
++(assert (factoid))
+ (while TRUE do
+-   (delayed-do-for-all-facts ((?b initial-fact)) TRUE 
++   (delayed-do-for-all-facts ((?b factoid)) TRUE 
+      (progn (printout t DELAYED ?b crlf) (break)))
+-   (do-for-all-facts ((?b initial-fact)) TRUE 
++   (do-for-all-facts ((?b factoid)) TRUE 
+      (progn (printout t DO-FOR-ALL ?b crlf) (break)))
+    (break))
+ (deffunction quoxnar ()
+-   (do-for-all-facts ((?b initial-fact)) TRUE 
++   (do-for-all-facts ((?b factoid)) TRUE 
+      (progn (printout t INS-RETURN ?b crlf) (return))))
+ (quoxnar)
+ (clear)
+diff -bup clips_feature_tests_631/fctquery.clp clips_feature_tests_640/fctquery.clp
+--- clips_feature_tests_631/fctquery.clp	2019-07-03 18:54:38.000000000 +0200
++++ clips_feature_tests_640/fctquery.clp	2021-03-29 18:57:56.000000000 +0200
+@@ -81,12 +81,12 @@
+      (bind ?count (+ ?count 1)))
+   ?count)
+ (deffunction count-facts-2 (?template)
+-  (length (find-all-facts ((?fct ?template)) TRUE)))
++  (length$ (find-all-facts ((?fct ?template)) TRUE)))
+ (deftemplate A (slot name)) ; (is-a USER))
+ (deftemplate B) ; (is-a A))
+ (deftemplate C) ; (is-a A))
+ (deftemplate D (slot name)) ; (is-a B C))
+-(defglobal ?*list* = (mv-append V W))
++(defglobal ?*list* = (create$ V W))
+ (deftemplate V (slot name))
+ (deftemplate W (slot name))
+ (deftemplate X (slot name))
+diff -bup clips_feature_tests_631/fldval50.clp clips_feature_tests_640/fldval50.clp
+--- clips_feature_tests_631/fldval50.clp	2019-07-03 18:54:38.000000000 +0200
++++ clips_feature_tests_640/fldval50.clp	2021-03-29 18:57:56.000000000 +0200
+@@ -768,13 +768,13 @@ cd))
+  (assert (rule-4 ?x))
+  (printout t "predicate-function-stringp should fire once" crlf))
+ 
+-(defrule predicate-function-wordp                               ;DR0059
++(defrule predicate-function-symbolp                             ;DR0059
+  (declare (salience 2)) ; Added by Gary Riley
+  (begin predicate-functions)                                    ;DR0059
+- (data ?x&:(wordp ?x))                                          ;DR0059
++ (data ?x&:(symbolp ?x))                                        ;DR0059
+ =>                                                              ;DR0059
+  (assert (rule-5 ?x))                                           ;DR0059
+- (printout t "predicate-function-wordp should fire once" crlf));DR0059
++ (printout t "predicate-function-symbolp should fire once" crlf));DR0059
+ 
+ (defrule predicate-function-integerp
+  (declare (salience 1)) ; Added by Gary Riley
+@@ -1186,13 +1186,11 @@ cd))
+ 
+ (defrule salience-max-value
+  (declare (salience 10000))
+- (initial-fact)
+ =>
+  (printout t crlf "TESTING CLIPS - BASIC PROGRAMMING GUIDE" crlf))
+ 
+ (defrule salience-positive
+  (declare (salience 100))
+- (initial-fact)
+ =>
+  (printout t "common capabilities such as:" crlf
+               "assert, retract, salience, fprintout" crlf
+@@ -1200,9 +1198,7 @@ cd))
+ 
+ (defrule salience-min-value
+  (declare (salience -10000))
+- ?f <- (initial-fact)
+ =>
+- (retract ?f)
+  (printout t "list of facts that were not cleaned up, error if any" crlf)
+  (facts)
+  (printout t "file text.tmp may be deleted" crlf
+@@ -1477,9 +1473,9 @@ y)))
+  (assert (multifield3 ?mult3))                            ;CR0008
+  (bind ?mult3.5 (create$ ?mult3 (create$ cww)  a (create$) b));CR0014
+  (assert (multifield3 ?mult3.5))                                         ;CR0008 CR0014 
+- (bind ?mult4 (str-explode "1 two"))             ;CR0008 DR0093
++ (bind ?mult4 (explode$ "1 two"))                         ;CR0008 DR0093
+  (assert (multifield4 ?mult4))                                           ;CR0008 DR0093
+- (bind ?string (str-implode ?mult4))                         ;CR0008
++ (bind ?string (implode$ ?mult4))                         ;CR0008
+  (assert (multifield4 ?string))                                           ;CR0008
+  (assert (multifield5 =(subseq$ ?mult3.5 3 33))))
+ 
+@@ -1489,9 +1485,9 @@ y)))
+  (close text-file)
+  (data $?x)
+ =>
+- (assert (length =(length ?x)))
+- (assert (second-element =(nth 2 ?x)))
+- (assert (member-center =(member Center ?x)))
++ (assert (length =(length$ ?x)))
++ (assert (second-element =(nth$ 2 ?x)))
++ (assert (member-center =(member$ Center ?x)))
+  (assert (multifield one two three)))
+ 
+ (defrule clean-up-action-functions
+@@ -1565,7 +1561,7 @@ y)))
+  (data-0 $?x $?y)
+  (data-1 $?z)
+ =>
+- (if (subset ?x ?z)
++ (if (subsetp ?x ?z)
+   then
+    (assert (set ?x is-a-subset-of ?z))
+   else
+@@ -1577,7 +1573,7 @@ y)))
+  (data-2 $?x $?y)
+  (data-1 $?z)
+ =>
+- (if (subset ?x ?z)
++ (if (subsetp ?x ?z)
+   then
+    (assert (set ?x is-a-subset-of ?z))
+   else
+diff -bup clips_feature_tests_631/gnrccmd.bat clips_feature_tests_640/gnrccmd.bat
+--- clips_feature_tests_631/gnrccmd.bat	2019-07-03 18:54:40.000000000 +0200
++++ clips_feature_tests_640/gnrccmd.bat	2021-03-29 18:57:56.000000000 +0200
+@@ -16,7 +16,13 @@
+ (describe 3)
+ (describe 3.0)
+ (ppdefgeneric describe)
++(ppdefgeneric describe stdout)
++(ppdefgeneric describe bogus)
++(ppdefgeneric describe nil)
+ (ppdefmethod describe 2)
++(ppdefmethod describe 2 stdout)
++(ppdefmethod describe 2 bogus)
++(ppdefmethod describe 2 nil)
+ (preview-generic describe 34)
+ (preview-generic describe 34.0)
+ (list-defgenerics)
+diff -bup clips_feature_tests_631/gnrcexe.clp clips_feature_tests_640/gnrcexe.clp
+--- clips_feature_tests_631/gnrcexe.clp	2019-07-03 18:54:40.000000000 +0200
++++ clips_feature_tests_640/gnrcexe.clp	2021-03-29 18:57:56.000000000 +0200
+@@ -47,7 +47,7 @@
+ 
+ (defmethod lots-of-arguments 
+   ((?a INTEGER) (?b STRING) ?c ?d ?e ?f (?g MY-CLASS) $?more)
+-  (str-implode (mv-append ?a ?b ?c ?d ?e ?f ?g ?more)))
++  (implode$ (create$ ?a ?b ?c ?d ?e ?f ?g ?more)))
+ 
+ (defmethod foo ()
+    (bind ?b 10)
+@@ -63,7 +63,7 @@
+ (defclass A (is-a USER) (role concrete))
+ 
+ (defglobal ?*success* = TRUE)
+-(defglobal ?*sevar* = (mv-append))
++(defglobal ?*sevar* = (create$))
+ 
+ (deffunction print-result (?flag ?test-no)
+   (if ?flag then
+@@ -72,13 +72,13 @@
+      (printout t "EXECUTION TEST #" ?test-no " BAD." crlf)
+      (bind ?*success* FALSE)))
+ 
+-(defmethod side-effects ((?a (bind ?*sevar* (mv-append ?*sevar* 1))))
+-   (bind ?*sevar* (mv-append ?*sevar* 3))
++(defmethod side-effects ((?a (bind ?*sevar* (create$ ?*sevar* 1))))
++   (bind ?*sevar* (create$ ?*sevar* 3))
+    (call-next-method)
+    ?*sevar*)
+ 
+-(defmethod side-effects ((?a (bind ?*sevar* (mv-append ?*sevar* 2))))
+-   (bind ?*sevar* (mv-append ?*sevar* 4)))
++(defmethod side-effects ((?a (bind ?*sevar* (create$ ?*sevar* 2))))
++   (bind ?*sevar* (create$ ?*sevar* 4)))
+ 
+ (defmethod - ((?a INTEGER) (?b INTEGER) ($?c INTEGER))
+    (override-next-method (* ?a 2) (* ?b 3) (expand$ ?c)))
+@@ -108,10 +108,10 @@
+   (print-result (eq (+ a b c d e f) abcdef) 15)
+   (print-result (eq (+ "a b c" "d e f") "a b cd e f") 16)
+   (print-result (eq (+ "a b c" "d e f") "a b cd e f") 17)
+-  (print-result (eq (+ (mv-append a b c) (mv-append) (mv-append d e f)) (mv-append a b c d e f)) 18)
++  (print-result (eq (+ (create$ a b c) (create$) (create$ d e f)) (create$ a b c d e f)) 18)
+   (print-result (= (foo) 10) 19)
+   (print-result (= (foo [a] [a] (instance-address [a])) 42) 20)
+-  (print-result (eq (side-effects 1) (mv-append 1 3 2 4)) 21)
++  (print-result (eq (side-effects 1) (create$ 1 3 2 4)) 21)
+   (print-result (= (- 1 2) -5) 22)
+   (print-result (= (call-specific-method - 2 1 2) -4) 23)
+   (print-result (= (call-specific-method - 1 1 2) -1) 24)
+diff -bup clips_feature_tests_631/gnrcovl.clp clips_feature_tests_640/gnrcovl.clp
+--- clips_feature_tests_631/gnrcovl.clp	2019-07-03 18:54:40.000000000 +0200
++++ clips_feature_tests_640/gnrcovl.clp	2021-03-29 18:57:56.000000000 +0200
+@@ -1,19 +1,19 @@
+ (defmethod + ((?a SYMBOL) $?any)
+   (bind ?i 1)
+-  (bind ?len (length ?any))
++  (bind ?len (length$ ?any))
+   (while (<= ?i ?len) do
+-     (bind ?a (sym-cat ?a (nth ?i ?any)))
++     (bind ?a (sym-cat ?a (nth$ ?i ?any)))
+      (bind ?i (+ ?i 1)))
+   ?a)
+ 
+-(defmethod sym-cat (?a ?b)
++(defmethod sym-cat ((?a SYMBOL) (?b SYMBOL))
+   (sym-cat my- ?a ?b))
+ 
+ (defmethod + ((?a STRING) $?any)
+   (bind ?i 1)
+-  (bind ?len (length ?any))
++  (bind ?len (length$ ?any))
+   (while (<= ?i ?len) do
+-     (bind ?a (str-cat ?a (nth ?i ?any)))
++     (bind ?a (str-cat ?a (nth$ ?i ?any)))
+      (bind ?i (+ ?i 1)))
+   ?a)
+ 
+@@ -21,7 +21,7 @@
+   (str-cat $?any))
+   
+ (defmethod + ((?a MULTIFIELD) $?any)
+-  (mv-append ?a ?any))
++  (create$ ?a ?any))
+ 
+ (defglobal ?*success* = TRUE)
+ 
+@@ -38,7 +38,7 @@
+   (print-result (eq (+ a b c d e f) abcdef) 3)
+   (print-result (eq (+ "a" "bc" "d" "ef") (alt-str-cat "a" "bc" "d" "ef") "abcdef") 4)
+   (print-result 
+-    (eq (+ (mv-append a) (mv-append b c)) (mv-append a b c)) 5)
++    (eq (+ (create$ a) (create$ b c)) (create$ a b c)) 5)
+   (if ?*success* then
+      (printout t "No errors detected." crlf)
+    else
+diff -bup clips_feature_tests_631/gnrcprc.clp clips_feature_tests_640/gnrcprc.clp
+--- clips_feature_tests_631/gnrcprc.clp	2019-07-03 18:54:40.000000000 +0200
++++ clips_feature_tests_640/gnrcprc.clp	2021-03-29 18:57:56.000000000 +0200
+@@ -63,11 +63,11 @@
+   (if (next-methodp) then
+      (call-next-method)))
+ 
+-(defgeneric mv-slot-replace)
++(defgeneric slot-replace$)
+ (defgeneric class-slots)
+-(defmethod mv-slot-replace ((?a INSTANCE-ADDRESS)))
+-(defmethod mv-slot-replace ((?a PRIMITIVE)))
+-(defmethod mv-slot-replace ((?a INSTANCE SYMBOL) (?b SYMBOL) (?c NUMBER) (?d NUMBER) ?e))
++(defmethod slot-replace$ ((?a INSTANCE-ADDRESS)))
++(defmethod slot-replace$ ((?a PRIMITIVE)))
++(defmethod slot-replace$ ((?a INSTANCE SYMBOL) (?b SYMBOL) (?c NUMBER) (?d NUMBER) ?e))
+ (defmethod class-slots ((?a SYMBOL) (?b LEXEME)))
+ (defmethod class-slots ((?a SYMBOL) ($?b SYMBOL)))
+ 
+diff -bup clips_feature_tests_631/insquery.bat clips_feature_tests_640/insquery.bat
+--- clips_feature_tests_631/insquery.bat	2019-07-03 19:03:58.000000000 +0200
++++ clips_feature_tests_640/insquery.bat	2021-03-29 18:57:56.000000000 +0200
+@@ -104,8 +104,8 @@
+ (any-instancep ((?b A)))
+ (any-instancep ((?b BOGUS)) TRUE)
+ (any-instancep ((?b 34)) TRUE)
+-(any-instancep ((?b (mv-append BOGUS USER))) TRUE)
+-(any-instancep ((?b (mv-append USER 34))) TRUE)
++(any-instancep ((?b (create$ BOGUS USER))) TRUE)
++(any-instancep ((?b (create$ USER 34))) TRUE)
+ (any-instancep ((?b A)) (progn (bind ?b 1) TRUE))
+ (find-instance)
+ (find-instance TRUE)
+@@ -114,8 +114,8 @@
+ (find-instance ((?b A)))
+ (find-instance ((?b BOGUS)) TRUE)
+ (find-instance ((?b 34)) TRUE)
+-(find-instance ((?b (mv-append BOGUS USER))) TRUE)
+-(find-instance ((?b (mv-append USER 34))) TRUE)
++(find-instance ((?b (create$ BOGUS USER))) TRUE)
++(find-instance ((?b (create$ USER 34))) TRUE)
+ (find-instance ((?b A)) (progn (bind ?b 1) TRUE))
+ (find-all-instances)
+ (find-all-instances TRUE)
+@@ -124,8 +124,8 @@
+ (find-all-instances ((?b A)))
+ (find-all-instances ((?b BOGUS)) TRUE)
+ (find-all-instances ((?b 34)) TRUE)
+-(find-all-instances ((?b (mv-append BOGUS USER))) TRUE)
+-(find-all-instances ((?b (mv-append USER 34))) TRUE)
++(find-all-instances ((?b (create$ BOGUS USER))) TRUE)
++(find-all-instances ((?b (create$ USER 34))) TRUE)
+ (find-all-instances ((?b A)) (progn (bind ?b 1) TRUE))
+ (do-for-instance)
+ (do-for-instance TRUE)
+@@ -135,8 +135,8 @@
+ (do-for-instance ((?b BOGUS)) TRUE)
+ (do-for-instance ((?b A)) (progn (bind ?b 1) TRUE))
+ (do-for-instance ((?b 34)) TRUE abc)
+-(do-for-instance ((?b (mv-append BOGUS USER))) TRUE abc)
+-(do-for-instance ((?b (mv-append USER 34))) TRUE abc)
++(do-for-instance ((?b (create$ BOGUS USER))) TRUE abc)
++(do-for-instance ((?b (create$ USER 34))) TRUE abc)
+ (do-for-instance ((?b OBJECT)) TRUE (bind ?b 1))
+ (do-for-all-instances)
+ (do-for-all-instances TRUE)
+@@ -146,8 +146,8 @@
+ (do-for-all-instances ((?b BOGUS)) TRUE)
+ (do-for-all-instances ((?b A)) (progn (bind ?b 1) TRUE))
+ (do-for-all-instances ((?b 34)) TRUE abc)
+-(do-for-all-instances ((?b (mv-append BOGUS USER))) TRUE abc)
+-(do-for-all-instances ((?b (mv-append USER 34))) TRUE abc)
++(do-for-all-instances ((?b (create$ BOGUS USER))) TRUE abc)
++(do-for-all-instances ((?b (create$ USER 34))) TRUE abc)
+ (do-for-all-instances ((?b OBJECT)) TRUE (bind ?b 1))
+ (delayed-do-for-all-instances)
+ (delayed-do-for-all-instances TRUE)
+@@ -157,16 +157,16 @@
+ (delayed-do-for-all-instances ((?b BOGUS)) TRUE)
+ (delayed-do-for-all-instances ((?b A)) (progn (bind ?b 1) TRUE))
+ (delayed-do-for-all-instances ((?b 34)) TRUE abc)
+-(delayed-do-for-all-instances ((?b (mv-append BOGUS USER))) TRUE abc)
+-(delayed-do-for-all-instances ((?b (mv-append USER 34))) TRUE abc)
++(delayed-do-for-all-instances ((?b (create$ BOGUS USER))) TRUE abc)
++(delayed-do-for-all-instances ((?b (create$ USER 34))) TRUE abc)
+ (delayed-do-for-all-instances ((?b OBJECT)) TRUE (bind ?b 1))
+ (make-instance v of V)
+ (make-instance w of W)
+ (make-instance x of X)
+ (make-instance y of Y)
+ (make-instance z of Z)
+-(do-for-all-instances ((?ins1 ?*list* X (mv-append Y Z)) 
+-                       (?ins2 X (mv-append Y Z) ?*list*))
++(do-for-all-instances ((?ins1 ?*list* X (create$ Y Z)) 
++                       (?ins2 X (create$ Y Z) ?*list*))
+   TRUE
+   (printout t ?ins1 " " ?ins2 crlf))
+ (while TRUE do
+diff -bup clips_feature_tests_631/insquery.clp clips_feature_tests_640/insquery.clp
+--- clips_feature_tests_631/insquery.clp	2019-07-03 18:54:40.000000000 +0200
++++ clips_feature_tests_640/insquery.clp	2021-03-29 18:57:56.000000000 +0200
+@@ -48,12 +48,12 @@
+      (bind ?count (+ ?count 1)))
+   ?count)
+ (deffunction count-instances-2 (?class)
+-  (length (find-all-instances ((?ins ?class)) TRUE)))
++  (length$ (find-all-instances ((?ins ?class)) TRUE)))
+ (defclass A (is-a USER) (role concrete))
+ (defclass B (is-a A) (role concrete))
+ (defclass C (is-a A) (role concrete))
+ (defclass D (is-a B C) (role concrete))
+-(defglobal ?*list* = (mv-append V W))
++(defglobal ?*list* = (create$ V W))
+ (defclass V (is-a USER) (role concrete))
+ (defclass W (is-a USER) (role concrete))
+ (defclass X (is-a USER) (role concrete))
+diff -bup clips_feature_tests_631/iofnx.bat clips_feature_tests_640/iofnx.bat
+--- clips_feature_tests_631/iofnx.bat	2019-07-03 18:54:40.000000000 +0200
++++ clips_feature_tests_640/iofnx.bat	2021-03-29 18:57:58.000000000 +0200
+@@ -15,7 +15,10 @@
+ (printout)                         ; 10.5.2.3
+ (printout (create$))               ; 10.5.2.3
+ (read (create$))                   ; 10.5.2.4
++(get-error)
+ (read bogus)                       ; 10.5.2.4
++(get-error)
++(clear-error)
+ (read stdin stdout)                ; 10.5.2.4
+ (read)                             ; 10.5.2.4 - 7
+ 7
+@@ -111,3 +114,124 @@ xyz abc
+ (read temp)
+ (close temp)
+ (remove "Temp/iofun.dat") 
++(open "Temp/read.dat" temp "w") ; Return symbols for tokens that are not primitive values
++(printout temp "(foo ?foo \"?foo\" \")\")" crlf)
++(close temp)
++(open "Temp/read.dat" temp "r")
++(read temp)
++(read temp)
++(read temp)
++(read temp)
++(read temp)
++(read temp)
++(close temp)
++(remove "Temp/read.dat") 
++(put-char) ; put-char/get-char
++(put-char temp)
++(open "Temp/read.dat" temp "w") 
++(put-char temp abc)
++(put-char temp 72 34)
++(put-char temp 72)
++(put-char temp 101)
++(put-char temp 108)
++(put-char temp 112)
++(put-char temp 111)
++(put-char temp 10)
++(close temp)
++(open "Temp/read.dat" temp "r")
++(read temp)
++(close temp)
++(open "Temp/read.dat" temp "r")
++(readline temp)
++(close temp)
++(open "Temp/read.dat" temp "r")
++(get-char temp)
++(get-char temp)
++(get-char temp)
++(get-char temp)
++(get-char temp)
++(get-char temp)
++(get-char temp)
++(close temp)
++(unget-char temp)
++(open "Temp/read.dat" temp "r")
++(get-char temp)
++(get-char temp)
++(unget-char temp 101)
++(get-char temp)
++(get-char temp)
++(unget-char temp 108)
++(unget-char temp 101)
++(get-char temp)
++(get-char temp)
++(get-char temp)
++(get-char temp)
++(unget-char temp -1)
++(get-char temp)
++(get-char temp)
++(close temp)
++(remove "Temp/read.dat")
++(while (not (member$ (get-char) (create$ 10 13))) do)
++ab cd ef
++(open "Temp/plus.dat" temp "w") ; seek, tell, rewind, flush args
++(seek)
++(seek temp)
++(seek temp 0)
++(seek temp 0 seek-cur)
++(seek temp 0 seek-set)
++(seek temp 0 seek-end)
++(seek temp 0 bogus)
++(seek temp 0 seek-set extra)
++(seek bogus 0 seek-set)
++(tell)
++(tell temp extra)
++(tell bogus)
++(rewind)
++(rewind temp extra)
++(rewind bogus)
++(flush temp extra)
++(flush temp)
++(flush)
++(flush bogus)
++(close temp)
++(open "Temp/plus.dat" temp "w") ; rewind
++(printout temp "Jack Smith" crlf)
++(printout temp "John Jones" crlf)
++(close temp)
++(open "Temp/plus.dat" temp "r") 
++(readline temp)
++(readline temp)
++(readline temp)
++(printout temp "Sally Walker" crlf)
++(rewind temp)
++(readline temp)
++(readline temp)
++(readline temp)
++(close temp)
++(open "Temp/plus.dat" temp "r+") ; r+ mode
++(readline temp)
++(readline temp)
++(readline temp)
++(printout temp "Sally Walker" crlf)
++(rewind temp)
++(readline temp)
++(readline temp)
++(readline temp)
++(readline temp)
++(close temp)
++(open "Temp/seek.dat" temp "w+") ; w+, seek, tell
++(printout temp "Jack Smith" crlf)
++(progn (bind ?pos (tell temp)) TRUE)
++(printout temp "John Jones" crlf)
++(printout temp "Sally Walker" crlf)
++(seek temp ?pos seek-set)
++(readline temp)
++(readline temp)
++(readline temp)
++(seek temp 0 seek-set)
++(readline temp)
++(close temp)
++(chdir)
++(chdir 3)
++(chdir 3 4)
++(clear)
+diff -bup clips_feature_tests_631/lgclexe.clp clips_feature_tests_640/lgclexe.clp
+--- clips_feature_tests_631/lgclexe.clp	2019-07-03 18:54:42.000000000 +0200
++++ clips_feature_tests_640/lgclexe.clp	2021-03-29 18:57:58.000000000 +0200
+@@ -3,11 +3,11 @@
+ 
+ (deffunction retract-many ($?x)
+   (bind ?i 1)
+-  (bind ?f (nth ?i ?x))
++  (bind ?f (nth$ ?i ?x))
+   (while (neq ?f nil) do
+      (retract ?f)
+      (bind ?i (+ 1 ?i))
+-     (bind ?f (nth ?i ?x))
++     (bind ?f (nth$ ?i ?x))
+      (if (neq ?f nil) then (printout t "..." crlf))))
+ 
+ (deffunction test-1 (?x)
+Only in clips_feature_tests_640: line_error_crlf.clp
+Only in clips_feature_tests_640: line_error_lf.clp
+diff -bup clips_feature_tests_631/mab.clp clips_feature_tests_640/mab.clp
+--- clips_feature_tests_631/mab.clp	2019-07-03 18:54:42.000000000 +0200
++++ clips_feature_tests_640/mab.clp	2021-03-29 18:57:58.000000000 +0200
+@@ -7,7 +7,7 @@
+ ;;;     The point is for the monkee to find
+ ;;;     and eat some bananas.
+ ;;;
+-;;;     CLIPS Version 6.0 Example
++;;;     CLIPS Version 6.4 Example
+ ;;;
+ ;;;     To execute, merely load, reset and run.
+ ;;;======================================================
+@@ -58,60 +58,63 @@
+       (type SYMBOL)
+       (allowed-symbols hold unlock eat move on walk-to)
+       (default ?NONE)) 
+-   (multislot arguments 
++   (slot target 
+       (type SYMBOL)
+-      (default ?NONE)))
++      (default unspecified))
++   (slot location 
++      (type SYMBOL)
++      (default unspecified)))
+              
+ ;;;*************************
+ ;;;* CHEST UNLOCKING RULES *
+ ;;;*************************
+ 
+ (defrule hold-chest-to-put-on-floor "" 
+-  (goal-is-to (action unlock) (arguments ?chest))
++  (goal-is-to (action unlock) (target ?chest))
+   (thing (name ?chest) (on-top-of ~floor) (weight light))
+   (monkey (holding ~?chest))
+-  (not (goal-is-to (action hold) (arguments ?chest)))
++  (not (goal-is-to (action hold) (target ?chest)))
+   =>
+-  (assert (goal-is-to (action hold) (arguments ?chest))))
++  (assert (goal-is-to (action hold) (target ?chest))))
+ 
+ (defrule put-chest-on-floor "" 
+-  (goal-is-to (action unlock) (arguments ?chest))
++  (goal-is-to (action unlock) (target ?chest))
+   ?monkey <- (monkey (location ?place) (on-top-of ?on) (holding ?chest))
+   ?thing <- (thing (name ?chest))
+   =>
+-  (printout t "Monkey throws the " ?chest " off the " 
+-              ?on " onto the floor." crlf)
+-  (modify ?monkey (holding blank))
++  (println "Monkey throws the " ?chest " off the " 
++           ?on " onto the floor.")
++  (modify ?monkey (holding nothing))
+   (modify ?thing (location ?place) (on-top-of floor)))
+ 
+ (defrule get-key-to-unlock "" 
+-  (goal-is-to (action unlock) (arguments ?obj))
++  (goal-is-to (action unlock) (target ?obj))
+   (thing (name ?obj) (on-top-of floor))
+   (chest (name ?obj) (unlocked-by ?key))
+   (monkey (holding ~?key))
+-  (not (goal-is-to (action hold) (arguments ?key)))
++  (not (goal-is-to (action hold) (target ?key)))
+   =>
+-  (assert (goal-is-to (action hold) (arguments ?key))))
++  (assert (goal-is-to (action hold) (target ?key))))
+ 
+ (defrule move-to-chest-with-key "" 
+-  (goal-is-to (action unlock) (arguments ?chest))
++  (goal-is-to (action unlock) (target ?chest))
+   (monkey (location ?mplace) (holding ?key))
+   (thing (name ?chest) (location ?cplace&~?mplace) (on-top-of floor))
+   (chest (name ?chest) (unlocked-by ?key))
+-  (not (goal-is-to (action walk-to) (arguments ?cplace)))
++  (not (goal-is-to (action walk-to) (location ?cplace)))
+   =>
+-  (assert (goal-is-to (action walk-to) (arguments ?cplace))))
++  (assert (goal-is-to (action walk-to) (location ?cplace))))
+ 
+ (defrule unlock-chest-with-key "" 
+-  ?goal <- (goal-is-to (action unlock) (arguments ?name))
++  ?goal <- (goal-is-to (action unlock) (target ?name))
+   ?chest <- (chest (name ?name) (contents ?contents) (unlocked-by ?key))
+   (thing (name ?name) (location ?place) (on-top-of ?on))
+   (monkey (location ?place) (on-top-of ?on) (holding ?key))
+   =>
+-  (printout t "Monkey opens the " ?name " with the " ?key 
+-              " revealing the " ?contents "." crlf)
+-  (modify ?chest (contents nothing))
++  (println "Monkey opens the " ?name " with the " ?key 
++           " revealing the " ?contents ".")
+   (assert (thing (name ?contents) (location ?place) (on-top-of ?name)))
++  (modify ?chest (contents nothing))
+   (retract ?goal))
+ 
+ ;;;*********************
+@@ -119,85 +122,85 @@
+ ;;;*********************
+ 
+ (defrule unlock-chest-to-hold-object ""
+-  (goal-is-to (action hold) (arguments ?obj))
++  (goal-is-to (action hold) (target ?obj))
+   (chest (name ?chest) (contents ?obj))
+-  (not (goal-is-to (action unlock) (arguments ?chest)))
++  (not (goal-is-to (action unlock) (target ?chest)))
+   =>
+-  (assert (goal-is-to (action unlock) (arguments ?chest))))
++  (assert (goal-is-to (action unlock) (target ?chest))))
+ 
+ (defrule use-ladder-to-hold ""
+-  (goal-is-to (action hold) (arguments ?obj))
++  (goal-is-to (action hold) (target ?obj))
+   (thing (name ?obj) (location ?place) (on-top-of ceiling) (weight light))
+   (not (thing (name ladder) (location ?place)))
+-  (not (goal-is-to (action move) (arguments ladder ?place)))
++  (not (goal-is-to (action move) (target ladder) (location ?place)))
+   =>
+-  (assert (goal-is-to (action move) (arguments ladder ?place))))
++  (assert (goal-is-to (action move) (target ladder) (location ?place))))
+ 
+ (defrule climb-ladder-to-hold ""
+-  (goal-is-to (action hold) (arguments ?obj))
++  (goal-is-to (action hold) (target ?obj))
+   (thing (name ?obj) (location ?place) (on-top-of ceiling) (weight light))
+   (thing (name ladder) (location ?place) (on-top-of floor))
+   (monkey (on-top-of ~ladder))
+-  (not (goal-is-to (action on) (arguments ladder)))
++  (not (goal-is-to (action on) (target ladder)))
+   =>
+-  (assert (goal-is-to (action on) (arguments ladder))))
++  (assert (goal-is-to (action on) (target ladder))))
+ 
+ (defrule grab-object-from-ladder "" 
+-  ?goal <- (goal-is-to (action hold) (arguments ?name))
++  ?goal <- (goal-is-to (action hold) (target ?name))
+   ?thing <- (thing (name ?name) (location ?place) 
+                      (on-top-of ceiling) (weight light))
+   (thing (name ladder) (location ?place))
+-  ?monkey <- (monkey (location ?place) (on-top-of ladder) (holding blank))
++  ?monkey <- (monkey (location ?place) (on-top-of ladder) (holding nothing))
+   =>
+-  (printout t "Monkey grabs the " ?name "." crlf)
++  (println "Monkey grabs the " ?name ".")
+   (modify ?thing (location held) (on-top-of held))
+   (modify ?monkey (holding ?name))
+   (retract ?goal))
+ 
+ (defrule climb-to-hold "" 
+-  (goal-is-to (action hold) (arguments ?obj))
++  (goal-is-to (action hold) (target ?obj))
+   (thing (name ?obj) (location ?place) (on-top-of ?on&~ceiling) (weight light))
+   (monkey (location ?place) (on-top-of ~?on))
+-  (not (goal-is-to (action on) (arguments ?on)))
++  (not (goal-is-to (action on) (target ?on)))
+   =>
+-  (assert (goal-is-to (action on) (arguments ?on))))
++  (assert (goal-is-to (action on) (target ?on))))
+ 
+ (defrule walk-to-hold ""
+-  (goal-is-to (action hold) (arguments ?obj))
++  (goal-is-to (action hold) (target ?obj))
+   (thing (name ?obj) (location ?place) (on-top-of ~ceiling) (weight light))
+   (monkey (location ~?place))
+-  (not (goal-is-to (action walk-to) (arguments ?place)))
++  (not (goal-is-to (action walk-to) (location ?place)))
+   =>
+-  (assert (goal-is-to (action walk-to) (arguments ?place))))
++  (assert (goal-is-to (action walk-to) (location ?place))))
+ 
+ (defrule drop-to-hold ""
+-  (goal-is-to (action hold) (arguments ?obj))
++  (goal-is-to (action hold) (target ?obj))
+   (thing (name ?obj) (location ?place) (on-top-of ?on) (weight light))
+-  (monkey (location ?place) (on-top-of ?on) (holding ~blank))
+-  (not (goal-is-to (action hold) (arguments blank)))
++  (monkey (location ?place) (on-top-of ?on) (holding ~nothing))
++  (not (goal-is-to (action hold) (target nothing)))
+   =>
+-  (assert (goal-is-to (action hold) (arguments blank))))
++  (assert (goal-is-to (action hold) (target nothing))))
+ 
+ (defrule grab-object "" 
+-  ?goal <- (goal-is-to (action hold) (arguments ?name))
++  ?goal <- (goal-is-to (action hold) (target ?name))
+   ?thing <- (thing (name ?name) (location ?place) 
+                      (on-top-of ?on) (weight light))
+-  ?monkey <- (monkey (location ?place) (on-top-of ?on) (holding blank))
++  ?monkey <- (monkey (location ?place) (on-top-of ?on) (holding nothing))
+   =>
+-  (printout t "Monkey grabs the " ?name "." crlf)
++  (println "Monkey grabs the " ?name ".")
+   (modify ?thing (location held) (on-top-of held))
+   (modify ?monkey (holding ?name))
+   (retract ?goal))
+ 
+ (defrule drop-object ""  
+-  ?goal <- (goal-is-to (action hold) (arguments blank))
++  ?goal <- (goal-is-to (action hold) (target nothing))
+   ?monkey <- (monkey (location ?place) 
+                      (on-top-of ?on) 
+-                     (holding ?name&~blank))
++                     (holding ?name&~nothing))
+   ?thing <- (thing (name ?name))
+   =>
+-  (printout t "Monkey drops the " ?name "." crlf)
+-  (modify ?monkey (holding blank))
++  (println "Monkey drops the " ?name ".")
++  (modify ?monkey (holding nothing))
+   (modify ?thing (location ?place) (on-top-of ?on))
+   (retract ?goal))
+ 
+@@ -206,39 +209,39 @@
+ ;;;*********************
+ 
+ (defrule unlock-chest-to-move-object "" 
+-  (goal-is-to (action move) (arguments ?obj ?))
++  (goal-is-to (action move) (target ?obj))
+   (chest (name ?chest) (contents ?obj))
+-  (not (goal-is-to (action unlock) (arguments ?chest)))
++  (not (goal-is-to (action unlock) (target ?chest)))
+   =>
+-  (assert (goal-is-to (action unlock) (arguments ?chest))))
++  (assert (goal-is-to (action unlock) (target ?chest))))
+ 
+ (defrule hold-object-to-move ""  
+-  (goal-is-to (action move) (arguments ?obj ?place))
++  (goal-is-to (action move) (target ?obj) (location ?place))
+   (thing (name ?obj) (location ~?place) (weight light))
+   (monkey (holding ~?obj))
+-  (not (goal-is-to (action hold) (arguments ?obj)))
++  (not (goal-is-to (action hold) (target ?obj)))
+   =>
+-  (assert (goal-is-to (action hold) (arguments ?obj))))
++  (assert (goal-is-to (action hold) (target ?obj))))
+ 
+ (defrule move-object-to-place "" 
+-  (goal-is-to (action move) (arguments ?obj ?place))
++  (goal-is-to (action move) (target ?obj) (location ?place))
+   (monkey (location ~?place) (holding ?obj))
+-  (not (goal-is-to (action walk-to) (arguments ?place)))
++  (not (goal-is-to (action walk-to) (location ?place)))
+   =>
+-  (assert (goal-is-to (action walk-to) (arguments ?place))))
++  (assert (goal-is-to (action walk-to) (location ?place))))
+ 
+ (defrule drop-object-once-moved "" 
+-  ?goal <- (goal-is-to (action move) (arguments ?name ?place))
+-  ?monkey <- (monkey (location ?place) (holding ?obj))
++  ?goal <- (goal-is-to (action move) (target ?name) (location ?place))
++  ?monkey <- (monkey (location ?place) (holding ?name))
+   ?thing <- (thing (name ?name) (weight light))
+   =>
+-  (printout t "Monkey drops the " ?name "." crlf)
+-  (modify ?monkey (holding blank))
++  (println "Monkey drops the " ?name ".")
++  (modify ?monkey (holding nothing))
+   (modify ?thing (location ?place) (on-top-of floor))
+   (retract ?goal))
+ 
+ (defrule already-moved-object ""
+-  ?goal <- (goal-is-to (action move) (arguments ?obj ?place))
++  ?goal <- (goal-is-to (action move) (target ?obj) (location ?place))
+   (thing (name ?obj) (location ?place))
+   =>
+   (retract ?goal))
+@@ -248,31 +251,31 @@
+ ;;;***********************
+ 
+ (defrule already-at-place "" 
+-  ?goal <- (goal-is-to (action walk-to) (arguments ?place))
++  ?goal <- (goal-is-to (action walk-to) (location ?place))
+   (monkey (location ?place))
+   =>
+   (retract ?goal))
+ 
+ (defrule get-on-floor-to-walk ""
+-  (goal-is-to (action walk-to) (arguments ?place))
++  (goal-is-to (action walk-to) (location ?place))
+   (monkey (location ~?place) (on-top-of ~floor))
+-  (not (goal-is-to (action on) (arguments floor)))
++  (not (goal-is-to (action on) (target floor)))
+   =>
+-  (assert (goal-is-to (action on) (arguments floor))))
++  (assert (goal-is-to (action on) (target floor))))
+ 
+ (defrule walk-holding-nothing ""
+-  ?goal <- (goal-is-to (action walk-to) (arguments ?place))
+-  ?monkey <- (monkey (location ~?place) (on-top-of floor) (holding blank))
++  ?goal <- (goal-is-to (action walk-to) (location ?place))
++  ?monkey <- (monkey (location ~?place) (on-top-of floor) (holding nothing))
+   =>
+-  (printout t "Monkey walks to " ?place "." crlf)
++  (println "Monkey walks to " ?place ".")
+   (modify ?monkey (location ?place))
+   (retract ?goal))
+ 
+ (defrule walk-holding-object ""
+-  ?goal <- (goal-is-to (action walk-to) (arguments ?place))
+-  ?monkey <- (monkey (location ~?place) (on-top-of floor) (holding ?obj&~blank))
++  ?goal <- (goal-is-to (action walk-to) (location ?place))
++  ?monkey <- (monkey (location ~?place) (on-top-of floor) (holding ?obj&~nothing))
+   =>
+-  (printout t "Monkey walks to " ?place " holding the " ?obj "." crlf)
++  (println "Monkey walks to " ?place " holding the " ?obj ".")
+   (modify ?monkey (location ?place))
+   (retract ?goal))
+ 
+@@ -281,48 +284,48 @@
+ ;;;***********************
+ 
+ (defrule jump-onto-floor "" 
+-  ?goal <- (goal-is-to (action on) (arguments floor))
++  ?goal <- (goal-is-to (action on) (target floor))
+   ?monkey <- (monkey (on-top-of ?on&~floor))
+   =>
+-  (printout t "Monkey jumps off the " ?on " onto the floor." crlf)
++  (println "Monkey jumps off the " ?on " onto the floor.")
+   (modify ?monkey (on-top-of floor))
+   (retract ?goal))
+ 
+ (defrule walk-to-place-to-climb "" 
+-  (goal-is-to (action on) (arguments ?obj))
++  (goal-is-to (action on) (target ?obj))
+   (thing (name ?obj) (location ?place))
+   (monkey (location ~?place))
+-  (not (goal-is-to (action walk-to) (arguments ?place)))
++  (not (goal-is-to (action walk-to) (location ?place)))
+   =>
+-  (assert (goal-is-to (action walk-to) (arguments ?place))))
++  (assert (goal-is-to (action walk-to) (location ?place))))
+ 
+ (defrule drop-to-climb "" 
+-  (goal-is-to (action on) (arguments ?obj))
++  (goal-is-to (action on) (target ?obj))
+   (thing (name ?obj) (location ?place))
+-  (monkey (location ?place) (holding ~blank))
+-  (not (goal-is-to (action hold) (arguments blank)))
++  (monkey (location ?place) (holding ~nothing))
++  (not (goal-is-to (action hold) (target nothing)))
+   =>
+-  (assert (goal-is-to (action hold) (arguments blank))))
++  (assert (goal-is-to (action hold) (target nothing))))
+ 
+ (defrule climb-indirectly "" 
+-  (goal-is-to (action on) (arguments ?obj))
++  (goal-is-to (action on) (target ?obj))
+   (thing (name ?obj) (location ?place) (on-top-of ?on))
+-  (monkey (location ?place) (on-top-of ~?on&~?obj) (holding blank))
+-  (not (goal-is-to (action on) (arguments ?on)))
++  (monkey (location ?place) (on-top-of ~?on&~?obj) (holding nothing))
++  (not (goal-is-to (action on) (target ?on)))
+   =>
+-  (assert (goal-is-to (action on) (arguments ?on))))
++  (assert (goal-is-to (action on) (target ?on))))
+ 
+ (defrule climb-directly ""  
+-  ?goal <- (goal-is-to (action on) (arguments ?obj))
++  ?goal <- (goal-is-to (action on) (target ?obj))
+   (thing (name ?obj) (location ?place) (on-top-of ?on))
+-  ?monkey <- (monkey (location ?place) (on-top-of ?on) (holding blank))
++  ?monkey <- (monkey (location ?place) (on-top-of ?on) (holding nothing))
+   =>
+-  (printout t "Monkey climbs onto the " ?obj "." crlf)
++  (println "Monkey climbs onto the " ?obj ".")
+   (modify ?monkey (on-top-of ?obj))
+   (retract ?goal))
+ 
+ (defrule already-on-object ""
+-  ?goal <- (goal-is-to (action on) (arguments ?obj))
++  ?goal <- (goal-is-to (action on) (target ?obj))
+   (monkey (on-top-of ?obj))
+   =>
+   (retract ?goal))
+@@ -332,19 +335,19 @@
+ ;;;********************
+ 
+ (defrule hold-to-eat ""
+-  (goal-is-to (action eat) (arguments ?obj))
++  (goal-is-to (action eat) (target ?obj))
+   (monkey (holding ~?obj))
+-  (not (goal-is-to (action hold) (arguments ?obj)))
++  (not (goal-is-to (action hold) (target ?obj)))
+   =>
+-  (assert (goal-is-to (action hold) (arguments ?obj))))
++  (assert (goal-is-to (action hold) (target ?obj))))
+ 
+ (defrule satisfy-hunger ""
+-  ?goal <- (goal-is-to (action eat) (arguments ?name))
++  ?goal <- (goal-is-to (action eat) (target ?name))
+   ?monkey <- (monkey (holding ?name))
+   ?thing <- (thing (name ?name))
+   =>
+-  (printout t "Monkey eats the " ?name "." crlf)
+-  (modify ?monkey (holding blank))
++  (println "Monkey eats the " ?name ".")
++  (modify ?monkey (holding nothing))
+   (retract ?goal ?thing))
+  
+ ;;;**********************
+@@ -353,7 +356,7 @@
+ 
+ (defrule startup ""
+   =>
+-  (assert (monkey (location t5-7) (on-top-of green-couch) (holding blank)))
++  (assert (monkey (location t5-7) (on-top-of green-couch) (holding nothing)))
+   (assert (thing (name green-couch) (location t5-7) (weight heavy)))
+   (assert (thing (name red-couch) (location t2-2) (weight heavy)))
+   (assert (thing (name big-pillow) (location t2-2) (on-top-of red-couch)))
+@@ -365,4 +368,4 @@
+   (assert (thing (name green-chest) (location t8-8) (on-top-of ceiling)))
+   (assert (chest (name green-chest) (contents blue-key) (unlocked-by red-key)))
+   (assert (thing (name red-key) (location t1-3)))
+-  (assert (goal-is-to (action eat) (arguments bananas))))
++  (assert (goal-is-to (action eat) (target bananas))))
+diff -bup clips_feature_tests_631/mathfnx.bat clips_feature_tests_640/mathfnx.bat
+--- clips_feature_tests_631/mathfnx.bat	2019-07-03 19:03:48.000000000 +0200
++++ clips_feature_tests_640/mathfnx.bat	2021-03-29 19:43:10.000000000 +0200
+@@ -54,11 +54,6 @@
+ (format nil "%0.6f" (/ 4 11.1))    ; 10.6.1.3 : 0.360360
+ (format nil "%0.6f" (/ -13.2 -6))  ; 10.6.1.3 : 2.2
+ (format nil "%0.6f" (/ 2 3.7 1.2)) ; 10.6.1.3 : 0.450450
+-(set-auto-float-dividend FALSE)    ; 10.6.1.3
+-(/ 2 3)                            ; 10.6.1.3 : 0
+-(format nil "%0.6f" (/ 2 3.0))     ; 10.6.1.3 : 0.666667
+-(format nil "%0.6f" (/ 2 4 3.0))   ; 10.6.1.3 : 0.0
+-(set-auto-float-dividend TRUE)     ; 10.6.1.3
+ (div)                              ; 10.6.1.5
+ (div 1)                            ; 10.6.1.5
+ (div a)                            ; 10.6.1.5
+@@ -216,6 +211,21 @@
+ (format nil "%0.6f" (atan 0))      ; 10.6.2.1 : 0.0
+ (format nil "%0.6f" (atan -1.0))   ; 10.6.2.1 : -0.785398
+ (format nil "%0.6f" (atan 0.5))    ; 10.6.2.1 : 0.463648
++(atan2)                             
++(atan2 a)                          
++(atan2 1 [b])         
++(atan2 1 2 3)             
++(atan2 0 0)
++(atan2 0.0 0.0)
++(format nil "%0.6f" (atan2 -11 1))  ; -1.480136
++(format nil "%0.6f" (atan2 11 1))   ; 1.480136
++(format nil "%0.6f" (atan2 1 1))    ; 0.785398
++(format nil "%0.6f" (atan2 1 -1))   ; 2.356194
++(format nil "%0.6f" (atan2 -1 -1))  ; -2.356194
++(format nil "%0.6f" (atan2 -1 1))   ; -0.785398
++(format nil "%0.6f" (atan2 1 0))    ; 1.570796
++(format nil "%0.6f" (atan2 -1 0))   ; -1.570796
++(format nil "%0.6f" (atan2 0.5 1))  ; 0.463648
+ (atanh)                            ; 10.6.2.1
+ (atanh a)                          ; 10.6.2.1
+ (atanh 1 [b])                      ; 10.6.2.1
+@@ -411,8 +421,5 @@
+ (format nil "%0.6f" (mod 3.7 1.2)) ; 10.6.2.13 : 0.1
+ (div -9223372036854775808 -1)      ; Error
+ (mod -9223372036854775808 -1)      ; Error
+-(set-auto-float-dividend FALSE)
+ (/ -9223372036854775808 -1)        ; Error in 6.3
+-(set-auto-float-dividend TRUE)
+-(/ -9223372036854775808 -1)
+ (clear)
+diff -bup clips_feature_tests_631/miscfnx.bat clips_feature_tests_640/miscfnx.bat
+--- clips_feature_tests_631/miscfnx.bat	2019-07-03 19:03:40.000000000 +0200
++++ clips_feature_tests_640/miscfnx.bat	2021-03-29 18:57:58.000000000 +0200
+@@ -189,3 +189,26 @@
+ (retract ?v)
+ (timetag ?v)
+ (clear)
++(acos 3)
++(get-error)
++(clear-error)
++(get-error)
++(acos 3)
++(clear-error)
++(get-error)
++(set-error 3)
++(clear-error)
++(get-error 3)
++(clear-error 3)
++(set-error)
++(set-error 3 4)
++(void)
++(void 3)
++(deffunction foo () (void))
++(foo)
++(deffunction bar () (return (void)))
++(bar)
++(local-time)
++(gm-time)
++(local-time 3)
++(gm-time 3)
+diff -bup clips_feature_tests_631/misclns4.bat clips_feature_tests_640/misclns4.bat
+--- clips_feature_tests_631/misclns4.bat	2019-07-03 18:54:42.000000000 +0200
++++ clips_feature_tests_640/misclns4.bat	2021-03-29 18:57:58.000000000 +0200
+@@ -333,4 +333,31 @@
+ (fact-slot-value 2 implied)
+ (length$ (fact-slot-value 1 implied))
+ (length$ (fact-slot-value 2 implied))
++(clear) ; Multifield wildcard not allowed in single field slot
++(deftemplate bar (slot x))
++(defrule blah (bar (x $?)) =>) 
++(clear)
++(defmethod clear ((?a EXTERNAL-ADDRESS))) ; Crash
++(undefgeneric clear)
++(clear)
++
++(deftemplate factoid
++   (slot source)
++   (slot status)
++   (slot processed))
++
++(deffacts initial
++   (factoid (source input) 
++            (status normal) 
++            (processed no)))
++            
++(defrule overwrite ""
++   ?f <- (factoid (source input) (processed no))
++   =>   
++   (modify ?f (processed yes))
++   (duplicate ?f (source output)
++                 (processed yes)))
++(reset)
++(run)
++(facts)
+ (clear)
+diff -bup clips_feature_tests_631/modulcmd.bat clips_feature_tests_640/modulcmd.bat
+--- clips_feature_tests_631/modulcmd.bat	2019-07-03 18:54:42.000000000 +0200
++++ clips_feature_tests_640/modulcmd.bat	2021-03-29 18:57:58.000000000 +0200
+@@ -14,9 +14,12 @@
+ (list-defmodules *)
+ (list-defmodules)
+ (ppdefmodule MAIN::d6)
+-(ppdefmodule d6 d5)
++(ppdefmodule)
+ (ppdefmodule *)
+ (ppdefmodule d1)
++(ppdefmodule d1 stdout)
++(ppdefmodule d1 bogus)
++(ppdefmodule d1 nil)
+ (ppdefmodule d2)
+ (ppdefmodule d3)
+ (ppdefmodule d4)
+diff -bup clips_feature_tests_631/msgerr.bat clips_feature_tests_640/msgerr.bat
+--- clips_feature_tests_631/msgerr.bat	2019-07-03 18:54:42.000000000 +0200
++++ clips_feature_tests_640/msgerr.bat	2021-03-29 18:57:58.000000000 +0200
+@@ -8,7 +8,7 @@
+ (make-instance a of A)
+ (defmessage-handler A print-args (?a ?b $?c)
+ 	(printout t (instance-name ?self) " " ?a " " ?b 
+-		" and " (length ?c) " extras: " ?c crlf))
++		" and " (length$ ?c) " extras: " ?c crlf))
+ (send [a] print-args 1 2)
+ (send [a] print-args a b c d)
+ (clear) 
+diff -bup clips_feature_tests_631/msghand.clp clips_feature_tests_640/msghand.clp
+--- clips_feature_tests_631/msghand.clp	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/msghand.clp	2021-03-29 18:57:58.000000000 +0200
+@@ -40,9 +40,9 @@
+ (defclass PHLEGM (is-a THINGO) (role concrete))
+ 
+ (defmessage-handler THINGO quoxnar ()
+-   (printout t (str-implode ?self:q) " " (str-cat ?self:r) " " 
+-               (str-implode ?self:s) " " (str-cat ?self:x) " "
+-               (str-cat ?self:y) " " (str-implode ?self:z) crlf))
++   (printout t (implode$ ?self:q) " " (str-cat ?self:r) " " 
++               (implode$ ?self:s) " " (str-cat ?self:x) " "
++               (str-cat ?self:y) " " (implode$ ?self:z) crlf))
+ 
+ (defmessage-handler THINGO fribban ()
+    (send ?self put-r ?self:x)
+@@ -51,9 +51,9 @@
+    (send ?self put-q ?self:s)
+    (send ?self put-s (create$ k 1 9.4))
+    (send ?self put-z ?*q*)
+-   (printout t (str-implode ?self:q) " " (str-cat ?self:r) " " 
+-               (str-implode ?self:s) " " (str-cat ?self:x) " "
+-               (str-cat ?self:y) " " (str-implode ?self:z) crlf))
++   (printout t (implode$ ?self:q) " " (str-cat ?self:r) " " 
++               (implode$ ?self:s) " " (str-cat ?self:x) " "
++               (str-cat ?self:y) " " (implode$ ?self:z) crlf))
+ 
+ (defmessage-handler PHLEGM get-x around ()
+    (printout t "This message should appear first" crlf)
+diff -bup clips_feature_tests_631/multifnx.bat clips_feature_tests_640/multifnx.bat
+--- clips_feature_tests_631/multifnx.bat	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/multifnx.bat	2021-03-29 18:57:58.000000000 +0200
+@@ -87,18 +87,18 @@
+ (delete$ (create$ computer printer hard-disk floppy-drive) 2 4)
+ (delete$ (create$ computer printer hard-disk floppy-drive) 3 4)
+ (delete$ (create$ computer printer hard-disk floppy-drive) 3 2)
+-(length)                           ; 10.3.6
+-(length "x" 3)                     ; 10.3.6
+-(length [def])                     ; 10.3.6
+-(length 4.3)                       ; 10.3.6
+-(length 567)                       ; 10.3.6
+-(length blah-blah-blah)            ; 10.3.6
+-(length "")                        ; 10.3.6
+-(length "Hello world")             ; 10.3.6
+-(length (create$))                 ; 10.3.6
+-(length (create$ a b c))           ; 10.3.6
+-(length (create$ a b c d e f g)) ; 10.3.6
+-(length "cat")                     ; 10.3.6
++(length$)                           ; 10.3.6
++(length$ "x" 3)                     ; 10.3.6
++(length$ [def])                     ; 10.3.6
++(length$ 4.3)                       ; 10.3.6
++(length$ 567)                       ; 10.3.6
++(length$ blah-blah-blah)            ; 10.3.6
++(length$ "")                        ; 10.3.6
++(length$ "Hello world")             ; 10.3.6
++(length$ (create$))                 ; 10.3.6
++(length$ (create$ a b c))           ; 10.3.6
++(length$ (create$ a b c d e f g))   ; 10.3.6
++(length$ "cat")                     ; 10.3.6
+ (explode$)                      ; 10.3.7
+ (explode$ "x" 3)                ; 10.3.7
+ (explode$ [jocko])              ; 10.3.7
+@@ -213,58 +213,3 @@
+ (rest$ (create$ a b c))
+ (rest$ (create$ a))
+ (rest$ (create$))
+-(mv-delete)                        
+-(mv-delete 1)                        
+-(mv-delete 3 (create$ a b c) [x])    
+-(mv-delete 3.4 (create$ a b c d))    
+-(mv-delete a (create$ a b c d))      
+-(mv-delete 3 "a b")                
+-(mv-delete -1 (create$ x 1 z))     
+-(mv-delete 0 (create$ x 4.2 z))    
+-(mv-delete 1 (create$ [ab] cd ef)) 
+-(mv-delete 2 (create$ abc d ef))   
+-(mv-delete 3 (create$ abcd 2 e))   
+-(mv-delete 4 (create$ q 3 "tx"))   
+-(mv-delete -1 (create$))             
+-(mv-delete 0 (create$))              
+-(mv-delete 1 (create$))              
+-(mv-delete 2 (create$))              
+-(mv-delete 3 (create$ hammer drill saw pliers wrench))
+-(mv-delete 1 (create$ computer printer hard-disk))
+-(mv-subseq)                        
+-(mv-subseq 1)                      
+-(mv-subseq 1 3)                    
+-(mv-subseq 1 2 (create$ a c d) 3)  
+-(mv-subseq a 2 (create$ a b c))    
+-(mv-subseq 2 a (create$ d e))      
+-(mv-subseq 1 2 this)               
+-(mv-subseq 1 2 (create$ a b c))  
+-(mv-subseq 1 2 (create$ a b c))  
+-(mv-subseq 1 2.5 (create$ a b c))  
+-(mv-subseq 1 3 (create$ a b c))    
+-(mv-subseq -1 3 (create$ a b c))   
+-(mv-subseq 1 4 (create$ a "b" c))  
+-(mv-subseq 3 1 (create$ a b c))    
+-(mv-subseq 1 1 (create$ 3 b c))    
+-(mv-subseq 2 2 (create$ a 4.1 c))  
+-(mv-subseq 3 3 (create$ a b [x]))  
+-(mv-subseq 0 0 (create$ a b c))    
+-(mv-subseq 4 4 (create$ a b c))    
+-(mv-subseq 2 3 (create$ a b c d))  
+-(mv-subseq 5 7 (create$ a b c))    
+-(mv-subseq -1 0 (create$ a b c))   
+-(mv-subseq 3 4 (create$ hammer drill wrench pliers))
+-(mv-subseq 1 1 (create$ a "abc" def "ghi" 2))
+-(mv-replace)                       
+-(mv-replace 1)                     
+-(mv-replace 1 (create$ a b))       
+-(mv-replace 1 (create$ a b) 3 4)   
+-(mv-replace 1.5 (create$ a) [x])   
+-(mv-replace 1 3.5 a)               
+-(mv-replace 2 (create$ a b) (create$))
+-(mv-replace -1 (create$ a b) x)    
+-(mv-replace 0 (create$ c d) 3.5)   
+-(mv-replace 1 (create$ "c" "d") 13)
+-(mv-replace 2 (create$ 3 5) "x")   
+-(mv-replace 3 (create$ [a] [b]) 3) 
+-(mv-replace 3 (create$ drill wrench pliers) machete)
+diff -bup clips_feature_tests_631/objfarm.clp clips_feature_tests_640/objfarm.clp
+--- clips_feature_tests_631/objfarm.clp	2019-07-03 19:00:12.000000000 +0200
++++ clips_feature_tests_640/objfarm.clp	2021-03-29 18:57:58.000000000 +0200
+@@ -6,15 +6,16 @@
+ ;;;     missionary) in agricultural terms. The point is
+ ;;;     to get the farmer, the fox the cabbage and the
+ ;;;     goat across a stream.
++;;;
+ ;;;     But the boat only holds 2 items. If left 
+ ;;;     alone with the goat, the fox will eat it. If
+ ;;;     left alone with the cabbage, the goat will eat
+ ;;;     it.
++;;;
+ ;;;        This example uses rules and object pattern  
+ ;;;     matching to solve the problem.
+ ;;;
+-;;;     CLIPS Version 6.0 Example using
+-;;;     Object Pattern-Matching
++;;;     CLIPS Version 6.4 Example
+ ;;;
+ ;;;     To execute, merely load, reset and run.
+ ;;;======================================================
+@@ -208,16 +209,18 @@
+                  (moves-list no-move $?m))
+   =>
+   (unmake-instance ?mv)
+-  (printout t crlf "Solution found: " crlf crlf)
++  (println crlf "Solution found: " crlf)
+   (bind ?length (length$ ?m))
+   (bind ?i 1)
+   (bind ?shore shore-2)
+   (while (<= ?i ?length)
+      (bind ?thing (nth$ ?i ?m))
+      (if (eq ?thing alone)
+-        then (printout t "Farmer moves alone to " ?shore "." crlf)
+-        else (printout t "Farmer moves with " ?thing " to " ?shore "." crlf))
++        then (println "Farmer moves alone to " ?shore ".")
++        else (println "Farmer moves with " ?thing " to " ?shore "."))
+      (if (eq ?shore shore-1)
+         then (bind ?shore shore-2)
+         else (bind ?shore shore-1))
+-     (bind ?i (+ 1 ?i))))
++     (bind ?i (+ 1 ?i)))
++  (println))
++
+diff -bup clips_feature_tests_631/pataddtn.clp clips_feature_tests_640/pataddtn.clp
+--- clips_feature_tests_631/pataddtn.clp	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/pataddtn.clp	2021-03-29 18:57:58.000000000 +0200
+@@ -16,11 +16,11 @@
+   =>)
+ 
+ (defrule should-not-fire-1a
+-  (not (and (initial-fact)))
++  (not (and (factoid)))
+   =>)
+ 
+ (defrule should-not-fire-1b
+-  (not (initial-fact))
++  (not (factoid))
+   =>)
+ 
+ ; Single test CE
+@@ -32,7 +32,7 @@
+ 
+ (defrule should-fire-2b
+   (declare (salience 3))
+-  (initial-fact)
++  (factoid)
+   (test (> 5 3))
+   =>)
+ 
+@@ -41,7 +41,7 @@
+   =>)
+ 
+ (defrule should-not-fire-2b
+-  (initial-fact)
++  (factoid)
+   (test (< 5 3))
+   =>)
+ 
+@@ -54,7 +54,7 @@
+ 
+ (defrule should-fire-3b
+   (declare (salience 5))
+-  (and (initial-fact)
++  (and (factoid)
+        (test (> 5 3)))
+   =>)
+ 
+@@ -63,7 +63,7 @@
+   =>)
+ 
+ (defrule should-not-fire-3b
+-  (and (initial-fact)
++  (and (factoid)
+        (test (< 5 3)))
+   =>)
+ 
+@@ -81,21 +81,21 @@
+   
+ (defrule should-fire-4c
+   (declare (salience 8))
+-  (not (and (initial-fact) 
++  (not (and (factoid) 
+             (test (< 5 3))))
+   =>)
+ 
+ (defrule should-fire-4d
+   (declare (salience 9))
+-  (initial-fact)
+-  (not (and (initial-fact) 
++  (factoid)
++  (not (and (factoid) 
+             (test (< 5 3))))
+   =>)
+   
+ (defrule should-fire-4e
+   (declare (salience 10))
+   (not (and (test (< 5 3)) 
+-            (initial-fact)))
++            (factoid)))
+   =>)
+   
+ (defrule should-not-fire-4a
+@@ -103,13 +103,13 @@
+   =>)
+ 
+ (defrule should-not-fire-4b
+-  (not (and (initial-fact) 
++  (not (and (factoid) 
+             (test (> 5 3))))
+   =>)
+   
+ (defrule should-not-fire-4c
+-  (initial-fact)
+-  (not (and (initial-fact) 
++  (factoid)
++  (not (and (factoid) 
+             (test (> 5 3))))
+   =>)
+ 
+@@ -119,7 +119,7 @@
+   
+ (defrule should-not-fire-4e
+   (not (and (test (> 5 3)) 
+-            (initial-fact)))
++            (factoid)))
+   =>)
+   
+ ; Single test CE within two not CEs
+@@ -136,26 +136,26 @@
+ 
+ (defrule should-fire-5c
+   (declare (salience 13))
+-  (initial-fact)
++  (factoid)
+   (exists (test (< 3 5)))
+   =>)
+ 
+ (defrule should-fire-5d
+   (declare (salience 14))
+-  (initial-fact)
++  (factoid)
+   (not (not (test (< 3 5))))
+   =>)
+   
+ (defrule should-fire-5e
+   (declare (salience 15))
+-  (initial-fact)
+-  (exists (and (initial-fact) (test (< 3 5))))
++  (factoid)
++  (exists (and (factoid) (test (< 3 5))))
+   =>)
+ 
+ (defrule should-fire-5f
+   (declare (salience 16))
+-  (initial-fact)
+-  (not (not (and (initial-fact) (test (< 3 5)))))
++  (factoid)
++  (not (not (and (factoid) (test (< 3 5)))))
+   =>)
+ 
+ (defrule should-not-fire-5a
+@@ -167,43 +167,43 @@
+   =>)
+ 
+ (defrule should-not-fire-5c
+-  (initial-fact)
++  (factoid)
+   (exists (test (> 3 5)))
+   =>)
+ 
+ (defrule should-not-fire-5d
+-  (initial-fact)
++  (factoid)
+   (not (not (test (> 3 5))))
+   =>)
+   
+ (defrule should-not-fire-5e
+-  (initial-fact)
+-  (exists (and (initial-fact) (test (> 3 5))))
++  (factoid)
++  (exists (and (factoid) (test (> 3 5))))
+   =>)
+ 
+ (defrule should-not-fire-5f
+-  (initial-fact)
+-  (not (not (and (initial-fact) (test (> 3 5)))))
++  (factoid)
++  (not (not (and (factoid) (test (> 3 5)))))
+   =>)
+ 
+ ; Forall CE
+ 
+ (defrule should-fire-6a
+   (declare (salience 17))
+-  (forall (initial-fact) 
+-          (initial-fact))
++  (forall (factoid) 
++          (factoid))
+   =>)
+ 
+ (defrule should-fire-6b
+   (declare (salience 18))
+-  (forall (initial-fact) 
++  (forall (factoid) 
+           (test (> 5 3)))
+   =>)
+ 
+ (defrule should-fire-6c
+   (declare (salience 19))
+   (forall (test (> 5 3)) 
+-          (initial-fact))
++          (factoid))
+   =>)
+ 
+ (defrule should-fire-6d
+@@ -215,7 +215,7 @@
+ (defrule should-fire-6e
+   (declare (salience 21))
+   (forall (test (< 5 3)) 
+-          (initial-fact))
++          (factoid))
+   =>)
+ 
+ (defrule should-fire-6f
+@@ -231,7 +231,7 @@
+   =>)
+ 
+ (defrule should-not-fire-6a
+-  (forall (initial-fact) 
++  (forall (factoid) 
+           (test (< 5 3)))
+   =>)
+ 
+diff -bup clips_feature_tests_631/pataddtn.tst clips_feature_tests_640/pataddtn.tst
+--- clips_feature_tests_631/pataddtn.tst	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/pataddtn.tst	2021-03-29 18:57:58.000000000 +0200
+@@ -7,6 +7,7 @@
+ (dribble-on "Actual//pataddtn.out")
+ (load "pataddtn.clp")
+ (reset)
++(assert (factoid))
+ (agenda)
+ (dribble-off)
+ (printout pataddtn "pataddtn.clp differences are as follows:" crlf)
+diff -bup clips_feature_tests_631/predcfnx.bat clips_feature_tests_640/predcfnx.bat
+--- clips_feature_tests_631/predcfnx.bat	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/predcfnx.bat	2021-03-29 18:57:58.000000000 +0200
+@@ -43,10 +43,10 @@
+ (multifieldp (create$))            ; 10.2.9
+ (multifieldp (create$ a 3 4.1))    ; 10.2.9
+ (multifieldp "hit")                ; 10.2.9
+-(pointerp)                         ; 10.2.10
+-(pointerp 3 a)                     ; 10.2.10
+-(pointerp 3)                       ; 10.2.10
+-(pointerp x)                       ; 10.2.10
++(external-addressp)                ; 10.2.10
++(external-addressp 3 a)            ; 10.2.10
++(external-addressp 3)              ; 10.2.10
++(external-addressp x)              ; 10.2.10
+ (eq)                               ; 10.2.11
+ (eq a)                             ; 10.2.11
+ (eq a a b)                         ; 10.2.11
+diff -bup clips_feature_tests_631/rfrshagn.clp clips_feature_tests_640/rfrshagn.clp
+--- clips_feature_tests_631/rfrshagn.clp	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/rfrshagn.clp	2021-03-29 18:57:58.000000000 +0200
+@@ -40,7 +40,7 @@
+   (run))
+ 
+ (deffunction print-order ($?x)
+-  (bind ?r (nth ?*which-test* ?x))
++  (bind ?r (nth$ ?*which-test* ?x))
+   (printout t "This rule should fire " ?r crlf))
+ 
+ ;;;**************************
+diff -bup clips_feature_tests_631/rulemisc.bat clips_feature_tests_640/rulemisc.bat
+--- clips_feature_tests_631/rulemisc.bat	2019-07-03 18:59:56.000000000 +0200
++++ clips_feature_tests_640/rulemisc.bat	2021-03-29 18:57:58.000000000 +0200
+@@ -11,9 +11,10 @@
+ (assert (b))
+ (unwatch all)
+ (clear) ; Test Thing #3
++(deffacts initial (factoid))
+ (reset)
+-(defrule foo (initial-fact) (not (a)) =>)
+-(defrule bar (initial-fact) =>)
++(defrule foo (factoid) (not (a)) =>)
++(defrule bar (factoid) =>)
+ (agenda)
+ (unwatch all)
+ (clear) ; Test Thing #4
+@@ -553,6 +554,25 @@
+ (agenda)
+ (reset)
+ (agenda)
++(clear) ; Fact duplication bug
++
++(deftemplate pay
++   (slot code)
++   (slot processed))
++
++(deffacts initial-data
++   (pay (code A) (processed 1))
++   (pay (code A) (processed 2)))
++   
++(defrule Secondary ""
++   ?p <- (pay (processed ~TRUE))
++   =>
++   (modify ?p (processed TRUE))) 
++(reset)
++(watch facts)
++(watch rules)
++(run)
++(unwatch all)
+ (clear) ; Class to alpha link removal
+ (watch activations)
+ (defclass A (is-a USER))
+diff -bup clips_feature_tests_631/seqop.bat clips_feature_tests_640/seqop.bat
+--- clips_feature_tests_631/seqop.bat	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/seqop.bat	2021-03-29 18:57:58.000000000 +0200
+@@ -1,4 +1,4 @@
+-(defglobal ?*x* = (mv-append 1 2 3))
++(defglobal ?*x* = (create$ 1 2 3))
+ (deffunction foo (?a ?b)
+   (printout t "Foo arguments: " ?a " " ?b crlf))
+ (batch "seqop2.bat")
+@@ -14,3 +14,38 @@
+ (send [s1] seqop-test abc def ghi)
+ (+ "abc" "def" "ghi")
+ (unwatch all)
++(bind ?a (create$ 1 2 3))
++(defglobal ?*b* = (create$ 4 5 6))
++?a
++?*b*
++$?a
++$?*b*
++(+ ?a)
++(+ ?*b*)
++(+ $?a)
++(+ $?*b*)
++(eval "?a")
++(eval "?*b*")
++(eval "$?a")
++(eval "$?*b*")
++(eval "(+ ?a)")
++(eval "(+ ?*b*)")
++(eval "(+ $?a)")
++(eval "(+ $?*b*)")
++(set-sequence-operator-recognition FALSE)
++?a
++?*b*
++$?a
++$?*b*
++(+ ?a)
++(+ ?*b*)
++(+ $?a)
++(+ $?*b*)
++(eval "?a")
++(eval "?*b*")
++(eval "$?a")
++(eval "$?*b*")
++(eval "(+ ?a)")
++(eval "(+ ?*b*)")
++(eval "(+ $?a)")
++(eval "(+ $?*b*)")
+diff -bup clips_feature_tests_631/seqop.clp clips_feature_tests_640/seqop.clp
+--- clips_feature_tests_631/seqop.clp	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/seqop.clp	2021-03-29 18:57:58.000000000 +0200
+@@ -32,7 +32,7 @@
+    (test (and (test-arg $?multi) (test-arg $?multi2)))
+ =>
+    (retract ?f ?g)
+-   (bind ?a (mv-append abc def ghi))
++   (bind ?a (create$ abc def ghi))
+    (printout t ?a " --> " $?a " ; " (expand$ ?a) crlf)
+    (printout t "Success:" crlf ?multi  " --> " $?multi  crlf
+                                ?multi2 " --> " $?multi2 crlf)
+@@ -47,13 +47,13 @@
+ )
+ 
+ (deffunction dfnx-seqop-test (?a $?b)
+-   (bind ?a (mv-append abc def ghi))
++   (bind ?a (create$ abc def ghi))
+    (printout t ?a " --> " $?a " ; " (expand$ ?a) crlf)
+    (printout t ?b " --> " $?b crlf)
+ )
+ 
+ (defmessage-handler SEQOP-TEST-CLASS seqop-test (?a $?b)
+-   (bind ?a (mv-append abc def ghi))
++   (bind ?a (create$ abc def ghi))
+    (printout t ?a " --> " $?a " ; " (expand$ ?a) crlf)
+    (printout t ?b " --> " $?b crlf)
+    (printout t ?self:woz " --> " (expand$ ?self:woz) crlf)
+@@ -63,7 +63,7 @@
+ )
+ 
+ (defmethod + (($?b STRING))
+-   (bind ?a (mv-append abc def ghi))
++   (bind ?a (create$ abc def ghi))
+    (printout t ?a " --> " $?a " ; " (expand$ ?a) crlf)
+    (printout t ?b " --> " $?b crlf)
+    (str-cat $?b)
+diff -bup clips_feature_tests_631/seqop2.bat clips_feature_tests_640/seqop2.bat
+--- clips_feature_tests_631/seqop2.bat	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/seqop2.bat	2021-03-29 18:58:00.000000000 +0200
+@@ -19,3 +19,7 @@
+ (deffunction bar ($?a) (foo $?a))
+ (bar 1 2)
+ (bar 1 2 3)
++(> (expand$ (create$ 3)))
++(> (expand$ (create$ 4 3)))
++(> (expand$ (create$ 4)) (expand$ (create$ 3)))
++(> (expand$ (create$ 3)) (expand$ (create$)))
+diff -bup clips_feature_tests_631/stobjcst.bat clips_feature_tests_640/stobjcst.bat
+--- clips_feature_tests_631/stobjcst.bat	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/stobjcst.bat	2021-03-29 18:58:00.000000000 +0200
+@@ -21,10 +21,4 @@
+    (slot foo (type INTEGER) (default abc)))
+ (defclass A (is-a USER)
+    (slot foo (type INTEGER) (default-dynamic abc)))
+-(set-static-constraint-checking FALSE)
+-(defclass A (is-a USER)
+-   (slot foo (type INTEGER) (default abc)))
+-(defclass B (is-a USER)
+-   (slot foo (type INTEGER) (default-dynamic abc)))
+-(set-static-constraint-checking TRUE)
+ (clear)
+diff -bup clips_feature_tests_631/stobjcst.clp clips_feature_tests_640/stobjcst.clp
+--- clips_feature_tests_631/stobjcst.clp	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/stobjcst.clp	2021-03-29 18:58:00.000000000 +0200
+@@ -289,7 +289,7 @@
+      (allowed-integers 1 2 3) (create-accessor ?NONE)))
+ 
+ (defclass DERIVE1 (is-a BASE)
+-  (single-slot foo (source composite)
++  (slot foo (source composite)
+             (propagation no-inherit) (create-accessor ?NONE)))
+ 
+ (defclass DERIVE2 (is-a DERIVE1)
+diff -bup clips_feature_tests_631/stobjcst.tst clips_feature_tests_640/stobjcst.tst
+--- clips_feature_tests_631/stobjcst.tst	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/stobjcst.tst	2021-03-29 18:58:00.000000000 +0200
+@@ -1,6 +1,5 @@
+ (unwatch all)
+ (clear)
+-(set-static-constraint-checking TRUE)
+ (dribble-on "Actual//stobjcst.out")
+ (batch "stobjcst.bat")
+ (dribble-off)
+diff -bup clips_feature_tests_631/strngfnx.bat clips_feature_tests_640/strngfnx.bat
+--- clips_feature_tests_631/strngfnx.bat	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/strngfnx.bat	2021-03-29 19:43:44.000000000 +0200
+@@ -78,7 +78,9 @@
+ (eval "?x")                        ; 10.4.5
+ (eval "(defrule foo =>)")          ; 10.4.5
+ (eval "(+ 3 4)")                   ; 10.4.5
+-(eval "(mv-append a b c)")         ; 10.4.5
++(eval "(create$ a b c)")           ; 10.4.5
++(eval "(+ 3 4) (+ 8 9)")           ; 10.4.5
++(eval "3 4")                       ; 10.4.5
+ (build)                            ; 10.4.6
+ (build "(defrule foo =>)" "dog")   ; 10.4.6
+ (build 7.8)                        ; 10.4.6
+@@ -90,6 +92,7 @@
+ (build "(defrule blah)")           ; 10.4.6
+ (build "(+ 3 4)")                  ; 10.4.6
+ (build "defrule foo =>)")          ; 10.4.6
++(build "(defrule bar =>) 3")       ; 10.4.6
+ (rules)                            ; 10.4.6
+ (clear)                            ; 10.4.6
+ (upcase)                           ; 10.4.7
+@@ -149,3 +152,15 @@
+ (str-length a)                     ; 10.4.10
+ (str-length "abcd")                ; 10.4.10
+ (str-length xyz)                   ; 10.4.10
++(str-replace)
++(str-replace "abcde")
++(str-replace "abcde" "bcd")
++(str-replace "abcde" "bcd" "xyz" "rst")
++(str-replace 7 "bcd" "xyz")
++(str-replace "abcde" 8.9 "xyz")
++(str-replace "abcde" "bcd" 8.9)
++(str-replace "abcde" "bcd" "xyz")
++(str-replace abcdefbcdgh bcd wxyz)
++(str-replace [abcdefbcdgh] [bcd] [xy])
++(str-replace "abcde" "" "xyz")
++(str-replace abcba a x)
+diff -bup clips_feature_tests_631/testall.tst clips_feature_tests_640/testall.tst
+--- clips_feature_tests_631/testall.tst	2019-07-03 18:54:44.000000000 +0200
++++ clips_feature_tests_640/testall.tst	2021-03-29 18:58:00.000000000 +0200
+@@ -1,14 +1,12 @@
+ (set-dynamic-constraint-checking FALSE)
+ (set-sequence-operator-recognition FALSE)
+-(set-static-constraint-checking TRUE)
+ (set-reset-globals TRUE)
+-(set-auto-float-dividend TRUE)
+ (set-fact-duplication FALSE)
+-(set-incremental-reset TRUE)
+ (set-salience-evaluation when-defined)
+ (set-strategy depth)
+ (open "Results//testall.rsl" testall "w")
+ (printout testall "*** FEATURE TESTS BEGIN ***" crlf)
++(printout testall ">>> Start time: " (time) crlf)
+ (clear)
+ (release-mem)
+ (printout testall "Memory use: " (mem-used) crlf)
+@@ -507,6 +505,12 @@
+ (clear)
+ (release-mem)
+ (printout testall "Memory use: " (mem-used) crlf)
++(batch "v640fun.tst")
++(printout testall "Completed v640fun.tst test" crlf)
++(clear)
++(release-mem)
++(printout testall "Memory use: " (mem-used) crlf)
+ (printout testall "*** FEATURE TESTS COMPLETED ***" crlf)
++(printout testall "<<< End time: " (time) crlf)
+ (close testall)
+ ;(exit)
+diff -bup clips_feature_tests_631/tmplmslt.bat clips_feature_tests_640/tmplmslt.bat
+--- clips_feature_tests_631/tmplmslt.bat	2019-07-03 18:54:46.000000000 +0200
++++ clips_feature_tests_640/tmplmslt.bat	2021-03-29 18:58:00.000000000 +0200
+@@ -50,12 +50,12 @@
+ (watch facts)
+ (assert (foo (a) (b) (x 1) (y 2))) 
+ (modify 1 (a 1))
+-(modify 2 (b 1))
+-(modify 3 (a 1 2))
+-(modify 4 (b 1 2 3))
+-(modify 5 (a))
+-(modify 6 (b 1))
+-(modify 7 (a 1) (b 1 2))
+-(modify 8 (a 1 2) (b))
+-(modify 9 (a) (b))
++(modify 1 (b 1))
++(modify 1 (a 1 2))
++(modify 1 (b 1 2 3))
++(modify 1 (a))
++(modify 1 (b 1))
++(modify 1 (a 1) (b 1 2))
++(modify 1 (a 1 2) (b))
++(modify 1 (a) (b))
+ (unwatch facts)
+diff -bup clips_feature_tests_631/utf8.bat clips_feature_tests_640/utf8.bat
+--- clips_feature_tests_631/utf8.bat	2019-07-03 18:54:46.000000000 +0200
++++ clips_feature_tests_640/utf8.bat	2021-03-29 18:58:00.000000000 +0200
+@@ -26,3 +26,9 @@ Olá Mundo                          ; UT
+ ?여러분                              ; UTF-8 Support
+ $?Привет                           ; UTF-8 Support
+ $?여러분                             ; UTF-8 Support
++(open "Temp/Назад.txt" temp "w")
++(close temp)
++(rename "Temp/Назад.txt" "Temp/НазадНазад.txt")
++(remove "Temp/НазадНазад.txt")
++(open "Temp/Назад.txt" temp "r")
++(open "Temp/НазадНазад.txt" temp "r")
+Only in clips_feature_tests_640: v640fun.bat
+Only in clips_feature_tests_640: v640fun.tst
+diff -bup clips_feature_tests_631/wine.clp clips_feature_tests_640/wine.clp
+--- clips_feature_tests_631/wine.clp	2019-07-03 18:54:46.000000000 +0200
++++ clips_feature_tests_640/wine.clp	2021-03-29 18:58:00.000000000 +0200
+@@ -6,7 +6,7 @@
+ ;;;     This example selects an appropriate wine
+ ;;;     to drink with a meal.
+ ;;;
+-;;;     CLIPS Version 6.0 Example
++;;;     CLIPS Version 6.4 Example
+ ;;;
+ ;;;     To execute, merely load, reset and run.
+ ;;;======================================================
+@@ -18,11 +18,11 @@
+ ;;****************
+ 
+ (deffunction MAIN::ask-question (?question ?allowed-values)
+-   (printout t ?question)
++   (print ?question)
+    (bind ?answer (read))
+    (if (lexemep ?answer) then (bind ?answer (lowcase ?answer)))
+-   (while (not (member ?answer ?allowed-values)) do
+-      (printout t ?question)
++   (while (not (member$ ?answer ?allowed-values)) do
++      (print ?question)
+       (bind ?answer (read))
+       (if (lexemep ?answer) then (bind ?answer (lowcase ?answer))))
+    ?answer)
+@@ -81,7 +81,7 @@
+                    (precursors ?name is ?value $?rest))
+          (attribute (name ?name) (value ?value))
+    =>
+-   (if (eq (nth 1 ?rest) and) 
++   (if (eq (nth$ 1 ?rest) and) 
+     then (modify ?f (precursors (rest$ ?rest)))
+     else (modify ?f (precursors ?rest))))
+ 
+@@ -90,7 +90,7 @@
+                    (precursors ?name is-not ?value $?rest))
+          (attribute (name ?name) (value ~?value))
+    =>
+-   (if (eq (nth 1 ?rest) and) 
++   (if (eq (nth$ 1 ?rest) and) 
+     then (modify ?f (precursors (rest$ ?rest)))
+     else (modify ?f (precursors ?rest))))
+ 
+@@ -105,7 +105,7 @@
+             (the-question "Is the main component of the meal meat, fish, or poultry? ")
+             (valid-answers meat fish poultry unknown))
+   (question (attribute has-turkey)
+-            (precursors main-component is turkey)
++            (precursors main-component is poultry)
+             (the-question "Does the meal have turkey in it? ")
+             (valid-answers yes no unknown))
+   (question (attribute has-sauce)
+@@ -180,7 +180,7 @@
+               (if)
+               (then ?attribute is ?value $?rest))
+   (test (or (eq (length$ ?rest) 0)
+-            (neq (nth 1 ?rest) with)))
++            (neq (nth$ 1 ?rest) with)))
+   =>
+   (modify ?f (then ?rest))
+   (assert (attribute (name ?attribute) (value ?value) (certainty ?c1))))
+@@ -364,10 +364,10 @@
+ (defrule PRINT-RESULTS::header ""
+    (declare (salience 10))
+    =>
+-   (printout t t)
+-   (printout t "        SELECTED WINES" t t)
+-   (printout t " WINE                  CERTAINTY" t)
+-   (printout t " -------------------------------" t)
++   (println)
++   (println "        SELECTED WINES" crlf)
++   (println " WINE                  CERTAINTY")
++   (println " -------------------------------")
+    (assert (phase print-wines)))
+ 
+ (defrule PRINT-RESULTS::print-wine ""
+@@ -385,8 +385,4 @@
+ (defrule PRINT-RESULTS::end-spaces ""
+    (not (attribute (name wine)))
+    =>
+-   (printout t t))
+-
+-
+-
+-
++   (println))
+diff -bup clips_feature_tests_631/wordgame.clp clips_feature_tests_640/wordgame.clp
+--- clips_feature_tests_631/wordgame.clp	2019-07-03 18:54:46.000000000 +0200
++++ clips_feature_tests_640/wordgame.clp	2021-03-29 18:58:00.000000000 +0200
+@@ -9,7 +9,7 @@
+ ;;;          ------
+ ;;;        = ROBERT
+ ;;;
+-;;;     CLIPS Version 6.0 Example
++;;;     CLIPS Version 6.4 Example
+ ;;;
+ ;;;     To execute, merely load, reset and run.
+ ;;;     This example takes alot of memory to execute.
+@@ -17,11 +17,11 @@
+ 
+ (defrule startup
+   =>
+-  (printout t crlf "The problem is" crlf crlf)
+-  (printout t "   GERALD" crlf)
+-  (printout t " + DONALD" crlf)
+-  (printout t "   ------" crlf)
+-  (printout t " = ROBERT" crlf crlf)
++  (println crlf "The problem is" crlf)
++  (println "   GERALD")
++  (println " + DONALD")
++  (println "   ------")
++  (println " = ROBERT" crlf)
+   (assert (number 0)
+           (number 1)
+           (number 2)
+@@ -84,21 +84,21 @@
+               (* 100000 ?g) (* 100000 ?d))
+            (+ (* 100000 ?r) (* 10000 ?o) (* 1000 ?b) (* 100 ?e) (* 10 ?r) ?t)))
+   =>
+-  (printout t "A Solution is:" crlf crlf)
+-  (printout t "  G = " ?g crlf)
+-  (printout t "  E = " ?e crlf)
+-  (printout t "  R = " ?r crlf)
+-  (printout t "  A = " ?a crlf)
+-  (printout t "  L = " ?l crlf)
+-  (printout t "  D = " ?d crlf)
+-  (printout t "  O = " ?o crlf)
+-  (printout t "  N = " ?n crlf)
+-  (printout t "  B = " ?b crlf)
+-  (printout t "  T = " ?t crlf)
+-  (printout t crlf)
+-  (printout t "   " ?g ?e ?r ?a ?l ?d crlf)
+-  (printout t " + " ?d ?o ?n ?a ?l ?d crlf) 
+-  (printout t "   " "------" crlf)
+-  (printout t " = " ?r ?o ?b ?e ?r ?t crlf crlf))  
++  (println "A Solution is:" crlf)
++  (println "  G = " ?g)
++  (println "  E = " ?e)
++  (println "  R = " ?r)
++  (println "  A = " ?a)
++  (println "  L = " ?l)
++  (println "  D = " ?d)
++  (println "  O = " ?o)
++  (println "  N = " ?n)
++  (println "  B = " ?b)
++  (println "  T = " ?t)
++  (println)
++  (println "   " ?g ?e ?r ?a ?l ?d)
++  (println " + " ?d ?o ?n ?a ?l ?d) 
++  (println "   " "------")
++  (println " = " ?r ?o ?b ?e ?r ?t crlf))  
+   
+  
+diff -bup clips_feature_tests_631/zebra.clp clips_feature_tests_640/zebra.clp
+--- clips_feature_tests_631/zebra.clp	2019-07-03 18:54:46.000000000 +0200
++++ clips_feature_tests_640/zebra.clp	2021-03-29 18:58:00.000000000 +0200
+@@ -9,7 +9,7 @@
+ ;;;     set of conditions, it must be determined which
+ ;;;     attributes are assigned to each man.
+ ;;;
+-;;;     CLIPS Version 6.0 Example
++;;;     CLIPS Version 6.4 Example
+ ;;;
+ ;;;     To execute, merely load, reset and run.
+ ;;;======================================================
+@@ -148,11 +148,12 @@
+   (format t "  3   | %-11s | %-6s | %-6s | %-12s | %-13s%n" ?n3 ?c3 ?p3 ?d3 ?s3)
+   (format t "  4   | %-11s | %-6s | %-6s | %-12s | %-13s%n" ?n4 ?c4 ?p4 ?d4 ?s4)
+   (format t "  5   | %-11s | %-6s | %-6s | %-12s | %-13s%n" ?n5 ?c5 ?p5 ?d5 ?s5)
+-  (printout t crlf crlf))
++  (format t "%n"))
+ 
+ (defrule startup
+    =>
+-   (printout t
++   (print
++    crlf
+     "There are five houses, each of a different color, inhabited by men of"  crlf
+     "different nationalities, with different pets, drinks, and cigarettes."  crlf
+     crlf
+@@ -160,8 +161,7 @@
+     "The ivory house is immediately to the left of the green house, where"   crlf
+     "the coffee drinker lives.  The milk drinker lives in the middle house." crlf
+     "The man who smokes Old Golds also keeps snails.  The Ukrainian drinks"  crlf
+-    "tea.  The Norwegian resides in the first house on the left.  The"       crlf)
+-   (printout t
++    "tea.  The Norwegian resides in the first house on the left.  The"       crlf
+     "Chesterfields smoker lives next door to the fox owner.  The Lucky"      crlf
+     "Strike smoker drinks orange juice.  The Japanese smokes Parliaments."   crlf
+     "The horse owner lives next to the Kools smoker, whose house is yellow." crlf
