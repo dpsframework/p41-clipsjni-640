@@ -3,7 +3,7 @@
 
 
 
-- **status**:  'Cancelado. CLIPS 6.40 no es compatible con versiones anteriores del desarrollo 6.31. Propuesta cerrada'
+- **status**:  'Cancelado. CLIPS 6.40 no es compatible con Sistemas Expertos desarrollados en v6.31. Propuesta cerrada'
 - **Review**:  'Ver lista de cambios en versión 6.40'
 - **title**:  'Propuesta: auto-localización de librería nativa para CLIPSJNI-6.40'
 - **subtitle**:  'Propuesta de actualización de CLIPS-JNI-6.40 para facilitar la detección de la arquitectura de máquina y ubicación de librería nativa en tiempo de ejecución'
@@ -455,7 +455,7 @@ for tokens that are not primitive values.
 
 
 
-- **status**: 'Canceled. CLIPS 6.40 is not backward compatible with 6.31 development. Proposal closed '
+- **status**: 'Canceled. CLIPS 6.40 is not backward compatible with v6.31 developments. Proposal closed '
 - **title**:  'Proposal: auto-localization of native library for CLIPSJNI-6.40'
 - **subtitle**:  'Proposal to update CLIPS-JNI-6.40 to facilitate the detection of the machine architecture and the location of the native library at runtime'
 - **abstract**:  'The component developed in Java CLIPSJNI-6.40 allows connecting Java to the CLIPS core developed in C++. This update proposal provides a solution to detect the architecture of the machine at runtime, as well as incorporating other additional security improvements, variable declaration adjustment and CLIPS engine Router deletion errors. This minor evolution of CLIPSJNI-6.40 is oriented to JADE PS-Agents. These agents manage and execute expert systems, and exchange their facts, rules and conclusions. However, this evolution of CLIPSJNI-6.40 may be useful in any application that requires connectivity to CLIPS 6.40 from Java.'
