@@ -1,0 +1,572 @@
+drtest05.bat differences are as follows:
+     8: f-0     (initial-fact)
+     8: f-1     (fact1)
+     9: f-1     (fact1)
+     9: For a total of 1 fact.
+    10: For a total of 2 facts.
+    10: CLIPS> (clear)                            ; DR0410
+    11: CLIPS> (clear)                            ; DR0410
+    11: CLIPS> (defrule foo                       ; DR0410
+    12: CLIPS> (defrule foo                       ; DR0410
+    12:    (fact ?x&:(and (< ?x 3) (> ?x 1)))
+    13:    (fact ?x&:(and (< ?x 3) (> ?x 1)))
+    13:    =>)
+    14:    =>)
+    14: CLIPS> (assert (fact a))                  ; DR0410 - Only one error message
+    15: CLIPS> (assert (fact a))                  ; DR0410 - Only one error message
+    15: [ARGACCES2] Function '<' expected argument #1 to be of type integer or float.
+    16: [ARGACCES5] Function < expected argument #1 to be of type integer or float
+    16: 
+    17: 
+    17: [FACTMCH1] This error occurred in the fact pattern network.
+    18: [FACTMCH1] This error occurred in the fact pattern network
+    18:    Currently active fact: (fact a)
+    19:    Currently active fact: (fact a)
+    19:    Problem resides in field #1
+    20:    Problem resides in field #1
+    20:       Of pattern #1 in rule foo
+    21:       Of pattern #1 in rule foo
+    21: 
+    22: 
+    22: <Fact-1>
+    23: <Fact-1>
+    23: CLIPS> (clear)                            ; DR0411
+    24: CLIPS> (clear)                            ; DR0411
+    24: CLIPS> (defrule foo                       ; DR0411
+    25: CLIPS> (defrule foo                       ; DR0411
+    25:    (fact ?x)
+    26:    (fact ?x)
+    26:    (fact $?y)
+    27:    (fact $?y)
+    27:    (test (eq ?y (str-explode ?x)))
+    28:    (test (eq ?y (str-explode ?x)))
+    28:    =>)
+    29:    =>)
+    29: 
+    30: CLIPS> (reset)                            ; DR0411
+    30: [EXPRNPSR3] Missing function declaration for 'str-explode'.
+    31: CLIPS> (assert (fact "a b c"))            ; DR0411
+    31: 
+    32: <Fact-1>
+    32: ERROR:
+    33: CLIPS> (assert (fact a b c))              ; DR0411
+    33: (defrule MAIN::foo
+    34: <Fact-2>
+    34:    (fact ?x)
+    35: CLIPS> (agenda)                           ; DR0411
+    35:    (fact $?y)
+    36: 0      foo: f-1,f-2
+    36:    (test (eq ?y (str-explode
+    37: For a total of 1 activation.
+    37: CLIPS> (reset)                            ; DR0411
+    38: CLIPS> (facts)                            ; DR0411
+    38: CLIPS> (assert (fact "a b c"))            ; DR0411
+    39: f-0     (initial-fact)
+    39: <Fact-1>
+    40: f-1     (fact "a b c")
+    40: CLIPS> (assert (fact a b c))              ; DR0411
+    41: f-2     (fact a b c)
+    41: <Fact-2>
+    42: For a total of 3 facts.
+    42: CLIPS> (agenda)                           ; DR0411
+    43: CLIPS> (save-facts "Temp//foo.tmp")       ; DR0411
+    43: CLIPS> (facts)                            ; DR0411
+    44: TRUE
+    44: f-1     (fact "a b c")
+    45: CLIPS> (reset)                            ; DR0411
+    45: f-2     (fact a b c)
+    46: CLIPS> (load-facts "Temp//foo.tmp")       ; DR0411
+    46: For a total of 2 facts.
+    47: TRUE
+    47: CLIPS> (save-facts "Temp//foo.tmp")       ; DR0411
+    48: CLIPS> (facts)                            ; DR0411
+    48: 2
+    49: f-0     (initial-fact)
+    49: CLIPS> (reset)                            ; DR0411
+    50: f-1     (fact "a b c")
+    50: CLIPS> (load-facts "Temp//foo.tmp")       ; DR0411
+    51: f-2     (fact a b c)
+    51: 2
+    52: For a total of 3 facts.
+    52: CLIPS> (facts)                            ; DR0411
+    53: CLIPS> (agenda)                           ; DR0411
+    53: f-1     (fact "a b c")
+    54: 0      foo: f-1,f-2
+    54: f-2     (fact a b c)
+    55: For a total of 1 activation.
+    55: For a total of 2 facts.
+    56: CLIPS> (clear)                            ; DR0427
+    56: CLIPS> (agenda)                           ; DR0411
+    57: CLIPS> (deftemplate first (fild one))     ; DR0427
+    57: CLIPS> (clear)                            ; DR0427
+    58: 
+    58: CLIPS> (deftemplate first (fild one))     ; DR0427
+    59: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for deftemplate.
+    59: 
+    60: 
+    60: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for deftemplate.
+    61: ERROR:
+    61: 
+    62: (deftemplate MAIN::first
+    62: ERROR:
+    63:    (fild
+    63: (deftemplate MAIN::first
+    64: CLIPS> (list-deftemplates)                ; DR0427
+    64:    (fild
+    65: initial-fact
+    65: CLIPS> (list-deftemplates)                ; DR0427
+    66: For a total of 1 deftemplate.
+    66: CLIPS> (eval (str-cat                     ; DR0435
+    67: CLIPS> (eval (str-cat                     ; DR0435
+    67:       (printout t " fact-list "))) ; DR0435
+    68:       (printout t " fact-list "))) ; DR0435
+    68: [ARGACCES2] Function 'str-cat' expected argument #1 to be of type integer, float, symbol, string, or instance name.
+    69:  fact-list [ARGACCES5] Function str-cat expected argument #1 to be of type string, instance name, symbol, float, or integer
+    69: CLIPS> (clear)                            ; DR0441
+    70: FALSE
+    70: CLIPS> (deftemplate a)                    ; DR0441
+    71: CLIPS> (clear)                            ; DR0441
+    71: CLIPS> (assert (a))                       ; DR0441
+    72: CLIPS> (deftemplate a)                    ; DR0441
+    72: <Fact-1>
+    73: CLIPS> (assert (a))                       ; DR0441
+    73: CLIPS> (clear)                            ; DR0441
+    74: <Fact-1>
+    74: CLIPS> (list-deftemplates)                ; DR0441
+    75: CLIPS> (clear)                            ; DR0441
+    75: CLIPS> (clear)                            ; DR0445
+    76: CLIPS> (list-deftemplates)                ; DR0441
+    76: CLIPS> (deftemplate congestion            ; DR0445
+    77: initial-fact
+    77:    (field no-of-nets))
+    78: For a total of 1 deftemplate.
+    78: CLIPS> (deftemplate total                 ; DR0445
+    79: CLIPS> (clear)                            ; DR0445
+    79:    (field net-name)
+    80: CLIPS> (deftemplate congestion            ; DR0445
+    80:    (field cong))
+    81:    (field no-of-nets))
+    81: CLIPS> (deffacts start                    ; DR0445
+    82: CLIPS> (deftemplate total                 ; DR0445
+    82:    (congestion (no-of-nets 5))
+    83:    (field net-name)
+    83:    (total (net-name 8) (cong nil))
+    84:    (field cong))
+    84:    (total (net-name 4) (cong 5)))
+    85: CLIPS> (deffacts start                    ; DR0445
+    85: CLIPS> (defrule p403                      ; DR0445
+    86:    (congestion (no-of-nets 5))
+    86:    ?t1 <-  (total (cong nil))
+    87:    (total (net-name 8) (cong nil))
+    87:    (congestion (no-of-nets ?non))
+    88:    (total (net-name 4) (cong 5)))
+    88:    =>
+    89: CLIPS> (defrule p403                      ; DR0445
+    89:    (retract ?t1))
+    90:    ?t1 <-  (total (cong nil))
+    90: CLIPS> (defrule p410                      ; DR0445
+    91:    (congestion (no-of-nets ?non))
+    91:    (total (net-name ?nn) (cong ?non))
+    92:    =>
+    92:    (not (total (cong nil)))
+    93:    (retract ?t1))
+    93:    ?t <- (total (net-name ~?nn) (cong ?x&:(<= ?x ?non)))
+    94: CLIPS> (defrule p410                      ; DR0445
+    94:    =>
+    95:    (total (net-name ?nn) (cong ?non))
+    95:    (retract ?t))
+    96:    (not (total (cong nil)))
+    96: CLIPS> (watch facts)                      ; DR0445
+    97:    ?t <- (total (net-name ~?nn) (cong ?x&:(<= ?x ?non)))
+    97: CLIPS> (reset)                            ; DR0445
+    98:    =>
+    98: ==> f-1     (congestion (no-of-nets 5))
+    99:    (retract ?t))
+    99: ==> f-2     (total (net-name 8) (cong nil))
+   100: CLIPS> (watch facts)                      ; DR0445
+   100: ==> f-3     (total (net-name 4) (cong 5))
+   101: CLIPS> (reset)                            ; DR0445
+   101: CLIPS> (run)                              ; DR0445
+   102: <== f-0     (initial-fact)
+   102: <== f-2     (total (net-name 8) (cong nil))
+   103: ==> f-0     (initial-fact)
+   103: CLIPS> (unwatch facts)                    ; DR0445
+   104: ==> f-1     (congestion (no-of-nets 5))
+   104: CLIPS> (clear)                            ; DR0447
+   105: ==> f-2     (total (net-name 8) (cong nil))
+   105: CLIPS> (deffacts one                      ; DR0447
+   106: ==> f-3     (total (net-name 4) (cong 5))
+   106:    (first =(assert let's see)))    ; DR0447
+   107: CLIPS> (run)                              ; DR0445
+   107: 
+   108: <== f-2     (total (net-name 8) (cong nil))
+   108: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for RHS patterns.
+   109: CLIPS> (unwatch facts)                    ; DR0445
+   109: 
+   110: CLIPS> (clear)                            ; DR0447
+   110: ERROR:
+   111: CLIPS> (deffacts one                      ; DR0447
+   111: (deffacts MAIN::one
+   112:    (first =(assert let's see)))    ; DR0447
+   112:    (first =(assert let's
+   113: 
+   113: CLIPS> (clear)                            ; DR0451
+   114: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for RHS patterns.
+   114: CLIPS> (defrule erroneous-syntax-error    ; DR0451
+   115: 
+   115:    (fact1 test ?symbol&:(eq ?symbol :) ?num)
+   116: ERROR:
+   116:    =>) 
+   117: (deffacts MAIN::one
+   117: CLIPS> (clear)                            ; DR0452
+   118:    (first =(assert let's
+   118: CLIPS> (deftemplate a (fileld one) (field two))
+   119: CLIPS> (clear)                            ; DR0451
+   119: 
+   120: CLIPS> (defrule erroneous-syntax-error    ; DR0451
+   120: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for deftemplate.
+   121:    (fact1 test ?symbol&:(eq ?symbol :) ?num)
+   121: 
+   122:    =>) 
+   122: ERROR:
+   123: CLIPS> (clear)                            ; DR0452
+   123: (deftemplate MAIN::a
+   124: CLIPS> (deftemplate a (fileld one) (field two))
+   124:    (fileld
+   125: 
+   125: CLIPS> (defrule b                         ; DR0452
+   126: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for deftemplate.
+   126:    (not (a (one first) (three second)))
+   127: 
+   127:    => 
+   128: ERROR:
+   128:    (assert (problem)))             ; DR0452
+   129: (deftemplate MAIN::a
+   129: 
+   130:    (fileld
+   130: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defrule.
+   131: CLIPS> (defrule b                         ; DR0452
+   131: 
+   132:    (not (a (one first) (three second)))
+   132: ERROR:
+   133:    => 
+   133: (defrule MAIN::b
+   134:    (assert (problem)))             ; DR0452
+   134:    (not (a (
+   135: 
+   135: CLIPS> (clear)                            ; DR0453
+   136: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defrule.
+   136: CLIPS> (deftemplate a (field one))        ; DR0453
+   137: 
+   137: CLIPS> (defrule a                         ; DR0453
+   138: ERROR:
+   138:    ?f1 <- (a (one two three))
+   139: (defrule MAIN::b
+   139:    =>
+   140:    (not (a (
+   140:    (assert (not good)))            ; DR0453
+   141: CLIPS> (clear)                            ; DR0453
+   141: 
+   142: CLIPS> (deftemplate a (field one))        ; DR0453
+   142: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for deftemplate patterns.
+   143: CLIPS> (defrule a                         ; DR0453
+   143: 
+   144:    ?f1 <- (a (one two three))
+   144: ERROR:
+   145:    =>
+   145: (defrule MAIN::a
+   146:    (assert (not good)))            ; DR0453
+   146:    ?f1 <- (a (one two three
+   147: 
+   147: CLIPS> (clear)                            ; DR0460
+   148: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for deftemplate patterns.
+   148: CLIPS> (deftemplate a                     ; DR0460
+   149: 
+   149:    (field one) (field two))
+   150: ERROR:
+   150: CLIPS> (defrule one                       ; DR0460
+   151: (defrule MAIN::a
+   151:    ?fact <- (a)
+   152:    ?f1 <- (a (one two three
+   152:    =>
+   153: CLIPS> (clear)                            ; DR0460
+   153:    (modify ?a (two)))
+   154: CLIPS> (deftemplate a                     ; DR0460
+   154: 
+   155:    (field one) (field two))
+   155: [PRCCODE3] Undefined variable ?a referenced in RHS of defrule.
+   156: CLIPS> (defrule one                       ; DR0460
+   156: 
+   157:    ?fact <- (a)
+   157: ERROR:
+   158:    =>
+   158: (defrule MAIN::one
+   159:    (modify ?a (two)))
+   159:    ?fact <- (a)
+   160: 
+   160:    =>
+   161: [PRCCODE3] Undefined variable a referenced in RHS of defrule.
+   161:    (modify ?a (two)))
+   162: 
+   162: CLIPS> (clear)                            ; DR0462
+   163: ERROR:
+   163: CLIPS> (defrule a => (assert (x ?h)))     ; DR0462
+   164: (defrule MAIN::one
+   164: 
+   165:    ?fact <- (a)
+   165: [PRCCODE3] Undefined variable ?h referenced in RHS of defrule.
+   166:    =>
+   166: 
+   167:    (modify ?a (two)))
+   167: ERROR:
+   168: CLIPS> (clear)                            ; DR0462
+   168: (defrule MAIN::a
+   169: CLIPS> (defrule a => (assert (x ?h)))     ; DR0462
+   169:    =>
+   170: 
+   170:    (assert (x ?h)))
+   171: [PRCCODE3] Undefined variable h referenced in RHS of defrule.
+   171: CLIPS> (reset)                            ; DR0462
+   172: 
+   172: CLIPS> (watch rules)                      ; DR0462
+   173: ERROR:
+   173: CLIPS> (run)                              ; DR0462
+   174: (defrule MAIN::a
+   174: CLIPS> (unwatch rules)                    ; DR0462
+   175:    =>
+   175: CLIPS> (clear)                            ; DR0466
+   176:    (assert (x ?h)))
+   176: CLIPS> (defrule a 
+   177: CLIPS> (reset)                            ; DR0462
+   177:    ?f1 <- (fact 1)
+   178: CLIPS> (watch rules)                      ; DR0462
+   178:    =>
+   179: CLIPS> (run)                              ; DR0462
+   179:    (eval "(retract ?f1)"))
+   180: CLIPS> (unwatch rules)                    ; DR0462
+   180: CLIPS> (reset)                            ; DR0466
+   181: CLIPS> (clear)                            ; DR0466
+   181: CLIPS> (assert (fact 1))                  ; DR0466
+   182: CLIPS> (defrule a 
+   182: <Fact-1>
+   183:    ?f1 <- (fact 1)
+   183: CLIPS> (run)                              ; DR0466
+   184:    =>
+   184: [EVALUATN1] Variable ?f1 is unbound.
+   185:    (eval "(retract ?f1)"))
+   185: [PRCCODE4] Execution halted during the actions of defrule 'a'.
+   186: CLIPS> (reset)                            ; DR0466
+   186: CLIPS> (facts)                            ; DR0466
+   187: CLIPS> (assert (fact 1))                  ; DR0466
+   187: f-1     (fact 1)
+   188: <Fact-1>
+   188: For a total of 1 fact.
+   189: CLIPS> (run)                              ; DR0466
+   189: CLIPS> (mod 160 100)                      ; DR0475
+   190: [STRNGFUN2] Some variables could not be accessed by the eval function.
+   190: 60
+   191: [PRCCODE4] Execution halted during the actions of defrule a.
+   191: CLIPS> (mod (+ 100 60) 100)               ; DR0475
+   192: CLIPS> (facts)                            ; DR0466
+   192: 60
+   193: f-0     (initial-fact)
+   193: CLIPS> (send diamond get-hardness)        ; DR0478
+   194: f-1     (fact 1)
+   194: [MSGFUN1] No applicable primary message-handlers found for 'get-hardness'.
+   195: For a total of 2 facts.
+   195: FALSE
+   196: CLIPS> (mod 160 100)                      ; DR0475
+   196: CLIPS> (clear)                            ; DR0479
+   197: 60
+   197: CLIPS> (defclass FOO (is-a USER)          ; DR0479
+   198: CLIPS> (mod (+ 100 60) 100)               ; DR0475
+   198:    (role concrete)
+   199: 60
+   199:    (multislot BAR (create-accessor read-write)))
+   200: CLIPS> (send diamond get-hardness)        ; DR0478
+   200: CLIPS> (make-instance foo of FOO)         ; DR0479 - [foo]
+   201: [MSGFUN1] No applicable primary message-handlers found for get-hardness.
+   201: [foo]
+   202: FALSE
+   202: CLIPS> (send [foo] put-BAR a b c)         ; DR0479 - TRUE
+   203: CLIPS> (clear)                            ; DR0479
+   203: (a b c)
+   204: CLIPS> (defclass FOO (is-a USER)          ; DR0479
+   204: CLIPS> (find-instance ((?x FOO))          ; DR0479
+   205:    (role concrete)
+   205:     (member d (send ?x get-BAR)))  ; DR0479 - ()
+   206:    (multislot BAR (create-accessor read-write)))
+   206: 
+   207: CLIPS> (make-instance foo of FOO)         ; DR0479 - [foo]
+   207: [EXPRNPSR3] Missing function declaration for 'member'.
+   208: [foo]
+   208: CLIPS> (clear)                            ; DR0480
+   209: CLIPS> (send [foo] put-BAR a b c)         ; DR0479 - TRUE
+   209: CLIPS> (defclass mineral (is-a USER)      ; DR0480
+   210: (a b c)
+   210:    (role concrete)
+   211: CLIPS> (find-instance ((?x FOO))          ; DR0479
+   211:    (slot gemname (create-accessor read-write))
+   212:     (member d (send ?x get-BAR)))  ; DR0479 - ()
+   212:    (slot group (create-accessor read-write)))
+   213: ()
+   213: CLIPS> (definstances gems                 ; DR0480
+   214: CLIPS> (clear)                            ; DR0480
+   214:    (almandite of mineral
+   215: CLIPS> (defclass mineral (is-a USER)      ; DR0480
+   215:       (gemname almandite) (class garnet))
+   216:    (role concrete)
+   216:    (grossularite of mineral
+   217:    (slot gemname (create-accessor read-write))
+   217:       (gemname grossularite) (group garnet))
+   218:    (slot group (create-accessor read-write)))
+   218:    (spessartite of mineral
+   219: CLIPS> (definstances gems                 ; DR0480
+   219:       (gemname spessartite) (group garnet)))
+   220:    (almandite of mineral
+   220: CLIPS> (reset)                            ; DR0480 - one error message
+   221:       (gemname almandite) (class garnet))
+   221: [INSMNGR13] Slot 'class' does not exist in instance [almandite].
+   222:    (grossularite of mineral
+   222: CLIPS> (clear)                            ; DR0484
+   223:       (gemname grossularite) (group garnet))
+   223: CLIPS> (send [bogus-instance] bogus-message) ; DR0484
+   224:    (spessartite of mineral
+   224: [MSGPASS2] No such instance [bogus-instance] in function 'send'.
+   225:       (gemname spessartite) (group garnet)))
+   225: FALSE
+   226: CLIPS> (reset)                            ; DR0480 - one error message
+   226: CLIPS> (clear)                            ; DR0486
+   227: [INSMNGR13] Slot class does not exist in instance almandite.
+   227: CLIPS> (defrule allie                     ; DR0486
+   228: CLIPS> (clear)                            ; DR0484
+   228:   (menu compress)
+   229: CLIPS> (send [bogus-instance] bogus-message) ; DR0484
+   229:   (compress ?nos ?range ?no&:(eq ?no 1))
+   230: [MSGPASS2] No such instance bogus-instance in function send.
+   230: =>
+   231: FALSE
+   231:   (printout t "rule allie ?nos= " ?nos " ?range= " ?range " " ?no crlf))
+   232: CLIPS> (clear)                            ; DR0486
+   232: CLIPS> (reset)                            ; DR0486
+   233: CLIPS> (defrule allie                     ; DR0486
+   233: CLIPS> (assert (menu compress))           ; DR0486
+   234:   (menu compress)
+   234: <Fact-1>
+   235:   (compress ?nos ?range ?no&:(eq ?no 1))
+   235: CLIPS> (assert (compress "19k" "date" 1)) ; DR0486
+   236: =>
+   236: <Fact-2>
+   237:   (printout t "rule allie ?nos= " ?nos " ?range= " ?range " " ?no crlf))
+   237: CLIPS> (run)                              ; DR0486
+   238: CLIPS> (reset)                            ; DR0486
+   238: rule allie ?nos= 19k ?range= date 1
+   239: CLIPS> (assert (menu compress))           ; DR0486
+   239: CLIPS> "1234567890
+   240: <Fact-1>
+   240:  1234567890
+   241: CLIPS> (assert (compress "19k" "date" 1)) ; DR0486
+   241:  1234567890
+   242: <Fact-2>
+   242:  1234567890
+   243: CLIPS> (run)                              ; DR0486
+   243:  1234567890
+   244: rule allie ?nos= 19k ?range= date 1
+   244:  1234567890
+   245: CLIPS> "1234567890
+   245:  1234567890
+   248:  1234567890
+   248:  1234567890"                       ; DR0488
+   249:  1234567890
+   249: "1234567890
+   254:  1234567890"                       ; DR0488
+   254:  1234567890
+   255: "1234567890
+   255:  1234567890
+   258:  1234567890
+   258:  1234567890"
+   259:  1234567890
+   259: CLIPS> (instance-address [bogus])         ; DR0491 - Error should contain function name
+   260:  1234567890
+   260: [INSFUN2] No such instance [bogus] in function 'instance-address'.
+   261:  1234567890
+   261: FALSE
+   262:  1234567890
+   262: CLIPS> (instance-namep [foo])             ; DR0492 - TRUE
+   263:  1234567890
+   263: TRUE
+   264:  1234567890"
+   264: CLIPS> (clear)                            ; DR0494
+   265: CLIPS> (instance-address [bogus])         ; DR0491 - Error should contain function name
+   265: CLIPS> (defmethod foo (?a))               ; DR0494
+   266: [INSFUN2] No such instance bogus in function instance-address.
+   266: CLIPS> (defmethod foo ((?a NUMBER)))      ; DR0494
+   267: FALSE
+   267: CLIPS> (preview-generic foo 45)           ; DR0494
+   268: CLIPS> (instance-namep [foo])             ; DR0492 - TRUE
+   268: foo #2  (NUMBER)
+   269: TRUE
+   269: foo #1  ()
+   270: CLIPS> (clear)                            ; DR0494
+   270: CLIPS> (clear)                            ; DR0495
+   271: CLIPS> (defmethod foo (?a))               ; DR0494
+   271: CLIPS> (defmethod foo ())                 ; DR0495
+   272: CLIPS> (defmethod foo ((?a NUMBER)))      ; DR0494
+   272: CLIPS> (ppdefmethod foo 1)                ; DR0495
+   273: CLIPS> (preview-generic foo 45)           ; DR0494
+   273: (defmethod MAIN::foo
+   274: foo #2  (NUMBER)
+   274:    ())
+   275: foo #1  ()
+   275: CLIPS> (clear)                            ; DR0496
+   276: CLIPS> (clear)                            ; DR0495
+   276: CLIPS> (defmethod foo ((?a INTEGER SYMBOL)))
+   277: CLIPS> (defmethod foo ())                 ; DR0495
+   277: CLIPS> (defmethod foo ((?a INTEGER)))     ; DR0496
+   278: CLIPS> (ppdefmethod foo 1)                ; DR0495
+   278: CLIPS> (list-defmethods)                  ; DR0496
+   279: (defmethod MAIN::foo
+   279: foo #2  (INTEGER)
+   280:    ())
+   280: foo #1  (INTEGER SYMBOL)
+   281: CLIPS> (clear)                            ; DR0496
+   281: For a total of 2 methods.
+   282: CLIPS> (defmethod foo ((?a INTEGER SYMBOL)))
+   282: CLIPS> (clear)                            ; DR0499
+   283: CLIPS> (defmethod foo ((?a INTEGER)))     ; DR0496
+   283: CLIPS> (defmethod foo 1 (?a))             ; DR0499
+   284: CLIPS> (list-defmethods)                  ; DR0496
+   284: CLIPS> (defmethod foo 2 () (undefmethod foo 1))
+   285: foo #2  (INTEGER)
+   285: CLIPS> (foo)                              ; DR0499
+   286: foo #1  (INTEGER SYMBOL)
+   286: [GENRCFUN1] Defgeneric 'foo' cannot be modified while one of its methods is executing.
+   287: For a total of 2 methods.
+   287: CLIPS> (clear)                            ; DR0500
+   288: CLIPS> (clear)                            ; DR0499
+   288: CLIPS> (defclass a (is-a USER) (role concrete))           ; DR0500
+   289: CLIPS> (defmethod foo 1 (?a))             ; DR0499
+   289: CLIPS> (defmessage-handler a create-new-handler ()
+   290: CLIPS> (defmethod foo 2 () (undefmethod foo 1))
+   290:    (build "(defmessage-handler a new-handler ())"))
+   291: CLIPS> (foo)                              ; DR0499
+   291: CLIPS> (make-instance a of a)             ; DR0500 - [a]
+   292: [GENRCFUN1] Defgeneric foo cannot be modified while one of its methods is executing.
+   292: [a]
+   293: CLIPS> (clear)                            ; DR0500
+   293: CLIPS> (send [a] create-new-handler)      ; DR0500 - Error
+   294: CLIPS> (defclass a (is-a USER) (role concrete))           ; DR0500
+   294: [MSGPSR2] Cannot (re)define message-handlers during execution of other message-handlers for the same class.
+   295: CLIPS> (defmessage-handler a create-new-handler ()
+   295: 
+   296:    (build "(defmessage-handler a new-handler ())"))
+   296: ERROR:
+   297: CLIPS> (make-instance a of a)             ; DR0500 - [a]
+   297: (defmessage-handler MAIN::a
+   298: [a]
+   298:    new-handler
+   299: CLIPS> (send [a] create-new-handler)      ; DR0500 - Error
+   299: FALSE
+   300: [MSGPSR2] Cannot (re)define message-handlers during execution of 
+   300: CLIPS> (dribble-off)
+   Files do not have the same # of lines

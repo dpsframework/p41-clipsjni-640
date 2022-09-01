@@ -1,0 +1,1666 @@
+drtest09.bat differences are as follows:
+    29: CLIPS> (make-instance a of A)
+    29: [PRNTUTIL1] Unable to find class 'INITIAL-OBJECT'.
+    30: ==> instance [a] of A
+    30: 
+    31: ==> Activation 0      A-rule: [a]
+    31: ERROR:
+    32: [a]
+    32: (defrule MAIN::A-rule
+    33: CLIPS> (run)
+    33:    (logical
+    34: FIRE    1 A-rule: [a]
+    34:         ?obj <- (object (is-a A)
+    35: ==> instance [gen1] of A
+    35:                 (match yes)))
+    36: ==> instance [gen2] of INITIAL-OBJECT
+    36:    =>
+    37: <== instance [gen2] of INITIAL-OBJECT
+    37:    (send ?obj put-container (make-instance of A
+    38: <== instance [gen1] of A
+    38:       (match no)
+    39: CLIPS> (unwatch all)
+    39:       (container (make-instance of INITIAL-OBJECT
+    40: CLIPS> (clear)                   ; DR0802
+    40: CLIPS> (make-instance a of A)
+    41: CLIPS> 
+    41: ==> instance [a] of A
+    42: (defclass A (is-a USER)
+    42: [a]
+    43:   (role concrete)
+    43: CLIPS> (run)
+    44:   (slot foo (default bar)))
+    44: CLIPS> (unwatch all)
+    45: CLIPS>   
+    45: CLIPS> (clear)                   ; DR0802
+    46: (defmessage-handler A delete after ()
+    46: CLIPS> 
+    47:   (printout t ?self:foo crlf))
+    47: (defclass A (is-a USER)
+    48: CLIPS> (unmake-instance (make-instance of A))
+    48:   (role concrete)
+    49: [INSFUN4] Invalid instance-address in function for slot get.
+    49:   (slot foo (default bar)))
+    50: [PRCCODE4] Execution halted during the actions of message-handler delete after in class A
+    50: CLIPS>   
+    51: TRUE
+    51: (defmessage-handler A delete after ()
+    52: CLIPS> (clear)                   ; DR0803
+    52:   (printout t ?self:foo crlf))
+    53: CLIPS> 
+    53: CLIPS> (unmake-instance (make-instance of A))
+    54: (defclass A
+    54: [INSFUN4] Invalid instance-address in ?self slot reference.
+    55:    (is-a USER)
+    55: [PRCCODE4] Execution halted during the actions of message-handler 'delete' after in class 'A'
+    56:   (role concrete)
+    56: FALSE
+    57:   (pattern-match reactive)
+    57: CLIPS> (clear)                   ; DR0803
+    58:   (multislot data
+    58: CLIPS> 
+    59:     (create-accessor read-write)))
+    59: (defclass A
+    60: CLIPS>     
+    60:    (is-a USER)
+    61: (defrule rule1
+    61:   (role concrete)
+    62:   (object (is-a A) (data 0 ?x))
+    62:   (pattern-match reactive)
+    63:   (object (is-a A) (data 1 ?x))
+    63:   (multislot data
+    64:   =>
+    64:     (create-accessor read-write)))
+    65:   (printout t ?x crlf))
+    65: CLIPS>     
+    66: CLIPS> 
+    66: (defrule rule1
+    67: (definstances objects
+    67:   (object (is-a A) (data 0 ?x))
+    68:   (a of A (data 0 0))
+    68:   (object (is-a A) (data 1 ?x))
+    69:   (b of A (data 1 0))
+    69:   =>
+    70:   (c of A (data 1 1)))
+    70:   (printout t ?x crlf))
+    71: CLIPS> (reset)
+    71: CLIPS> 
+    72: CLIPS> (agenda)
+    72: (definstances objects
+    73: 0      rule1: [a],[b]
+    73:   (a of A (data 0 0))
+    74: For a total of 1 activation.
+    74:   (b of A (data 1 0))
+    75: CLIPS> (clear)                   ; DR0804
+    75:   (c of A (data 1 1)))
+    76: CLIPS> 
+    76: CLIPS> (reset)
+    77: (deffunction imfi (?cv)
+    77: CLIPS> (agenda)
+    78:    (bind ?position 3)
+    78: 0      rule1: [a],[b]
+    79:    (while TRUE do
+    79: For a total of 1 activation.
+    80:      (bind ?nv (+ (nth$ ?position ?cv) 1))
+    80: CLIPS> (clear)                   ; DR0804
+    81:      (if (<= ?nv 9)
+    81: CLIPS> 
+    82:         then 
+    82: (deffunction imfi (?cv)
+    83:         (return (replace$ ?cv ?position ?position ?nv)))
+    83:    (bind ?position 3)
+    84:      (bind ?cv (replace$ ?cv ?position ?position 1))
+    84:    (while TRUE do
+    85:      (bind ?position (- ?position 1))
+    85:      (bind ?nv (+ (nth$ ?position ?cv) 1))
+    86:      (if (< ?position 1) then (return FALSE))))
+    86:      (if (<= ?nv 9)
+    87: CLIPS>  
+    87:         then 
+    88: (deffunction optimize ()
+    88:         (return (replace$ ?cv ?position ?position ?nv)))
+    89:    (bind ?current-settings (create$ 1 1 1))
+    89:      (bind ?cv (replace$ ?cv ?position ?position 1))
+    90:    (while (neq ?current-settings FALSE)
+    90:      (bind ?position (- ?position 1))
+    91:       (bind ?current-settings (imfi ?current-settings))))
+    91:      (if (< ?position 1) then (return FALSE))))
+    92: CLIPS> (reset)
+    92: CLIPS>  
+    93: CLIPS> (optimize)
+    93: (deffunction optimize ()
+    94: FALSE
+    94:    (bind ?current-settings (create$ 1 1 1))
+    95: CLIPS> (clear)                   ; DR0805
+    95:    (while (neq ?current-settings FALSE)
+    96: CLIPS> (setgen 1)
+    96:       (bind ?current-settings (imfi ?current-settings))))
+    97: 1
+    97: CLIPS> (reset)
+    98: CLIPS> 
+    98: CLIPS> (optimize)
+    99: (defclass A
+    99: FALSE
+   100:    (is-a USER)
+   100: CLIPS> (clear)                   ; DR0805
+   101:    (role concrete)
+   101: CLIPS> (setgen 1)
+   102:    (pattern-match reactive)
+   102: 1
+   103:    (multislot data
+   103: CLIPS> 
+   104:       (create-accessor read-write)))
+   104: (defclass A
+   105: CLIPS> 
+   105:    (is-a USER)
+   106: (defrule rule1
+   106:    (role concrete)
+   107:    (object (is-a A) (data ? red ?x&green))
+   107:    (pattern-match reactive)
+   108:    (object (is-a A) (data ? red ?x))
+   108:    (multislot data
+   109:    =>)
+   109:       (create-accessor read-write)))
+   110: CLIPS> (make-instance of A (data orange red green))
+   110: CLIPS> 
+   111: [gen1]
+   111: (defrule rule1
+   112: CLIPS> (matches rule1)
+   112:    (object (is-a A) (data ? red ?x&green))
+   113: Matches for Pattern 1
+   113:    (object (is-a A) (data ? red ?x))
+   114: [gen1]
+   114:    =>)
+   115: Matches for Pattern 2
+   115: CLIPS> (make-instance of A (data orange red green))
+   117: Partial matches for CEs 1 - 2
+   117: CLIPS> (matches rule1)
+   118: [gen1],[gen1]
+   118: Matches for Pattern 1
+   119: Activations
+   119: [gen1]
+   120: [gen1],[gen1]
+   120: Matches for Pattern 2
+   121: (2 1 1)
+   121: [gen1]
+   122: CLIPS> (clear)                   ; DR0806
+   122: Partial matches for CEs 1 - 2
+   123: CLIPS> (setgen 1)
+   123: [gen1],[gen1]
+   124: 1
+   124: Activations
+   125: CLIPS> 
+   125: [gen1],[gen1]
+   126: (defclass A (is-a INITIAL-OBJECT)
+   126: (2 1 1)
+   127:    (multislot foo))
+   127: CLIPS> (clear)                   ; DR0806
+   128: CLIPS> 
+   128: CLIPS> (setgen 1)
+   129: (defclass B (is-a A)
+   129: 1
+   130:    (slot foo))
+   130: CLIPS> 
+   131: CLIPS> 
+   131: (defclass A (is-a INITIAL-OBJECT)
+   132: (defrule AB
+   132:    (multislot foo))
+   133:    (object (is-a A) (foo ?val))
+   133: [INHERPSR3] A class must be defined after all its superclasses.
+   134:    =>
+   134: 
+   135:    (printout t ?val crlf))
+   135: ERROR:
+   136: CLIPS> (make-instance of B)
+   136: (defclass MAIN::A
+   137: [gen1]
+   137:    (is-a INITIAL-OBJECT
+   138: CLIPS> (run)
+   138: CLIPS> 
+   139: nil
+   139: (defclass B (is-a A)
+   140: CLIPS> (clear)                   ; DR0807
+   140:    (slot foo))
+   141: CLIPS> (insert$ (rest$ (create$ abc def)) 2 ghi)
+   141: [INHERPSR3] A class must be defined after all its superclasses.
+   142: (def ghi)
+   142: 
+   143: CLIPS> (clear)                   ; DR0808
+   143: ERROR:
+   144: CLIPS> (assert (m))
+   144: (defclass MAIN::B
+   145: <Fact-1>
+   145:    (is-a A
+   146: CLIPS> (assert (a))
+   146: CLIPS> 
+   147: <Fact-2>
+   147: (defrule AB
+   148: CLIPS> (defrule r1 (m) (not (a)) =>)
+   148:    (object (is-a A) (foo ?val))
+   149: CLIPS> (defrule r2 (m) (not (a)) (not (b)) =>)
+   149:    =>
+   150: CLIPS> (agenda)
+   150:    (printout t ?val crlf))
+   151: CLIPS> (clear)                   ; DR0809
+   151: [OBJRTBLD1] No objects of existing classes can satisfy pattern.
+   152: CLIPS> (deffunction pins () (ppinstance))
+   152: 
+   153: CLIPS> (defmessage-handler USER pins () (pins))
+   153: ERROR:
+   154: CLIPS> (defclass A (is-a USER) (role concrete))
+   154: (defrule MAIN::AB
+   155: CLIPS> (make-instance a of A)
+   155:    (object
+   156: [a]
+   156: CLIPS> (make-instance of B)
+   157: CLIPS> (send [a] pins)
+   157: [PRNTUTIL1] Unable to find class 'B'.
+   158: [MSGFUN4] ppinstance may only be called from within message-handlers.
+   158: CLIPS> (run)
+   159: [PRCCODE4] Execution halted during the actions of deffunction pins.
+   159: CLIPS> (clear)                   ; DR0807
+   160: [PRCCODE4] Execution halted during the actions of message-handler pins primary in class USER
+   160: CLIPS> (insert$ (rest$ (create$ abc def)) 2 ghi)
+   161: FALSE
+   161: (def ghi)
+   162: CLIPS> (clear)                   ; DR0810
+   162: CLIPS> (clear)                   ; DR0808
+   163: CLIPS> (deffunction MAIN::foo
+   163: CLIPS> (assert (m))
+   164:    (?garbage)
+   164: <Fact-1>
+   165:    (setgen 1)
+   165: CLIPS> (assert (a))
+   166:    (loop-for-count ?garbage
+   166: <Fact-2>
+   167:       (make-instance of INITIAL-OBJECT))
+   167: CLIPS> (defrule r1 (m) (not (a)) =>)
+   168:    (delayed-do-for-all-instances ((?ins INITIAL-OBJECT))
+   168: CLIPS> (defrule r2 (m) (not (a)) (not (b)) =>)
+   169:       TRUE
+   169: CLIPS> (agenda)
+   170:       (progn
+   170: CLIPS> (clear)                   ; DR0809
+   171:          (unmake-instance *)
+   171: CLIPS> (deffunction pins () (ppinstance))
+   172:          (return (gensym*)))))
+   172: CLIPS> (defmessage-handler USER pins () (pins))
+   173: CLIPS> (foo 100)
+   173: CLIPS> (defclass A (is-a USER) (role concrete))
+   174: gen101
+   174: CLIPS> (make-instance a of A)
+   175: CLIPS> (foo 500)
+   175: [a]
+   176: gen501
+   176: CLIPS> (send [a] pins)
+   177: CLIPS> (clear)                   ; DR0813
+   177: [MSGFUN4] The function 'ppinstance' may only be called from within message-handlers.
+   178: CLIPS> 
+   178: [PRCCODE4] Execution halted during the actions of deffunction 'pins'.
+   179: (defclass A (is-a INITIAL-OBJECT)
+   179: [PRCCODE4] Execution halted during the actions of message-handler 'pins' primary in class 'USER'
+   180:    (multislot foo (create-accessor read-write)))
+   180: FALSE
+   181: CLIPS> 
+   181: CLIPS> (clear)                   ; DR0810
+   182: (defrule A
+   182: CLIPS> (deffunction MAIN::foo
+   183:    (fact ?v)
+   183:    (?garbage)
+   184:    (not (object (is-a A) (foo $? ?v $?)))
+   184:    (setgen 1)
+   185: =>)
+   185:    (loop-for-count ?garbage
+   186: CLIPS> (assert (fact a))
+   186:       (make-instance of INITIAL-OBJECT))
+   187: <Fact-1>
+   187:    (delayed-do-for-all-instances ((?ins INITIAL-OBJECT))
+   188: CLIPS> (make-instance a of A (foo a b c))
+   188:       TRUE
+   189: [a]
+   189:       (progn
+   190: CLIPS> (make-instance b of A (foo a b c))
+   190:          (unmake-instance *)
+   191: [b]
+   191:          (return (gensym*)))))
+   192: CLIPS> 
+   192: [PRNTUTIL1] Unable to find class 'INITIAL-OBJECT'.
+   193: (object-pattern-match-delay
+   193: 
+   194:    (modify-instance a (foo q))
+   194: ERROR:
+   195:    (modify-instance b (foo q)))
+   195: (deffunction MAIN::foo
+   196: TRUE
+   196:    (?garbage)
+   197: CLIPS> (clear)                   ; DR0815
+   197:    (setgen 1)
+   198: CLIPS> 
+   198:    (loop-for-count ?garbage
+   199: (defclass grammy (is-a USER)
+   199:       (make-instance of INITIAL-OBJECT
+   200:     (role concrete)
+   200: CLIPS> (foo 100)
+   201:     (pattern-match reactive)
+   201: 
+   202:     (multislot  text
+   202: [EXPRNPSR3] Missing function declaration for 'foo'.
+   203:     (create-accessor write)
+   203: CLIPS> (foo 500)
+   204:     (type SYMBOL)))
+   204: 
+   205: CLIPS> 
+   205: [EXPRNPSR3] Missing function declaration for 'foo'.
+   206: (defmessage-handler grammy print before ()
+   206: CLIPS> (clear)                   ; DR0813
+   207:     (printout t crlf)
+   207: CLIPS> 
+   208:     (printout t "******  starting to print   ****"  ?self crlf))
+   208: (defclass A (is-a INITIAL-OBJECT)
+   209: CLIPS> 
+   209:    (multislot foo (create-accessor read-write)))
+   210: (defmessage-handler grammy print after ()
+   210: [INHERPSR3] A class must be defined after all its superclasses.
+   211:     (printout t "******  starting to print   ****"  ?self crlf)
+   211: 
+   212:     (printout t crlf))
+   212: ERROR:
+   213: CLIPS> 
+   213: (defclass MAIN::A
+   214: (deffunction resize (?xlist)
+   214:    (is-a INITIAL-OBJECT
+   215:    (if (= (length$ ?xlist)  0)
+   215: CLIPS> 
+   216:      then
+   216: (defrule A
+   217:      (printout t "got to here !!! "  crlf)
+   217:    (fact ?v)
+   218:      (return)
+   218:    (not (object (is-a A) (foo $? ?v $?)))
+   219:      else
+   219: =>)
+   220:      (make-instance (gensym) of grammy
+   220: [OBJRTBLD1] No objects of existing classes can satisfy pattern.
+   221:          (text (subseq$ ?xlist 1 9))))
+   221: 
+   222:      (resize (subseq$ ?xlist 10 (length$ ?xlist))))
+   222: ERROR:
+   223: CLIPS> 
+   223: (defrule MAIN::A
+   224: (deffunction ask ()
+   224:    (fact ?v)
+   225:    (do-for-all-instances ((?tag grammy)) (instancep ?tag)
+   225:    (not (object
+   226:       (send ?tag print)))
+   226: CLIPS> (assert (fact a))
+   227: CLIPS> 
+   227: <Fact-1>
+   228: (defrule commence  "make it happen"
+   228: CLIPS> (make-instance a of A (foo a b c))
+   229:    =>
+   229: [PRNTUTIL1] Unable to find class 'A'.
+   230:    (resize (create$ a b c d e f g h i j k l m n)))
+   230: CLIPS> (make-instance b of A (foo a b c))
+   231: CLIPS> (reset)
+   231: [PRNTUTIL1] Unable to find class 'A'.
+   232: CLIPS> (run)
+   232: CLIPS> 
+   233: got to here !!! 
+   233: (object-pattern-match-delay
+   234: CLIPS> (clear)                   ; DR0816
+   234:    (modify-instance a (foo q))
+   235: CLIPS> 
+   235:    (modify-instance b (foo q)))
+   236: (defclass A
+   236: [INSFUN2] No such instance [a] in function 'modify-instance'.
+   237: 	  (is-a USER)
+   237: FALSE
+   238: 	  (role concrete)
+   238: CLIPS> (clear)                   ; DR0815
+   239: 	  (slot str
+   239: CLIPS> 
+   240: 	    (create-accessor read-write)
+   240: (defclass grammy (is-a USER)
+   241: 	    (type STRING))
+   241:     (role concrete)
+   242: 	  (slot length
+   242:     (pattern-match reactive)
+   243: 	    (create-accessor read-write)
+   243:     (multislot  text
+   244: 	    (type INTEGER)))
+   244:     (create-accessor write)
+   245: CLIPS> 
+   245:     (type SYMBOL)))
+   246: (defmessage-handler A put-str after (?value)
+   246: CLIPS> 
+   247:    (bind ?self:length 3))
+   247: (defmessage-handler grammy print before ()
+   248: CLIPS> (make-instance a of A (str 4))
+   248:     (printout t crlf)
+   249: [a]
+   249:     (printout t "******  starting to print   ****"  ?self crlf))
+   250: CLIPS> (send [a] get-length)
+   250: CLIPS> 
+   251: 3
+   251: (defmessage-handler grammy print after ()
+   252: CLIPS> (clear)                   ; DR0817
+   252:     (printout t "******  starting to print   ****"  ?self crlf)
+   253: CLIPS> 
+   253:     (printout t crlf))
+   254: (deftemplate status 
+   254: CLIPS> 
+   255:    (slot search-depth)
+   255: (deffunction resize (?xlist)
+   256:    (slot parent))
+   256:    (if (= (length$ ?xlist)  0)
+   257: CLIPS> 
+   257:      then
+   258: (defrule move-alone 
+   258:      (printout t "got to here !!! "  crlf)
+   259:   ?node <- (status)
+   259:      (return)
+   260:   =>
+   260:      else
+   261:   (duplicate ?node (search-depth =(+ 1 3))
+   261:      (make-instance (gensym) of grammy
+   262:                    (parent ?node)))
+   262:          (text (subseq$ ?xlist 1 9))))
+   263: CLIPS> (ppdefrule move-alone) 
+   263:      (resize (subseq$ ?xlist 10 (length$ ?xlist))))
+   264: (defrule MAIN::move-alone
+   264: CLIPS> 
+   265:    ?node <- (status)
+   265: (deffunction ask ()
+   266:    =>
+   266:    (do-for-all-instances ((?tag grammy)) (instancep ?tag)
+   267:    (duplicate ?node (search-depth =(+ 1 3)) (parent ?node)))
+   267:       (send ?tag print)))
+   268: CLIPS>  
+   268: CLIPS> 
+   269: (deftemplate dbdata
+   269: (defrule commence  "make it happen"
+   270:   (multislot values))
+   270:    =>
+   271: CLIPS>  
+   271:    (resize (create$ a b c d e f g h i j k l m n)))
+   272: (defrule bug1
+   272: CLIPS> (reset)
+   273:   =>
+   273: CLIPS> (run)
+   274:   (assert (dbdata (values (create$ 1 2)))))
+   274: got to here !!! 
+   275: CLIPS> (ppdefrule bug1)
+   275: CLIPS> (clear)                   ; DR0816
+   276: (defrule MAIN::bug1
+   276: CLIPS> 
+   277:    =>
+   277: (defclass A
+   278:    (assert (dbdata (values (create$ 1 2)))))
+   278: 	  (is-a USER)
+   279: CLIPS>  
+   279: 	  (role concrete)
+   280: (defrule bug2
+   280: 	  (slot str
+   281:   =>
+   281: 	    (create-accessor read-write)
+   282:   (assert (dbdata (values (create$ 1 2) (create$ 3 4)))))
+   282: 	    (type STRING))
+   283: CLIPS> (ppdefrule bug2)    
+   283: 	  (slot length
+   284: (defrule MAIN::bug2
+   284: 	    (create-accessor read-write)
+   285:    =>
+   285: 	    (type INTEGER)))
+   286:    (assert (dbdata (values (create$ 1 2) (create$ 3 4)))))
+   286: CLIPS> 
+   287: CLIPS>  
+   287: (defmessage-handler A put-str after (?value)
+   288: (deftemplate foo 
+   288:    (bind ?self:length 3))
+   289:    (field x) 
+   289: CLIPS> (make-instance a of A (str 4))
+   290:    (multifield y))
+   290: [a]
+   291: CLIPS>  
+   291: CLIPS> (send [a] get-length)
+   292: (deffacts d5 (foo (y a)))
+   292: 3
+   293: CLIPS> (ppdeffacts d5)
+   293: CLIPS> (clear)                   ; DR0817
+   294: (deffacts MAIN::d5
+   294: CLIPS> 
+   295:    (foo (y a)))
+   295: (deftemplate status 
+   296: CLIPS> (deffacts d6 (foo (y a b)) (b) (foo (x 3)) (d))
+   296:    (slot search-depth)
+   297: CLIPS> (ppdeffacts d6)
+   297:    (slot parent))
+   298: (deffacts MAIN::d6
+   298: CLIPS> 
+   299:    (foo (y a b))
+   299: (defrule move-alone 
+   300:    (b)
+   300:   ?node <- (status)
+   301:    (foo (x 3))
+   301:   =>
+   302:    (d))
+   302:   (duplicate ?node (search-depth =(+ 1 3))
+   303: CLIPS> (clear)                   ; DR0818
+   303:                    (parent ?node)))
+   304: CLIPS> (defmodule A (export ?ALL))
+   304: CLIPS> (ppdefrule move-alone) 
+   305: CLIPS> (defgeneric A::foo)
+   305: (defrule MAIN::move-alone
+   306: CLIPS> (defmethod A::foo ((?arg NUMBER)))
+   306:    ?node <- (status)
+   307: CLIPS> (defmodule B (import A ?ALL))
+   307:    =>
+   308: CLIPS> (defclass B (is-a USER))
+   308:    (duplicate ?node (search-depth =(+ 1 3)) (parent ?node)))
+   309: CLIPS> (defmethod B::foo ((?arg B)))
+   309: CLIPS>  
+   310: 
+   310: (deftemplate dbdata
+   311: [CSTRCPSR3] Cannot define defgeneric foo because of an import/export conflict.
+   311:   (multislot values))
+   312: 
+   312: CLIPS>  
+   313: ERROR:
+   313: (defrule bug1
+   314: (defmethod B::foo
+   314:   =>
+   315: CLIPS> (clear)                   ; DR0819
+   315:   (assert (dbdata (values (create$ 1 2)))))
+   316: CLIPS> 
+   316: CLIPS> (ppdefrule bug1)
+   317: (defclass A 
+   317: (defrule MAIN::bug1
+   318:    (is-a INITIAL-OBJECT)
+   318:    =>
+   319:    (multislot foo (create-accessor read-write)))
+   319:    (assert (dbdata (values (create$ 1 2)))))
+   320: CLIPS> (make-instance a of A)
+   320: CLIPS>  
+   321: [a]
+   321: (defrule bug2
+   322: CLIPS> (modify-instance [a] (foo 4))
+   322:   =>
+   323: TRUE
+   323:   (assert (dbdata (values (create$ 1 2) (create$ 3 4)))))
+   324: CLIPS> (send [a] print)
+   324: CLIPS> (ppdefrule bug2)    
+   325: [a] of A
+   325: (defrule MAIN::bug2
+   326: (foo 4)
+   326:    =>
+   327: CLIPS> (clear)                   ; DR0820
+   327:    (assert (dbdata (values (create$ 1 2) (create$ 3 4)))))
+   328: CLIPS> 
+   328: CLIPS>  
+   329: (defclass A (is-a USER)
+   329: (deftemplate foo 
+   330:    (role concrete)
+   330:    (field x) 
+   331:    (slot iii 
+   331:    (multifield y))
+   332:       (type INTEGER)
+   332: CLIPS>  
+   333:       (default -1)
+   333: (deffacts d5 (foo (y a)))
+   334:       (visibility public)
+   334: CLIPS> (ppdeffacts d5)
+   335:       (create-accessor read-write)))
+   335: (deffacts MAIN::d5
+   336: CLIPS> 
+   336:    (foo (y a)))
+   337: (defclass B (is-a USER)
+   337: CLIPS> (deffacts d6 (foo (y a b)) (b) (foo (x 3)) (d))
+   338:    (role concrete)
+   338: CLIPS> (ppdeffacts d6)
+   339:    (slot ooo 
+   339: (deffacts MAIN::d6
+   340:       (type INSTANCE)
+   340:    (foo (y a b))
+   341:       (visibility public)
+   341:    (b)
+   342:       (create-accessor read-write)))
+   342:    (foo (x 3))
+   343: CLIPS> 
+   343:    (d))
+   344: (defmessage-handler B init after ()
+   344: CLIPS> (clear)                   ; DR0818
+   345:    (send [a] put-iii 23)
+   345: CLIPS> (defmodule A (export ?ALL))
+   346:    (printout t "1st output line: iii = " (send [a] get-iii) crlf)
+   346: CLIPS> (defgeneric A::foo)
+   347:    (initialize-instance [a])
+   347: CLIPS> (defmethod A::foo ((?arg NUMBER)))
+   348:    (printout t "2nd output line: iii = " (send [a] get-iii) crlf))
+   348: CLIPS> (defmodule B (import A ?ALL))
+   349: CLIPS> 
+   349: CLIPS> (defclass B (is-a USER))
+   350: (defrule test
+   350: CLIPS> (defmethod B::foo ((?arg B)))
+   351:    (initial-fact)
+   351: 
+   352:    =>
+   352: [CSTRCPSR3] Cannot define defgeneric 'foo' because of an import/export conflict.
+   353:    (make-instance [a] of A)
+   353: 
+   354:    (make-instance [b] of B))
+   354: ERROR:
+   355: CLIPS> (reset)
+   355: (defmethod B::foo
+   356: CLIPS> (run)
+   356: CLIPS> (clear)                   ; DR0819
+   357: 1st output line: iii = 23
+   357: CLIPS> 
+   358: 2nd output line: iii = -1
+   358: (defclass A 
+   359: CLIPS> (clear)
+   359:    (is-a INITIAL-OBJECT)
+   360: CLIPS> (watch slots)
+   360:    (multislot foo (create-accessor read-write)))
+   361: CLIPS> 
+   361: [INHERPSR3] A class must be defined after all its superclasses.
+   362: (defclass A (is-a USER)
+   362: 
+   363:   (role concrete)
+   363: ERROR:
+   364:   (slot foo
+   364: (defclass MAIN::A
+   365:     (create-accessor read-write)
+   365:    (is-a INITIAL-OBJECT
+   366:     (access initialize-only)))
+   366: CLIPS> (make-instance a of A)
+   367: CLIPS> (make-instance a of A)
+   367: [PRNTUTIL1] Unable to find class 'A'.
+   368: ::= local slot foo in instance a <- nil
+   368: CLIPS> (modify-instance [a] (foo 4))
+   369: [a]
+   369: [INSFUN2] No such instance [a] in function 'modify-instance'.
+   370: CLIPS> 
+   370: FALSE
+   371: (defclass B (is-a USER)
+   371: CLIPS> (send [a] print)
+   372:   (role concrete)
+   372: [MSGPASS2] No such instance [a] in function 'send'.
+   373:   (slot bar
+   373: FALSE
+   374:      (create-accessor read-write)
+   374: CLIPS> (clear)                   ; DR0820
+   375:      (default-dynamic (send [a] put-foo blah))))
+   375: CLIPS> 
+   376: CLIPS> (make-instance of B)
+   376: (defclass A (is-a USER)
+   377: [MSGFUN3] foo slot in [a] of A: write access denied.
+   377:    (role concrete)
+   378: [PRCCODE4] Execution halted during the actions of message-handler put-foo primary in class A
+   378:    (slot iii 
+   379: [PRCCODE4] Execution halted during the actions of message-handler init primary in class USER
+   379:       (type INTEGER)
+   380: [INSMNGR8] An error occurred during the initialization of instance gen504.
+   380:       (default -1)
+   381: FALSE
+   381:       (visibility public)
+   382: CLIPS> (unwatch slots)
+   382:       (create-accessor read-write)))
+   383: CLIPS> (clear)                   ; DR0821
+   383: CLIPS> 
+   384: CLIPS> 
+   384: (defclass B (is-a USER)
+   385: (deffunction function2 ()
+   385:    (role concrete)
+   386:   (subseq$ (create$ 3 (+ 3 1)) 1 1))
+   386:    (slot ooo 
+   387: CLIPS> 
+   387:       (type INSTANCE)
+   388: (deffunction function1 ()
+   388:       (visibility public)
+   389:    (bind ?str "")
+   389:       (create-accessor read-write)))
+   390:    (bind ?result (function2))
+   390: CLIPS> 
+   391:    (loop-for-count 3
+   391: (defmessage-handler B init after ()
+   392:       (bind ?str (str-cat ?str " ")))) 
+   392:    (send [a] put-iii 23)
+   393: CLIPS> (loop-for-count 1000 (function1))
+   393:    (printout t "1st output line: iii = " (send [a] get-iii) crlf)
+   394: FALSE
+   394:    (initialize-instance [a])
+   395: CLIPS> (clear)
+   395:    (printout t "2nd output line: iii = " (send [a] get-iii) crlf))
+   396: CLIPS> (clear)                   ; DR0824
+   396: CLIPS> 
+   397: CLIPS> 
+   397: (defrule test
+   398: (defclass c
+   398:    (initial-fact)
+   399:    (is-a USER)
+   399:    =>
+   400:    (role concrete)
+   400:    (make-instance [a] of A)
+   401:    (slot s
+   401:    (make-instance [b] of B))
+   402:       (access initialize-only)
+   402: CLIPS> (reset)
+   403:       (visibility public)
+   403: CLIPS> (run)
+   404:       (create-accessor read-write)))
+   404: CLIPS> (clear)
+   405: CLIPS> 
+   405: CLIPS> (watch slots)
+   406: (defmessage-handler c init after
+   406: CLIPS> 
+   407:    ()
+   407: (defclass A (is-a USER)
+   408:    (bind ?self:s (+ ?self:s 1)))
+   408:   (role concrete)
+   409: CLIPS> (make-instance of c (s 1))
+   409:   (slot foo
+   410: [gen505]
+   410:     (create-accessor read-write)
+   411: CLIPS> (clear)                   ; DR0825
+   411:     (access initialize-only)))
+   412: CLIPS> 
+   412: CLIPS> (make-instance a of A)
+   413: (defclass EXAMPLE
+   413: ::= local slot foo in instance a <- nil
+   414:    (is-a USER)
+   414: [a]
+   415:    (role concrete)
+   415: CLIPS> 
+   416:    (slot x))
+   416: (defclass B (is-a USER)
+   417: CLIPS> (restore-instances bug825.ins)
+   417:   (role concrete)
+   418: 
+   418:   (slot bar
+   419: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for make-instance.
+   419:      (create-accessor read-write)
+   420: [INSFILE1] Function restore-instances could not completely process file bug825.ins.
+   420:      (default-dynamic (send [a] put-foo blah))))
+   421: 1
+   421: CLIPS> (make-instance of B)
+   422: CLIPS> (clear)
+   422: [MSGFUN3] Write access denied for slot 'foo' in instance [a] of class 'A'.
+   423: CLIPS> (progn (release-mem) TRUE)
+   423: [PRCCODE4] Execution halted during the actions of message-handler 'put-foo' primary in class 'A'
+   424: TRUE
+   424: [PRCCODE4] Execution halted during the actions of message-handler 'init' primary in class 'USER'
+   425: CLIPS> (clear)                   ; DR0831
+   425: [INSMNGR8] An error occurred during the initialization of instance [gen3].
+   426: CLIPS> (defmodule MAIN (export ?ALL))
+   426: FALSE
+   427: CLIPS> (defmodule M (import MAIN ?ALL) (export ?ALL))
+   427: CLIPS> (unwatch slots)
+   428: CLIPS> (deffunction MAIN::problem (?x))
+   428: CLIPS> (clear)                   ; DR0821
+   429: CLIPS> (save "Temp//bug.clp")
+   429: CLIPS> 
+   430: TRUE
+   430: (deffunction function2 ()
+   431: CLIPS> (clear)
+   431:   (subseq$ (create$ 3 (+ 3 1)) 1 1))
+   432: CLIPS> (load "Temp//bug.clp")
+   432: CLIPS> 
+   433: +!!+
+   433: (deffunction function1 ()
+   434: TRUE
+   434:    (bind ?str "")
+   435: CLIPS> (clear)                   ; DR0834
+   435:    (bind ?result (function2))
+   436: CLIPS> 
+   436:    (loop-for-count 3
+   437: (deffacts Stuff
+   437:       (bind ?str (str-cat ?str " ")))) 
+   438:    (Value)
+   438: CLIPS> (loop-for-count 1000 (function1))
+   439:    (AxisLine))  
+   439: FALSE
+   440: CLIPS> 
+   440: CLIPS> (clear)
+   441: (defrule r1
+   441: CLIPS> (clear)                   ; DR0824
+   442:    (initial-fact)
+   442: CLIPS> 
+   443:    (not (and (Value) 
+   443: (defclass c
+   444:              (not (AxisLine))))
+   444:    (is-a USER)
+   445:    (not (AxisLine))
+   445:    (role concrete)
+   446:    (not (Bogus))
+   446:    (slot s
+   447:    =>)
+   447:       (access initialize-only)
+   448: CLIPS> (reset)
+   448:       (visibility public)
+   449: CLIPS> (retract 2)
+   449:       (create-accessor read-write)))
+   450: CLIPS> (run)
+   450: CLIPS> 
+   451: CLIPS> (clear)                   ; DR0835
+   451: (defmessage-handler c init after
+   452: CLIPS> 
+   452:    ()
+   453: (explode$
+   453:    (bind ?self:s (+ ?self:s 1)))
+   454:    (nth$ 1 (explode$
+   454: CLIPS> (make-instance of c (s 1))
+   455:       (nth$ 1 (explode$
+   455: [gen4]
+   456:          (nth$ 1 (explode$
+   456: CLIPS> (clear)                   ; DR0825
+   457:             (implode$ (create$
+   457: CLIPS> 
+   458:                (implode$ (create$
+   458: (defclass EXAMPLE
+   459:                   (implode$ (create$
+   459:    (is-a USER)
+   460:                      (implode$ (create$ a b c)))))))))))))))
+   460:    (role concrete)
+   461: (a b c)
+   461:    (slot x))
+   462: CLIPS> (clear)                   ; DR0837
+   462: CLIPS> (restore-instances bug825.ins)
+   463: CLIPS> (assert-string "()dfj )))(")
+   463: 
+   464: 
+   464: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for make-instance.
+   465: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for first field of a RHS pattern.
+   465: [INSFILE1] Function 'restore-instances' could not completely process file 'bug825.ins'.
+   466: FALSE
+   466: 1
+   467: CLIPS> (assert-string ")(dsf")
+   467: CLIPS> (clear)
+   468: 
+   468: CLIPS> (progn (release-mem) TRUE)
+   469: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for RHS patterns.
+   469: TRUE
+   470: FALSE
+   470: CLIPS> (clear)                   ; DR0831
+   471: CLIPS> (clear)                   ; DR0839
+   471: CLIPS> (defmodule MAIN (export ?ALL))
+   472: CLIPS> (ppdefclass asd)
+   472: CLIPS> (defmodule M (import MAIN ?ALL) (export ?ALL))
+   473: [PRNTUTIL1] Unable to find defclass asd.
+   473: CLIPS> (deffunction MAIN::problem (?x))
+   474: CLIPS> (ppdefclass MAIN::dip)
+   474: CLIPS> (save "Temp//bug.clp")
+   475: [PRNTUTIL1] Unable to find defclass MAIN::dip.
+   475: TRUE
+   476: CLIPS> (ppdefclass uiui::gop)
+   476: CLIPS> (clear)
+   477: [PRNTUTIL1] Unable to find defclass uiui::gop.
+   477: CLIPS> (load "Temp//bug.clp")
+   478: CLIPS> (clear)                   ; DR0840
+   478: +!!+
+   479: CLIPS> 
+   479: TRUE
+   480: (defmodule A
+   480: CLIPS> (clear)                   ; DR0834
+   481:    (export deftemplate template))
+   481: CLIPS> 
+   482: CLIPS> (deftemplate A::template)
+   482: (deffacts Stuff
+   483: CLIPS> 
+   483:    (Value)
+   484: (defmodule B
+   484:    (AxisLine))  
+   485:    (import A deftemplate template))
+   485: CLIPS> 
+   486: CLIPS> (save "Temp//bug.tmp")
+   486: (defrule r1
+   487: TRUE
+   487:    (initial-fact)
+   488: CLIPS> (clear)
+   488:    (not (and (Value) 
+   489: CLIPS> (load "Temp//bug.tmp")
+   489:              (not (AxisLine))))
+   490: +%+
+   490:    (not (AxisLine))
+   491: TRUE
+   491:    (not (Bogus))
+   492: CLIPS> (clear)
+   492:    =>)
+   493: CLIPS> (load mab.clp)
+   493: CLIPS> (reset)
+   494: %%%%********************************
+   494: CLIPS> (retract 2)
+   495: TRUE
+   495: CLIPS> (run)
+   496: CLIPS> (save "Temp//bug.tmp")
+   496: CLIPS> (clear)                   ; DR0835
+   497: TRUE
+   497: CLIPS> 
+   498: CLIPS> (clear)
+   498: (explode$
+   499: CLIPS> (load "Temp//bug.tmp")
+   499:    (nth$ 1 (explode$
+   500: %%%%********************************
+   500:       (nth$ 1 (explode$
+   501: TRUE
+   501:          (nth$ 1 (explode$
+   502: CLIPS> (clear)
+   502:             (implode$ (create$
+   503: CLIPS> (load dilemma1.clp)
+   503:                (implode$ (create$
+   504: +%$$****+***+%***
+   504:                   (implode$ (create$
+   505: TRUE
+   505:                      (implode$ (create$ a b c)))))))))))))))
+   506: CLIPS> (save "Temp//bug.tmp")
+   506: (a b c)
+   507: TRUE
+   507: CLIPS> (clear)                   ; DR0837
+   508: CLIPS> (clear)
+   508: CLIPS> (assert-string "()dfj )))(")
+   509: CLIPS> (load "Temp//bug.tmp")
+   509: 
+   510: +%$$****+***+%***
+   510: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for first field of a RHS pattern.
+   511: TRUE
+   511: FALSE
+   512: CLIPS> (clear)
+   512: CLIPS> (assert-string ")(dsf")
+   513: CLIPS> (load dilemma2.clp)
+   513: 
+   514: #!!!*~~~~~~~
+   514: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for RHS patterns.
+   515: TRUE
+   515: FALSE
+   516: CLIPS> (save "Temp//bug.tmp")
+   516: CLIPS> (clear)                   ; DR0839
+   517: TRUE
+   517: CLIPS> (ppdefclass asd)
+   518: CLIPS> (clear)
+   518: [PRNTUTIL1] Unable to find defclass 'asd'.
+   519: CLIPS> (load "Temp//bug.tmp")
+   519: CLIPS> (ppdefclass MAIN::dip)
+   520: !!!#~~~~~~~!!!*
+   520: [PRNTUTIL1] Unable to find defclass 'MAIN::dip'.
+   521: TRUE
+   521: CLIPS> (ppdefclass uiui::gop)
+   522: CLIPS> (clear)
+   522: [PRNTUTIL1] Unable to find defclass 'uiui::gop'.
+   523: CLIPS> (load wordgame.clp)
+   523: CLIPS> (clear)                   ; DR0840
+   524: ***
+   524: CLIPS> 
+   525: TRUE
+   525: (defmodule A
+   526: CLIPS> (save "Temp//bug.tmp")
+   526:    (export deftemplate template))
+   527: TRUE
+   527: CLIPS> (deftemplate A::template)
+   528: CLIPS> (clear)
+   528: CLIPS> 
+   529: CLIPS> (load "Temp//bug.tmp")
+   529: (defmodule B
+   530: ***
+   530:    (import A deftemplate template))
+   531: TRUE
+   531: CLIPS> (save "Temp//bug.tmp")
+   532: CLIPS> (clear)
+   532: TRUE
+   533: CLIPS> (load zebra.clp)
+   533: CLIPS> (clear)
+   534: %****
+   534: CLIPS> (load "Temp//bug.tmp")
+   535: TRUE
+   535: +%+
+   536: CLIPS> (save "Temp//bug.tmp")
+   536: TRUE
+   537: TRUE
+   537: CLIPS> (clear)
+   538: CLIPS> (clear)
+   538: CLIPS> (load mab.clp)
+   539: CLIPS> (load "Temp//bug.tmp")
+   539: %%%%********************************
+   540: %****
+   540: TRUE
+   541: TRUE
+   541: CLIPS> (save "Temp//bug.tmp")
+   542: CLIPS> (clear)
+   542: TRUE
+   543: CLIPS> (load electrnc.clp)
+   543: CLIPS> (clear)
+   544: ##~#~#~##~#~###!~#!~#!~#!~#!~#~#!^&&&&:::!!******
+   544: CLIPS> (load "Temp//bug.tmp")
+   545: TRUE
+   545: %%%%********************************
+   546: CLIPS> (load circuit3.clp)
+   546: TRUE
+   547: @!
+   547: CLIPS> (clear)
+   548: TRUE
+   548: CLIPS> (load dilemma1.clp)
+   549: CLIPS> (save "Temp//bug.tmp")
+   549: +%$$****+***+%***
+   550: TRUE
+   550: [EXPRNPSR3] dilemma1.clp, Line 185: Missing function declaration for 'length'.
+   551: CLIPS> (clear)
+   551: 
+   552: CLIPS> (load "Temp//bug.tmp")
+   552: ERROR:
+   553: !!!!!!!!^:::##~#~#~##~#~###~#~#~#~#~#~#@!!!!!!!!******&&&&
+   553: (defrule SOLUTION::print-solution
+   554: TRUE
+   554:    ?mv <- (moves (id no-parent) (moves-list no-move $?m))
+   555: CLIPS> (clear)
+   555:    =>
+   556: CLIPS> (load mabobj.clp)
+   556:    (retract ?mv)
+   557: ####*******************************@
+   557:    (printout t crlf "Solution found: " crlf crlf)
+   558: TRUE
+   558:    (bind ?length (length
+   559: CLIPS> (save "Temp//bug.tmp")
+   559: 
+   560: TRUE
+   560: FALSE
+   561: CLIPS> (clear)
+   561: CLIPS> (save "Temp//bug.tmp")
+   562: CLIPS> (load "Temp//bug.tmp")
+   562: TRUE
+   563: ####@*******************************
+   563: CLIPS> (clear)
+   564: TRUE
+   564: CLIPS> (load "Temp//bug.tmp")
+   565: CLIPS> (clear)
+   565: +%$$****+***+%**
+   566: CLIPS> (load objfarm.clp)
+   566: TRUE
+   567: +##@****+***+#***
+   567: CLIPS> (clear)
+   568: TRUE
+   568: CLIPS> (load dilemma2.clp)
+   569: CLIPS> (save "Temp//bug.tmp")
+   569: #!!!*~~~~~~~
+   571: CLIPS> (clear)
+   571: CLIPS> (save "Temp//bug.tmp")
+   572: CLIPS> (load "Temp//bug.tmp")
+   572: TRUE
+   573: +##@****+***+#***
+   573: CLIPS> (clear)
+   574: TRUE
+   574: CLIPS> (load "Temp//bug.tmp")
+   575: CLIPS> (clear)
+   575: !!!#~~~~~~~!!!*
+   576: CLIPS> (load wrdgmobj.clp)
+   576: TRUE
+   577: ###***
+   577: CLIPS> (clear)
+   578: TRUE
+   578: CLIPS> (load wordgame.clp)
+   579: CLIPS> (save "Temp//bug.tmp")
+   579: ***
+   581: CLIPS> (clear)
+   581: CLIPS> (save "Temp//bug.tmp")
+   582: CLIPS> (load "Temp//bug.tmp")
+   582: TRUE
+   583: ###***
+   583: CLIPS> (clear)
+   584: TRUE
+   584: CLIPS> (load "Temp//bug.tmp")
+   585: CLIPS> (clear)
+   585: ***
+   586: CLIPS> (load wine.clp)
+   586: TRUE
+   587: +!%**+%***+$+%******+*$+$%$*+****
+   587: CLIPS> (clear)
+   588: TRUE
+   588: CLIPS> (load zebra.clp)
+   589: CLIPS> (save "Temp//bug.tmp")
+   589: %****
+   591: CLIPS> (clear)
+   591: CLIPS> (save "Temp//bug.tmp")
+   592: CLIPS> (load "Temp//bug.tmp")
+   592: TRUE
+   593: +!%!**+%***+$+%******+$*+%$$*+****
+   593: CLIPS> (clear)
+   594: TRUE
+   594: CLIPS> (load "Temp//bug.tmp")
+   595: CLIPS> (clear)
+   595: %****
+   596: CLIPS> (clear)                   ; DR0848
+   596: TRUE
+   597: CLIPS> 
+   597: CLIPS> (clear)
+   598: (defrule test1 
+   598: CLIPS> (load electrnc.clp)
+   599:    (hihi ?a $?m) 
+   599: ##~#~#~##~#~###!~#!~#!~#!~#!~#~#!^&&&&:::!!*
+   600:    => 
+   600: [EXPRNPSR3] electrnc.clp, Line 326: Missing function declaration for 'length'.
+   601:    (progn$ (?each ?m) 
+   601: 
+   602:       (printout t "Value=" ?each " Index=" ?each-index crlf)))
+   602: ERROR:
+   603: CLIPS> (assert (hihi alpha bravo charli david echo))
+   603: (defrule MAIN::startup
+   604: <Fact-1>
+   604:    =>
+   605: CLIPS> (run)
+   605:    (connect-circuit)
+   606: Value=bravo Index=1
+   606:    (bind ?*sources* (find-all-instances ((?x SOURCE))
+   607: Value=charli Index=2
+   607:       TRUE))
+   608: Value=david Index=3
+   608:    (do-for-all-instances ((?x SOURCE))
+   609: Value=echo Index=4
+   609:       TRUE
+   610: CLIPS> (clear)                   ; DR0849
+   610:       (bind ?*gray-code* (create$ ?*gray-code* 0)))
+   611: CLIPS> 
+   611:    (bind ?*max-iterations* (round (** 2 (length
+   612: (defclass FRIDGE
+   612: *
+   613:    (is-a USER)
+   613: [EXPRNPSR3] electrnc.clp, Line 336: Missing function declaration for 'str-implode'.
+   614:    (multislot contents))
+   614: 
+   615: CLIPS> 
+   615: ERROR:
+   616: (definstances test
+   616: (defrule MAIN::compute-response-1st-time
+   617:    (fridge-1 of FRIDGE (contents a b c d)))
+   617:    ?f <- (current-iteration 0)
+   618: CLIPS> (reset)
+   618:    =>
+   619: CLIPS> (member$ (first$ (rest$ (send [fridge-1] get-contents))) (send [fridge-1] get-contents))
+   619:    (do-for-all-instances ((?source SOURCE))
+   620: 2
+   620:       TRUE
+   621: CLIPS> (member$ (first$ (rest$ (send [fridge-1] get-contents))) (rest$ (send [fridge-1] get-contents)))
+   621:       (send ?source put-output-1 0))
+   622: 1
+   622:    (assert (result ?*gray-code* =(str-implode
+   623: CLIPS> (clear)                   ; DR0854
+   623: *
+   624: CLIPS> 
+   624: [EXPRNPSR3] electrnc.clp, Line 346: Missing function declaration for 'nth'.
+   625: (deffunction foobar (?a ?b ?c)
+   625: 
+   626:    (printout t ?a " " ?b " " ?c crlf))
+   626: ERROR:
+   627: CLIPS> (funcall foobar 1)
+   627: (defrule MAIN::compute-response-other-times
+   628: [ARGACCES4] Function foobar expected exactly 3 argument(s)
+   628:    ?f <- (current-iteration ?n&~0&:(< ?n ?*max-iterations*))
+   629: [MISCFUN4] Function funcall called with the wrong number of arguments for deffunction foobar
+   629:    =>
+   630: FALSE
+   630:    (bind ?pos (change-which-bit ?n))
+   631: CLIPS> (clear)                   ; DR0855
+   631:    (bind ?nv (- 1 (nth
+   632: CLIPS> (fetch
+   632: ***
+   633: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+   633: [EXPRNPSR3] electrnc.clp, Line 385: Missing function declaration for 'nth'.
+   634: )
+   634: 
+   635: [TEXTPRO1] Could not open file "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".
+   635: ERROR:
+   636: FALSE
+   636: (defrule MAIN::print-result
+   637: CLIPS> (clear)                   ; DR0856
+   637:    (print-results)
+   638: CLIPS> (constructs-to-c
+   638:    ?f <- (result $?input ?response)
+   639: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+   639:    (not (result $?input-2 ?response-2&:(< (str-compare ?response-2 ?response) 0)))
+   640: 1)
+   640:    =>
+   641: [CONSCOMP1] Aborting because the base file name may cause the fopen maximum of 1024 to be violated when file names are generated.
+   641:    (retract ?f)
+   642: CLIPS> (clear)                   ; DR0857
+   642:    (while (neq ?input (create$)) do
+   643: CLIPS> 
+   643:       (printout t "  " (nth
+   644: (defclass
+   644: 
+   645: CLASSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+   645: FALSE
+   646: (is-a OBJECT))
+   646: CLIPS> (load circuit3.clp)
+   647: CLIPS> (profile constructs)
+   647: @!
+   648: CLIPS> (profile-info)
+   648: TRUE
+   649: Profile elapsed time = 0.005962 seconds ;; Different number is OK
+   649: CLIPS> (save "Temp//bug.tmp")
+   650: Construct Name                           Entries         Time           %          Time+Kids     %+Kids
+   650: TRUE
+   651: --------------                           -------        ------        -----        ---------     ------
+   651: CLIPS> (clear)
+   652: CLIPS> (profile off)
+   652: CLIPS> (load "Temp//bug.tmp")
+   653: CLIPS> (clear)                   ; DR0858
+   653: !!!!!!!!^:::##~#~#~##~#~###~#~#~#~#~#~#@!!!!!!!!**&&&&
+   654: CLIPS> 
+   654: TRUE
+   655: (defmodule
+   655: CLIPS> (clear)
+   656: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa)
+   656: CLIPS> (load mabobj.clp)
+   657: CLIPS> 
+   657: ####*******************************@
+   658: (deffunction
+   658: TRUE
+   659: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa::foo
+   659: CLIPS> (save "Temp//bug.tmp")
+   660: ()))
+   660: TRUE
+   661: CLIPS> (get-deffunction-list *)
+   661: CLIPS> (clear)
+   662: (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa::foo)
+   662: CLIPS> (load "Temp//bug.tmp")
+   663: CLIPS> (clear)                   ; DR0867
+   663: ####@*******************************
+   664: CLIPS> 
+   664: TRUE
+   665: (defrule Bad-Rule ""
+   665: CLIPS> (clear)
+   666:    (exists (C))
+   666: CLIPS> (load objfarm.clp)
+   667:    (not (B))
+   667: +##@****+***+#***
+   668:    =>)
+   668: TRUE
+   669: CLIPS> (watch activations)
+   669: CLIPS> (save "Temp//bug.tmp")
+   670: CLIPS> (reset)
+   670: TRUE
+   671: CLIPS> (reset)
+   671: CLIPS> (clear)
+   672: CLIPS> (agenda)
+   672: CLIPS> (load "Temp//bug.tmp")
+   673: CLIPS> (unwatch activations)
+   673: +##@****+***+#***
+   674: CLIPS> (clear)                   ; DR0870
+   674: TRUE
+   675: CLIPS> 
+   675: CLIPS> (clear)
+   676: (defclass A (is-a USER)
+   676: CLIPS> (load wrdgmobj.clp)
+   677:    (slot x (default ?NONE)))
+   677: ###***
+   678: CLIPS> (slot-default-value A x)
+   678: TRUE
+   679: ?NONE
+   679: CLIPS> (save "Temp//bug.tmp")
+   680: CLIPS> (clear)                   ; DR0872
+   680: TRUE
+   681: CLIPS> (load dr0872-1.clp)
+   681: CLIPS> (clear)
+   682: !
+   682: CLIPS> (load "Temp//bug.tmp")
+   683: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for deffunction.
+   683: ###***
+   684: 
+   684: TRUE
+   685: ERROR:
+   685: CLIPS> (clear)
+   686: (deffunction MAIN::testUnmatched
+   686: CLIPS> (load wine.clp)
+   687:    ()
+   687: +!
+   688:    (+ 3 4)
+   688: [EXPRNPSR3] wine.clp, Line 24: Missing function declaration for 'member'.
+   689:    
+   689: 
+   690: 
+   690: ERROR:
+   691: FALSE
+   691: (deffunction MAIN::ask-question
+   692: CLIPS> (load dr0872-2.clp)
+   692:    (?question ?allowed-values)
+   693: &
+   693:    (printout t ?question)
+   694: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for defmethod.
+   694:    (bind ?answer (read))
+   695: 
+   695:    (if (lexemep ?answer)
+   696: ERROR:
+   696:       then
+   697: (defmethod MAIN::foo
+   697:       (bind ?answer (lowcase ?answer)))
+   698:    ()
+   698:    (while (not (member
+   699:    (+ 3 4)
+   699: %**+%*
+   700:    
+   700: [EXPRNPSR3] wine.clp, Line 77: Missing function declaration for 'ask-question'.
+   702: FALSE
+   702: ERROR:
+   703: CLIPS> (clear)                   ; DR0873
+   703: (defrule QUESTIONS::ask-a-question
+   704: CLIPS> 
+   704:    ?f <- (question (already-asked FALSE) (precursors) (the-question ?the-question) (attribute ?the-attribute) (valid-answers $?valid-answers))
+   705: (defclass A
+   705:    =>
+   706:    (is-a USER) 
+   706:    (modify ?f (already-asked TRUE))
+   707:    (slot x)) 
+   707:    (assert (attribute (name ?the-attribute) (value (ask-question
+   708: CLIPS> 
+   708: *
+   709: (defclass B
+   709: [EXPRNPSR3] wine.clp, Line 84: Missing function declaration for 'nth'.
+   710:    (is-a USER) 
+   710: 
+   711:    (slot y)) 
+   711: ERROR:
+   712: CLIPS> 
+   712: (defrule QUESTIONS::precursor-is-satisfied
+   713: (definstances initialization 
+   713:    ?f <- (question (already-asked FALSE) (precursors ?name is ?value $?rest))
+   714:    (ob1 of A (x 1)) 
+   714:    (attribute (name ?name) (value ?value))
+   715:    (ob2 of B (y 1))) 
+   715:    =>
+   716: CLIPS> 
+   716:    (if (eq (nth
+   717: (defrule one 
+   717: *
+   718:    (object (is-a A) 
+   718: [EXPRNPSR3] wine.clp, Line 93: Missing function declaration for 'nth'.
+   719:            (x ~0)) 
+   719: 
+   720:    (object (is-a B) 
+   720: ERROR:
+   721:            (y ?val)) 
+   721: (defrule QUESTIONS::precursor-is-not-satisfied
+   722:    (test (> ?val 0)) 
+   722:    ?f <- (question (already-asked FALSE) (precursors ?name is-not ?value $?rest))
+   723:    =>)
+   723:    (attribute (name ?name) (value ~?value))
+   724: CLIPS>    
+   724:    =>
+   725: (defrule trigger
+   725:    (if (eq (nth
+   726:    =>
+   726: +$+%******
+   727:    (object-pattern-match-delay
+   727: [EXPRNPSR3] wine.clp, Line 183: Missing function declaration for 'nth'.
+   728:       (modify-instance [ob1] (x 2))
+   728: 
+   729:       (make-instance [ob2] of B (y 2))))
+   729: ERROR:
+   730: CLIPS> (reset)
+   730: (defrule RULES::perform-rule-consequent-without-certainty
+   731: CLIPS> (run)
+   731:    ?f <- (rule (certainty ?c1) (if) (then ?attribute is ?value $?rest))
+   732: CLIPS> (clear)                   ; DR0874
+   732:    (test (or (eq (length$ ?rest) 0) (neq (nth
+   733: CLIPS> (undefrule MAIN::)
+   733: +*$+$%$*+****
+   734: [PRNTUTIL1] Unable to find defrule MAIN::.
+   734: FALSE
+   735: CLIPS> (clear)                   ; DR0877
+   735: CLIPS> (save "Temp//bug.tmp")
+   736: CLIPS> 
+   736: TRUE
+   737: (deftemplate foo (multislot bar) (multislot yak))
+   737: CLIPS> (clear)
+   738: CLIPS> 
+   738: CLIPS> (load "Temp//bug.tmp")
+   739: (deffacts init
+   739: +%**+%+$+%*****+$*+%$$*+****
+   740:    (foo (bar) (yak)))
+   740: TRUE
+   741: CLIPS>    
+   741: CLIPS> (clear)
+   742: (deffunction callit (?c)
+   742: CLIPS> (clear)                   ; DR0848
+   743:     (loop-for-count (?i ?c)
+   743: CLIPS> 
+   744:        (do-for-fact ((?f foo)) TRUE
+   744: (defrule test1 
+   745:           (bind ?b1 ?f:bar)
+   745:    (hihi ?a $?m) 
+   746:           (bind ?b2 ?f:yak)
+   746:    => 
+   747:           (assert (foo (bar ?b1 ?i) (yak ?b2 (- ?c ?i))))
+   747:    (progn$ (?each ?m) 
+   748:           (retract ?f))))
+   748:       (printout t "Value=" ?each " Index=" ?each-index crlf)))
+   749: CLIPS>       
+   749: CLIPS> (assert (hihi alpha bravo charli david echo))
+   750: (defrule doit
+   750: <Fact-1>
+   751:     =>
+   751: CLIPS> (run)
+   752:     (callit 2000))
+   752: Value=bravo Index=1
+   753: CLIPS> (reset)
+   753: Value=charli Index=2
+   754: CLIPS> (run)
+   754: Value=david Index=3
+   755: CLIPS> (clear)                   ; DR0878
+   755: Value=echo Index=4
+   756: CLIPS> (funcall assert foo a b c)
+   756: CLIPS> (clear)                   ; DR0849
+   757: [ARGACCES5] Function funcall expected argument #1 to be of type function without specialized parser
+   757: CLIPS> 
+   758: FALSE
+   758: (defclass FRIDGE
+   759: CLIPS> (clear)                   ; DR0879
+   759:    (is-a USER)
+   760: CLIPS> (assert (a) (b) (c))
+   760:    (multislot contents))
+   761: <Fact-3>
+   761: CLIPS> 
+   762: CLIPS> (implode$ (get-fact-list))
+   762: (definstances test
+   763: "<Fact-0> <Fact-1> <Fact-2> <Fact-3>"
+   763:    (fridge-1 of FRIDGE (contents a b c d)))
+   764: CLIPS> (clear)                   ; DR0880
+   764: CLIPS> (reset)
+   765: CLIPS> (deftemplate matrix (slot ID) (slot JD))
+   765: CLIPS> (member$ (first$ (rest$ (send [fridge-1] get-contents))) (send [fridge-1] get-contents))
+   766: CLIPS> (deffacts blah (matrix (ID 5) (JD 5)))
+   766: 2
+   767: CLIPS> (reset)
+   767: CLIPS> (member$ (first$ (rest$ (send [fridge-1] get-contents))) (rest$ (send [fridge-1] get-contents)))
+   768: CLIPS> 
+   768: 1
+   769: (defrule rule1
+   769: CLIPS> (clear)                   ; DR0854
+   770:    (matrix (ID 5) (JD 3))
+   770: CLIPS> 
+   771:    =>)
+   771: (deffunction foobar (?a ?b ?c)
+   772: CLIPS> 
+   772:    (printout t ?a " " ?b " " ?c crlf))
+   773: (defrule rule2
+   773: CLIPS> (funcall foobar 1)
+   774:    (matrix (ID 5))
+   774: [ARGACCES1] Function 'foobar' expected exactly 3 arguments.
+   775:    =>)
+   775: [MISCFUN4] Function 'funcall' called with the wrong number of arguments for deffunction 'foobar'.
+   776: CLIPS> (agenda)
+   776: FALSE
+   777: 0      rule2: f-1
+   777: CLIPS> (clear)                   ; DR0855
+   778: For a total of 1 activation.
+   778: CLIPS> (fetch
+   779: CLIPS> (reset)
+   779: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+   780: CLIPS> (agenda)
+   780: )
+   781: 0      rule2: f-1
+   781: [TEXTPRO1] Could not open file 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'.
+   782: For a total of 1 activation.
+   782: FALSE
+   783: CLIPS> (clear)                   ; SourceForge 1881324: CLIPS 6.3 Beta Release 2
+   783: CLIPS> (clear)                   ; DR0856
+   784: CLIPS> 
+   784: CLIPS> (constructs-to-c
+   785: (deftemplate as_score 
+   785: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+   786:    (slot segment_id) 
+   786: 1)
+   787:    (slot score))
+   787: [CONSCOMP2] Aborting because the base file name may cause the fopen maximum of 260 to be violated when file names are generated.
+   788: CLIPS> 
+   788: CLIPS> (clear)                   ; DR0857
+   789: (deffacts as_score_info 
+   789: CLIPS> 
+   790:    (as_score (segment_id 11)(score 5)) 
+   790: (defclass
+   791:    (as_score (segment_id 12)(score 9))) 
+   791: CLASSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+   792: CLIPS> (reset)
+   792: (is-a OBJECT))
+   793: CLIPS> (facts)
+   793: CLIPS> (profile constructs)
+   794: f-0     (initial-fact)
+   794: CLIPS> (profile-info)
+   795: f-1     (as_score (segment_id 11) (score 5))
+   795: Profile elapsed time = 0 seconds
+   796: f-2     (as_score (segment_id 12) (score 9))
+   796: Construct Name                           Entries         Time           %          Time+Kids     %+Kids
+   797: For a total of 3 facts.
+   797: --------------                           -------        ------        -----        ---------     ------
+   798: CLIPS> (reset)
+   798: CLIPS> (profile off)
+   799: CLIPS> (facts)
+   799: CLIPS> (clear)                   ; DR0858
+   800: f-0     (initial-fact)
+   800: CLIPS> 
+   801: f-1     (as_score (segment_id 11) (score 5))
+   801: (defmodule
+   802: f-2     (as_score (segment_id 12) (score 9))
+   802: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa)
+   803: For a total of 3 facts.
+   803: CLIPS> 
+   804: CLIPS> (clear)
+   804: (deffunction
+   805: CLIPS> (clear)                   ; SourceForge 1881324: CLIPS 6.3 Beta Release 3
+   805: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa::foo
+   806: CLIPS> 
+   806: ()))
+   807: (deftemplate TAG2200 
+   807: CLIPS> (get-deffunction-list *)
+   808:    (slot Doc-Address))
+   808: (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa::foo)
+   809: CLIPS>    
+   809: CLIPS> (clear)                   ; DR0867
+   810: (defrule bug ""
+   810: CLIPS> 
+   811:    (TAG2200 (Doc-Address ?DA1) )
+   811: (defrule Bad-Rule ""
+   812:    (not (create-doc-shipper))
+   812:    (exists (C))
+   813:    (test (eq ?DA1 ""))
+   813:    (not (B))
+   815: CLIPS>  
+   815: CLIPS> (watch activations)
+   816: (reset)
+   816: CLIPS> (reset)
+   817: CLIPS> (assert (TAG2200 (Doc-Address "")))
+   817: CLIPS> (reset)
+   818: <Fact-1>
+   818: CLIPS> (agenda)
+   819: CLIPS> (assert (create-doc-shipper))
+   819: CLIPS> (unwatch activations)
+   820: <Fact-2>
+   820: CLIPS> (clear)                   ; DR0870
+   822: (clear)                   ; DR0881
+   822: (defclass A (is-a USER)
+   823: CLIPS> (unwatch all)   
+   823:    (slot x (default ?NONE)))
+   824: CLIPS> 
+   824: CLIPS> (slot-default-value A x)
+   825: (defrule detect
+   825: ?NONE
+   826:    (b ?b)
+   826: CLIPS> (clear)                   ; DR0872
+   827:    (exists (a))
+   827: CLIPS> (load dr0872-1.clp)
+   828:    (test (eq ?b 2))
+   828: !
+   829:    =>
+   829: [PRNTUTIL2] dr0872-1.clp, Line 1: Syntax Error:  Check appropriate syntax for deffunction.
+   830:    (printout t "Rule Fired" crlf))
+   830: 
+   831: CLIPS> (assert (a))
+   831: ERROR:
+   832: <Fact-1>
+   832: (deffunction MAIN::testUnmatched
+   833: CLIPS> (assert (b 1))
+   833:    ()
+   834: <Fact-2>
+   834:    (+ 3 4)
+   835: CLIPS> (run)
+   835:    
+   836: CLIPS> (reset)
+   836: 
+   837: CLIPS> (assert (b 1))
+   837: FALSE
+   838: <Fact-1>
+   838: CLIPS> (load dr0872-2.clp)
+   839: CLIPS> (assert (a))
+   839: &
+   840: <Fact-2>
+   840: [PRNTUTIL2] dr0872-2.clp, Line 2: Syntax Error:  Check appropriate syntax for defmethod.
+   841: CLIPS> (run)
+   841: 
+   842: CLIPS> (reset)
+   842: ERROR:
+   843: CLIPS> (assert (a))
+   843: (defmethod MAIN::foo
+   844: <Fact-1>
+   844:    ()
+   845: CLIPS> (assert (b 2))
+   845:    (+ 3 4)
+   846: <Fact-2>
+   846:    
+   847: CLIPS> (run)
+   847: 
+   848: Rule Fired
+   848: FALSE
+   849: CLIPS> (reset)
+   849: CLIPS> (clear)                   ; DR0873
+   850: CLIPS> (assert (b 2))
+   850: CLIPS> 
+   851: <Fact-1>
+   851: (defclass A
+   852: CLIPS> (assert (a))
+   852:    (is-a USER) 
+   853: <Fact-2>
+   853:    (slot x)) 
+   854: CLIPS> (run)
+   854: CLIPS> 
+   855: Rule Fired
+   855: (defclass B
+   856: CLIPS> (clear)                   ; CLIPSESG Issue
+   856:    (is-a USER) 
+   857: CLIPS> (defclass BEO (is-a USER) (multislot de) (multislot en))
+   857:    (slot y)) 
+   858: CLIPS> (make-instance of BEO)
+   858: CLIPS> 
+   859: [gen506]
+   859: (definstances initialization 
+   860: CLIPS> (make-instance of BEO)
+   860:    (ob1 of A (x 1)) 
+   861: [gen507]
+   861:    (ob2 of B (y 1))) 
+   862: CLIPS> (bsave-instances "Temp//d.bins")
+   862: CLIPS> 
+   863: 3
+   863: (defrule one 
+   864: CLIPS> (reset)
+   864:    (object (is-a A) 
+   865: CLIPS> (bload-instances "Temp//d.bins")
+   865:            (x ~0)) 
+   866: 3
+   866:    (object (is-a B) 
+   867: CLIPS> (dribble-off)
+   867:            (y ?val)) 
+   Files do not have the same # of lines

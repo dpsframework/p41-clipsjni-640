@@ -1,0 +1,3 @@
+instance.clp differences are as follows:
+   145: (stamp 26959.7) ;; Different number is OK
+   145: (stamp 1661613672.92373)

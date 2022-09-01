@@ -1,0 +1,362 @@
+dffctcmd.bat differences are as follows:
+    14: [ARGACCES5] Function list-deffacts expected argument #1 to be of type defmodule name
+    14: [ARGACCES2] Function 'list-deffacts' expected argument #1 to be of type 'defmodule name'.
+    16: initial-fact
+    16: d1
+    17: d1
+    17: d2
+    18: d2
+    18: d3
+    19: d3
+    19: d4
+    20: d4
+    20: d5
+    21: d5
+    21: d6
+    22: d6
+    22: *
+    23: *
+    23: For a total of 7 deffacts.
+    24: For a total of 8 deffacts.
+    24: CLIPS> (ppdeffacts d1)
+    25: CLIPS> (ppdeffacts d1)
+    25: (deffacts MAIN::d1)
+    26: (deffacts MAIN::d1)
+    26: CLIPS> (ppdeffacts d2)
+    27: CLIPS> (ppdeffacts d2)
+    27: (deffacts MAIN::d2
+    28: (deffacts MAIN::d2
+    28:    (a))
+    29:    (a))
+    29: CLIPS> (ppdeffacts d3)
+    30: CLIPS> (ppdeffacts d3)
+    30: (deffacts MAIN::d3
+    31: (deffacts MAIN::d3
+    31:    (a)
+    32:    (a)
+    32:    (b)
+    33:    (b)
+    33:    (c))
+    34:    (c))
+    34: CLIPS> (ppdeffacts d4)
+    35: CLIPS> (ppdeffacts d4)
+    35: (deffacts MAIN::d4
+    36: (deffacts MAIN::d4
+    36:    (foo (x 3) (y)))
+    37:    (foo (x 3) (y)))
+    37: CLIPS> (ppdeffacts d5)
+    38: CLIPS> (ppdeffacts d5)
+    38: (deffacts MAIN::d5
+    39: (deffacts MAIN::d5
+    39:    (a)
+    40:    (a)
+    40:    (foo (y a) (x 3)))
+    41:    (foo (y a) (x 3)))
+    41: CLIPS> (ppdeffacts d6)
+    42: CLIPS> (ppdeffacts d6)
+    42: (deffacts MAIN::d6
+    43: (deffacts MAIN::d6
+    43:    (foo (y a b))
+    44:    (foo (y a b))
+    44:    (b)
+    45:    (b)
+    45:    (foo (x 3))
+    46:    (foo (x 3))
+    46:    (d))
+    47:    (d))
+    47: CLIPS> (undeffacts)
+    48: CLIPS> (undeffacts)
+    48: [ARGACCES1] Function 'undeffacts' expected exactly 1 argument.
+    49: [ARGACCES4] Function undeffacts expected exactly 1 argument(s)
+    49: CLIPS> (undeffacts 10)
+    50: CLIPS> (undeffacts 10)
+    50: [ARGACCES2] Function 'undeffacts' expected argument #1 to be of type symbol.
+    51: [ARGACCES5] Function undeffacts expected argument #1 to be of type symbol
+    51: CLIPS> (undeffacts bad-name)
+    52: CLIPS> (undeffacts bad-name)
+    52: [PRNTUTIL1] Unable to find deffacts 'bad-name'.
+    53: [PRNTUTIL1] Unable to find deffacts bad-name.
+    53: CLIPS> (undeffacts d6 10)
+    54: CLIPS> (undeffacts d6 10)
+    54: [ARGACCES1] Function 'undeffacts' expected exactly 1 argument.
+    55: [ARGACCES4] Function undeffacts expected exactly 1 argument(s)
+    55: CLIPS> (list-deffacts)
+    56: CLIPS> (list-deffacts)
+    56: d1
+    57: initial-fact
+    57: d2
+    58: d1
+    58: d3
+    59: d2
+    59: d4
+    60: d3
+    60: d5
+    61: d4
+    61: d6
+    62: d5
+    62: *
+    63: d6
+    63: For a total of 7 deffacts.
+    64: *
+    64: CLIPS> (undeffacts d1)
+    65: For a total of 8 deffacts.
+    65: CLIPS> (undeffacts d2)
+    66: CLIPS> (undeffacts d1)
+    66: CLIPS> (undeffacts d3)
+    67: CLIPS> (undeffacts d2)
+    67: CLIPS> (list-deffacts)
+    68: CLIPS> (undeffacts d3)
+    68: d4
+    69: CLIPS> (list-deffacts)
+    69: d5
+    70: initial-fact
+    70: d6
+    71: d4
+    71: *
+    72: d5
+    72: For a total of 4 deffacts.
+    73: d6
+    73: CLIPS> (undeffacts *)
+    74: *
+    74: CLIPS> (list-deffacts)
+    75: For a total of 5 deffacts.
+    75: d4
+    76: CLIPS> (undeffacts *)
+    76: d5
+    77: CLIPS> (list-deffacts)
+    77: d6
+    78: initial-fact
+    78: For a total of 3 deffacts.
+    79: d4
+    79: CLIPS> (undeffacts *)
+    80: d5
+    80: CLIPS> (list-deffacts)
+    81: d6
+    81: CLIPS> (clear) ; Some new 6.0 features
+    82: For a total of 4 deffacts.
+    82: CLIPS> (deffacts BOGUS::d5)
+    83: CLIPS> (undeffacts *)
+    83: [PRNTUTIL1] Unable to find defmodule 'BOGUS'.
+    84: CLIPS> (list-deffacts)
+    84: 
+    85: CLIPS> (clear) ; Some new 6.0 features
+    85: ERROR:
+    86: CLIPS> (deffacts BOGUS::d5)
+    86: (deffacts BOGUS::d5
+    87: [PRNTUTIL1] Unable to find defmodule BOGUS.
+    87: CLIPS> (defmodule FOO)
+    88: 
+    88: CLIPS> (deffacts FOO::d1)
+    89: ERROR:
+    89: CLIPS> (deffacts FOO::d2)
+    90: (deffacts BOGUS::d5
+    90: CLIPS> (defmodule BAR)
+    91: CLIPS> (defmodule FOO)
+    91: CLIPS> (deffacts BAR::d2)
+    92: CLIPS> (deffacts FOO::d1)
+    92: CLIPS> (deffacts BAR::d3)
+    93: CLIPS> (deffacts FOO::d2)
+    93: CLIPS> (list-deffacts BOGUS)
+    94: CLIPS> (defmodule BAR)
+    94: [ARGACCES2] Function 'list-deffacts' expected argument #1 to be of type 'defmodule name'.
+    95: CLIPS> (deffacts BAR::d2)
+    95: CLIPS> (list-deffacts FOO 7)
+    96: CLIPS> (deffacts BAR::d3)
+    96: [ARGACCES1] Function 'list-deffacts' expected no more than 1 argument.
+    97: CLIPS> (list-deffacts BOGUS)
+    97: CLIPS> (list-deffacts FOO)
+    98: [ARGACCES5] Function list-deffacts expected argument #1 to be of type defmodule name
+    98: d1
+    99: CLIPS> (list-deffacts FOO 7)
+    99: d2
+   100: [ARGACCES4] Function list-deffacts expected no more than 1 argument(s)
+   100: For a total of 2 deffacts.
+   101: CLIPS> (list-deffacts FOO)
+   101: CLIPS> (list-deffacts BAR)
+   102: d1
+   102: d2
+   103: d2
+   103: d3
+   105: CLIPS> (list-deffacts BAR)
+   105: CLIPS> (list-deffacts)
+   109: CLIPS> (list-deffacts)
+   109: CLIPS> (list-deffacts *)
+   110: d2
+   110: MAIN:
+   111: d3
+   111: FOO:
+   112: For a total of 2 deffacts.
+   112:    d1
+   113: CLIPS> (list-deffacts *)
+   113:    d2
+   114: MAIN:
+   114: BAR:
+   115:    initial-fact
+   115:    d2
+   116: FOO:
+   116:    d3
+   117:    d1
+   117: For a total of 4 deffacts.
+   118:    d2
+   118: CLIPS> (get-deffacts-list 7)
+   119: BAR:
+   119: [ARGACCES2] Function 'get-deffacts-list' expected argument #1 to be of type symbol.
+   120:    d2
+   120: CLIPS> (get-deffacts-list BOGUS 7)
+   121:    d3
+   121: [ARGACCES1] Function 'get-deffacts-list' expected no more than 1 argument.
+   122: For a total of 5 deffacts.
+   122: CLIPS> (get-deffacts-list)
+   123: CLIPS> (get-deffacts-list 7)
+   123: (d2 d3)
+   124: [ARGACCES5] Function get-deffacts-list expected argument #1 to be of type symbol
+   124: CLIPS> (get-deffacts-list BOGUS)
+   125: CLIPS> (get-deffacts-list BOGUS 7)
+   125: [ARGACCES2] Function 'get-deffacts-list' expected argument #1 to be of type 'defmodule name'.
+   126: [ARGACCES4] Function get-deffacts-list expected no more than 1 argument(s)
+   126: ()
+   127: CLIPS> (get-deffacts-list)
+   127: CLIPS> (get-deffacts-list FOO)
+   128: (d2 d3)
+   128: (d1 d2)
+   129: CLIPS> (get-deffacts-list BOGUS)
+   129: CLIPS> (get-deffacts-list BAR)
+   130: [ARGACCES5] Function get-deffacts-list expected argument #1 to be of type defmodule name
+   130: (d2 d3)
+   131: ()
+   131: CLIPS> (get-deffacts-list *)
+   132: CLIPS> (get-deffacts-list FOO)
+   132: (FOO::d1 FOO::d2 BAR::d2 BAR::d3)
+   133: (d1 d2)
+   133: CLIPS> (ppdeffacts d1)
+   134: CLIPS> (get-deffacts-list BAR)
+   134: [PRNTUTIL1] Unable to find deffacts 'd1'.
+   135: (d2 d3)
+   135: CLIPS> (ppdeffacts d2)
+   136: CLIPS> (get-deffacts-list *)
+   136: (deffacts BAR::d2)
+   137: (MAIN::initial-fact FOO::d1 FOO::d2 BAR::d2 BAR::d3)
+   137: CLIPS> (ppdeffacts d3)
+   138: CLIPS> (ppdeffacts d1)
+   138: (deffacts BAR::d3)
+   139: [PRNTUTIL1] Unable to find deffacts d1.
+   139: CLIPS> (ppdeffacts BOGUS::d2)
+   140: CLIPS> (ppdeffacts d2)
+   140: [PRNTUTIL1] Unable to find deffacts 'BOGUS::d2'.
+   141: (deffacts BAR::d2)
+   141: CLIPS> (ppdeffacts FOO::d1)
+   142: CLIPS> (ppdeffacts d3)
+   142: (deffacts FOO::d1)
+   143: (deffacts BAR::d3)
+   143: CLIPS> (ppdeffacts FOO::d2)
+   144: CLIPS> (ppdeffacts BOGUS::d2)
+   144: (deffacts FOO::d2)
+   145: [PRNTUTIL1] Unable to find deffacts BOGUS::d2.
+   145: CLIPS> (ppdeffacts FOO::d3)
+   146: CLIPS> (ppdeffacts FOO::d1)
+   146: [PRNTUTIL1] Unable to find deffacts 'FOO::d3'.
+   147: (deffacts FOO::d1)
+   147: CLIPS> (ppdeffacts BAR::d1)
+   148: CLIPS> (ppdeffacts FOO::d2)
+   148: [PRNTUTIL1] Unable to find deffacts 'BAR::d1'.
+   149: (deffacts FOO::d2)
+   149: CLIPS> (ppdeffacts BAR::d2)
+   150: CLIPS> (ppdeffacts FOO::d3)
+   150: (deffacts BAR::d2)
+   151: [PRNTUTIL1] Unable to find deffacts FOO::d3.
+   151: CLIPS> (ppdeffacts BAR::d3)
+   152: CLIPS> (ppdeffacts BAR::d1)
+   152: (deffacts BAR::d3)
+   153: [PRNTUTIL1] Unable to find deffacts BAR::d1.
+   153: CLIPS> (deffacts-module)
+   154: CLIPS> (ppdeffacts BAR::d2)
+   154: [ARGACCES1] Function 'deffacts-module' expected exactly 1 argument.
+   155: (deffacts BAR::d2)
+   155: CLIPS> (deffacts-module bogus)
+   156: CLIPS> (ppdeffacts BAR::d3)
+   156: [PRNTUTIL1] Unable to find deffacts 'bogus'.
+   157: (deffacts BAR::d3)
+   157: FALSE
+   158: CLIPS> (deffacts-module)
+   158: CLIPS> (deffacts-module d3 7)
+   159: [ARGACCES4] Function deffacts-module expected exactly 1 argument(s)
+   159: [ARGACCES1] Function 'deffacts-module' expected exactly 1 argument.
+   160: CLIPS> (deffacts-module bogus)
+   160: CLIPS> (deffacts-module d2)
+   161: [PRNTUTIL1] Unable to find deffacts bogus.
+   161: BAR
+   162: FALSE
+   162: CLIPS> (deffacts-module d3)
+   163: CLIPS> (deffacts-module d3 7)
+   163: BAR
+   164: [ARGACCES4] Function deffacts-module expected exactly 1 argument(s)
+   164: CLIPS> (deffacts-module FOO::d1)
+   165: CLIPS> (deffacts-module d2)
+   165: FOO
+   166: BAR
+   166: CLIPS> (deffacts-module FOO::d2)
+   167: CLIPS> (deffacts-module d3)
+   167: FOO
+   168: BAR
+   168: CLIPS> (deffacts-module BAR::d2)
+   169: CLIPS> (deffacts-module FOO::d1)
+   169: BAR
+   170: FOO
+   170: CLIPS> (deffacts-module BAR::d3)
+   171: CLIPS> (deffacts-module FOO::d2)
+   171: BAR
+   172: FOO
+   172: CLIPS> (undeffacts BOGUS::d2)
+   173: CLIPS> (deffacts-module BAR::d2)
+   173: [PRNTUTIL1] Unable to find deffacts 'BOGUS::d2'.
+   174: BAR
+   174: CLIPS> (undeffacts FOO::d2)
+   175: CLIPS> (deffacts-module BAR::d3)
+   175: CLIPS> (list-deffacts *)
+   176: BAR
+   176: MAIN:
+   177: CLIPS> (undeffacts BOGUS::d2)
+   177: FOO:
+   178: [PRNTUTIL1] Unable to find deffacts BOGUS::d2.
+   178:    d1
+   179: CLIPS> (undeffacts FOO::d2)
+   179: BAR:
+   180: CLIPS> (list-deffacts *)
+   180:    d2
+   181: MAIN:
+   181:    d3
+   182:    initial-fact
+   182: For a total of 3 deffacts.
+   183: FOO:
+   183: CLIPS> (undeffacts BAR::d2)
+   184:    d1
+   184: CLIPS> (list-deffacts *)
+   185: BAR:
+   185: MAIN:
+   186:    d2
+   186: FOO:
+   187:    d3
+   187:    d1
+   188: For a total of 4 deffacts.
+   188: BAR:
+   189: CLIPS> (undeffacts BAR::d2)
+   189:    d3
+   190: CLIPS> (list-deffacts *)
+   190: For a total of 2 deffacts.
+   191: MAIN:
+   191: CLIPS> (undeffacts *)
+   192:    initial-fact
+   192: CLIPS> (list-deffacts *)
+   193: FOO:
+   193: MAIN:
+   194:    d1
+   194: FOO:
+   195: BAR:
+   195:    d1
+   196:    d3
+   196: BAR:
+   197: For a total of 3 deffacts.
+   197: For a total of 1 deffacts.
+   198: CLIPS> (undeffacts *)
+   198: CLIPS> (dribble-off)
+   Files do not have the same # of lines

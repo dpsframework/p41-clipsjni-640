@@ -1,0 +1,2028 @@
+drtest10.bat differences are as follows:
+     8: 1697966  ;; Can be different
+     8: 1695990
+    16: [EXPRNPSR3] Missing function declaration for bogus.
+    16: [EXPRNPSR3] Missing function declaration for 'bogus'.
+    31: 1698150 ;; Reference mem-used number
+    31: 1696110
+    38: [EXPRNPSR3] Missing function declaration for bogus.
+    38: [EXPRNPSR3] Missing function declaration for 'bogus'.
+    51: 1698150 ;; Should be the same as above
+    51: 1696110
+    59: [EXPRNPSR3] Missing function declaration for bogus.
+    59: [EXPRNPSR3] Missing function declaration for 'bogus'.
+    74: 1698150 ;; Should be the same as above
+    74: 1696110
+    81: [EXPRNPSR3] Missing function declaration for bogus.
+    81: [EXPRNPSR3] Missing function declaration for 'bogus'.
+    94: 1698150 ;; Should be the same as above
+    94: 1696110
+   103: [EXPRNPSR3] Missing function declaration for bogus.
+   103: [EXPRNPSR3] Missing function declaration for 'bogus'.
+   114: 1698150 ;; Should be the same as above
+   114: 1696110
+   126: for argument #1 of the expression (+ ?x 1)
+   126: for argument #1 of the expression (+ ?x 1) found in the rule's RHS to be violated.
+   127: found in the rule's RHS to be violated.
+   127: 
+   128: 
+   128: ERROR:
+   129: ERROR:
+   129: (defrule MAIN::foo
+   130: (defrule MAIN::foo
+   130:    (FOO (value1 ?x))
+   131:    (FOO (value1 ?x))
+   131:    =>
+   132:    =>
+   132:    (+ ?x 1)
+   133:    (+ ?x 1)
+   133:    (printout t ?x))
+   134:    (printout t ?x))
+   134: CLIPS> (clear)
+   135: CLIPS> (clear)
+   135: CLIPS> (progn (release-mem) TRUE)
+   136: CLIPS> (progn (release-mem) TRUE)
+   136: TRUE
+   137: TRUE
+   137: CLIPS> (mem-used)
+   138: CLIPS> (mem-used)
+   138: 1696110
+   139: 1698150 ;; Should be the same as above
+   139: CLIPS> (clear)
+   140: CLIPS> (clear)
+   140: CLIPS> 
+   141: CLIPS> 
+   141: (deftemplate nar 
+   142: (deftemplate nar 
+   142:    (slot bc))
+   143:    (slot bc))
+   143: CLIPS> 
+   144: CLIPS> 
+   144: (defrule migrant 
+   145: (defrule migrant 
+   145:    (test (eq 1 1))
+   146:    (test (eq 1 1))
+   146:    (nar (bc ?bc))
+   147:    (nar (bc ?bc))
+   147:    =>
+   148:    =>
+   148:    (printout t ?bc crlf))
+   149:    (printout t ?bc crlf))
+   149: CLIPS> 
+   150: CLIPS> 
+   150: (deffacts stuff
+   151: (deffacts stuff
+   151:    (nar  (bc "US")))
+   152:    (nar  (bc "US")))
+   152: CLIPS> (reset)
+   153: CLIPS> (reset)
+   153: CLIPS> (run)
+   154: CLIPS> (run)
+   154: US
+   155: US
+   155: CLIPS> (clear)                   ; SourceForge Bug #12
+   156: CLIPS> (clear)                   ; SourceForge Bug #12
+   156: CLIPS> (defclass Test (is-a USER) (multislot Contents))
+   157: CLIPS> (defclass Test (is-a USER) (multislot Contents))
+   157: CLIPS> (make-instance of Test (Contents a b c d e f g h))
+   158: CLIPS> (make-instance of Test (Contents a b c d e f g h))
+   158: [gen7]
+   159: [gen508]
+   159: CLIPS> 
+   160: CLIPS> 
+   160: (defrule BrokenPatternMatchBehavior-Object
+   161: (defrule BrokenPatternMatchBehavior-Object
+   161:    (object (is-a Test) 
+   162:    (object (is-a Test) 
+   162:            (Contents $?first ?second ?third $?fourth ?fifth))
+   163:            (Contents $?first ?second ?third $?fourth ?fifth))
+   163:    =>
+   164:    =>
+   164:    (printout t ?first " " ?second " " ?third " " ?fourth " " ?fifth crlf))
+   165:    (printout t ?first " " ?second " " ?third " " ?fourth " " ?fifth crlf))
+   165: CLIPS> (run)
+   166: CLIPS> (run)
+   166: CLIPS> (clear) ;; CLIPSESG Bug
+   167: (a b c d e) f g () h
+   167: CLIPS> 
+   168: (a b c d) e f (g) h
+   168: (defclass A (is-a USER)
+   169: (a b c) d e (f g) h
+   169:   (role concrete)
+   170: (a b) c d (e f g) h
+   170:   (slot foo)
+   171: (a) b c (d e f g) h
+   171:   (slot bar))
+   172: () a b (c d e f g) h
+   172: CLIPS> (make-instance a of A)
+   173: CLIPS> (clear) ;; CLIPSESG Bug
+   173: [a]
+   174: CLIPS> 
+   174: CLIPS> (watch all)
+   175: (defclass A (is-a USER)
+   175: CLIPS> (modify-instance a (foo 0))
+   176:   (role concrete)
+   176: MSG >> direct-modify ED:1 (<Instance-a> <Pointer-C-000002B16E023940>)
+   177:   (slot foo)
+   177: HND >> direct-modify primary in class USER
+   178:   (slot bar))
+   178:        ED:1 (<Instance-a> <Pointer-C-000002B16E023940>)
+   179: CLIPS> (make-instance a of A)
+   179: ::= local slot foo in instance a <- 0
+   180: [a]
+   180: HND << direct-modify primary in class USER
+   181: CLIPS> (watch all)
+   181:        ED:1 (<Instance-a> <Pointer-C-000002B16E023940>)
+   182: CLIPS> (modify-instance a (foo 0))
+   182: MSG << direct-modify ED:1 (<Instance-a> <Pointer-C-000002B16E023940>)
+   183: MSG >> direct-modify ED:1 (<Instance-a> <Pointer-0x608000442070>) ;; Reference Pointer
+   183: TRUE
+   184: HND >> direct-modify primary in class USER
+   184: CLIPS> (unwatch all)
+   185:        ED:1 (<Instance-a> <Pointer-0x608000442070>)               ;; Should be the same as above
+   185: CLIPS> (clear) ;; CLIPSESG Bug
+   186: ::= local slot foo in instance a <- 0
+   186: CLIPS> 
+   187: HND << direct-modify primary in class USER
+   187: (defclass A
+   188:        ED:1 (<Instance-a> <Pointer-0x608000442070>)               ;; Should be the same as above
+   188:   (is-a USER)
+   189: MSG << direct-modify ED:1 (<Instance-a> <Pointer-0x608000442070>) ;; Should be the same as above
+   189:   (role concrete)
+   190: TRUE
+   190:   (slot one (type STRING))
+   191: CLIPS> (unwatch all)
+   191:   (slot two (type SYMBOL) (allowed-values TRUE FALSE) (default TRUE)))
+   192: CLIPS> (clear) ;; CLIPSESG Bug
+   192: CLIPS> 
+   193: CLIPS> 
+   193: (definstances TEST (a1 of A) (a2 of A) (a3 of A))
+   194: (defclass A
+   194: CLIPS> 
+   195:   (is-a USER)
+   195: (defrule rule1
+   196:   (role concrete)
+   196:   ?obj <- (object (is-a A) (name [a1]))
+   197:   (slot one (type STRING))
+   197:   =>
+   198:   (slot two (type SYMBOL) (allowed-values TRUE FALSE) (default TRUE)))
+   198:   (message-modify-instance ?obj (one "a") (two FALSE))
+   199: CLIPS> 
+   199:   (send ?obj print))
+   200: (definstances TEST (a1 of A) (a2 of A) (a3 of A))
+   200: CLIPS> 
+   201: CLIPS> 
+   201: (defrule rule2
+   202: (defrule rule1
+   202:   ?obj <- (object (is-a A) (name [a2]))
+   203:   ?obj <- (object (is-a A) (name [a1]))
+   203:   =>
+   204:   =>
+   204:   (message-modify-instance ?obj (two FALSE) (one "a"))
+   205:   (message-modify-instance ?obj (one "a") (two FALSE))
+   205:   (send ?obj print))
+   206:   (send ?obj print))
+   206: CLIPS> 
+   207: CLIPS> 
+   207: (defrule rule3
+   208: (defrule rule2
+   208:   ?obj <- (object (is-a A) (name [a3]))
+   209:   ?obj <- (object (is-a A) (name [a2]))
+   209:   =>
+   210:   =>
+   210:   (modify-instance ?obj (two FALSE) (one "a"))
+   211:   (message-modify-instance ?obj (two FALSE) (one "a"))
+   211:   (send ?obj print))
+   212:   (send ?obj print))
+   212: CLIPS> (reset)
+   213: CLIPS> 
+   213: CLIPS> (run)
+   214: (defrule rule3
+   214: CLIPS> (clear) ;; CLIPSESG Crash Bug
+   215:   ?obj <- (object (is-a A) (name [a3]))
+   215: CLIPS> 
+   216:   =>
+   216: (defrule bug
+   217:   (modify-instance ?obj (two FALSE) (one "a"))
+   217:    (dummy)
+   218:   (send ?obj print))
+   218:    (foo ?x)
+   219: CLIPS> (reset)
+   219:    (not (and (huge ?x)
+   220: CLIPS> (run)
+   220:              (not (and (test (eq ?x 1))
+   221: [a3] of A
+   221:                        (bar ?x)))))
+   222: (one "a")
+   222:    =>)
+   223: (two FALSE)
+   223: CLIPS> (reset)
+   224: [a2] of A
+   224: CLIPS> (assert (bar 1))
+   225: (one "a")
+   225: <Fact-1>
+   226: (two FALSE)
+   226: CLIPS> (assert (huge 1))
+   227: [a1] of A
+   227: <Fact-2>
+   228: (one "a")
+   228: CLIPS> (clear) ; SourceForge Bug
+   229: (two FALSE)
+   229: CLIPS> 
+   230: CLIPS> (clear) ;; CLIPSESG Crash Bug
+   230: (defclass FOO
+   231: CLIPS> 
+   231:    (is-a USER)
+   232: (defrule bug
+   232:    (slot _foo (default ?NONE)))
+   233:    (dummy)
+   233: CLIPS> (make-instance foo1 of FOO)
+   234:    (foo ?x)
+   234: [INSMNGR14] Override required for slot '_foo' in instance [foo1].
+   235:    (not (and (huge ?x)
+   235: [PRCCODE4] Execution halted during the actions of message-handler 'init' primary in class 'USER'
+   236:              (not (and (test (eq ?x 1))
+   236: [INSMNGR8] An error occurred during the initialization of instance [foo1].
+   237:                        (bar ?x)))))
+   237: FALSE
+   238:    =>)
+   238: CLIPS> (make-instance foo2 of FOO (_foo))
+   239: CLIPS> (reset)
+   239: [INSMNGR14] Override required for slot '_foo' in instance [foo2].
+   240: CLIPS> (assert (bar 1))
+   240: [PRCCODE4] Execution halted during the actions of message-handler 'put-_foo' primary in class 'FOO'
+   241: <Fact-1>
+   241: FALSE
+   242: CLIPS> (assert (huge 1))
+   242: CLIPS> (clear) ; SourceForge Assert/Clear Bug
+   243: <Fact-2>
+   243: CLIPS> (defrule foo (a ?x&:(progn (clear) TRUE)) =>)
+   244: CLIPS> (clear) ; SourceForge Bug
+   244: CLIPS> (assert (a 1))
+   245: CLIPS> 
+   245: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   246: (defclass FOO
+   246: <Fact-1>
+   247:    (is-a USER)
+   247: CLIPS> (send [initial-object] delete)
+   248:    (slot _foo (default ?NONE)))
+   248: [MSGPASS2] No such instance [initial-object] in function 'send'.
+   249: CLIPS> (make-instance foo1 of FOO)
+   249: FALSE
+   250: [INSMNGR14] Override required for slot _foo in instance foo1.
+   250: CLIPS> (assert (a 2))
+   251: [PRCCODE4] Execution halted during the actions of message-handler init primary in class USER
+   251: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   252: [INSMNGR8] An error occurred during the initialization of instance foo1.
+   252: <Fact-2>
+   253: FALSE
+   253: CLIPS> (clear)
+   254: CLIPS> (make-instance foo2 of FOO (_foo))
+   254: CLIPS> (assert (a (clear)))
+   255: [INSMNGR14] Override required for slot _foo in instance foo2.
+   255: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   256: [PRCCODE4] Execution halted during the actions of message-handler put-_foo primary in class FOO
+   256: <Fact-1>
+   257: FALSE
+   257: CLIPS> (clear)
+   258: CLIPS> (clear) ; SourceForge Assert/Clear Bug
+   258: CLIPS> (deffacts FOO (foo bar) (foo (clear)))
+   259: CLIPS> (defrule foo (a ?x&:(progn (clear) TRUE)) =>)
+   259: CLIPS> (reset)
+   260: CLIPS> (assert (a 1))
+   260: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   261: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   261: CLIPS> (clear)
+   262: <Fact-1>
+   262: CLIPS> (assert-string "(a (clear))")
+   263: CLIPS> (send [initial-object] delete)
+   263: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   264: TRUE
+   264: <Fact-1>
+   265: CLIPS> (assert (a 2))
+   265: CLIPS> (clear)
+   266: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   266: CLIPS> (deftemplate foo (multislot x))
+   267: <Fact-2>
+   267: CLIPS> (assert (foo (x (clear) 1)))
+   268: CLIPS> (clear)
+   268: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   269: CLIPS> (assert (a (clear)))
+   269: <Fact-1>
+   270: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   270: CLIPS> (facts)
+   271: <Fact-1>
+   271: f-1     (foo (x 1))
+   272: CLIPS> (clear)
+   272: For a total of 1 fact.
+   273: CLIPS> (deffacts FOO (foo bar) (foo (clear)))
+   273: CLIPS> (modify 1 (x (clear) 2))
+   274: CLIPS> (reset)
+   274: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   275: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   275: <Fact-1>
+   276: CLIPS> (clear)
+   276: CLIPS> (facts)
+   277: CLIPS> (assert-string "(a (clear))")
+   277: f-1     (foo (x 2))
+   278: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   278: For a total of 1 fact.
+   279: <Fact-1>
+   279: CLIPS> (clear) ; SourceForge Bug
+   280: CLIPS> (clear)
+   280: CLIPS> 
+   281: CLIPS> (deftemplate foo (multislot x))
+   281: (defmodule FOO
+   282: CLIPS> (assert (foo (x (clear) 1)))
+   282:    (export ?ALL))
+   283: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   283: CLIPS>    
+   284: <Fact-1>
+   284: (defclass FOO::DUMMY 
+   285: CLIPS> (facts)
+   285:    (is-a USER)
+   286: f-0     (initial-fact)
+   286:    (slot foo))
+   287: f-1     (foo (x 1))
+   287: CLIPS>    
+   288: For a total of 2 facts.
+   288: (defmodule BAR
+   289: CLIPS> (modify 1 (x (clear) 2))
+   289:    (import FOO ?ALL))
+   290: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   290: CLIPS> 
+   291: <Fact-2>
+   291: (defclass BAR::BAR 
+   292: CLIPS> (facts)
+   292:    (is-a USER)
+   293: f-0     (initial-fact)
+   293:    (slot bar (allowed-classes DUMMY)))
+   294: f-2     (foo (x 2))
+   294: CLIPS> (set-dynamic-constraint-checking TRUE)
+   295: For a total of 2 facts.
+   295: FALSE
+   296: CLIPS> (clear) ; SourceForge Bug
+   296: CLIPS> 
+   297: CLIPS> 
+   297: (make-instance b of BAR
+   298: (defmodule FOO
+   298:    (bar (make-instance f of DUMMY)))
+   299:    (export ?ALL))
+   299: [b]
+   300: CLIPS>    
+   300: CLIPS> (set-dynamic-constraint-checking FALSE)   
+   301: (defclass FOO::DUMMY 
+   301: TRUE
+   302:    (is-a USER)
+   302: CLIPS> (clear) ; CLIPSESG Bug
+   303:    (slot foo))
+   303: CLIPS> 
+   304: CLIPS>    
+   304: (deffunction generate (?a ?c)
+   305: (defmodule BAR
+   305:    (str-cat ?a ?c))
+   306:    (import FOO ?ALL))
+   306: CLIPS> 
+   307: CLIPS> 
+   307: (deffunction gm1 ()
+   308: (defclass BAR::BAR 
+   308:    (progn$ (?ctype (create$ aaa))
+   309:    (is-a USER)
+   309:       (generate 2 ?ctype)))
+   310:    (slot bar (allowed-classes DUMMY)))
+   310: CLIPS> 
+   311: CLIPS> (set-dynamic-constraint-checking TRUE)
+   311: (deffunction gm2 ()
+   312: FALSE
+   312:    (bind ?ctype aaa)
+   313: CLIPS> 
+   313:    (generate 2 ?ctype))
+   314: (make-instance b of BAR
+   314: CLIPS> (gm1)
+   315:    (bar (make-instance f of DUMMY)))
+   315: "2aaa"
+   316: [b]
+   316: CLIPS> (gm2)
+   317: CLIPS> (set-dynamic-constraint-checking FALSE)   
+   317: "2aaa"
+   318: TRUE
+   318: CLIPS>    
+   319: CLIPS> (clear) ; CLIPSESG Bug
+   319: (clear) ; Dangling constructs
+   321: (deffunction generate (?a ?c)
+   321: (progn
+   322:    (str-cat ?a ?c))
+   322:    (clear)
+   323: CLIPS> 
+   323:    (build "(defrule foo (count) =>)")
+   324: (deffunction gm1 ()
+   324:    (assert (count)))
+   325:    (progn$ (?ctype (create$ aaa))
+   325: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   326:       (generate 2 ?ctype)))
+   326: <Fact-1>
+   327: CLIPS> 
+   327: CLIPS> (deftemplate blah (slot x))
+   328: (deffunction gm2 ()
+   328: CLIPS> 
+   329:    (bind ?ctype aaa)
+   329: (progn 
+   330:    (generate 2 ?ctype))
+   330:    (clear)
+   331: CLIPS> (gm1)
+   331:    (assert (blah (x 1))))
+   332: "2aaa"
+   332: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   333: CLIPS> (gm2)
+   333: <Fact-2>
+   334: "2aaa"
+   334: CLIPS>    
+   335: CLIPS>    
+   335: (defclass BLAH (is-a USER) (slot x))
+   336: (clear) ; Dangling constructs
+   336: CLIPS> 
+   337: CLIPS> 
+   337: (progn
+   338: (progn
+   338:    (clear)
+   339:    (clear)
+   339:    (make-instance of BLAH (x 1)))
+   340:    (build "(defrule foo (count) =>)")
+   340: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   341:    (assert (count)))
+   341: [gen8]
+   342: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   342: CLIPS> (deffunction yabbo () (printout t "Hello, world!" crlf))
+   343: <Fact-1>
+   343: CLIPS> 
+   344: CLIPS> (deftemplate blah (slot x))
+   344: (progn (clear)
+   345: CLIPS> 
+   345:        (yabbo))
+   346: (progn 
+   346: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   347:    (clear)
+   347: Hello, world!
+   348:    (assert (blah (x 1))))
+   348: CLIPS> 
+   349: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   349: (defmethod blah ((?x STRING))
+   350: <Fact-2>
+   350:    (printout t ?x crlf))
+   351: CLIPS>    
+   351: CLIPS> 
+   352: (defclass BLAH (is-a USER) (slot x))
+   352: (progn (clear)
+   353: CLIPS> 
+   353:        (blah "Hello, world!"))
+   354: (progn
+   354: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   355:    (clear)
+   355: Hello, world!
+   356:    (make-instance of BLAH (x 1)))
+   356: CLIPS> (clear) ; Sourceforge bug
+   357: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   357: CLIPS> (funcall str-cat)
+   358: [gen509]
+   358: [ARGACCES1] Function 'str-cat' expected at least 1 argument.
+   359: CLIPS> (deffunction yabbo () (printout t "Hello, world!" crlf))
+   359: FALSE
+   361: (progn (clear)
+   361: (deffunction bar1 (?func)
+   362:        (yabbo))
+   362:    (bind $?a (create$))
+   363: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   363:    (funcall ?func (expand$ $?a)))
+   364: Hello, world!
+   364: CLIPS> (bar1 "str-cat")
+   365: CLIPS> 
+   365: [ARGACCES1] Function 'str-cat' expected at least 1 argument.
+   366: (defmethod blah ((?x STRING))
+   366: FALSE
+   367:    (printout t ?x crlf))
+   367: CLIPS> (clear)
+   369: (progn (clear)
+   369: (defclass BOO (is-a USER)
+   370:        (blah "Hello, world!"))
+   370:    (multislot foo (cardinality -1 0)))
+   371: [CONSTRCT1] Some constructs are still in use. Clear cannot continue.
+   371: 
+   372: Hello, world!
+   372: [CSTRNPSR6] Minimum 'cardinality' value must be greater than or equal to zero.
+   373: CLIPS> (clear) ; Sourceforge bug
+   373: 
+   374: CLIPS> (funcall str-cat)
+   374: ERROR:
+   375: ""
+   375: (defclass MAIN::BOO
+   376: CLIPS> 
+   376:    (is-a USER)
+   377: (deffunction bar1 (?func)
+   377:    (multislot foo
+   378:    (bind $?a (create$))
+   378:       (cardinality -1
+   379:    (funcall ?func (expand$ $?a)))
+   379: CLIPS>    
+   380: CLIPS> (bar1 "str-cat")
+   380: (defclass BOO (is-a USER)
+   381: ""
+   381:    (multislot foo (cardinality 0 -3)))
+   382: CLIPS> (clear)
+   382: 
+   383: CLIPS> 
+   383: [CSTRNPSR2] Minimum 'cardinality' value must be less than or equal to the maximum 'cardinality' value.
+   384: (defclass BOO (is-a USER)
+   384: 
+   385:    (multislot foo (cardinality -1 0)))
+   385: ERROR:
+   386: 
+   386: (defclass MAIN::BOO
+   387: [CSTRNPSR6] Minimum cardinality value must be greater than or equal to zero
+   387:    (is-a USER)
+   388: 
+   388:    (multislot foo
+   389: ERROR:
+   389:       (cardinality 0 -3)
+   390: (defclass MAIN::BOO
+   390: CLIPS> (clear) ; Continuous operation issue
+   391:    (is-a USER)
+   391: CLIPS> (defglobal ?*num* = 37)
+   392:    (multislot foo
+   392: CLIPS> (defglobal ?*val* = FALSE)
+   393:       (cardinality -1
+   393: CLIPS> 
+   394: CLIPS>    
+   394: (deffunction get-number ()
+   395: (defclass BOO (is-a USER)
+   395:    (bind ?*num* (+ ?*num* 1)))
+   396:    (multislot foo (cardinality 0 -3)))
+   396: CLIPS> 
+   397: 
+   397: (deffunction muck ()
+   398: [CSTRNPSR2] Minimum cardinality value must be less than
+   398:    (bind ?*val* (create$ (get-number) (get-number))))
+   399: or equal to the maximum cardinality value
+   399: CLIPS> 
+   400: 
+   400: (deffacts startup
+   401: ERROR:
+   401:    (muck-around))
+   402: (defclass MAIN::BOO
+   402: CLIPS>    
+   403:    (is-a USER)
+   403: (defrule muck-around
+   404:    (multislot foo
+   404:    ?f0 <- (muck-around)
+   405:       (cardinality 0 -3)
+   405:    =>
+   406: CLIPS> (clear) ; Continuous operation issue
+   406:    (retract ?f0) 
+   407: CLIPS> (defglobal ?*num* = 37)
+   407:    (muck)
+   408: CLIPS> (defglobal ?*val* = FALSE)
+   408:    (assert (muck-around)))
+   409: CLIPS> 
+   409: CLIPS> (reset)
+   410: (deffunction get-number ()
+   410: CLIPS> (run 1)
+   411:    (bind ?*num* (+ ?*num* 1)))
+   411: CLIPS> ?*val*
+   412: CLIPS> 
+   412: (38 39)
+   413: (deffunction muck ()
+   413: CLIPS> (clear) ; SourceForge Crash Bug
+   414:    (bind ?*val* (create$ (get-number) (get-number))))
+   414: CLIPS> 
+   415: CLIPS> 
+   415: (deftemplate table
+   416: (deffacts startup
+   416:    (slot table-id (type INTEGER)))
+   417:    (muck-around))
+   417: CLIPS> 
+   418: CLIPS>    
+   418: (deftemplate modeler-instance
+   419: (defrule muck-around
+   419:    (slot class (type SYMBOL) (default ?NONE))
+   420:    ?f0 <- (muck-around)
+   420:    (slot id (type SYMBOL) (default ?NONE)))
+   421:    =>
+   421: CLIPS> 
+   422:    (retract ?f0) 
+   422: (deftemplate table-modeler-binding
+   423:    (muck)
+   423:    (slot modeler (type SYMBOL))
+   424:    (assert (muck-around)))
+   424:    (slot table-id))
+   425: CLIPS> (reset)
+   425: CLIPS> 
+   426: CLIPS> (run 1)
+   426: (deffacts start
+   427: CLIPS> ?*val*
+   427:    (table (table-id 100002))
+   428: (38 39)
+   428:    (table (table-id 100003))
+   429: CLIPS> (clear) ; SourceForge Crash Bug
+   429:    (modeler-instance (class TIME-PROFILER) (id gen4)) 
+   430: CLIPS> 
+   430:    (table-modeler-binding (modeler gen4) (table-id 100003)) 
+   431: (deftemplate table
+   431:    (modeler-instance (class TIME-PROFILER) (id gen6))
+   432:    (slot table-id (type INTEGER)))
+   432:    (table-modeler-binding (modeler gen6) (table-id 100002)))
+   434: (deftemplate modeler-instance
+   434: (defrule mark   
+   435:    (slot class (type SYMBOL) (default ?NONE))
+   435:    (modeler-instance (id ?m1))
+   436:    (slot id (type SYMBOL) (default ?NONE)))
+   436:    (modeler-instance (id ?m2&~?m1))
+   437: CLIPS> 
+   437:    (not (and (table-modeler-binding (modeler ?m1) (table-id ?t1))
+   438: (deftemplate table-modeler-binding
+   438:              (table-modeler-binding (modeler ?m2) (table-id ?t2&~?t1))
+   439:    (slot modeler (type SYMBOL))
+   439:              (table (table-id ?t1))
+   440:    (slot table-id))
+   440:              (table (table-id ?t2))))
+   441: CLIPS> 
+   441:    (not (and
+   442: (deffacts start
+   442:              (table-modeler-binding (modeler ?m2) (table-id ?t3))
+   443:    (table (table-id 100002))
+   443:              (table-modeler-binding (modeler ?m1) (table-id ?t4&~?t3))
+   444:    (table (table-id 100003))
+   444:              (table (table-id ?t4))))
+   445:    (modeler-instance (class TIME-PROFILER) (id gen4)) 
+   445:    =>)
+   446:    (table-modeler-binding (modeler gen4) (table-id 100003)) 
+   446: CLIPS> 
+   447:    (modeler-instance (class TIME-PROFILER) (id gen6))
+   447: (defrule remove 
+   448:    (table-modeler-binding (modeler gen6) (table-id 100002)))
+   448:    =>)
+   449: CLIPS> 
+   449: CLIPS> (reset)
+   450: (defrule mark   
+   450: CLIPS> (matches mark)
+   451:    (modeler-instance (id ?m1))
+   451: Matches for Pattern 1
+   452:    (modeler-instance (id ?m2&~?m1))
+   452: f-3
+   453:    (not (and (table-modeler-binding (modeler ?m1) (table-id ?t1))
+   453: f-5
+   454:              (table-modeler-binding (modeler ?m2) (table-id ?t2&~?t1))
+   454: Matches for Pattern 2
+   455:              (table (table-id ?t1))
+   455: f-3
+   456:              (table (table-id ?t2))))
+   456: f-5
+   457:    (not (and
+   457: Matches for Pattern 3
+   458:              (table-modeler-binding (modeler ?m2) (table-id ?t3))
+   458: f-4
+   459:              (table-modeler-binding (modeler ?m1) (table-id ?t4&~?t3))
+   459: f-6
+   460:              (table (table-id ?t4))))
+   460: Matches for Pattern 4
+   461:    =>)
+   461: f-4
+   462: CLIPS> 
+   462: f-6
+   463: (defrule remove 
+   463: Matches for Pattern 5
+   464:    =>)
+   464: f-1
+   465: CLIPS> (reset)
+   465: f-2
+   466: CLIPS> (matches mark)
+   466: Matches for Pattern 6
+   467: Matches for Pattern 1
+   467: f-1
+   468: f-3
+   468: f-2
+   469: f-5
+   469: Matches for Pattern 7
+   470: Matches for Pattern 2
+   470: f-4
+   471: f-3
+   471: f-6
+   472: f-5
+   472: Matches for Pattern 8
+   473: Matches for Pattern 3
+   473: f-4
+   474: f-4
+   474: f-6
+   475: f-6
+   475: Matches for Pattern 9
+   476: Matches for Pattern 4
+   476: f-1
+   477: f-4
+   477: f-2
+   478: f-6
+   478: Partial matches for CEs 1 - 2
+   479: Matches for Pattern 5
+   479: f-3,f-5
+   480: f-1
+   480: f-5,f-3
+   481: f-2
+   481: Partial matches for CEs 1 - 3
+   482: Matches for Pattern 6
+   482: f-5,f-3,f-6
+   483: f-1
+   483: f-3,f-5,f-4
+   484: f-2
+   484: Partial matches for CEs 1 - 4
+   485: Matches for Pattern 7
+   485: f-5,f-3,f-6,f-4
+   486: f-4
+   486: f-3,f-5,f-4,f-6
+   487: f-6
+   487: Partial matches for CEs 1 - 5
+   488: Matches for Pattern 8
+   488: f-3,f-5,f-4,f-6,f-2
+   489: f-4
+   489: f-5,f-3,f-6,f-4,f-1
+   490: f-6
+   490: Partial matches for CEs 1 - 6
+   491: Matches for Pattern 9
+   491: f-5,f-3,f-6,f-4,f-1,f-2
+   492: f-1
+   492: f-3,f-5,f-4,f-6,f-2,f-1
+   493: f-2
+   493: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6)
+   494: Partial matches for CEs 1 - 2
+   494:  None
+   495: f-3,f-5
+   495: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7)
+   496: f-5,f-3
+   496:  None
+   497: Partial matches for CEs 1 - 3
+   497: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7) - 5 (P8)
+   498: f-5,f-3,f-6
+   498:  None
+   499: f-3,f-5,f-4
+   499: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7) - 6 (P9)
+   500: Partial matches for CEs 1 - 4
+   500:  None
+   501: f-5,f-3,f-6,f-4
+   501: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7 - P9)
+   502: f-3,f-5,f-4,f-6
+   502:  None
+   503: Partial matches for CEs 1 - 5
+   503: Activations
+   504: f-3,f-5,f-4,f-6,f-2
+   504:  None
+   505: f-5,f-3,f-6,f-4,f-1
+   505: (18 10 0)
+   506: Partial matches for CEs 1 - 6
+   506: CLIPS> (retract 2)
+   507: f-5,f-3,f-6,f-4,f-1,f-2
+   507: CLIPS> (matches mark)
+   508: f-3,f-5,f-4,f-6,f-2,f-1
+   508: Matches for Pattern 1
+   509: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6)
+   509: f-3
+   510:  None
+   510: f-5
+   511: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7)
+   511: Matches for Pattern 2
+   512:  None
+   512: f-3
+   513: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7) - 5 (P8)
+   513: f-5
+   514:  None
+   514: Matches for Pattern 3
+   515: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7) - 6 (P9)
+   515: f-4
+   516:  None
+   516: f-6
+   517: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7 - P9)
+   517: Matches for Pattern 4
+   518:  None
+   518: f-4
+   519: Activations
+   519: f-6
+   520:  None
+   520: Matches for Pattern 5
+   521: (18 10 0)
+   521: f-1
+   522: CLIPS> (retract 2)
+   522: Matches for Pattern 6
+   523: CLIPS> (matches mark)
+   523: f-1
+   524: Matches for Pattern 1
+   524: Matches for Pattern 7
+   525: f-3
+   525: f-4
+   526: f-5
+   526: f-6
+   527: Matches for Pattern 2
+   527: Matches for Pattern 8
+   528: f-3
+   528: f-4
+   529: f-5
+   529: f-6
+   530: Matches for Pattern 3
+   530: Matches for Pattern 9
+   531: f-4
+   531: f-1
+   532: f-6
+   532: Partial matches for CEs 1 - 2
+   533: Matches for Pattern 4
+   533: f-3,f-5
+   534: f-4
+   534: f-5,f-3
+   535: f-6
+   535: Partial matches for CEs 1 - 3
+   536: Matches for Pattern 5
+   536: f-5,f-3,f-6
+   537: f-1
+   537: f-3,f-5,f-4
+   538: Matches for Pattern 6
+   538: Partial matches for CEs 1 - 4
+   539: f-1
+   539: f-5,f-3,f-6,f-4
+   540: Matches for Pattern 7
+   540: f-3,f-5,f-4,f-6
+   541: f-4
+   541: Partial matches for CEs 1 - 5
+   542: f-6
+   542: f-5,f-3,f-6,f-4,f-1
+   543: Matches for Pattern 8
+   543: Partial matches for CEs 1 - 6
+   544: f-4
+   544:  None
+   545: f-6
+   545: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6)
+   546: Matches for Pattern 9
+   546: f-5,f-3,*
+   547: f-1
+   547: f-3,f-5,*
+   548: Partial matches for CEs 1 - 2
+   548: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7)
+   549: f-3,f-5
+   549: f-3,f-5,*,f-6
+   550: f-5,f-3
+   550: f-5,f-3,*,f-4
+   551: Partial matches for CEs 1 - 3
+   551: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7) - 5 (P8)
+   552: f-5,f-3,f-6
+   552: f-5,f-3,*,f-4,f-6
+   553: f-3,f-5,f-4
+   553: f-3,f-5,*,f-6,f-4
+   554: Partial matches for CEs 1 - 4
+   554: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7) - 6 (P9)
+   555: f-5,f-3,f-6,f-4
+   555: f-5,f-3,*,f-4,f-6,f-1
+   556: f-3,f-5,f-4,f-6
+   556: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7 - P9)
+   557: Partial matches for CEs 1 - 5
+   557: f-3,f-5,*,*
+   558: f-5,f-3,f-6,f-4,f-1
+   558: Activations
+   559: Partial matches for CEs 1 - 6
+   559: f-3,f-5,*,*
+   560:  None
+   560: (15 15 1)
+   561: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6)
+   561: CLIPS> (retract 3)
+   562: f-5,f-3,*
+   562: CLIPS> (matches mark)
+   563: f-3,f-5,*
+   563: Matches for Pattern 1
+   564: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7)
+   564: f-5
+   565: f-3,f-5,*,f-6
+   565: Matches for Pattern 2
+   566: f-5,f-3,*,f-4
+   566: f-5
+   567: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7) - 5 (P8)
+   567: Matches for Pattern 3
+   568: f-5,f-3,*,f-4,f-6
+   568: f-4
+   569: f-3,f-5,*,f-6,f-4
+   569: f-6
+   570: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7) - 6 (P9)
+   570: Matches for Pattern 4
+   571: f-5,f-3,*,f-4,f-6,f-1
+   571: f-4
+   572: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7 - P9)
+   572: f-6
+   573: f-3,f-5,*,*
+   573: Matches for Pattern 5
+   574: Activations
+   574: f-1
+   575: f-3,f-5,*,*
+   575: Matches for Pattern 6
+   576: (15 15 1)
+   576: f-1
+   577: CLIPS> (retract 3)
+   577: Matches for Pattern 7
+   578: CLIPS> (matches mark)
+   578: f-4
+   579: Matches for Pattern 1
+   579: f-6
+   580: f-5
+   580: Matches for Pattern 8
+   581: Matches for Pattern 2
+   581: f-4
+   582: f-5
+   582: f-6
+   583: Matches for Pattern 3
+   583: Matches for Pattern 9
+   584: f-4
+   584: f-1
+   585: f-6
+   585: Partial matches for CEs 1 - 2
+   586: Matches for Pattern 4
+   586:  None
+   587: f-4
+   587: Partial matches for CEs 1 - 3
+   588: f-6
+   588:  None
+   589: Matches for Pattern 5
+   589: Partial matches for CEs 1 - 4
+   590: f-1
+   590:  None
+   591: Matches for Pattern 6
+   591: Partial matches for CEs 1 - 5
+   592: f-1
+   592:  None
+   593: Matches for Pattern 7
+   593: Partial matches for CEs 1 - 6
+   594: f-4
+   594:  None
+   595: f-6
+   595: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6)
+   596: Matches for Pattern 8
+   596:  None
+   597: f-4
+   597: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7)
+   598: f-6
+   598:  None
+   599: Matches for Pattern 9
+   599: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7) - 5 (P8)
+   600: f-1
+   600:  None
+   601: Partial matches for CEs 1 - 2
+   601: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7) - 6 (P9)
+   603: Partial matches for CEs 1 - 3
+   603: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7 - P9)
+   605: Partial matches for CEs 1 - 4
+   605: Activations
+   607: Partial matches for CEs 1 - 5
+   607: (13 0 0)
+   608:  None
+   608: CLIPS> (clear)
+   609: Partial matches for CEs 1 - 6
+   609: CLIPS> (clear) ; DR #882
+   610:  None
+   610: CLIPS> (watch activations)
+   611: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6)
+   611: CLIPS> 
+   612:  None
+   612: (defrule if 
+   613: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7)
+   613:    (not (and (not (and (A) (B)))
+   614:  None
+   614:              (C)))
+   615: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7) - 5 (P8)
+   615:    (not (and (SAD ?v)
+   616:  None
+   616:              (SAD ?v)))
+   617: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7) - 6 (P9)
+   617:    =>)
+   618:  None
+   618: ==> Activation 0      if: *,*
+   619: Partial matches for CEs 1 (P1) - 2 (P2) , 3 (P3 - P6) , 4 (P7 - P9)
+   619: CLIPS> (assert (SAD 2))
+   620:  None
+   620: <== Activation 0      if: *,*
+   621: Activations
+   621: <Fact-1>
+   622:  None
+   622: CLIPS> (clear)
+   623: (13 0 0)
+   623: CLIPS> 
+   624: CLIPS> (clear)
+   624: (defrule if 
+   625: CLIPS> (clear) ; DR #882
+   625:     (and  
+   626: CLIPS> (watch activations)
+   626:         (exists 
+   627: CLIPS> 
+   627:             (SAD T ?tx1 T01 ?t01)
+   628: (defrule if 
+   628:             (SAD T ?tx1 T02 ?t02)
+   629:    (not (and (not (and (A) (B)))
+   629:             (or  
+   630:              (C)))
+   630:                 (test (not (not (str-index  "ABCD" ?t01)))) 
+   631:    (not (and (SAD ?v)
+   631:                 (test (not (not (str-index  "ABCD" ?t02)))))) 
+   632:              (SAD ?v)))
+   632:         (exists 
+   633:    =>)
+   633:             (SAD G ?gx1 G02N ?g02n)
+   634: ==> Activation 0      if: *,*
+   634:             (and  
+   635: CLIPS> (assert (SAD 2))
+   635:                 (test (eq (str-index  "9900" ?g02n) 1)) 
+   636: <== Activation 0      if: *,*
+   636:                 (exists 
+   637: <Fact-1>
+   637:                     (SAD T ?tx2 T08 ?t08)
+   638: CLIPS> (clear)
+   638:                     (SAD G ?gx1 G01 ?g01)
+   639: CLIPS> 
+   639:                     (or  
+   640: (defrule if 
+   640:                         (test (<= ?t08 0)) 
+   641:     (and  
+   641:                         (test (= ?t08 ?g01)))))))
+   642:         (exists 
+   642:    =>)
+   643:             (SAD T ?tx1 T01 ?t01)
+   643: CLIPS> (assert (SAD G 2 G01 2))
+   644:             (SAD T ?tx1 T02 ?t02)
+   644: <Fact-1>
+   645:             (or  
+   645: CLIPS> (assert (SAD G 2 G02N "99009000"))
+   646:                 (test (not (not (str-index  "ABCD" ?t01)))) 
+   646: <Fact-2>
+   647:                 (test (not (not (str-index  "ABCD" ?t02)))))) 
+   647: CLIPS> (assert (SAD T 3 T01 "ABCD XYX"))
+   648:         (exists 
+   648: <Fact-3>
+   649:             (SAD G ?gx1 G02N ?g02n)
+   649: CLIPS> (assert (SAD T 3 T02 "XYZ CDE"))
+   650:             (and  
+   650: <Fact-4>
+   651:                 (test (eq (str-index  "9900" ?g02n) 1)) 
+   651: CLIPS> (assert (SAD T 3 T08 2))
+   652:                 (exists 
+   652: ==> Activation 0      if: *,*
+   653:                     (SAD T ?tx2 T08 ?t08)
+   653: <Fact-5>
+   654:                     (SAD G ?gx1 G01 ?g01)
+   654: CLIPS> (unwatch activations)
+   655:                     (or  
+   655: CLIPS> (clear) ; Matches issue
+   656:                         (test (<= ?t08 0)) 
+   656: CLIPS> (defmodule MAIN (export ?ALL))
+   657:                         (test (= ?t08 ?g01)))))))
+   657: CLIPS> (deffacts start (a) (b) (c))
+   658:    =>)
+   658: CLIPS> (defmodule A (import MAIN ?ALL))
+   659: CLIPS> (assert (SAD G 2 G01 2))
+   659: CLIPS> (defrule A::foo (a) =>)
+   660: <Fact-1>
+   660: CLIPS> (defmodule B (import MAIN ?ALL))
+   661: CLIPS> (assert (SAD G 2 G02N "99009000"))
+   661: CLIPS> (defrule B::foo (b) =>)
+   662: <Fact-2>
+   662: CLIPS> (defmodule C (import MAIN ?ALL))
+   663: CLIPS> (assert (SAD T 3 T01 "ABCD XYX"))
+   663: CLIPS> (defrule C::foo (c) =>)
+   664: <Fact-3>
+   664: CLIPS> (reset)
+   665: CLIPS> (assert (SAD T 3 T02 "XYZ CDE"))
+   665: CLIPS> (matches A::foo)
+   666: <Fact-4>
+   666: Matches for Pattern 1
+   667: CLIPS> (assert (SAD T 3 T08 2))
+   667: f-1
+   668: ==> Activation 0      if: *,*
+   668: Activations
+   669: <Fact-5>
+   669: f-1
+   670: CLIPS> (unwatch activations)
+   670: (1 0 1)
+   671: CLIPS> (clear) ; Matches issue
+   671: CLIPS> (matches B::foo)
+   672: CLIPS> (defmodule MAIN (export ?ALL))
+   672: Matches for Pattern 1
+   673: CLIPS> (deffacts start (a) (b) (c))
+   673: f-2
+   674: CLIPS> (defmodule A (import MAIN ?ALL))
+   674: Activations
+   675: CLIPS> (defrule A::foo (a) =>)
+   675: f-2
+   676: CLIPS> (defmodule B (import MAIN ?ALL))
+   676: (1 0 1)
+   677: CLIPS> (defrule B::foo (b) =>)
+   677: CLIPS> (matches C::foo)
+   678: CLIPS> (defmodule C (import MAIN ?ALL))
+   678: Matches for Pattern 1
+   679: CLIPS> (defrule C::foo (c) =>)
+   679: f-3
+   680: CLIPS> (reset)
+   680: Activations
+   681: CLIPS> (matches A::foo)
+   681: f-3
+   682: Matches for Pattern 1
+   682: (1 0 1)
+   683: f-1
+   683: CLIPS> (set-current-module MAIN)
+   684: Activations
+   684: MAIN
+   685: f-1
+   685: CLIPS> (matches A::foo)
+   686: (1 0 1)
+   686: Matches for Pattern 1
+   687: CLIPS> (matches B::foo)
+   687: f-1
+   688: Matches for Pattern 1
+   688: Activations
+   689: f-2
+   689: f-1
+   690: Activations
+   690: (1 0 1)
+   691: f-2
+   691: CLIPS> (clear) ; SourceForge Bug
+   692: (1 0 1)
+   692: CLIPS> 
+   693: CLIPS> (matches C::foo)
+   693: (defrule bug 
+   694: Matches for Pattern 1
+   694:    (A)
+   695: f-3
+   695:    (B ?cot)     
+   696: Activations
+   696:    (not (and (X)  
+   697: f-3
+   697:              (C ?cot)))
+   698: (1 0 1)
+   698:    (not (and (D ?cot) 
+   699: CLIPS> (set-current-module MAIN)
+   699:              (not (Z))))
+   700: MAIN
+   700:    =>)
+   701: CLIPS> (matches A::foo)
+   701: CLIPS> (watch activations)
+   702: Matches for Pattern 1
+   702: CLIPS> (assert (B R))
+   703: f-1
+   703: <Fact-1>
+   704: Activations
+   704: CLIPS> (assert (B C))
+   705: f-1
+   705: <Fact-2>
+   706: (1 0 1)
+   706: CLIPS> (assert (D C))
+   707: CLIPS> (clear) ; SourceForge Bug
+   707: <Fact-3>
+   708: CLIPS> 
+   708: CLIPS> (assert (A)))
+   709: (defrule bug 
+   709: ==> Activation 0      bug: f-4,f-1,*,*
+   710:    (A)
+   710: <Fact-4>
+   711:    (B ?cot)     
+   711: CLIPS> (agenda)
+   712:    (not (and (X)  
+   712: 0      bug: f-4,f-1,*,*
+   713:              (C ?cot)))
+   713: For a total of 1 activation.
+   714:    (not (and (D ?cot) 
+   714: CLIPS> (unwatch activations)
+   715:              (not (Z))))
+   715: CLIPS> (clear) ; SourceForge Bug
+   716:    =>)
+   716: CLIPS> (deftemplate C (slot x))
+   717: CLIPS> (watch activations)
+   717: CLIPS> (deftemplate D (slot x))
+   718: CLIPS> (assert (B R))
+   718: CLIPS> 
+   719: <Fact-1>
+   719: (defrule if ""
+   720: CLIPS> (assert (B C))
+   720:     (not 
+   721: <Fact-2>
+   721:          (and 
+   722: CLIPS> (assert (D C))
+   722:               (not 
+   723: <Fact-3>
+   723:                    (not 
+   724: CLIPS> (assert (A)))
+   724:                         (and (not (and (W) 
+   725: ==> Activation 0      bug: f-4,f-1,*,*
+   725:                                        (X)))
+   726: <Fact-4>
+   726:                              (not (and (Y) 
+   727: CLIPS> (agenda)
+   727:                                        (Z)))
+   728: 0      bug: f-4,f-1,*,*
+   728:                         )
+   729: For a total of 1 activation.
+   729:                    )  
+   730: CLIPS> (unwatch activations)
+   730:               )
+   731: CLIPS> (clear) ; SourceForge Bug
+   731:               (C (x ?ix_t))
+   732: CLIPS> (deftemplate C (slot x))
+   732:               (D (x ?ix_t))
+   733: CLIPS> (deftemplate D (slot x))
+   733:          ) 
+   734: CLIPS> 
+   734:     )
+   735: (defrule if ""
+   735:    =>)
+   736:     (not 
+   736: CLIPS> (assert (C (x 1)))
+   737:          (and 
+   737: <Fact-1>
+   738:               (not 
+   738: CLIPS> (clear) ; Load Crash
+   739:                    (not 
+   739: CLIPS> 
+   740:                         (and (not (and (W) 
+   740: (defrule bug
+   741:                                        (X)))
+   741:    (X ?a)
+   742:                              (not (and (Y) 
+   742:    (Y ?b)
+   743:                                        (Z)))
+   743:    (not (and (not (and (A ?a)      
+   744:                         )
+   744:                        (B ?b)))    
+   745:                    )  
+   745:              (test (eq ?a ?b))))  
+   746:               )
+   746:    (Z)
+   747:               (C (x ?ix_t))
+   747:    =>)
+   748:               (D (x ?ix_t))
+   748: CLIPS> (assert (Z)) 
+   749:          ) 
+   749: <Fact-1>
+   750:     )
+   750: CLIPS> (agenda)
+   751:    =>)
+   751: CLIPS> (assert (X 1))
+   752: CLIPS> (assert (C (x 1)))
+   752: <Fact-2>
+   753: <Fact-1>
+   753: CLIPS> (agenda)
+   754: CLIPS> (clear) ; Load Crash
+   754: CLIPS> (assert (Y 2))
+   755: CLIPS> 
+   755: <Fact-3>
+   756: (defrule bug
+   756: CLIPS> (agenda)
+   757:    (X ?a)
+   757: 0      bug: f-2,f-3,*,f-1
+   758:    (Y ?b)
+   758: For a total of 1 activation.
+   759:    (not (and (not (and (A ?a)      
+   759: CLIPS> (assert (X 2))
+   760:                        (B ?b)))    
+   760: <Fact-4>
+   761:              (test (eq ?a ?b))))  
+   761: CLIPS> (agenda)
+   762:    (Z)
+   762: 0      bug: f-2,f-3,*,f-1
+   763:    =>)
+   763: For a total of 1 activation.
+   764: CLIPS> (assert (Z)) 
+   764: CLIPS> (assert (Y 1))
+   765: <Fact-1>
+   765: <Fact-5>
+   767: CLIPS> (assert (X 1))
+   767: 0      bug: f-4,f-5,*,f-1
+   768: <Fact-2>
+   768: 0      bug: f-2,f-3,*,f-1
+   769: CLIPS> (agenda)
+   769: For a total of 2 activations.
+   770: CLIPS> (assert (Y 2))
+   770: CLIPS> (assert (A 1))
+   771: <Fact-3>
+   771: <Fact-6>
+   773: 0      bug: f-2,f-3,*,f-1
+   773: 0      bug: f-4,f-5,*,f-1
+   774: For a total of 1 activation.
+   774: 0      bug: f-2,f-3,*,f-1
+   775: CLIPS> (assert (X 2))
+   775: For a total of 2 activations.
+   776: <Fact-4>
+   776: CLIPS> (assert (B 2))
+   777: CLIPS> (agenda)
+   777: <Fact-7>
+   778: 0      bug: f-2,f-3,*,f-1
+   778: CLIPS> (agenda)
+   779: For a total of 1 activation.
+   779: 0      bug: f-4,f-5,*,f-1
+   780: CLIPS> (assert (Y 1))
+   780: 0      bug: f-2,f-3,*,f-1
+   781: <Fact-5>
+   781: For a total of 2 activations.
+   782: CLIPS> (agenda)
+   782: CLIPS> (assert (A 2))
+   783: 0      bug: f-4,f-5,*,f-1
+   783: <Fact-8>
+   784: 0      bug: f-2,f-3,*,f-1
+   784: CLIPS> (agenda)
+   785: For a total of 2 activations.
+   785: 0      bug: f-4,f-3,*,f-1
+   786: CLIPS> (assert (A 1))
+   786: 0      bug: f-4,f-5,*,f-1
+   787: <Fact-6>
+   787: 0      bug: f-2,f-3,*,f-1
+   788: CLIPS> (agenda)
+   788: For a total of 3 activations.
+   789: 0      bug: f-4,f-5,*,f-1
+   789: CLIPS> (assert (B 1))
+   790: 0      bug: f-2,f-3,*,f-1
+   790: <Fact-9>
+   791: For a total of 2 activations.
+   791: CLIPS> (agenda)
+   792: CLIPS> (assert (B 2))
+   792: 0      bug: f-2,f-5,*,f-1
+   793: <Fact-7>
+   793: 0      bug: f-4,f-3,*,f-1
+   794: CLIPS> (agenda)
+   794: 0      bug: f-4,f-5,*,f-1
+   795: 0      bug: f-4,f-5,*,f-1
+   795: 0      bug: f-2,f-3,*,f-1
+   796: 0      bug: f-2,f-3,*,f-1
+   796: For a total of 4 activations.
+   797: For a total of 2 activations.
+   797: CLIPS> (clear) ; Load Crash
+   798: CLIPS> (assert (A 2))
+   798: CLIPS> 
+   799: <Fact-8>
+   799: (defrule bug
+   800: CLIPS> (agenda)
+   800:     (Surname ?surname_1)
+   801: 0      bug: f-4,f-3,*,f-1
+   801:     (PersonSurname ?PersonSurname_1)
+   802: 0      bug: f-4,f-5,*,f-1
+   802:     (exists 
+   803: 0      bug: f-2,f-3,*,f-1
+   803:         (or  
+   804: For a total of 3 activations.
+   804:             (and  
+   805: CLIPS> (assert (B 1))
+   805:                 (exists 
+   806: <Fact-9>
+   806:                     (Surname ?Surname_2)
+   807: CLIPS> (agenda)
+   807:                     (LVAR two ?two)
+   808: 0      bug: f-2,f-5,*,f-1
+   808:                     (test (eq ?Surname_2 ?two))) 
+   809: 0      bug: f-4,f-3,*,f-1
+   809:                 (test (eq ?surname_1 ?PersonSurname_1))) 
+   810: 0      bug: f-4,f-5,*,f-1
+   810:             (and  
+   811: 0      bug: f-2,f-3,*,f-1
+   811:                 (exists 
+   812: For a total of 4 activations.
+   812:                     (Surname ?Surname_3)
+   813: CLIPS> (clear) ; Load Crash
+   813:                     (LVAR three ?three)
+   814: CLIPS> 
+   814:                     (test (eq ?Surname_3 ?three))))))
+   815: (defrule bug
+   815: =>)
+   816:     (Surname ?surname_1)
+   816: CLIPS> (clear) ; DR0882
+   817:     (PersonSurname ?PersonSurname_1)
+   817: CLIPS> 
+   818:     (exists 
+   818: (defrule foo
+   819:         (or  
+   819:    (logical (test (> 4 3))
+   820:             (and  
+   820:             (a))
+   821:                 (exists 
+   821:    =>
+   822:                     (Surname ?Surname_2)
+   822:    (assert (b)))
+   823:                     (LVAR two ?two)
+   823: CLIPS> (watch facts)
+   824:                     (test (eq ?Surname_2 ?two))) 
+   824: CLIPS> (assert (a))
+   825:                 (test (eq ?surname_1 ?PersonSurname_1))) 
+   825: ==> f-1     (a)
+   826:             (and  
+   826: <Fact-1>
+   827:                 (exists 
+   827: CLIPS> (run)
+   828:                     (Surname ?Surname_3)
+   828: ==> f-2     (b)
+   829:                     (LVAR three ?three)
+   829: CLIPS> (retract 1)
+   830:                     (test (eq ?Surname_3 ?three))))))
+   830: <== f-1     (a)
+   831: =>)
+   831: <== f-2     (b)
+   832: CLIPS> (clear) ; DR0882
+   832: CLIPS> (unwatch facts) 
+   833: CLIPS> 
+   833: CLIPS> (clear) ; CLIPSESG Bug
+   834: (defrule foo
+   834: CLIPS> (watch activations)
+   835:    (logical (test (> 4 3))
+   835: CLIPS> (defclass A (is-a USER))
+   836:             (a))
+   836: CLIPS> 
+   837:    =>
+   837: (defrule crash
+   838:    (assert (b)))
+   838:   (not (object (is-a A)))
+   839: CLIPS> (watch facts)
+   839:   (object (is-a A))
+   840: CLIPS> (assert (a))
+   840:   =>)
+   841: ==> f-1     (a)
+   841: CLIPS> (make-instance test1 of A)
+   842: <Fact-1>
+   842: [test1]
+   843: CLIPS> (run)
+   843: CLIPS> (unmake-instance [test1])
+   844: ==> f-2     (b)
+   844: TRUE
+   845: CLIPS> (retract 1)
+   845: CLIPS> (run)
+   846: <== f-1     (a)
+   846: CLIPS> (clear)
+   847: <== f-2     (b)
+   847: CLIPS> (deftemplate A)
+   848: CLIPS> (unwatch facts) 
+   848: CLIPS> 
+   849: CLIPS> (clear) ; CLIPSESG Bug
+   849: (defrule crash
+   850: CLIPS> (watch activations)
+   850:   (not (A))
+   851: CLIPS> (defclass A (is-a USER))
+   851:   (A)
+   852: CLIPS> 
+   852:   =>)
+   853: (defrule crash
+   853: CLIPS> (assert (A))
+   854:   (not (object (is-a A)))
+   854: ==> Activation 0      crash: *,f-1
+   855:   (object (is-a A))
+   855: <== Activation 0      crash: *,f-1
+   856:   =>)
+   856: <Fact-1>
+   857: CLIPS> (make-instance test1 of A)
+   857: CLIPS> (retract 1)
+   858: ==> Activation 0      crash: *,[test1]
+   858: CLIPS> (unwatch activations)
+   859: <== Activation 0      crash: *,[test1]
+   859: CLIPS> (clear) ; CLIPSESG Bug
+   860: [test1]
+   860: CLIPS> (watch activations)
+   861: CLIPS> (unmake-instance [test1])
+   861: CLIPS> 
+   862: TRUE
+   862: (defclass A
+   863: CLIPS> (run)
+   863:   (is-a USER)
+   864: CLIPS> (clear)
+   864:   (slot a))
+   865: CLIPS> (deftemplate A)
+   865: CLIPS> 
+   866: CLIPS> 
+   866: (defrule test
+   867: (defrule crash
+   867:   (not (object (is-a A) (a 1)))
+   868:   (not (A))
+   868:   (object (is-a A) (a 1))
+   869:   (A)
+   869:   =>)
+   870:   =>)
+   870: CLIPS> (make-instance [a1] of A (a 1))
+   871: CLIPS> (assert (A))
+   871: [a1]
+   872: ==> Activation 0      crash: *,f-1
+   872: CLIPS> (modify-instance [a1] (a 2))
+   873: <== Activation 0      crash: *,f-1
+   873: TRUE
+   874: <Fact-1>
+   874: CLIPS> (agenda)
+   875: CLIPS> (retract 1)
+   875: CLIPS> (unwatch activations)
+   876: CLIPS> (unwatch activations)
+   876: CLIPS> (clear) ; SourceForge Ticket #14
+   877: CLIPS> (clear) ; CLIPSESG Bug
+   877: CLIPS> (watch facts)
+   878: CLIPS> (watch activations)
+   878: CLIPS> (deftemplate foo (multislot x))
+   879: CLIPS> 
+   879: CLIPS> (deffacts start (foo (x 1 2)) (foo (x a)))
+   880: (defclass A
+   880: CLIPS> (reset)
+   881:   (is-a USER)
+   881: ==> f-1     (foo (x 1 2))
+   882:   (slot a))
+   882: ==> f-2     (foo (x a))
+   884: (defrule test
+   884: (do-for-fact ((?f foo)) TRUE
+   885:   (not (object (is-a A) (a 1)))
+   885:   (retract ?f)
+   886:   (object (is-a A) (a 1))
+   886:   (bind ?x ?f:x)
+   887:   =>)
+   887:   (assert (foo (x $?x 3))))
+   888: CLIPS> (make-instance [a1] of A (a 1))
+   888: <== f-1     (foo (x 1 2))
+   889: ==> Activation 0      test: *,[a1]
+   889: [PRNTUTIL12] The variable/slot reference ?f:x cannot be resolved because the referenced fact f-1 has been retracted.
+   890: <== Activation 0      test: *,[a1]
+   890: FALSE
+   891: [a1]
+   891: CLIPS> (reset)
+   892: CLIPS> (modify-instance [a1] (a 2))
+   892: <== f-2     (foo (x a))
+   893: TRUE
+   893: ==> f-1     (foo (x 1 2))
+   894: CLIPS> (agenda)
+   894: ==> f-2     (foo (x a))
+   895: CLIPS> (unwatch activations)
+   895: CLIPS> (do-for-all-facts ((?f foo)) TRUE
+   896: CLIPS> (clear) ; SourceForge Ticket #14
+   896:   (retract ?f)
+   897: CLIPS> (watch facts)
+   897:   (printout t ?f " " ?f:x crlf))
+   898: CLIPS> (deftemplate foo (multislot x))
+   898: <== f-1     (foo (x 1 2))
+   899: CLIPS> (deffacts start (foo (x 1 2)) (foo (x a)))
+   899: <Fact-1> [PRNTUTIL12] The variable/slot reference ?f:x cannot be resolved because the referenced fact f-1 has been retracted.
+   900: CLIPS> (reset)
+   900: FALSE
+   901: <== f-0     (initial-fact)
+   901: CLIPS>   
+   902: ==> f-0     (initial-fact)
+   902: (unwatch facts)
+   903: ==> f-1     (foo (x 1 2))
+   903: CLIPS> (clear)  
+   904: ==> f-2     (foo (x a))
+   904: CLIPS> (watch instances)
+   905: CLIPS> 
+   905: CLIPS> (watch slots)
+   906: (do-for-fact ((?f foo)) TRUE
+   906: CLIPS> (defclass FOO (is-a USER) (multislot x))
+   907:   (retract ?f)
+   907: CLIPS> 
+   908:   (bind ?x ?f:x)
+   908: (definstances start
+   909:   (assert (foo (x $?x 3))))
+   909:    ([f1] of FOO (x 1 2))
+   910: <== f-1     (foo (x 1 2))
+   910:    ([f2] of FOO (x a)))
+   911: [PRNTUTIL12] The variable/slot reference ?f:x cannot be resolved because the referenced fact f-1 has been retracted.
+   911: CLIPS> (reset)
+   912: FALSE
+   912: ==> instance [f1] of FOO
+   913: CLIPS> (reset)
+   913: ::= local slot x in instance f1 <- (1 2)
+   914: <== f-0     (initial-fact)
+   914: ==> instance [f2] of FOO
+   915: <== f-2     (foo (x a))
+   915: ::= local slot x in instance f2 <- (a)
+   916: ==> f-0     (initial-fact)
+   916: CLIPS> 
+   917: ==> f-1     (foo (x 1 2))
+   917: (do-for-instance ((?f FOO)) TRUE
+   918: ==> f-2     (foo (x a))
+   918:   (send ?f delete)
+   919: CLIPS> (do-for-all-facts ((?f foo)) TRUE
+   919:   (bind ?x ?f:x)
+   920:   (retract ?f)
+   920:   (make-instance [f3] of FOO (x $?x 3)))
+   921:   (printout t ?f " " ?f:x crlf))
+   921: <== instance [f1] of FOO
+   922: <== f-1     (foo (x 1 2))
+   922: [PRNTUTIL15] The variable/slot reference ?f:x cannot be resolved because the referenced instance [f1] has been deleted.
+   923: <Fact-1> [PRNTUTIL12] The variable/slot reference ?f:x cannot be resolved because the referenced fact f-1 has been retracted.
+   923: FALSE
+   924: FALSE
+   924: CLIPS> (reset)
+   925: CLIPS>   
+   925: <== instance [f2] of FOO
+   926: (unwatch facts)
+   926: ==> instance [f1] of FOO
+   927: CLIPS> (clear)  
+   927: ::= local slot x in instance f1 <- (1 2)
+   928: CLIPS> (watch instances)
+   928: ==> instance [f2] of FOO
+   929: CLIPS> (watch slots)
+   929: ::= local slot x in instance f2 <- (a)
+   930: CLIPS> (defclass FOO (is-a USER) (multislot x))
+   930: CLIPS> 
+   931: CLIPS> 
+   931: (do-for-all-instances ((?f FOO)) TRUE
+   932: (definstances start
+   932:   (send ?f delete)
+   933:    ([f1] of FOO (x 1 2))
+   933:   (printout t ?f " " ?f:x crlf))
+   934:    ([f2] of FOO (x a)))
+   934: <== instance [f1] of FOO
+   935: CLIPS> (reset)
+   935: [f1] [PRNTUTIL15] The variable/slot reference ?f:x cannot be resolved because the referenced instance [f1] has been deleted.
+   936: <== instance [initial-object] of INITIAL-OBJECT
+   936: FALSE
+   937: ==> instance [initial-object] of INITIAL-OBJECT
+   937: CLIPS> (unwatch all)
+   938: ==> instance [f1] of FOO
+   938: CLIPS> (clear) ; Indentation depth overflow
+   939: ::= local slot x in instance f1 <- (1 2)
+   939: CLIPS> (defrule foo
+   940: ==> instance [f2] of FOO
+   940:    =>
+   941: ::= local slot x in instance f2 <- (a)
+   941:    (if (eq 3 3)
+   942: CLIPS> 
+   942:       then
+   943: (do-for-instance ((?f FOO)) TRUE
+   943:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   944:   (send ?f delete)
+   944:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   945:   (bind ?x ?f:x)
+   945:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   946:   (make-instance [f3] of FOO (x $?x 3)))
+   946:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   947: <== instance [f1] of FOO
+   947:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   948: [PRNTUTIL15] The variable/slot reference ?f:x cannot be resolved because the referenced instance [f1] has been deleted.
+   948:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   949: FALSE
+   949:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   950: CLIPS> (reset)
+   950:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   951: <== instance [initial-object] of INITIAL-OBJECT
+   951:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   952: <== instance [f2] of FOO
+   952:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   953: ==> instance [initial-object] of INITIAL-OBJECT
+   953:       (if (eq 3 3) then 3)))))))))))))))))))))))))))))))))))))))))))
+   954: ==> instance [f1] of FOO
+   954: CLIPS> (clear) ; Crash bug
+   955: ::= local slot x in instance f1 <- (1 2)
+   955: CLIPS> 
+   956: ==> instance [f2] of FOO
+   956: (deftemplate foobar
+   957: ::= local slot x in instance f2 <- (a)
+   957:   (slot foo)
+   958: CLIPS> 
+   958:   (multislot bar))
+   959: (do-for-all-instances ((?f FOO)) TRUE
+   959: CLIPS> (assert (foobar)))
+   960:   (send ?f delete)
+   960: <Fact-1>
+   961:   (printout t ?f " " ?f:x crlf))
+   961: CLIPS> (modify 1 (dummy TRUE))
+   962: <== instance [f1] of FOO
+   962: 
+   963: [f1] [PRNTUTIL15] The variable/slot reference ?f:x cannot be resolved because the referenced instance [f1] has been deleted.
+   963: [TMPLTDEF1] Invalid slot 'dummy' not defined in corresponding deftemplate 'foobar'.
+   965: CLIPS> (unwatch all)
+   965: CLIPS> (clear) ; Logical CE Issue
+   966: CLIPS> (clear) ; Indentation depth overflow
+   966: CLIPS> (deftemplate A (slot val))
+   967: CLIPS> (defrule foo
+   967: CLIPS> (deftemplate B)
+   968:    =>
+   968: CLIPS> (deftemplate C)
+   969:    (if (eq 3 3)
+   969: CLIPS> (deftemplate D)
+   970:       then
+   970: CLIPS> 
+   971:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   971: (deffacts infinite_setup
+   972:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   972:   (A (val 1)))
+   973:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   973: CLIPS> 
+   974:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   974: (defrule infinite_rule
+   975:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   975:   (logical
+   976:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   976:     (A (val ?val))
+   977:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   977:     (not (and (B) (C)))
+   978:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   978:     (test (eq ?val 1)))
+   979:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   979:   (not (D))
+   980:       (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then (if (eq 3 3) then
+   980:   =>
+   981:       (if (eq 3 3) then 3)))))))))))))))))))))))))))))))))))))))))))
+   981:   (assert (D)))
+   982: CLIPS> (clear) ; Crash bug
+   982: CLIPS> 
+   983: CLIPS> 
+   983: (reset)
+   984: (deftemplate foobar
+   984: CLIPS> (watch rules)
+   985:   (slot foo)
+   985: CLIPS> (watch facts)
+   986:   (multislot bar))
+   986: CLIPS> (watch activations)
+   987: CLIPS> (assert (foobar)))
+   987: CLIPS> (run 1)
+   988: <Fact-1>
+   988: FIRE    1 infinite_rule: f-1,*,*
+   989: CLIPS> (modify 1 (dummy TRUE))
+   989: ==> f-2     (D)
+   990: 
+   990: CLIPS> (unwatch all)
+   991: [TMPLTDEF1] Invalid slot dummy not defined in corresponding deftemplate foobar.
+   991: CLIPS> (clear)
+   992: FALSE
+   992: CLIPS> (deftemplate A (slot val))
+   993: CLIPS> (clear) ; Logical CE Issue
+   993: CLIPS> (deftemplate B)
+   994: CLIPS> (deftemplate A (slot val))
+   994: CLIPS> (deftemplate C)
+   995: CLIPS> (deftemplate B)
+   995: CLIPS> (deftemplate D)
+   996: CLIPS> (deftemplate C)
+   996: CLIPS> 
+   997: CLIPS> (deftemplate D)
+   997: (deffacts infinite_setup
+   998: CLIPS> 
+   998:   (A (val 1)))
+   999: (deffacts infinite_setup
+   999: CLIPS> 
+   1000:   (A (val 1)))
+   1000: (defrule infinite_rule
+   1001: CLIPS> 
+   1001:   (logical
+   1002: (defrule infinite_rule
+   1002:     (A (val ?val))
+   1003:   (logical
+   1003:     (not (and (B) (C)))
+   1004:     (A (val ?val))
+   1004:     (test (eq ?val 1))
+   1005:     (not (and (B) (C)))
+   1005:     (not (D)))
+   1006:     (test (eq ?val 1)))
+   1006:   =>
+   1007:   (not (D))
+   1007:   (assert (D)))
+   1008:   =>
+   1008: CLIPS> 
+   1009:   (assert (D)))
+   1009: (reset)
+   1010: CLIPS> 
+   1010: CLIPS> (watch rules)
+   1011: (reset)
+   1011: CLIPS> (watch facts)
+   1012: CLIPS> (watch rules)
+   1012: CLIPS> (watch activations)
+   1013: CLIPS> (watch facts)
+   1013: CLIPS> (run 1)
+   1014: CLIPS> (watch activations)
+   1014: FIRE    1 infinite_rule: f-1,*,*
+   1015: CLIPS> (run 1)
+   1015: ==> f-2     (D)
+   1016: FIRE    1 infinite_rule: f-1,*,*
+   1016: <== f-2     (D)
+   1017: ==> f-2     (D)
+   1017: ==> Activation 0      infinite_rule: f-1,*,*
+   1019: CLIPS> (clear)
+   1019: CLIPS> (clear) ; SourceForge Ticket #49
+   1020: CLIPS> (deftemplate A (slot val))
+   1020: CLIPS> (::)
+   1021: CLIPS> (deftemplate B)
+   1021: 
+   1022: CLIPS> (deftemplate C)
+   1022: [EXPRNPSR7] Missing module name for '::'.
+   1023: CLIPS> (deftemplate D)
+   1023: CLIPS> (clear) ; SourceForge Ticket #54 Extraneous Module Specifier
+   1024: CLIPS> 
+   1024: CLIPS> (defmodule EXTRANEOUS::COMPUTE)
+   1025: (deffacts infinite_setup
+   1025: 
+   1026:   (A (val 1)))
+   1026: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1027: CLIPS> 
+   1027: 
+   1028: (defrule infinite_rule
+   1028: ERROR:
+   1029:   (logical
+   1029: (defmodule EXTRANEOUS::COMPUTE
+   1030:     (A (val ?val))
+   1030: CLIPS> (deftemplate MAIN::EXTRANEOUS::point)
+   1031:     (not (and (B) (C)))
+   1031: 
+   1032:     (test (eq ?val 1))
+   1032: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1033:     (not (D)))
+   1033: 
+   1034:   =>
+   1034: ERROR:
+   1035:   (assert (D)))
+   1035: (deftemplate MAIN::EXTRANEOUS::point
+   1036: CLIPS> 
+   1036: CLIPS> (deffacts MAIN::EXTRANEOUS::points)
+   1037: (reset)
+   1037: 
+   1038: CLIPS> (watch rules)
+   1038: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1039: CLIPS> (watch facts)
+   1039: 
+   1040: CLIPS> (watch activations)
+   1040: ERROR:
+   1041: CLIPS> (run 1)
+   1041: (deffacts MAIN::EXTRANEOUS::points
+   1042: FIRE    1 infinite_rule: f-1,*,*
+   1042: CLIPS> (defrule MAIN::EXTRANEOUS::find-point =>)
+   1043: ==> f-2     (D)
+   1043: 
+   1044: <== f-2     (D)
+   1044: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1045: ==> Activation 0      infinite_rule: f-1,*,*
+   1045: 
+   1046: CLIPS> (unwatch all)
+   1046: ERROR:
+   1047: CLIPS> (clear) ; SourceForge Ticket #49
+   1047: (defrule MAIN::EXTRANEOUS::find-point
+   1048: CLIPS> (::)
+   1048: CLIPS> (defclass MAIN::EXTRANEOUS::POINT (is-a USER))
+   1050: [EXPRNPSR8] Missing module name for '::'.
+   1050: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1051: CLIPS> (clear) ; SourceForge Ticket #54 Extraneous Module Specifier
+   1051: 
+   1052: CLIPS> (defmodule EXTRANEOUS::COMPUTE)
+   1052: ERROR:
+   1053: 
+   1053: (defclass MAIN::EXTRANEOUS::POINT
+   1054: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1054: CLIPS> (defclass MAIN::POINT (is-a USER))
+   1055: 
+   1055: CLIPS> (defmessage-handler MAIN::EXTRANEOUS::POINT add-points ())
+   1056: ERROR:
+   1056: 
+   1057: (defmodule EXTRANEOUS::COMPUTE
+   1057: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1058: CLIPS> (deftemplate MAIN::EXTRANEOUS::point)
+   1058: 
+   1059: 
+   1059: ERROR:
+   1060: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1060: (defmessage-handler MAIN::EXTRANEOUS::POINT
+   1061: 
+   1061: CLIPS> (definstances MAIN::EXTRANEOUS::points)
+   1062: ERROR:
+   1062: 
+   1063: (deftemplate MAIN::EXTRANEOUS::point
+   1063: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1064: CLIPS> (deffacts MAIN::EXTRANEOUS::points)
+   1064: 
+   1065: 
+   1065: ERROR:
+   1066: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1066: (definstances MAIN::EXTRANEOUS::points
+   1067: 
+   1067: CLIPS> (deffunction MAIN::EXTRANEOUS::add-point (?x ?y))
+   1068: ERROR:
+   1068: 
+   1069: (deffacts MAIN::EXTRANEOUS::points
+   1069: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1070: CLIPS> (defrule MAIN::EXTRANEOUS::find-point =>)
+   1070: 
+   1071: 
+   1071: ERROR:
+   1072: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1072: (deffunction MAIN::EXTRANEOUS::add-point
+   1073: 
+   1073: CLIPS> (defgeneric MAIN::EXTRANEOUS::add-point)
+   1074: ERROR:
+   1074: 
+   1075: (defrule MAIN::EXTRANEOUS::find-point
+   1075: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1076: CLIPS> (defclass MAIN::EXTRANEOUS::POINT (is-a USER))
+   1076: 
+   1077: 
+   1077: ERROR:
+   1078: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1078: (defgeneric MAIN::EXTRANEOUS::add-point
+   1079: 
+   1079: CLIPS> (defmethod MAIN::EXTRANEOUS::add-point ((?x FLOAT) (?y FLOAT)))
+   1080: ERROR:
+   1080: 
+   1081: (defclass MAIN::EXTRANEOUS::POINT
+   1081: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1082: CLIPS> (defclass MAIN::POINT (is-a USER))
+   1082: 
+   1083: CLIPS> (defmessage-handler MAIN::EXTRANEOUS::POINT add-points ())
+   1083: ERROR:
+   1084: 
+   1084: (defmethod MAIN::EXTRANEOUS::add-point
+   1085: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1085: CLIPS> (clear) ; bsave-instances external-address issue
+   1086: 
+   1086: CLIPS> 
+   1087: ERROR:
+   1087: (defclass EXPERIMENT 
+   1088: (defmessage-handler MAIN::EXTRANEOUS::POINT
+   1088:    (is-a USER)
+   1089: CLIPS> (definstances MAIN::EXTRANEOUS::points)
+   1089:    (slot fa (type FACT-ADDRESS))
+   1090: 
+   1090:    (slot ia (type INSTANCE-ADDRESS))
+   1091: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1091:    (slot ea (type EXTERNAL-ADDRESS)))
+   1092: 
+   1092: CLIPS>    
+   1093: ERROR:
+   1093: (make-instance e1 of EXPERIMENT
+   1094: (definstances MAIN::EXTRANEOUS::points
+   1094:    (fa (assert (b)))
+   1095: CLIPS> (deffunction MAIN::EXTRANEOUS::add-point (?x ?y))
+   1095:    (ia (instance-address(make-instance e2 of EXPERIMENT))))
+   1096: 
+   1096: [e1]
+   1097: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1097: CLIPS> (bsave-instances "Temp//experiment.bins")
+   1098: 
+   1098: 2
+   1099: ERROR:
+   1099: CLIPS> (reset)
+   1100: (deffunction MAIN::EXTRANEOUS::add-point
+   1100: CLIPS> (bload-instances "Temp//experiment.bins")
+   1101: CLIPS> (defgeneric MAIN::EXTRANEOUS::add-point)
+   1101: 2
+   1102: 
+   1102: CLIPS> (send [e1] print)
+   1103: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1103: [e1] of EXPERIMENT
+   1104: 
+   1104: (fa <Dummy Fact>)
+   1105: ERROR:
+   1105: (ia [e2])
+   1106: (defgeneric MAIN::EXTRANEOUS::add-point
+   1106: (ea <Pointer-C-0000000000000000>)
+   1107: CLIPS> (defmethod MAIN::EXTRANEOUS::add-point ((?x FLOAT) (?y FLOAT)))
+   1107: CLIPS> (send [e2] print)
+   1108: 
+   1108: [e2] of EXPERIMENT
+   1109: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for module specifier.
+   1109: (fa <Dummy Fact>)
+   1110: 
+   1110: (ia [Dummy Instance])
+   1111: ERROR:
+   1111: (ea <Pointer-C-0000000000000000>)
+   1112: (defmethod MAIN::EXTRANEOUS::add-point
+   1112: CLIPS> (clear) ; Local variables cannot be accessed bug
+   1113: CLIPS> (clear) ; bsave-instances external-address issue
+   1113: CLIPS> 
+   1114: CLIPS> 
+   1114: (deftemplate hello
+   1115: (defclass EXPERIMENT 
+   1115:   (slot self (type FACT-ADDRESS)))
+   1116:    (is-a USER)
+   1116: CLIPS>   
+   1117:    (slot fa (type FACT-ADDRESS))
+   1117: (deffacts hellos
+   1118:    (slot ia (type INSTANCE-ADDRESS))
+   1118:    (hello))
+   1119:    (slot ea (type EXTERNAL-ADDRESS)))
+   1119: CLIPS> (clear) ; Source Ticket #56
+   1120: CLIPS>    
+   1120: CLIPS> 
+   1121: (make-instance e1 of EXPERIMENT
+   1121: (deftemplate maze
+   1122:    (fa (assert (b)))
+   1122:    (multislot open-list)
+   1123:    (ia (instance-address(make-instance e2 of EXPERIMENT))))
+   1123:    (slot goal))
+   1124: [e1]
+   1124: CLIPS> 
+   1125: CLIPS> (bsave-instances "Temp//experiment.bins")
+   1125: (defrule test-1
+   1126: 3
+   1126:    (maze (open-list)
+   1127: CLIPS> (reset)
+   1127:          (goal ?g&nil))
+   1128: CLIPS> (bload-instances "Temp//experiment.bins")
+   1128:    =>)
+   1129: 3
+   1129: CLIPS> 
+   1130: CLIPS> (send [e1] print)
+   1130: (defrule test-2
+   1131: [e1] of EXPERIMENT
+   1131:    (maze (open-list) 
+   1132: (fa <Dummy Fact>)
+   1132:          (goal ?g&:(eq ?g nil)))
+   1133: (ia [e2])
+   1133:    =>)
+   1134: (ea <Pointer-C-0x0>)
+   1134: CLIPS> 
+   1135: CLIPS> (send [e2] print)
+   1135: (defrule test-3
+   1136: [e2] of EXPERIMENT
+   1136:    (maze (open-list) 
+   1137: (fa <Dummy Fact>)
+   1137:          (goal ~nil))
+   1138: (ia [Dummy Instance])
+   1138:    =>)
+   1139: (ea <Pointer-C-0x0>)
+   1139: CLIPS> (clear)
+   1140: CLIPS> (clear) ; Local variables cannot be accessed bug
+   1140: CLIPS> (dribble-off)
+   Files do not have the same # of lines

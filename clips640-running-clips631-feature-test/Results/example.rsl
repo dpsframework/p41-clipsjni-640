@@ -1,0 +1,275 @@
+mab.clp differences are as follows:
+    12: FIRE   11 walk-holding-nothing: f-20,f-22
+    12: FIRE   11 walk-holding-nothing: f-20,f-1
+    14: FIRE   12 climb-to-hold: f-19,f-5,f-23,*
+    14: FIRE   12 climb-to-hold: f-19,f-5,f-1,*
+    15: FIRE   13 climb-indirectly: f-24,f-4,f-23,*
+    15: FIRE   13 climb-indirectly: f-22,f-4,f-1,*
+    16: FIRE   14 climb-directly: f-25,f-3,f-23
+    16: FIRE   14 climb-directly: f-23,f-3,f-1
+    18: FIRE   15 climb-directly: f-24,f-4,f-26
+    18: FIRE   15 climb-directly: f-22,f-4,f-1
+    20: FIRE   16 grab-object: f-19,f-5,f-27
+    20: FIRE   16 grab-object: f-19,f-5,f-1
+    22: FIRE   17 put-chest-on-floor: f-18,f-29,f-28
+    22: FIRE   17 put-chest-on-floor: f-18,f-1,f-5
+    24: FIRE   18 get-key-to-unlock: f-18,f-31,f-6,f-30,*
+    24: FIRE   18 get-key-to-unlock: f-18,f-5,f-6,f-1,*
+    25: FIRE   19 walk-to-hold: f-32,f-12,f-30,*
+    25: FIRE   19 walk-to-hold: f-24,f-12,f-1,*
+    26: FIRE   20 get-on-floor-to-walk: f-33,f-30,*
+    26: FIRE   20 get-on-floor-to-walk: f-25,f-1,*
+    27: FIRE   21 jump-onto-floor: f-34,f-30
+    27: FIRE   21 jump-onto-floor: f-26,f-1
+    29: FIRE   22 walk-holding-nothing: f-33,f-35
+    29: FIRE   22 walk-holding-nothing: f-25,f-1
+    31: FIRE   23 grab-object: f-32,f-12,f-36
+    31: FIRE   23 grab-object: f-24,f-12,f-1
+    33: FIRE   24 move-to-chest-with-key: f-18,f-38,f-31,f-6,*
+    33: FIRE   24 move-to-chest-with-key: f-18,f-1,f-5,f-6,*
+    34: FIRE   25 walk-holding-object: f-39,f-38
+    34: FIRE   25 walk-holding-object: f-27,f-1
+    36: FIRE   26 unlock-chest-with-key: f-18,f-6,f-31,f-40
+    36: FIRE   26 unlock-chest-with-key: f-18,f-6,f-5,f-1
+    38: FIRE   27 hold-object-to-move: f-17,f-42,f-40,*
+    38: FIRE   27 hold-object-to-move: f-17,f-28,f-1,*
+    39: FIRE   28 climb-to-hold: f-43,f-42,f-40,*
+    39: FIRE   28 climb-to-hold: f-29,f-28,f-1,*
+    40: FIRE   29 drop-to-climb: f-44,f-31,f-40,*
+    40: FIRE   29 drop-to-climb: f-30,f-5,f-1,*
+    41: FIRE   30 drop-object: f-45,f-40,f-37
+    41: FIRE   30 drop-object: f-31,f-1,f-12
+    43: FIRE   31 climb-directly: f-44,f-31,f-46
+    43: FIRE   31 climb-directly: f-30,f-5,f-1
+    45: FIRE   32 grab-object: f-43,f-42,f-48
+    45: FIRE   32 grab-object: f-29,f-28,f-1
+    47: FIRE   33 move-object-to-place: f-17,f-50,*
+    47: FIRE   33 move-object-to-place: f-17,f-1,*
+    48: FIRE   34 get-on-floor-to-walk: f-51,f-50,*
+    48: FIRE   34 get-on-floor-to-walk: f-32,f-1,*
+    49: FIRE   35 jump-onto-floor: f-52,f-50
+    49: FIRE   35 jump-onto-floor: f-33,f-1
+    51: FIRE   36 walk-holding-object: f-51,f-53
+    51: FIRE   36 walk-holding-object: f-32,f-1
+    53: FIRE   37 drop-object-once-moved: f-17,f-54,f-49
+    53: FIRE   37 drop-object-once-moved: f-17,f-1,f-28
+    55: FIRE   38 climb-ladder-to-hold: f-16,f-7,f-56,f-55,*
+    55: FIRE   38 climb-ladder-to-hold: f-16,f-7,f-28,f-1,*
+    56: FIRE   39 climb-directly: f-57,f-56,f-55
+    56: FIRE   39 climb-directly: f-34,f-28,f-1
+    58: FIRE   40 grab-object-from-ladder: f-16,f-7,f-56,f-58
+    58: FIRE   40 grab-object-from-ladder: f-16,f-7,f-28,f-1
+    60: FIRE   41 put-chest-on-floor: f-15,f-60,f-59
+    60: FIRE   41 put-chest-on-floor: f-15,f-1,f-7
+    62: FIRE   42 get-key-to-unlock: f-15,f-62,f-8,f-61,*
+    62: FIRE   42 get-key-to-unlock: f-15,f-7,f-8,f-1,*
+    63: FIRE   43 unlock-chest-to-hold-object: f-63,f-11,*
+    63: FIRE   43 unlock-chest-to-hold-object: f-35,f-11,*
+    64: FIRE   44 hold-chest-to-put-on-floor: f-64,f-10,f-61,*
+    64: FIRE   44 hold-chest-to-put-on-floor: f-36,f-10,f-1,*
+    65: FIRE   45 use-ladder-to-hold: f-65,f-10,*,*
+    65: FIRE   45 use-ladder-to-hold: f-37,f-10,*,*
+    66: FIRE   46 hold-object-to-move: f-66,f-56,f-61,*
+    66: FIRE   46 hold-object-to-move: f-38,f-28,f-1,*
+    67: FIRE   47 climb-to-hold: f-67,f-56,f-61,*
+    67: FIRE   47 climb-to-hold: f-39,f-28,f-1,*
+    68: FIRE   48 jump-onto-floor: f-68,f-61
+    68: FIRE   48 jump-onto-floor: f-40,f-1
+    70: FIRE   49 grab-object: f-67,f-56,f-69
+    70: FIRE   49 grab-object: f-39,f-28,f-1
+    72: FIRE   50 move-object-to-place: f-66,f-71,*
+    72: FIRE   50 move-object-to-place: f-38,f-1,*
+    73: FIRE   51 walk-holding-object: f-72,f-71
+    73: FIRE   51 walk-holding-object: f-41,f-1
+    75: FIRE   52 drop-object-once-moved: f-66,f-73,f-70
+    75: FIRE   52 drop-object-once-moved: f-38,f-1,f-28
+    77: FIRE   53 climb-ladder-to-hold: f-65,f-10,f-75,f-74,*
+    77: FIRE   53 climb-ladder-to-hold: f-37,f-10,f-28,f-1,*
+    78: FIRE   54 climb-directly: f-76,f-75,f-74
+    78: FIRE   54 climb-directly: f-42,f-28,f-1
+    80: FIRE   55 grab-object-from-ladder: f-65,f-10,f-75,f-77
+    80: FIRE   55 grab-object-from-ladder: f-37,f-10,f-28,f-1
+    82: FIRE   56 put-chest-on-floor: f-64,f-79,f-78
+    82: FIRE   56 put-chest-on-floor: f-36,f-1,f-10
+    84: FIRE   57 get-key-to-unlock: f-64,f-81,f-11,f-80,*
+    84: FIRE   57 get-key-to-unlock: f-36,f-10,f-11,f-1,*
+    85: FIRE   58 walk-to-hold: f-82,f-47,f-80,*
+    85: FIRE   58 walk-to-hold: f-43,f-12,f-1,*
+    86: FIRE   59 get-on-floor-to-walk: f-83,f-80,*
+    86: FIRE   59 get-on-floor-to-walk: f-44,f-1,*
+    87: FIRE   60 jump-onto-floor: f-84,f-80
+    87: FIRE   60 jump-onto-floor: f-45,f-1
+    89: FIRE   61 walk-holding-nothing: f-83,f-85
+    89: FIRE   61 walk-holding-nothing: f-44,f-1
+    91: FIRE   62 grab-object: f-82,f-47,f-86
+    91: FIRE   62 grab-object: f-43,f-12,f-1
+    93: FIRE   63 move-to-chest-with-key: f-64,f-88,f-81,f-11,*
+    93: FIRE   63 move-to-chest-with-key: f-36,f-1,f-10,f-11,*
+    94: FIRE   64 walk-holding-object: f-89,f-88
+    94: FIRE   64 walk-holding-object: f-46,f-1
+    96: FIRE   65 unlock-chest-with-key: f-64,f-11,f-81,f-90
+    96: FIRE   65 unlock-chest-with-key: f-36,f-11,f-10,f-1
+    98: FIRE   66 climb-to-hold: f-63,f-92,f-90,*
+    98: FIRE   66 climb-to-hold: f-35,f-47,f-1,*
+    99: FIRE   67 drop-to-climb: f-93,f-81,f-90,*
+    99: FIRE   67 drop-to-climb: f-48,f-10,f-1,*
+   100: FIRE   68 drop-object: f-94,f-90,f-87
+   100: FIRE   68 drop-object: f-49,f-1,f-12
+   102: FIRE   69 climb-directly: f-93,f-81,f-95
+   102: FIRE   69 climb-directly: f-48,f-10,f-1
+   104: FIRE   70 grab-object: f-63,f-92,f-97
+   104: FIRE   70 grab-object: f-35,f-47,f-1
+   106: FIRE   71 move-to-chest-with-key: f-15,f-99,f-62,f-8,*
+   106: FIRE   71 move-to-chest-with-key: f-15,f-1,f-7,f-8,*
+   107: FIRE   72 get-on-floor-to-walk: f-100,f-99,*
+   107: FIRE   72 get-on-floor-to-walk: f-50,f-1,*
+   108: FIRE   73 jump-onto-floor: f-101,f-99
+   108: FIRE   73 jump-onto-floor: f-51,f-1
+   110: FIRE   74 walk-holding-object: f-100,f-102
+   110: FIRE   74 walk-holding-object: f-50,f-1
+   112: FIRE   75 unlock-chest-with-key: f-15,f-8,f-62,f-103
+   112: FIRE   75 unlock-chest-with-key: f-15,f-8,f-7,f-1
+   114: FIRE   76 climb-to-hold: f-14,f-105,f-103,*
+   114: FIRE   76 climb-to-hold: f-14,f-52,f-1,*
+   115: FIRE   77 drop-to-climb: f-106,f-62,f-103,*
+   115: FIRE   77 drop-to-climb: f-53,f-7,f-1,*
+   116: FIRE   78 drop-object: f-107,f-103,f-98
+   116: FIRE   78 drop-object: f-54,f-1,f-47
+   118: FIRE   79 climb-directly: f-106,f-62,f-108
+   118: FIRE   79 climb-directly: f-53,f-7,f-1
+   120: FIRE   80 grab-object: f-14,f-105,f-110
+   120: FIRE   80 grab-object: f-14,f-52,f-1
+   122: FIRE   81 satisfy-hunger: f-13,f-112,f-111
+   122: FIRE   81 satisfy-hunger: f-13,f-1,f-52
+dilemma1.clp differences are as follows:
+    26: FIRE   26 further-solution: f-15,f-20
+    26: FIRE   26 further-solution: f-15,f-19
+    27: FIRE   27 further-solution: f-12,f-21
+    27: FIRE   27 further-solution: f-12,f-19
+    28: FIRE   28 further-solution: f-9,f-22
+    28: FIRE   28 further-solution: f-9,f-19
+    29: FIRE   29 further-solution: f-7,f-23
+    29: FIRE   29 further-solution: f-7,f-19
+    30: FIRE   30 further-solution: f-6,f-24
+    30: FIRE   30 further-solution: f-6,f-19
+    31: FIRE   31 further-solution: f-1,f-25
+    31: FIRE   31 further-solution: f-1,f-19
+    32: FIRE   32 print-solution: f-26
+    32: FIRE   32 move-with-fox: f-15,f-3
+    33: 
+    33: FIRE   33 move-alone: f-20,f-2
+    34: Solution found: 
+    34: FIRE   34 fox-eats-goat: f-21
+    35: 
+    35: FIRE   35 move-with-fox: f-20,f-2
+    36: Farmer moves with goat to shore-2.
+    36: FIRE   36 circular-path: f-15,f-22
+    37: Farmer moves alone to shore-1.
+    37: FIRE   37 move-with-goat: f-20,f-2
+    38: Farmer moves with fox to shore-2.
+    38: FIRE   38 move-alone: f-23,f-3
+    39: Farmer moves with goat to shore-1.
+    39: FIRE   39 goat-eats-cabbage: f-24
+    40: Farmer moves with cabbage to shore-2.
+    40: FIRE   40 move-with-goat: f-23,f-3
+    41: Farmer moves alone to shore-1.
+    41: FIRE   41 circular-path: f-20,f-25
+    42: Farmer moves with goat to shore-2.
+    42: FIRE   42 move-with-cabbage: f-23,f-3
+    43: FIRE   33 move-with-fox: f-15,f-3
+    43: FIRE   43 circular-path: f-7,f-26
+    44: FIRE   34 move-alone: f-27,f-2
+    44: FIRE   44 move-with-cabbage: f-15,f-3
+    45: FIRE   35 fox-eats-goat: f-28
+    45: FIRE   45 circular-path: f-12,f-27
+    46: FIRE   36 move-with-fox: f-27,f-2
+    46: FIRE   46 move-with-cabbage: f-7,f-2
+    47: FIRE   37 circular-path: f-15,f-29
+    47: FIRE   47 circular-path: f-28,f-23
+    48: FIRE   38 move-with-goat: f-27,f-2
+    48: FIRE   48 move-alone: f-28,f-3
+    49: FIRE   39 move-alone: f-30,f-3
+    49: FIRE   49 goat-eats-cabbage: f-29
+    50: FIRE   40 goat-eats-cabbage: f-31
+    50: FIRE   50 move-with-goat: f-28,f-3
+    51: FIRE   41 move-with-goat: f-30,f-3
+    51: FIRE   51 circular-path: f-30,f-20
+    52: FIRE   42 circular-path: f-27,f-32
+    52: FIRE   52 move-alone: f-30,f-2
+    53: FIRE   43 move-with-cabbage: f-30,f-3
+    53: FIRE   53 fox-eats-goat: f-31
+    54: FIRE   44 circular-path: f-7,f-33
+    54: FIRE   54 move-with-fox: f-30,f-2
+    55: FIRE   45 move-with-cabbage: f-15,f-3
+    55: FIRE   55 move-alone: f-32,f-3
+    56: FIRE   46 circular-path: f-12,f-34
+    56: FIRE   56 move-alone: f-33,f-2
+    57: FIRE   47 move-with-cabbage: f-7,f-2
+    57: FIRE   57 circular-path: f-15,f-34
+    58: FIRE   48 circular-path: f-35,f-30
+    58: FIRE   58 move-with-goat: f-33,f-2
+    59: FIRE   49 move-alone: f-35,f-3
+    59: FIRE   59 recognize-solution: f-35
+    60: FIRE   50 goat-eats-cabbage: f-36
+    60: FIRE   60 further-solution: f-33,f-36
+    61: FIRE   51 move-with-goat: f-35,f-3
+    61: FIRE   61 further-solution: f-32,f-36
+    62: FIRE   52 circular-path: f-37,f-27
+    62: FIRE   62 further-solution: f-30,f-36
+    63: FIRE   53 move-alone: f-37,f-2
+    63: FIRE   63 further-solution: f-28,f-36
+    64: FIRE   54 fox-eats-goat: f-38
+    64: FIRE   64 further-solution: f-7,f-36
+    65: FIRE   55 move-with-fox: f-37,f-2
+    65: FIRE   65 further-solution: f-6,f-36
+    66: FIRE   56 move-alone: f-39,f-3
+    66: FIRE   66 further-solution: f-1,f-36
+    67: FIRE   57 move-alone: f-40,f-2
+    67: FIRE   67 move-with-fox: f-32,f-3
+    68: FIRE   58 circular-path: f-15,f-41
+    68: FIRE   68 circular-path: f-30,f-37
+    69: FIRE   59 move-with-goat: f-40,f-2
+    69: FIRE   69 move-with-cabbage: f-32,f-3
+    70: FIRE   60 recognize-solution: f-42
+    70: FIRE   70 circular-path: f-12,f-38
+    71: FIRE   61 further-solution: f-40,f-43
+    71: FIRE   71 move-with-goat: f-30,f-2
+    72: FIRE   62 further-solution: f-39,f-44
+    72: FIRE   72 circular-path: f-28,f-39
+    73: FIRE   63 further-solution: f-37,f-45
+    73: FIRE   73 move-with-cabbage: f-28,f-3
+    74: FIRE   64 further-solution: f-35,f-46
+    74: FIRE   74 circular-path: f-7,f-40
+    75: FIRE   65 further-solution: f-7,f-47
+    75: FIRE   75 move-with-goat: f-6,f-3
+    76: FIRE   66 further-solution: f-6,f-48
+    76: FIRE   76 circular-path: f-1,f-41
+    77: FIRE   67 further-solution: f-1,f-49
+    77: FIRE   77 move-with-cabbage: f-1,f-2
+    78: FIRE   68 print-solution: f-50
+    78: FIRE   78 fox-eats-goat: f-42
+   Files do not have the same # of lines
+dilemma2.clp differences are as follows:
+   No differences detected in 269 lines.
+wordgame.clp differences are as follows:
+   No differences detected in 128 lines.
+zebra.clp differences are as follows:
+   No differences detected in 52 lines.
+electronic.clp differences are as follows:
+     1: FIRE    1 startup: *
+     1: FIRE    1 print-header: *
+     2: FIRE    2 compute-response-1st-time: f-1
+     2:  S-1  S-2  S-3  S-4  S-5  S-6  |  L-1  L-2  L-3 
+     3: FIRE    3 compute-response-other-times: f-3
+     3: -------------------------------+----------------
+   Files do not have the same # of lines
+mabobj.clp differences are as follows:
+   Files do not have the same # of lines
+mabobjbin.clp differences are as follows:
+objfarm.clp differences are as follows:
+objfarmbin.clp differences are as follows:
+wrdgmobj.clp differences are as follows:
+wrdgmobjbin.clp differences are as follows:
+manners.clp differences are as follows:
+waltz.clp differences are as follows:
+sudoku.clp differences are as follows:

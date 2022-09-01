@@ -1,0 +1,78 @@
+basicfnx.bat differences are as follows:
+    31: [EVALUATN1] Variable x is unbound
+    31: [EVALUATN1] Variable ?x is unbound.
+    46: [ARGACCES4] Function retract expected at least 1 argument(s)
+    46: [ARGACCES1] Function 'retract' expected at least 1 argument.
+    56: <== f-0     (initial-fact)
+    56: <== f-3     (f)
+    57: <== f-3     (f)
+    57: <== f-5     (h)
+    58: <== f-5     (h)
+    58: <== f-6     (i 7)
+    59: <== f-6     (i 7)
+    59: CLIPS> (unwatch facts)                    ; 10.1.2
+    60: CLIPS> (unwatch facts)                    ; 10.1.2
+    60: CLIPS> (clear)                            ; 10.1.5
+    61: CLIPS> (clear)                            ; 10.1.5
+    61: CLIPS> (deftemplate foo (slot x) (slot y))
+    62: CLIPS> (deftemplate foo (slot x) (slot y))
+    62: CLIPS> (assert-string)                    ; 10.1.5
+    63: CLIPS> (assert-string)                    ; 10.1.5
+    63: [ARGACCES1] Function 'assert-string' expected exactly 1 argument.
+    64: [ARGACCES4] Function assert-string expected exactly 1 argument(s)
+    64: CLIPS> (assert-string "a b c" "d e f")    ; 10.1.5
+    65: CLIPS> (assert-string "a b c" "d e f")    ; 10.1.5
+    65: [ARGACCES1] Function 'assert-string' expected exactly 1 argument.
+    66: [ARGACCES4] Function assert-string expected exactly 1 argument(s)
+    66: CLIPS> (assert-string 7)                  ; 10.1.5
+    67: CLIPS> (assert-string 7)                  ; 10.1.5
+    67: [ARGACCES2] Function 'assert-string' expected argument #1 to be of type string.
+    68: [ARGACCES5] Function assert-string expected argument #1 to be of type string
+    68: CLIPS> (assert-string hello)              ; 10.1.5
+    69: CLIPS> (assert-string hello)              ; 10.1.5
+    69: [ARGACCES2] Function 'assert-string' expected argument #1 to be of type string.
+    70: [ARGACCES5] Function assert-string expected argument #1 to be of type string
+    70: CLIPS> (assert-string "(x y z)")          ; 10.1.5
+    71: CLIPS> (assert-string "(x y z)")          ; 10.1.5
+    71: <Fact-1>
+    72: <Fact-1>
+    72: CLIPS> (assert-string "(foo (y 3))")      ; 10.1.5
+    73: CLIPS> (assert-string "(foo (y 3))")      ; 10.1.5
+    73: <Fact-2>
+    74: <Fact-2>
+    74: CLIPS> (facts)                            ; 10.1.5
+    75: CLIPS> (facts)                            ; 10.1.5
+    75: f-1     (x y z)
+    76: f-0     (initial-fact)
+    76: f-2     (foo (x nil) (y 3))
+    77: f-1     (x y z)
+    77: For a total of 2 facts.
+    78: f-2     (foo (x nil) (y 3))
+    78: CLIPS> (clear)                            ; 10.1.5
+    79: For a total of 3 facts.
+    79: CLIPS> (bind)                             ; 10.1.6
+    80: CLIPS> (clear)                            ; 10.1.5
+    80: 
+    81: CLIPS> (bind)                             ; 10.1.6
+    81: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for bind function.
+    82: 
+    82: CLIPS> (bind ?x)                          ; 10.1.6
+    83: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for bind function.
+    83: FALSE
+    84: CLIPS> (bind ?x)                          ; 10.1.6
+    84: CLIPS> (bind ?x 3)                        ; 10.1.6
+    85: FALSE
+    85: 3
+    86: CLIPS> (bind ?x 3)                        ; 10.1.6
+    86: CLIPS> (bind ?x 3 4)                      ; 10.1.6
+    87: 3
+    87: (3 4)
+    88: CLIPS> (bind ?x 3 4)                      ; 10.1.6
+    88: CLIPS> (halt)                             ; 10.1.7
+    89: (3 4)
+    89: CLIPS> (halt 3)                           ; 10.1.7
+    90: CLIPS> (halt)                             ; 10.1.7
+    90: [ARGACCES1] Function 'halt' expected exactly 0 arguments.
+    91: CLIPS> (halt 3)                           ; 10.1.7
+    91: CLIPS> (dribble-off)
+   Files do not have the same # of lines

@@ -1,0 +1,112 @@
+dfnxexe.bat differences are as follows:
+     6: CLIPS> (print-args 1 2)
+     6: 
+     7: 1 2 and 0 extras: ()
+     7: [EXPRNPSR3] Missing function declaration for 'length'.
+     8: CLIPS> (print-args 1 2 3 4)
+     8: 
+     9: 1 2 and 2 extras: (3 4)
+     9: ERROR:
+    10: CLIPS> (print-args 1 2 (mv-append a b c) (mv-append d e f) 1 2 3 4)
+    10: (deffunction MAIN::print-args
+    11: 1 2 and 10 extras: (a b c d e f 1 2 3 4)
+    11:    (?a ?b $?c)
+    12: CLIPS> (deffunction test-return ()
+    12:    (printout t ?a " " ?b " and " (length
+    13:    (+ (eval "(gensym)") 2)
+    13: CLIPS> (print-args 1 2)
+    14:    TRUE)
+    14: 
+    15: CLIPS> (test-return)
+    15: [EXPRNPSR3] Missing function declaration for 'print-args'.
+    16: [ARGACCES5] Function + expected argument #1 to be of type integer or float
+    16: CLIPS> (print-args 1 2 3 4)
+    17: [PRCCODE4] Execution halted during the actions of deffunction test-return.
+    17: 
+    18: FALSE
+    18: [EXPRNPSR3] Missing function declaration for 'print-args'.
+    19: CLIPS> (deffunction test-return ()
+    19: CLIPS> (print-args 1 2 (mv-append a b c) (mv-append d e f) 1 2 3 4)
+    20:   1 2 3 4)
+    20: 
+    21: CLIPS> (test-return)
+    21: [EXPRNPSR3] Missing function declaration for 'print-args'.
+    22: 4
+    22: CLIPS> (deffunction test-return ()
+    23: CLIPS> (deffunction factorial (?a)
+    23:    (+ (eval "(gensym)") 2)
+    24:    (if (or (not (integerp ?a)) (< ?a 0)) then
+    24:    TRUE)
+    25:       (printout t "Factorial error!" crlf)
+    25: CLIPS> (test-return)
+    26:     else
+    26: [ARGACCES2] Function '+' expected argument #1 to be of type integer or float.
+    27:       (if (= ?a 0) then
+    27: [PRCCODE4] Execution halted during the actions of deffunction 'test-return'.
+    28:          1
+    28: FALSE
+    29:        else
+    29: CLIPS> (deffunction test-return ()
+    30:          (* ?a (factorial (- ?a 1))))))
+    30:   1 2 3 4)
+    31: CLIPS> (factorial 5)
+    31: CLIPS> (test-return)
+    32: 120
+    32: 4
+    33: CLIPS> (* 5 4 3 2)
+    33: CLIPS> (deffunction factorial (?a)
+    34: 120
+    34:    (if (or (not (integerp ?a)) (< ?a 0)) then
+    35: CLIPS> (factorial 0)
+    35:       (printout t "Factorial error!" crlf)
+    36: 1
+    36:     else
+    37: CLIPS> (factorial 1)
+    37:       (if (= ?a 0) then
+    38: 1
+    38:          1
+    39: CLIPS> (factorial abc)
+    39:        else
+    40: Factorial error!
+    40:          (* ?a (factorial (- ?a 1))))))
+    41: CLIPS> 
+    41: CLIPS> (factorial 5)
+    42: (defglobal ?*cnt* = 0)
+    42: 120
+    43: CLIPS> 
+    43: CLIPS> (* 5 4 3 2)
+    44: (deffunction foo ())
+    44: 120
+    45: CLIPS> (deffunction bar ()
+    45: CLIPS> (factorial 0)
+    46:    (if (< ?*cnt* 10) then
+    46: 1
+    47:       (bind ?*cnt* (+ ?*cnt* 1))
+    47: CLIPS> (factorial 1)
+    48:       (foo)))
+    48: 1
+    49: CLIPS> (deffunction foo ()
+    49: CLIPS> (factorial abc)
+    50:   (bar))
+    50: Factorial error!
+    51: CLIPS> (foo)
+    51: CLIPS> 
+    52: FALSE
+    52: (defglobal ?*cnt* = 0)
+    53: CLIPS> (deffunction wildcard-test (?a $?rest)
+    53: CLIPS> 
+    54:   (printout t ?rest crlf)
+    54: (deffunction foo ())
+    55:   (bind ?rest 34)
+    55: CLIPS> (deffunction bar ()
+    56:   (printout t ?rest crlf))
+    56:    (if (< ?*cnt* 10) then
+    57: CLIPS> (wildcard-test 1 2 3 4 5 6)
+    57:       (bind ?*cnt* (+ ?*cnt* 1))
+    58: (2 3 4 5 6)
+    58:       (foo)))
+    59: 34
+    59: CLIPS> (deffunction foo ()
+    60: CLIPS> (dribble-off)
+    60:   (bar))
+   Files do not have the same # of lines

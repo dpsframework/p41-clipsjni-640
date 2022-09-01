@@ -1,0 +1,55 @@
+dfgblcmd.bat differences are as follows:
+    13: [ARGACCES5] Function list-defglobals expected argument #1 to be of type defmodule name
+    13: [ARGACCES2] Function 'list-defglobals' expected argument #1 to be of type 'defmodule name'.
+    36: [ARGACCES4] Function undefglobal expected exactly 1 argument(s)
+    36: [ARGACCES1] Function 'undefglobal' expected exactly 1 argument.
+    38: [ARGACCES5] Function undefglobal expected argument #1 to be of type symbol
+    38: [ARGACCES2] Function 'undefglobal' expected argument #1 to be of type symbol.
+    40: [PRNTUTIL1] Unable to find defglobal bad-name.
+    40: [PRNTUTIL1] Unable to find defglobal 'bad-name'.
+    42: [ARGACCES4] Function undefglobal expected exactly 1 argument(s)
+    42: [ARGACCES1] Function 'undefglobal' expected exactly 1 argument.
+    74: [ARGACCES4] Function show-defglobals expected no more than 1 argument(s)
+    74: [ARGACCES1] Function 'show-defglobals' expected no more than 1 argument.
+    91: [ARGACCES4] Function get-reset-globals expected exactly 0 argument(s)
+    91: [ARGACCES1] Function 'get-reset-globals' expected exactly 0 arguments.
+    93: [ARGACCES4] Function set-reset-globals expected exactly 1 argument(s)
+    93: [ARGACCES1] Function 'set-reset-globals' expected exactly 1 argument.
+    95: [ARGACCES4] Function set-reset-globals expected exactly 1 argument(s)
+    95: [ARGACCES1] Function 'set-reset-globals' expected exactly 1 argument.
+   131: [PRNTUTIL1] Unable to find defglobal x.
+   131: [PRNTUTIL1] Unable to find defglobal 'x'.
+   134: [PRNTUTIL1] Unable to find defmodule BOGUS.
+   134: [PRNTUTIL1] Unable to find defmodule 'BOGUS'.
+   145: [ARGACCES5] Function list-defglobals expected argument #1 to be of type defmodule name
+   145: [ARGACCES2] Function 'list-defglobals' expected argument #1 to be of type 'defmodule name'.
+   147: [ARGACCES4] Function list-defglobals expected no more than 1 argument(s)
+   147: [ARGACCES1] Function 'list-defglobals' expected no more than 1 argument.
+   170: [ARGACCES5] Function get-defglobal-list expected argument #1 to be of type symbol
+   170: [ARGACCES2] Function 'get-defglobal-list' expected argument #1 to be of type symbol.
+   172: [ARGACCES4] Function get-defglobal-list expected no more than 1 argument(s)
+   172: [ARGACCES1] Function 'get-defglobal-list' expected no more than 1 argument.
+   176: [ARGACCES5] Function get-defglobal-list expected argument #1 to be of type defmodule name
+   176: [ARGACCES2] Function 'get-defglobal-list' expected argument #1 to be of type 'defmodule name'.
+   185: [PRNTUTIL1] Unable to find defglobal d1.
+   185: [PRNTUTIL1] Unable to find defglobal 'd1'.
+   191: [PRNTUTIL1] Unable to find defglobal BOGUS::d2.
+   191: [PRNTUTIL1] Unable to find defglobal 'BOGUS::d2'.
+   197: [PRNTUTIL1] Unable to find defglobal FOO::d3.
+   197: [PRNTUTIL1] Unable to find defglobal 'FOO::d3'.
+   199: [PRNTUTIL1] Unable to find defglobal BAR::d1.
+   199: [PRNTUTIL1] Unable to find defglobal 'BAR::d1'.
+   205: [ARGACCES4] Function defglobal-module expected exactly 1 argument(s)
+   205: [ARGACCES1] Function 'defglobal-module' expected exactly 1 argument.
+   207: [PRNTUTIL1] Unable to find defglobal bogus.
+   207: [PRNTUTIL1] Unable to find defglobal 'bogus'.
+   210: [ARGACCES4] Function defglobal-module expected exactly 1 argument(s)
+   210: [ARGACCES1] Function 'defglobal-module' expected exactly 1 argument.
+   227: [ARGACCES5] Function show-defglobals expected argument #1 to be of type symbol
+   227: [ARGACCES2] Function 'show-defglobals' expected argument #1 to be of type symbol.
+   229: [ARGACCES5] Function show-defglobals expected argument #1 to be of type defmodule name
+   229: [ARGACCES2] Function 'show-defglobals' expected argument #1 to be of type 'defmodule name'.
+   231: [ARGACCES4] Function show-defglobals expected no more than 1 argument(s)
+   231: [ARGACCES1] Function 'show-defglobals' expected no more than 1 argument.
+   247: [PRNTUTIL1] Unable to find defglobal BOGUS::d2.
+   247: [PRNTUTIL1] Unable to find defglobal 'BOGUS::d2'.

@@ -1,0 +1,382 @@
+cnstrsn.clp differences are as follows:
+    12: initial-fact
+    12: foo
+    13: foo
+    13: bar
+    14: bar
+    14: woz
+    15: woz
+    15: For a total of 3 deffacts.
+    16: For a total of 4 deffacts.
+    16: CLIPS> (get-deffacts-list)
+    17: CLIPS> (get-deffacts-list)
+    17: (foo bar woz)
+    18: (initial-fact foo bar woz)
+    18: CLIPS> (list-deftemplates)
+    19: CLIPS> (list-deftemplates)
+    19: foo
+    20: initial-fact
+    20: bar
+    21: foo
+    21: woz
+    22: bar
+    22: For a total of 3 deftemplates.
+    23: woz
+    23: CLIPS> (get-deftemplate-list)
+    24: For a total of 4 deftemplates.
+    24: (foo bar woz)
+    25: CLIPS> (get-deftemplate-list)
+    25: CLIPS> (list-defglobals)
+    26: (initial-fact foo bar woz)
+    26: foo
+    27: CLIPS> (list-defglobals)
+    27: bar
+    28: foo
+    28: woz
+    29: bar
+    29: For a total of 3 defglobals.
+    30: woz
+    30: CLIPS> (get-defglobal-list)
+    31: For a total of 3 defglobals.
+    31: (foo bar woz)
+    32: CLIPS> (get-defglobal-list)
+    32: CLIPS> (list-deffunctions)
+    33: (foo bar woz)
+    33: foo
+    34: CLIPS> (list-deffunctions)
+    34: bar
+    35: foo
+    35: woz
+    36: bar
+    36: For a total of 3 deffunctions.
+    37: woz
+    37: CLIPS> (get-deffunction-list)
+    38: For a total of 3 deffunctions.
+    38: (foo bar woz)
+    39: CLIPS> (get-deffunction-list)
+    39: CLIPS> (list-defgenerics)
+    40: (foo bar woz)
+    40: zow
+    41: CLIPS> (list-defgenerics)
+    41: oof
+    42: zow
+    42: rab
+    43: oof
+    43: ziggle
+    44: rab
+    44: For a total of 4 defgenerics.
+    45: ziggle
+    45: CLIPS> (get-defgeneric-list)
+    46: For a total of 4 defgenerics.
+    46: (zow oof rab ziggle)
+    47: CLIPS> (get-defgeneric-list)
+    47: CLIPS> (list-defmethods)
+    48: (zow oof rab ziggle)
+    48: 
+    49: CLIPS> (list-defmethods)
+    49: oof #51 
+    50: 
+    50: oof #50 (INTEGER SYMBOL) (<qry>) $?
+    51: oof #51 
+    51: 
+    52: oof #50 (INTEGER SYMBOL) (<qry>) $?
+    52: rab #1  
+    54: rab #1  
+    54: ziggle #1  
+    55: 
+    55: For a total of 4 methods.
+    56: ziggle #1  
+    56: CLIPS> (get-defmethod-list)
+    57: For a total of 4 methods.
+    57: (oof 51 oof 50 rab 1 ziggle 1)
+    58: CLIPS> (get-defmethod-list)
+    58: CLIPS> (list-defmethods (nth 1 (get-defmethod-list)))
+    59: (oof 51 oof 50 rab 1 ziggle 1)
+    59: 
+    60: CLIPS> (list-defmethods (nth 1 (get-defmethod-list)))
+    60: [EXPRNPSR3] Missing function declaration for 'nth'.
+    61: oof #51 
+    61: CLIPS> (get-defmethod-list (nth 1 (get-defmethod-list)))
+    62: oof #50 (INTEGER SYMBOL) (<qry>) $?
+    62: 
+    63: For a total of 2 methods.
+    63: [EXPRNPSR3] Missing function declaration for 'nth'.
+    64: CLIPS> (get-defmethod-list (nth 1 (get-defmethod-list)))
+    64: CLIPS> (get-method-restrictions oof 50)
+    65: (oof 51 oof 50)
+    65: (2 -1 3 7 11 13 FALSE 2 INTEGER SYMBOL TRUE 0 FALSE 0)
+    66: CLIPS> (get-method-restrictions oof 50)
+    66: CLIPS> (get-method-restrictions rab 1)
+    67: (2 -1 3 7 11 13 FALSE 2 INTEGER SYMBOL TRUE 0 FALSE 0)
+    67: (0 0 0)
+    68: CLIPS> (get-method-restrictions rab 1)
+    68: CLIPS> (list-defclasses)
+    69: (0 0 0)
+    69: FLOAT
+    70: CLIPS> (list-defclasses)
+    70: INTEGER
+    71: FLOAT
+    71: SYMBOL
+    72: INTEGER
+    72: STRING
+    73: SYMBOL
+    73: MULTIFIELD
+    74: STRING
+    74: EXTERNAL-ADDRESS
+    75: MULTIFIELD
+    75: FACT-ADDRESS
+    76: EXTERNAL-ADDRESS
+    76: INSTANCE-ADDRESS
+    77: FACT-ADDRESS
+    77: INSTANCE-NAME
+    78: INSTANCE-ADDRESS
+    78: OBJECT
+    79: INSTANCE-NAME
+    79: PRIMITIVE
+    80: OBJECT
+    80: NUMBER
+    81: PRIMITIVE
+    81: LEXEME
+    82: NUMBER
+    82: ADDRESS
+    83: LEXEME
+    83: INSTANCE
+    84: ADDRESS
+    84: USER
+    85: INSTANCE
+    85: foo
+    86: USER
+    86: bar
+    87: INITIAL-OBJECT
+    87: woz
+    88: foo
+    88: For a total of 19 defclasses.
+    89: bar
+    89: CLIPS> (get-defclass-list)
+    90: woz
+    90: (FLOAT INTEGER SYMBOL STRING MULTIFIELD EXTERNAL-ADDRESS FACT-ADDRESS INSTANCE-ADDRESS INSTANCE-NAME OBJECT PRIMITIVE NUMBER LEXEME ADDRESS INSTANCE USER foo bar woz)
+    91: For a total of 20 defclasses.
+    91: CLIPS> (describe-class woz)
+    92: CLIPS> (get-defclass-list)
+    92: ================================================================================
+    93: (FLOAT INTEGER SYMBOL STRING MULTIFIELD EXTERNAL-ADDRESS FACT-ADDRESS INSTANCE-ADDRESS INSTANCE-NAME OBJECT PRIMITIVE NUMBER LEXEME ADDRESS INSTANCE USER INITIAL-OBJECT foo bar woz)
+    93: ********************************************************************************
+    94: CLIPS> (describe-class woz)
+    94: Abstract: direct instances of this class cannot be created.
+    95: ================================================================================
+    95: 
+    96: ********************************************************************************
+    96: Direct Superclasses: bar
+    97: Abstract: direct instances of this class cannot be created.
+    97: Inheritance Precedence: woz bar foo USER OBJECT
+    98: 
+    98: Direct Subclasses:
+    99: Direct Superclasses: bar
+    99: --------------------------------------------------------------------------------
+   100: Inheritance Precedence: woz bar foo USER OBJECT
+   100: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   101: Direct Subclasses:
+   101: x     : SGL STC INH RW  LCL RCT CMP PRV NIL put-x    foo bar
+   102: --------------------------------------------------------------------------------
+   102: y     : SGL STC INH RW  LCL RCT EXC PRV NIL put-y    bar
+   103: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   103: z     : SGL STC INH RW  LCL RCT EXC PRV NIL put-z    woz
+   104: x     : SGL STC INH RW  LCL RCT CMP PRV NIL put-x    foo bar
+   104: 
+   105: y     : SGL STC INH RW  LCL RCT EXC PRV NIL put-y    bar
+   105: Constraint information for slots:
+   106: z     : SGL STC INH RW  LCL RCT EXC PRV NIL put-z    woz
+   106: 
+   107: 
+   107: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   108: Constraint information for slots:
+   108: x     :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   109: 
+   109: y     :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   110: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   110: z     :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   111: x     :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   111: --------------------------------------------------------------------------------
+   112: y     :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   112: Recognized message-handlers:
+   113: z     :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   113: init primary in class USER
+   114: --------------------------------------------------------------------------------
+   114: delete primary in class USER
+   115: Recognized message-handlers:
+   115: create primary in class USER
+   116: init primary in class USER
+   116: print primary in class USER
+   117: delete primary in class USER
+   117: direct-modify primary in class USER
+   118: create primary in class USER
+   118: message-modify primary in class USER
+   119: print primary in class USER
+   119: direct-duplicate primary in class USER
+   120: direct-modify primary in class USER
+   120: message-duplicate primary in class USER
+   121: message-modify primary in class USER
+   121: foo primary in class foo
+   122: direct-duplicate primary in class USER
+   122: bar primary in class bar
+   123: message-duplicate primary in class USER
+   123: woz primary in class woz
+   124: foo primary in class foo
+   124: ********************************************************************************
+   125: bar primary in class bar
+   125: ================================================================================
+   126: woz primary in class woz
+   126: CLIPS> (class-slots woz)
+   127: ********************************************************************************
+   127: (z)
+   128: ================================================================================
+   128: CLIPS> (class-slots woz inherit)
+   129: CLIPS> (class-slots woz)
+   129: (x y z)
+   130: (z)
+   130: CLIPS> (class-abstractp woz)
+   131: CLIPS> (class-slots woz inherit)
+   131: TRUE
+   132: (x y z)
+   132: CLIPS> (class-superclasses woz)
+   133: CLIPS> (class-abstractp woz)
+   133: (bar)
+   134: TRUE
+   134: CLIPS> (class-superclasses woz inherit)
+   135: CLIPS> (class-superclasses woz)
+   135: (bar foo USER OBJECT)
+   136: (bar)
+   136: CLIPS> (class-subclasses foo)
+   137: CLIPS> (class-superclasses woz inherit)
+   137: (bar)
+   138: (bar foo USER OBJECT)
+   138: CLIPS> (class-subclasses foo inherit)
+   139: CLIPS> (class-subclasses foo)
+   139: (bar woz)
+   140: (bar)
+   140: CLIPS> (slot-facets woz x)
+   141: CLIPS> (class-subclasses foo inherit)
+   141: (SGL STC INH RW LCL RCT CMP PRV NIL put-x)
+   142: (bar woz)
+   142: CLIPS> (slot-sources woz x)
+   143: CLIPS> (slot-facets woz x)
+   143: (foo bar)
+   144: (SGL STC INH RW LCL RCT CMP PRV NIL put-x)
+   144: CLIPS> (list-defmessage-handlers)
+   145: CLIPS> (slot-sources woz x)
+   145: init primary in class USER
+   146: (foo bar)
+   146: delete primary in class USER
+   147: CLIPS> (list-defmessage-handlers)
+   147: create primary in class USER
+   148: init primary in class USER
+   148: print primary in class USER
+   149: delete primary in class USER
+   149: direct-modify primary in class USER
+   150: create primary in class USER
+   150: message-modify primary in class USER
+   151: print primary in class USER
+   151: direct-duplicate primary in class USER
+   152: direct-modify primary in class USER
+   152: message-duplicate primary in class USER
+   153: message-modify primary in class USER
+   153: foo primary in class foo
+   154: direct-duplicate primary in class USER
+   154: bar primary in class bar
+   155: message-duplicate primary in class USER
+   155: woz primary in class woz
+   156: foo primary in class foo
+   156: For a total of 11 message-handlers.
+   157: bar primary in class bar
+   157: CLIPS> (get-defmessage-handler-list)
+   158: woz primary in class woz
+   158: (USER init primary USER delete primary USER create primary USER print primary USER direct-modify primary USER message-modify primary USER direct-duplicate primary USER message-duplicate primary foo foo primary bar bar primary woz woz primary)
+   159: For a total of 11 message-handlers.
+   159: CLIPS> (list-defmessage-handlers woz)
+   160: CLIPS> (get-defmessage-handler-list)
+   160: woz primary in class woz
+   161: (USER init primary USER delete primary USER create primary USER print primary USER direct-modify primary USER message-modify primary USER direct-duplicate primary USER message-duplicate primary foo foo primary bar bar primary woz woz primary)
+   161: For a total of 1 message-handler.
+   162: CLIPS> (list-defmessage-handlers woz)
+   162: CLIPS> (get-defmessage-handler-list woz)
+   163: woz primary in class woz
+   163: (woz woz primary)
+   164: For a total of 1 message-handler.
+   164: CLIPS> (list-defmessage-handlers woz inherit)
+   165: CLIPS> (get-defmessage-handler-list woz)
+   165: init primary in class USER
+   166: (woz woz primary)
+   166: delete primary in class USER
+   167: CLIPS> (list-defmessage-handlers woz inherit)
+   167: create primary in class USER
+   168: init primary in class USER
+   168: print primary in class USER
+   169: delete primary in class USER
+   169: direct-modify primary in class USER
+   170: create primary in class USER
+   170: message-modify primary in class USER
+   171: print primary in class USER
+   171: direct-duplicate primary in class USER
+   172: direct-modify primary in class USER
+   172: message-duplicate primary in class USER
+   173: message-modify primary in class USER
+   173: foo primary in class foo
+   174: direct-duplicate primary in class USER
+   174: bar primary in class bar
+   175: message-duplicate primary in class USER
+   175: woz primary in class woz
+   176: foo primary in class foo
+   176: For a total of 11 message-handlers.
+   177: bar primary in class bar
+   177: CLIPS> (get-defmessage-handler-list woz inherit)
+   178: woz primary in class woz
+   178: (USER init primary USER delete primary USER create primary USER print primary USER direct-modify primary USER message-modify primary USER direct-duplicate primary USER message-duplicate primary foo foo primary bar bar primary woz woz primary)
+   179: For a total of 11 message-handlers.
+   179: CLIPS> (list-definstances)
+   180: CLIPS> (get-defmessage-handler-list woz inherit)
+   180: foo
+   181: (USER init primary USER delete primary USER create primary USER print primary USER direct-modify primary USER message-modify primary USER direct-duplicate primary USER message-duplicate primary foo foo primary bar bar primary woz woz primary)
+   181: bar
+   182: CLIPS> (list-definstances)
+   182: woz
+   183: initial-object
+   183: For a total of 3 definstances.
+   184: foo
+   184: CLIPS> (get-definstances-list)
+   185: bar
+   185: (foo bar woz)
+   186: woz
+   186: CLIPS> (get-defrule-list abc)
+   187: For a total of 4 definstances.
+   187: [ARGACCES2] Function 'get-defrule-list' expected argument #1 to be of type 'defmodule name'.
+   188: CLIPS> (get-definstances-list)
+   188: ()
+   189: (initial-object foo bar woz)
+   189: CLIPS> (get-defmessage-handler-list no-exist)
+   190: CLIPS> (get-defrule-list abc)
+   190: [CLASSFUN1] Unable to find class 'no-exist' in function 'get-defmessage-handler-list'.
+   191: [ARGACCES5] Function get-defrule-list expected argument #1 to be of type defmodule name
+   191: ()
+   192: ()
+   192: CLIPS> (get-defmethod-list no-exist)
+   193: CLIPS> (get-defmessage-handler-list no-exist)
+   193: [GENRCFUN3] Unable to find generic function 'no-exist' in function 'get-defmethod-list'.
+   194: [CLASSFUN1] Unable to find class no-exist in function get-defmessage-handler-list.
+   194: ()
+   195: ()
+   195: CLIPS> (get-defmessage-handler-list USER junk)
+   196: CLIPS> (get-defmethod-list no-exist)
+   196: 
+   197: [GENRCFUN3] Unable to find generic function no-exist in function get-defmethod-list.
+   197: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for get-defmessage-handler-list.
+   199: CLIPS> (get-defmessage-handler-list USER junk)
+   199: CLIPS> (get-defmessage-handler-list USER inherit abc)
+   200: 
+   200: [ARGACCES1] Function 'get-defmessage-handler-list' expected no more than 2 arguments.
+   201: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for get-defmessage-handler-list.
+   201: CLIPS> (get-defmethod-list oof abc)
+   202: ()
+   202: [ARGACCES1] Function 'get-defmethod-list' expected no more than 1 argument.
+   203: CLIPS> (get-defmessage-handler-list USER inherit abc)
+   203: CLIPS> (dribble-off)
+   Files do not have the same # of lines

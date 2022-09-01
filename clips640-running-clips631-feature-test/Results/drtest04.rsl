@@ -1,0 +1,92 @@
+drtest04.bat differences are as follows:
+    15: [ARGACCES5] Function watch expected argument #1 to be of type watchable symbol
+    15: [ARGACCES2] Function 'watch' expected argument #1 to be of type watchable symbol.
+    17: [ARGACCES4] Function subseq$ expected exactly 3 argument(s)
+    17: [ARGACCES1] Function 'subseq$' expected exactly 3 arguments.
+    29: [DEFAULT1] The default value for a single field slot must be a single field value
+    29: [DEFAULT1] The default value for a single field slot must be a single field value.
+    43: f-0     (initial-fact)
+    43: f-1     (bar (a w) (b x y z))
+    44: f-1     (bar (a w) (b x y z))
+    44: f-2     (bar (a g) (b h i j))
+    45: f-2     (bar (a g) (b h i j))
+    45: For a total of 2 facts.
+    46: For a total of 3 facts.
+    46: CLIPS> (clear)                            ; DR0380
+    47: CLIPS> (clear)                            ; DR0380
+    47: CLIPS> (if (= 2 2)                        ; DR0380
+    48: CLIPS> (if (= 2 2)                        ; DR0380
+    48:     then (eval (str-cat (run))))   ; DR0380
+    49:     then (eval (str-cat (run))))   ; DR0380
+    49: [ARGACCES2] Function 'str-cat' expected argument #1 to be of type integer, float, symbol, string, or instance name.
+    50: [ARGACCES5] Function str-cat expected argument #1 to be of type string, instance name, symbol, float, or integer
+    50: CLIPS> (clear)                            ; DR0381
+    51: FALSE
+    51: CLIPS> (deftemplate a                     ; DR0381
+    52: CLIPS> (clear)                            ; DR0381
+    52:    (field one
+    53: CLIPS> (deftemplate a                     ; DR0381
+    53:       (max-number-of-elements 9)
+    54:    (field one
+    54:       (min-number-of-elements 3)))
+    55:       (max-number-of-elements 9)
+    55: 
+    56:       (min-number-of-elements 3)))
+    56: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for slot attributes.
+    58: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for slot attributes.
+    58: ERROR:
+    59: 
+    59: (deftemplate MAIN::a
+    60: ERROR:
+    60:    (field one (max-number-of-elements
+    61: (deftemplate MAIN::a
+    61: CLIPS> (clear)                            ; DR0382
+    62:    (field one (max-number-of-elements
+    62: CLIPS> (deftemplate a                     ; DR0382
+    63: CLIPS> (clear)                            ; DR0382
+    63:    (field one (default nothing)))  ; DR0382
+    64: CLIPS> (deftemplate a                     ; DR0382
+    64: CLIPS> (assert (a (one a a a a)))         ; DR0382
+    65:    (field one (default nothing)))  ; DR0382
+    65: 
+    66: CLIPS> (assert (a (one a a a a)))         ; DR0382
+    66: [TMPLTDEF2] The single field slot 'one' can only contain a single field value.
+    67: 
+    67: CLIPS> (clear)                            ; DR0383
+    68: [TMPLTDEF2] The single field slot one can only contain a single field value.
+    68: CLIPS> (deftemplate data (field one) (field two))
+    69: CLIPS> (clear)                            ; DR0383
+    69: CLIPS> (assert (data (one)))              ; DR0383
+    70: CLIPS> (deftemplate data (field one) (field two))
+    70: 
+    71: CLIPS> (assert (data (one)))              ; DR0383
+    71: [TMPLTDEF2] The single field slot 'one' can only contain a single field value.
+    72: 
+    72: CLIPS> (clear)                            ; DR0396
+    73: [TMPLTDEF2] The single field slot one can only contain a single field value.
+    73: CLIPS> (create$)                        ; DR0396
+    74: CLIPS> (clear)                            ; DR0396
+    74: ()
+    75: CLIPS> (create$)                        ; DR0396
+    75: CLIPS> (str-compare (str-cat (create$)) 
+    76: ()
+    76:              (str-cat (create$)))
+    77: CLIPS> (str-compare (str-cat (create$)) 
+    77: [ARGACCES2] Function 'str-cat' expected argument #1 to be of type integer, float, symbol, string, or instance name.
+    78:              (str-cat (create$)))
+    78: CLIPS> (clear)                            ; DR0397
+    79: [ARGACCES5] Function str-cat expected argument #1 to be of type string, instance name, symbol, float, or integer
+    79: CLIPS> (assert-string (str-cat " (" (bind ?var (read)) ")"))
+    80: 0
+    80: anything
+    81: CLIPS> (clear)                            ; DR0397
+    81: <Fact-1>
+    82: CLIPS> (assert-string (str-cat " (" (bind ?var (read)) ")"))
+    82: CLIPS> (facts)                            ; DR0397
+    83: anything
+    83: f-1     (anything)
+    84: <Fact-1>
+    84: For a total of 1 fact.
+    85: CLIPS> (facts)                            ; DR0397
+    85: CLIPS> (dribble-off)
+   Files do not have the same # of lines

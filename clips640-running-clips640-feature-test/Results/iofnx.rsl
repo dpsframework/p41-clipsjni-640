@@ -1,0 +1,3 @@
+iofnx.bat differences are as follows:
+   455: TRUE ; FALSE on unsupported systems
+   455: TRUE

@@ -1,0 +1,488 @@
+drtest03.bat differences are as follows:
+     7: f-0     (initial-fact)
+     7: CLIPS> (clear)                            ; DR0202
+     8: For a total of 1 fact.
+     8: CLIPS> (deffacts stuff
+     9: CLIPS> (clear)                            ; DR0202
+     9:    (point 1)
+    10: CLIPS> (deffacts stuff
+    10:    (point 2)
+    11:    (point 1)
+    11:    (point 3)
+    12:    (point 2)
+    12:    (point 4))
+    13:    (point 3)
+    13: CLIPS> (defrule get-min
+    14:    (point 4))
+    14:    ?x <-  (point ?min)
+    15: CLIPS> (defrule get-min
+    15:    (not (point ?y&:(< ?y ?min)))
+    16:    ?x <-  (point ?min)
+    16:    ?fy <- (point ?minp1&:(<> ?min ?minp1))
+    17:    (not (point ?y&:(< ?y ?min)))
+    17:    (not (point ?z&:(<> ?z ?min)&:(< ?z ?minp1)))
+    18:    ?fy <- (point ?minp1&:(<> ?min ?minp1))
+    18:    =>
+    19:    (not (point ?z&:(<> ?z ?min)&:(< ?z ?minp1)))
+    19:    (retract ?x ?fy)
+    20:    =>
+    20:    (printout t "This rule fires" crlf))
+    21:    (retract ?x ?fy)
+    21: CLIPS> (reset)                            ; DR0202
+    22:    (printout t "This rule fires" crlf))
+    22: CLIPS> (agenda)                           ; DR0202
+    23: CLIPS> (reset)                            ; DR0202
+    23: 0      get-min: f-1,*,f-2,*
+    24: CLIPS> (agenda)                           ; DR0202
+    24: For a total of 1 activation.
+    25: 0      get-min: f-1,*,f-2,*
+    25: CLIPS> (watch rules)                      ; DR0202
+    26: For a total of 1 activation.
+    26: CLIPS> (run)                              ; DR0202
+    27: CLIPS> (watch rules)                      ; DR0202
+    27: FIRE    1 get-min: f-1,*,f-2,*
+    28: CLIPS> (run)                              ; DR0202
+    28: This rule fires
+    29: FIRE    1 get-min: f-1,*,f-2,*
+    29: FIRE    2 get-min: f-3,*,f-4,*
+    31: FIRE    2 get-min: f-3,*,f-4,*
+    31: CLIPS> (unwatch rules)                    ; DR0202
+    32: This rule fires
+    32: CLIPS> (clear)                            ; DR0204
+    33: CLIPS> (unwatch rules)                    ; DR0202
+    33: CLIPS> (defrule test
+    34: CLIPS> (clear)                            ; DR0204
+    34:    ?fact <- (initial-fact)
+    35: CLIPS> (defrule test
+    35:    =>
+    36:    ?fact <- (initial-fact)
+    36:    (printout t "any thing" crlf)
+    37:    =>
+    37:    (retract ?fact))
+    38:    (printout t "any thing" crlf)
+    38: CLIPS> (reset)                            ; DR0204
+    39:    (retract ?fact))
+    39: CLIPS> (run)                              ; DR0204
+    40: CLIPS> (reset)                            ; DR0204
+    40: CLIPS> (clear)                            ; DR0206
+    41: CLIPS> (run)                              ; DR0204
+    41: CLIPS> (deffacts test "rebinding of mulitfield vars"
+    42: any thing
+    42:    (_1 to see if the vars mess up if the fields are long)
+    43: CLIPS> (clear)                            ; DR0206
+    43:    (_2 if so what is the limit also see if there is problem with bind))
+    44: CLIPS> (deffacts test "rebinding of mulitfield vars"
+    44: CLIPS> (defrule ok 
+    45:    (_1 to see if the vars mess up if the fields are long)
+    45:    ?f1 <- (_1 $?one)
+    46:    (_2 if so what is the limit also see if there is problem with bind))
+    46:    ?f2 <- (_2 ? $?two)
+    47: CLIPS> (defrule ok 
+    47:    =>
+    48:    ?f1 <- (_1 $?one)
+    48:    (retract ?f1 ?f2)
+    49:    ?f2 <- (_2 ? $?two)
+    49:    (printout t "to see ... are long = " ?one  crlf)
+    50:    =>
+    50:    (printout t "if so ... with bind = "?two crlf)
+    51:    (retract ?f1 ?f2)
+    51:    (bind ?one (create$ ?one (subseq$ ?two 1 10)))
+    52:    (printout t "to see ... are long = " ?one  crlf)
+    52:    (printout t ?one crlf))
+    53:    (printout t "if so ... with bind = "?two crlf)
+    53: CLIPS> (reset)                            ; DR0206
+    54:    (bind ?one (create$ ?one (subseq$ ?two 1 10)))
+    54: CLIPS> (run)                              ; DR0206
+    55:    (printout t ?one crlf))
+    55: to see ... are long = (to see if the vars mess up if the fields are long)
+    56: CLIPS> (reset)                            ; DR0206
+    56: if so ... with bind = (so what is the limit also see if there is problem with bind)
+    57: CLIPS> (run)                              ; DR0206
+    57: (to see if the vars mess up if the fields are long so what is the limit also see if there is)
+    58: to see ... are long = (to see if the vars mess up if the fields are long)
+    58: CLIPS> (clear)                            ; DR0207
+    59: if so ... with bind = (so what is the limit also see if there is problem with bind)
+    59: CLIPS> (deffacts input
+    60: (to see if the vars mess up if the fields are long so what is the limit also see if there is)
+    60:    (gift ball shoe food "candies  " 3 1 )
+    61: CLIPS> (clear)                            ; DR0207
+    61:    (but we didn't have time !))
+    62: CLIPS> (deffacts input
+    62: CLIPS> (defrule check 
+    63:    (gift ball shoe food "candies  " 3 1 )
+    63:    ?f1 <- (gift ?ball $?multi)
+    64:    (but we didn't have time !))
+    64:    ?f2 <- (but $?rest)
+    65: CLIPS> (defrule check 
+    65:    =>
+    66:    ?f1 <- (gift ?ball $?multi)
+    66:    (printout t "?ball = "?ball crlf "?multi " ?multi crlf)
+    67:    ?f2 <- (but $?rest)
+    67:    (printout t "but " ?rest crlf)
+    68:    =>
+    68:    (printout t "let's mess with them " crlf)
+    69:    (printout t "?ball = "?ball crlf "?multi " ?multi crlf)
+    69:    (bind ?multi (create$ (subseq$ ?rest 1 3)))
+    70:    (printout t "but " ?rest crlf)
+    70:    (printout t "we didn't have = " ?multi  crlf))
+    71:    (printout t "let's mess with them " crlf)
+    71: CLIPS> (reset)                            ; DR0207
+    72:    (bind ?multi (create$ (subseq$ ?rest 1 3)))
+    72: CLIPS> (run)                              ; DR0207
+    73:    (printout t "we didn't have = " ?multi  crlf))
+    73: ?ball = ball
+    74: CLIPS> (reset)                            ; DR0207
+    74: ?multi (shoe food "candies  " 3 1)
+    75: CLIPS> (run)                              ; DR0207
+    75: but (we didn't have time !)
+    76: ?ball = ball
+    76: let's mess with them 
+    77: ?multi (shoe food "candies  " 3 1)
+    77: we didn't have = (we didn't have)
+    78: but (we didn't have time !)
+    78: CLIPS> (clear)                            ; DR0232
+    79: let's mess with them 
+    79: CLIPS> (defrule a => (initialize-it))     ; DR0232
+    80: we didn't have = (we didn't have)
+    80: 
+    81: CLIPS> (clear)                            ; DR0232
+    81: [EXPRNPSR3] Missing function declaration for 'initialize-it'.
+    82: CLIPS> (defrule a => (initialize-it))     ; DR0232
+    82: 
+    83: 
+    83: ERROR:
+    84: [EXPRNPSR3] Missing function declaration for initialize-it.
+    84: (defrule MAIN::a
+    85: 
+    85:    =>
+    86: ERROR:
+    86:    (initialize-it
+    87: (defrule MAIN::a
+    87: CLIPS> (reset)                            ; DR0232
+    88:    =>
+    88: CLIPS> (run)                              ; DR0232
+    89:    (initialize-it
+    89: CLIPS> (format t "%6.5 " 8655.3)          ; DR0233
+    90: CLIPS> (reset)                            ; DR0232
+    90: [IOFUN3] Invalid format flag "%6.5 " specified in format function.
+    91: CLIPS> (run)                              ; DR0232
+    91: ""
+    92: CLIPS> (format t "%6.5 " 8655.3)          ; DR0233
+    92: CLIPS> (clear)                            ; DR0235
+    93: [IOFUN3] Invalid format flag "%6.5 " specified in format function.
+    93: CLIPS> (deftemplate colors 
+    94: ""
+    94:    (field standard (default white))
+    95: CLIPS> (clear)                            ; DR0235
+    95:    (multifield metallic (default "plain black")))
+    96: CLIPS> (deftemplate colors 
+    96: CLIPS> (reset)                            ; DR0235
+    97:    (field standard (default white))
+    97: CLIPS> (assert (colors))                  ; DR0235
+    98:    (multifield metallic (default "plain black")))
+    98: <Fact-1>
+    99: CLIPS> (reset)                            ; DR0235
+    99: CLIPS> (assert (colors (standard black))) ; DR0235
+   100: CLIPS> (assert (colors))                  ; DR0235
+   100: <Fact-2>
+   101: <Fact-1>
+   101: CLIPS> (assert (colors (metallic "navy blue")))
+   102: CLIPS> (assert (colors (standard black))) ; DR0235
+   102: <Fact-3>
+   103: <Fact-2>
+   103: CLIPS> (facts)                            ; DR0235
+   104: CLIPS> (assert (colors (metallic "navy blue")))
+   104: f-1     (colors (standard white) (metallic "plain black"))
+   105: <Fact-3>
+   105: f-2     (colors (standard black) (metallic "plain black"))
+   106: CLIPS> (facts)                            ; DR0235
+   106: f-3     (colors (standard white) (metallic "navy blue"))
+   107: f-0     (initial-fact)
+   107: For a total of 3 facts.
+   108: f-1     (colors (standard white) (metallic "plain black"))
+   108: CLIPS> (clear)                            ; DR0238
+   109: f-2     (colors (standard black) (metallic "plain black"))
+   109: CLIPS> (deftemplate auto (field name))
+   110: f-3     (colors (standard white) (metallic "navy blue"))
+   110: CLIPS> (defrule one 
+   111: For a total of 4 facts.
+   111:    ?f1 <- (auto (name nil))
+   112: CLIPS> (clear)                            ; DR0238
+   112:    =>
+   113: CLIPS> (deftemplate auto (field name))
+   113:    (modify ?f1 (namse any))) 
+   114: CLIPS> (defrule one 
+   114: 
+   115:    ?f1 <- (auto (name nil))
+   115: [TMPLTDEF1] Invalid slot 'namse' not defined in corresponding deftemplate 'auto'.
+   116:    =>
+   116: 
+   117:    (modify ?f1 (namse any))) 
+   117: ERROR:
+   118: 
+   118: (defrule MAIN::one
+   119: [TMPLTDEF1] Invalid slot namse not defined in corresponding deftemplate auto.
+   119:    ?f1 <- (auto (name nil))
+   120: 
+   120:    =>
+   121: ERROR:
+   121:    (modify ?f1 (namse any)))
+   122: (defrule MAIN::one
+   122: CLIPS> (reset)                            ; DR0238
+   123:    ?f1 <- (auto (name nil))
+   123: CLIPS> (assert (auto))                    ; DR0238
+   124:    =>
+   124: <Fact-1>
+   125:    (modify ?f1 (namse any)))
+   125: CLIPS> (agenda)                           ; DR0238
+   126: CLIPS> (reset)                            ; DR0238
+   126: CLIPS> (run)                              ; DR0238
+   127: CLIPS> (assert (auto))                    ; DR0238
+   127: CLIPS> (format nil "%6.5f" 864)           ; DR0240
+   128: <Fact-1>
+   128: "864.00000"
+   129: CLIPS> (agenda)                           ; DR0238
+   129: CLIPS> (format nil "%6.5f" 86.543)        ; DR0240
+   130: CLIPS> (run)                              ; DR0238
+   130: "86.54300"
+   131: CLIPS> (format nil "%6.5f" 864)           ; DR0240
+   131: CLIPS> (format nil "%6.5f" 86551.)        ; DR0240    
+   132: "864.00000"
+   132: "86551.00000"
+   133: CLIPS> (format nil "%6.5f" 86.543)        ; DR0240
+   133: CLIPS> (clear)                            ; DR0245
+   134: "86.54300"
+   134: CLIPS> (deftemplate a                     ; DR0245
+   135: CLIPS> (format nil "%6.5f" 86551.)        ; DR0240    
+   135:    (field one) (field two))
+   136: "86551.00000"
+   136: CLIPS> (defrule b
+   137: CLIPS> (clear)                            ; DR0245
+   137:    (not (a (one anything) (three whatever)))
+   138: CLIPS> (deftemplate a                     ; DR0245
+   138:    =>)       
+   139:    (field one) (field two))
+   139: 
+   140: CLIPS> (defrule b
+   140: [TMPLTDEF1] Invalid slot 'three' not defined in corresponding deftemplate 'a'.
+   141:    (not (a (one anything) (three whatever)))
+   141: 
+   142:    =>)       
+   142: ERROR:
+   143: 
+   143: (defrule MAIN::b
+   144: [TMPLTDEF1] Invalid slot three not defined in corresponding deftemplate a.
+   144:    (not (a (one anything) (three
+   145: 
+   145: CLIPS> (clear)                            ; DR0246
+   146: ERROR:
+   146: CLIPS> (defrule error                     ; DR0246
+   147: (defrule MAIN::b
+   147:    ?f <- (fact)
+   148:    (not (a (one anything) (three
+   148:    =>
+   149: CLIPS> (clear)                            ; DR0246
+   149:    (assert (new-fact ?f))) 
+   150: CLIPS> (defrule error                     ; DR0246
+   150: CLIPS> (assert (fact))                    ; DR0246
+   151:    ?f <- (fact)
+   151: <Fact-1>
+   152:    =>
+   152: CLIPS> (run)                              ; DR0246
+   153:    (assert (new-fact ?f))) 
+   153: CLIPS> (facts)                            ; DR0246
+   154: CLIPS> (assert (fact))                    ; DR0246
+   154: f-1     (fact)
+   155: <Fact-1>
+   155: f-2     (new-fact <Fact-1>)
+   156: CLIPS> (run)                              ; DR0246
+   156: For a total of 2 facts.
+   157: CLIPS> (facts)                            ; DR0246
+   157: CLIPS> (clear)                            ; DR0248
+   158: f-0     (initial-fact)
+   158: CLIPS> (deffacts a)                       ; DR0248
+   159: f-1     (fact)
+   159: CLIPS> (clear)                            ; DR0251
+   160: f-2     (new-fact <Fact-1>)
+   160: CLIPS> (deftemplate auto (field name))    ; DR0251
+   161: For a total of 3 facts.
+   161: CLIPS> (defrule one "test the naked assert & modify"
+   162: CLIPS> (clear)                            ; DR0248
+   162:    ?f1 <- (auto (name nil))
+   163: CLIPS> (deffacts a)                       ; DR0248
+   163:    (not (auto (mane nil)))
+   164: CLIPS> (clear)                            ; DR0251
+   164:    =>
+   165: CLIPS> (deftemplate auto (field name))    ; DR0251
+   165:    (modify ?f1 (name any)))
+   166: CLIPS> (defrule one "test the naked assert & modify"
+   166: 
+   167:    ?f1 <- (auto (name nil))
+   167: [TMPLTDEF1] Invalid slot 'mane' not defined in corresponding deftemplate 'auto'.
+   168:    (not (auto (mane nil)))
+   168: 
+   169:    =>
+   169: ERROR:
+   170:    (modify ?f1 (name any)))
+   170: (defrule MAIN::one "test the naked assert & modify"
+   171: 
+   171:    ?f1 <- (auto (name nil))
+   172: [TMPLTDEF1] Invalid slot mane not defined in corresponding deftemplate auto.
+   172:    (not (auto (mane
+   173: 
+   173: CLIPS> (str-implode (create$))          ; DR0256
+   174: ERROR:
+   174: 
+   175: (defrule MAIN::one "test the naked assert & modify"
+   175: [EXPRNPSR3] Missing function declaration for 'str-implode'.
+   176:    ?f1 <- (auto (name nil))
+   176: CLIPS> (clear)                            ; DR0257
+   177:    (not (auto (mane
+   177: CLIPS> (defrule foo                       ; DR0257
+   178: CLIPS> (str-implode (create$))          ; DR0256
+   178:    ?f1 <- (a 1) 
+   179: ""
+   179:    ?f2 <- (b 1)
+   180: CLIPS> (clear)                            ; DR0257
+   180:    (test (neq ?f1 ?f2))
+   181: CLIPS> (defrule foo                       ; DR0257
+   181:    =>)
+   182:    ?f1 <- (a 1) 
+   182: CLIPS> (defrule bar                       ; DR0257
+   183:    ?f2 <- (b 1)
+   183:    ?f1 <- (a ?) 
+   184:    (test (neq ?f1 ?f2))
+   184:    ?f2 <- (b ?)
+   185:    =>)
+   185:    (test (neq ?f1 ?f2))
+   186: CLIPS> (defrule bar                       ; DR0257
+   186:    =>)
+   187:    ?f1 <- (a ?) 
+   187: CLIPS> (assert (a 1) (a 2) (b 1))         ; DR0257
+   188:    ?f2 <- (b ?)
+   188: <Fact-3>
+   189:    (test (neq ?f1 ?f2))
+   189: CLIPS> (agenda)                           ; DR0257
+   190:    =>)
+   190: 0      foo: f-1,f-3
+   191: CLIPS> (assert (a 1) (a 2) (b 1))         ; DR0257
+   191: 0      bar: f-1,f-3
+   192: <Fact-3>
+   192: 0      bar: f-2,f-3
+   193: CLIPS> (agenda)                           ; DR0257
+   193: For a total of 3 activations.
+   194: 0      foo: f-1,f-3
+   194: CLIPS> (clear)                            ; DR0261
+   195: 0      bar: f-1,f-3
+   195: CLIPS> (deffacts a (one =(reset)))        ; DR0261
+   196: 0      bar: f-2,f-3
+   196: CLIPS> (reset)                            ; DR0261
+   197: For a total of 3 activations.
+   197: CLIPS> (facts)                            ; DR0261
+   198: CLIPS> (clear)                            ; DR0261
+   198: f-1     (one)
+   199: CLIPS> (deffacts a (one =(reset)))        ; DR0261
+   199: For a total of 1 fact.
+   200: CLIPS> (reset)                            ; DR0261
+   200: CLIPS> (clear)                            ; DR0279
+   201: CLIPS> (facts)                            ; DR0261
+   201: CLIPS> (defrule with-error                ; DR0279
+   202: f-0     (initial-fact)
+   202:    (value ?a&:(> ?a max))
+   203: f-1     (one)
+   203:    =>)
+   204: For a total of 2 facts.
+   204: [ARGACCES2] Function '>' expected argument #2 to be of type integer or float.
+   205: CLIPS> (clear)                            ; DR0279
+   205: 
+   206: CLIPS> (defrule with-error                ; DR0279
+   206: ERROR:
+   207:    (value ?a&:(> ?a max))
+   207: (defrule MAIN::with-error
+   208:    =>)
+   208:    (value ?a&:(> ?a max)
+   209: [ARGACCES5] Function > expected argument #2 to be of type integer or float
+   209: CLIPS> (defrule with-error-inside-not     ; DR0279
+   210: 
+   210:    (not (value ?b&:(> ?b max)))
+   211: ERROR:
+   211:    =>)
+   212: (defrule MAIN::with-error
+   212: [ARGACCES2] Function '>' expected argument #2 to be of type integer or float.
+   213:    (value ?a&:(> ?a max)
+   213: 
+   214: CLIPS> (defrule with-error-inside-not     ; DR0279
+   214: ERROR:
+   215:    (not (value ?b&:(> ?b max)))
+   215: (defrule MAIN::with-error-inside-not
+   216:    =>)
+   216:    (not (value ?b&:(> ?b max)
+   217: [ARGACCES5] Function > expected argument #2 to be of type integer or float
+   217: CLIPS> (clear)                            ; DR0296
+   218: 
+   218: CLIPS> (create$ / 3 1)                  ; DR0296
+   219: ERROR:
+   219: (/ 3 1)
+   220: (defrule MAIN::with-error-inside-not
+   220: CLIPS> (eval "(create$ / 3 1)")         ; DR0296
+   221:    (not (value ?b&:(> ?b max)
+   221: (/ 3 1)
+   222: CLIPS> (clear)                            ; DR0296
+   222: CLIPS> (deffacts a (one =(eval "(create$ / 3 1)")))
+   223: CLIPS> (create$ / 3 1)                  ; DR0296
+   223: CLIPS> (reset)                            ; DR0296
+   224: (/ 3 1)
+   224: CLIPS> (facts)                            ; DR0296
+   225: CLIPS> (eval "(create$ / 3 1)")         ; DR0296
+   225: f-1     (one / 3 1)
+   226: (/ 3 1)
+   226: For a total of 1 fact.
+   227: CLIPS> (deffacts a (one =(eval "(create$ / 3 1)")))
+   227: CLIPS> (clear)                            ; DR0298
+   228: CLIPS> (reset)                            ; DR0296
+   228: CLIPS> (deftemplate foo (field x) (field y))
+   229: CLIPS> (facts)                            ; DR0296
+   229: CLIPS> (defrule this-rule-doesnt-work     ; DR0298
+   230: f-0     (initial-fact)
+   230:    (foo (y ?x1) (x ?x2&~?x1))
+   231: f-1     (one / 3 1)
+   231:    =>)
+   232: For a total of 2 facts.
+   232: CLIPS> (defrule this-rule-works           ; DR0298
+   233: CLIPS> (clear)                            ; DR0298
+   233:    (foo (y ?x1&~?x2) (x ?x2))
+   234: CLIPS> (deftemplate foo (field x) (field y))
+   234:    =>)
+   235: CLIPS> (defrule this-rule-doesnt-work     ; DR0298
+   235: 
+   236:    (foo (y ?x1) (x ?x2&~?x1))
+   236: [ANALYSIS4] Variable ?x2 was referenced in CE #1 slot 'y' before being defined.
+   237:    =>)
+   237: 
+   238: CLIPS> (defrule this-rule-works           ; DR0298
+   238: ERROR:
+   239:    (foo (y ?x1&~?x2) (x ?x2))
+   239: (defrule MAIN::this-rule-works
+   240:    =>)
+   240:    (foo (y ?x1&~?x2) (x ?x2))
+   241: 
+   241:    =>)
+   242: [ANALYSIS4] Variable ?x2 was referenced in CE #1 slot y before being defined.
+   242: CLIPS> (assert (foo (x 3) (y 4)))         ; DR0298
+   243: 
+   243: <Fact-1>
+   244: ERROR:
+   244: CLIPS> (assert (foo (x 4) (y 3)))         ; DR0298
+   245: (defrule MAIN::this-rule-works
+   245: <Fact-2>
+   246:    (foo (y ?x1&~?x2) (x ?x2))
+   246: CLIPS> (agenda)                           ; DR0298
+   247:    =>)
+   247: 0      this-rule-doesnt-work: f-2
+   248: CLIPS> (assert (foo (x 3) (y 4)))         ; DR0298
+   248: 0      this-rule-doesnt-work: f-1
+   249: <Fact-1>
+   249: For a total of 2 activations.
+   250: CLIPS> (assert (foo (x 4) (y 3)))         ; DR0298
+   250: CLIPS> (dribble-off)
+   Files do not have the same # of lines

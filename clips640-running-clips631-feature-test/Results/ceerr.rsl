@@ -1,0 +1,23 @@
+ceerr.clp differences are as follows:
+     4: [ANALYSIS4] Variable ?x found in the expression (> ?x ?y)
+     4: [ANALYSIS4] ceerr.clp, Line 5: Variable ?x found in the expression (> ?x ?y)
+    13: [ANALYSIS4] Variable ?x found in the expression (> ?x ?y)
+    13: [ANALYSIS4] ceerr.clp, Line 10: Variable ?x found in the expression (> ?x ?y)
+    22: [ANALYSIS4] Variable ?x found in the expression (> ?x ?y)
+    22: [ANALYSIS4] ceerr.clp, Line 16: Variable ?x found in the expression (> ?x ?y)
+    32: [ANALYSIS4] Variable ?x found in the expression (> ?x ?y)
+    32: [ANALYSIS4] ceerr.clp, Line 23: Variable ?x found in the expression (> ?x ?y)
+    43: [ANALYSIS4] Variable ?x found in the expression (> ?x ?y)
+    43: [ANALYSIS4] ceerr.clp, Line 27: Variable ?x found in the expression (> ?x ?y)
+    51: [ANALYSIS4] Variable ?x found in the expression (> ?x ?y)
+    51: [ANALYSIS4] ceerr.clp, Line 33: Variable ?x found in the expression (> ?x ?y)
+    61: [ANALYSIS4] Variable ?x was referenced in CE #4 field #1 before being defined.
+    61: [ANALYSIS4] ceerr.clp, Line 40: Variable ?x was referenced in CE #4 field #1 before being defined.
+    71: [ANALYSIS4] Variable ?x found in the expression (> ?x ?y)
+    71: [ANALYSIS4] ceerr.clp, Line 48: Variable ?x found in the expression (> ?x ?y)
+    83: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for the exists conditional element.
+    83: [PRNTUTIL2] ceerr.clp, Line 51: Syntax Error:  Check appropriate syntax for the exists conditional element.
+    89: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for the forall conditional element.
+    89: [PRNTUTIL2] ceerr.clp, Line 55: Syntax Error:  Check appropriate syntax for the forall conditional element.
+    95: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for the forall conditional element.
+    95: [PRNTUTIL2] ceerr.clp, Line 59: Syntax Error:  Check appropriate syntax for the forall conditional element.

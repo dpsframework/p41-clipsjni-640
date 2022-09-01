@@ -1,0 +1,6 @@
+dynsal.clp differences are as follows:
+     2: This rule should fire 1st
+     2: Testing When Activated Salience Evaluation...
+     3: This rule should fire 2nd
+     3: Testing Every Cycle Salience Evaluation...
+   Files do not have the same # of lines

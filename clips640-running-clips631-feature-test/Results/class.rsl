@@ -1,0 +1,698 @@
+class.clp differences are as follows:
+    21: Direct Subclasses: INITIAL-OBJECT doc-test A1 A2 A3 A4 A5 A6 A7 A8 A9 GLOBAL-TEST
+    21: Direct Subclasses: doc-test A1 A2 A4 A5 A6 A7 A8 A9 GLOBAL-TEST
+   141: INITIAL-OBJECT
+   141: doc-test
+   142: doc-test
+   142: A1
+   143: A1
+   143: B1
+   144: B1
+   144: A2
+   145: A2
+   145: A4
+   146: A3
+   146: A5
+   147: A4
+   147: A6
+   148: A5
+   148: A7
+   149: A6
+   149: B7
+   150: A7
+   150: A8
+   151: B7
+   151: B8
+   152: A8
+   152: C8
+   153: B8
+   153: A9
+   154: C8
+   154: B9
+   155: A9
+   155: GLOBAL-TEST
+   156: B9
+   156: For a total of 31 defclasses.
+   157: GLOBAL-TEST
+   157: CLIPS> (describe-class A1)
+   158: For a total of 33 defclasses.
+   158: ================================================================================
+   159: CLIPS> (describe-class A1)
+   159: ********************************************************************************
+   160: ================================================================================
+   160: Concrete: direct instances of this class can be created.
+   161: ********************************************************************************
+   161: Non-reactive: direct instances of this class cannot match defrule patterns.
+   162: Concrete: direct instances of this class can be created.
+   162: 
+   163: Non-reactive: direct instances of this class cannot match defrule patterns.
+   163: Direct Superclasses: USER
+   164: 
+   164: Inheritance Precedence: A1 USER OBJECT
+   165: Direct Superclasses: USER
+   165: Direct Subclasses: B1
+   166: Inheritance Precedence: A1 USER OBJECT
+   166: --------------------------------------------------------------------------------
+   167: Direct Subclasses: B1
+   167: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   168: --------------------------------------------------------------------------------
+   168: fooA  : SGL STC INH RW  LCL RCT EXC PRV RW  put-fooA A1
+   169: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   169: barA  : SGL STC INH RW  LCL RCT EXC PRV RW  put-barA A1
+   170: fooA  : SGL STC INH RW  LCL RCT EXC PRV RW  put-fooA A1
+   170: 
+   171: barA  : SGL STC INH RW  LCL RCT EXC PRV RW  put-barA A1
+   171: Constraint information for slots:
+   173: Constraint information for slots:
+   173: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   174: 
+   174: fooA  :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   175: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   175: barA  :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   176: fooA  :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   176: --------------------------------------------------------------------------------
+   177: barA  :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   177: Recognized message-handlers:
+   178: --------------------------------------------------------------------------------
+   178: init primary in class USER
+   179: Recognized message-handlers:
+   179: delete primary in class USER
+   180: init primary in class USER
+   180: create primary in class USER
+   181: delete primary in class USER
+   181: print primary in class USER
+   182: create primary in class USER
+   182: direct-modify primary in class USER
+   183: print primary in class USER
+   183: message-modify primary in class USER
+   184: direct-modify primary in class USER
+   184: direct-duplicate primary in class USER
+   185: message-modify primary in class USER
+   185: message-duplicate primary in class USER
+   186: direct-duplicate primary in class USER
+   186: get-fooA primary in class A1
+   187: message-duplicate primary in class USER
+   187: put-fooA primary in class A1
+   188: get-fooA primary in class A1
+   188: get-barA primary in class A1
+   189: put-fooA primary in class A1
+   189: put-barA primary in class A1
+   190: get-barA primary in class A1
+   190: ********************************************************************************
+   191: put-barA primary in class A1
+   191: ================================================================================
+   192: ********************************************************************************
+   192: CLIPS> (describe-class B1)
+   194: CLIPS> (describe-class B1)
+   194: ********************************************************************************
+   195: ================================================================================
+   195: Concrete: direct instances of this class can be created.
+   196: ********************************************************************************
+   196: Non-reactive: direct instances of this class cannot match defrule patterns.
+   197: Concrete: direct instances of this class can be created.
+   197: 
+   198: Non-reactive: direct instances of this class cannot match defrule patterns.
+   198: Direct Superclasses: A1
+   199: 
+   199: Inheritance Precedence: B1 A1 USER OBJECT
+   200: Direct Superclasses: A1
+   200: Direct Subclasses:
+   201: Inheritance Precedence: B1 A1 USER OBJECT
+   201: --------------------------------------------------------------------------------
+   202: Direct Subclasses:
+   202: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   203: --------------------------------------------------------------------------------
+   203: fooA  : SGL STC INH RW  LCL RCT EXC PRV RW  put-fooA A1
+   204: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   204: barA  : SGL STC INH RW  LCL RCT EXC PRV RW  put-barA A1
+   205: fooA  : SGL STC INH RW  LCL RCT EXC PRV RW  put-fooA A1
+   205: fooB  : SGL STC INH RW  LCL RCT EXC PRV RW  put-fooB B1
+   206: barA  : SGL STC INH RW  LCL RCT EXC PRV RW  put-barA A1
+   206: barB  : SGL STC INH RW  LCL RCT EXC PRV RW  put-barB B1
+   207: fooB  : SGL STC INH RW  LCL RCT EXC PRV RW  put-fooB B1
+   207: 
+   208: barB  : SGL STC INH RW  LCL RCT EXC PRV RW  put-barB B1
+   208: Constraint information for slots:
+   210: Constraint information for slots:
+   210: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   211: 
+   211: fooA  :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   212: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   212: barA  :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   213: fooA  :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   213: fooB  :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   214: barA  :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   214: barB  :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   215: fooB  :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   215: --------------------------------------------------------------------------------
+   216: barB  :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   216: Recognized message-handlers:
+   217: --------------------------------------------------------------------------------
+   217: init primary in class USER
+   218: Recognized message-handlers:
+   218: delete primary in class USER
+   219: init primary in class USER
+   219: create primary in class USER
+   220: delete primary in class USER
+   220: print primary in class USER
+   221: create primary in class USER
+   221: direct-modify primary in class USER
+   222: print primary in class USER
+   222: message-modify primary in class USER
+   223: direct-modify primary in class USER
+   223: direct-duplicate primary in class USER
+   224: message-modify primary in class USER
+   224: message-duplicate primary in class USER
+   225: direct-duplicate primary in class USER
+   225: get-fooA primary in class A1
+   226: message-duplicate primary in class USER
+   226: put-fooA primary in class A1
+   227: get-fooA primary in class A1
+   227: get-barA primary in class A1
+   228: put-fooA primary in class A1
+   228: put-barA primary in class A1
+   229: get-barA primary in class A1
+   229: get-fooB primary in class B1
+   230: put-barA primary in class A1
+   230: put-fooB primary in class B1
+   231: get-fooB primary in class B1
+   231: get-barB primary in class B1
+   232: put-fooB primary in class B1
+   232: put-barB primary in class B1
+   233: get-barB primary in class B1
+   233: ********************************************************************************
+   234: put-barB primary in class B1
+   234: ================================================================================
+   235: ********************************************************************************
+   235: CLIPS> (make-instance a21 of A2)
+   236: ================================================================================
+   236: [a21]
+   237: CLIPS> (make-instance a21 of A2)
+   237: CLIPS> (make-instance a22 of A2)
+   238: [a21]
+   238: [a22]
+   239: CLIPS> (make-instance a22 of A2)
+   239: CLIPS> (send [a21] print)
+   240: [a22]
+   240: [a21] of A2
+   241: CLIPS> (send [a21] print)
+   241: (foo gen2)
+   242: [a21] of A2
+   242: (bar gen1)
+   243: (foo gen2)
+   243: CLIPS> (send [a22] print)
+   244: (bar gen1)
+   244: [a22] of A2
+   245: CLIPS> (send [a22] print)
+   245: (foo gen3)
+   246: [a22] of A2
+   246: (bar gen1)
+   247: (foo gen3)
+   247: CLIPS> (make-instance a3 of A3)
+   248: (bar gen1)
+   248: [PRNTUTIL1] Unable to find class 'A3'.
+   249: CLIPS> (make-instance a3 of A3)
+   249: CLIPS> (nth 2 (send [a3] get-foo))
+   250: [a3]
+   250: 
+   251: CLIPS> (nth 2 (send [a3] get-foo))
+   251: [EXPRNPSR3] Missing function declaration for 'nth'.
+   252: def
+   252: CLIPS> (send [a3] put-bar 45)
+   253: CLIPS> (send [a3] put-bar 45)
+   253: [MSGPASS2] No such instance [a3] in function 'send'.
+   254: 45
+   254: FALSE
+   256: 45
+   256: [MSGPASS2] No such instance [a3] in function 'send'.
+   257: CLIPS> (make-instance a4 of A4)
+   257: FALSE
+   258: [a4]
+   258: CLIPS> (make-instance a4 of A4)
+   259: CLIPS> (send [a4] print)
+   259: [a4]
+   260: [a4] of A4
+   260: CLIPS> (send [a4] print)
+   261: (foo 1)
+   261: [a4] of A4
+   262: (bar 2)
+   262: (foo 1)
+   263: (woz nil)
+   263: (bar 2)
+   264: CLIPS> (send [a4] put-foo 56)
+   264: (woz nil)
+   265: 56
+   265: CLIPS> (send [a4] put-foo 56)
+   266: CLIPS> (send [a4] put-bar 104)
+   266: 56
+   267: 104
+   267: CLIPS> (send [a4] put-bar 104)
+   268: CLIPS> (make-instance [b4] of A4)
+   268: 104
+   269: [b4]
+   269: CLIPS> (make-instance [b4] of A4)
+   270: CLIPS> (send [b4] print)
+   270: [b4]
+   271: [b4] of A4
+   271: CLIPS> (send [b4] print)
+   272: (foo 56)
+   272: [b4] of A4
+   273: (bar 2)
+   273: (foo 56)
+   274: (woz nil)
+   274: (bar 2)
+   275: CLIPS> (send [b4] put-foo 34)
+   275: (woz nil)
+   276: 34
+   276: CLIPS> (send [b4] put-foo 34)
+   277: CLIPS> (send [b4] put-woz 68)
+   277: 34
+   278: 68
+   278: CLIPS> (send [b4] put-woz 68)
+   279: CLIPS> (send [a4] print)
+   279: 68
+   280: [a4] of A4
+   280: CLIPS> (send [a4] print)
+   281: (foo 34)
+   281: [a4] of A4
+   282: (bar 2)
+   282: (foo 34)
+   283: (woz nil)
+   283: (bar 2)
+   284: CLIPS> (send [b4] print)
+   284: (woz nil)
+   285: [b4] of A4
+   285: CLIPS> (send [b4] print)
+   286: (foo 34)
+   286: [b4] of A4
+   287: (bar 2)
+   287: (foo 34)
+   288: (woz 68)
+   288: (bar 2)
+   289: CLIPS> (describe-class A5)
+   289: (woz 68)
+   290: ================================================================================
+   290: CLIPS> (describe-class A5)
+   291: ********************************************************************************
+   291: ================================================================================
+   292: Concrete: direct instances of this class can be created.
+   292: ********************************************************************************
+   293: Non-reactive: direct instances of this class cannot match defrule patterns.
+   293: Concrete: direct instances of this class can be created.
+   294: 
+   294: Non-reactive: direct instances of this class cannot match defrule patterns.
+   295: Direct Superclasses: USER
+   295: 
+   296: Inheritance Precedence: A5 USER OBJECT
+   296: Direct Superclasses: USER
+   297: Direct Subclasses:
+   297: Inheritance Precedence: A5 USER OBJECT
+   298: --------------------------------------------------------------------------------
+   298: Direct Subclasses:
+   299: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   299: --------------------------------------------------------------------------------
+   300: foo   : SGL STC INH  R  SHR RCT EXC PRV  R  NIL      A5
+   300: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   301: 
+   301: foo   : SGL STC INH  R  SHR RCT EXC PRV  R  NIL      A5
+   302: Constraint information for slots:
+   302: 
+   303: 
+   303: Constraint information for slots:
+   304: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   304: 
+   305: foo   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   305: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   306: --------------------------------------------------------------------------------
+   306: foo   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   307: Recognized message-handlers:
+   307: --------------------------------------------------------------------------------
+   308: init primary in class USER
+   308: Recognized message-handlers:
+   309: delete primary in class USER
+   309: init primary in class USER
+   310: create primary in class USER
+   310: delete primary in class USER
+   311: print primary in class USER
+   311: create primary in class USER
+   312: direct-modify primary in class USER
+   312: print primary in class USER
+   313: message-modify primary in class USER
+   313: direct-modify primary in class USER
+   314: direct-duplicate primary in class USER
+   314: message-modify primary in class USER
+   315: message-duplicate primary in class USER
+   315: direct-duplicate primary in class USER
+   316: get-foo primary in class A5
+   316: message-duplicate primary in class USER
+   317: ********************************************************************************
+   317: get-foo primary in class A5
+   318: ================================================================================
+   318: ********************************************************************************
+   319: CLIPS> (make-instance a6 of A6 (bar 34))
+   319: ================================================================================
+   320: [MSGFUN1] No applicable primary message-handlers found for put-bar.
+   320: CLIPS> (make-instance a6 of A6 (bar 34))
+   321: FALSE
+   321: [MSGFUN1] No applicable primary message-handlers found for 'put-bar'.
+   322: CLIPS> (make-instance a6 of A6 (foo 34) (woz 65))
+   322: FALSE
+   323: [a6]
+   323: CLIPS> (make-instance a6 of A6 (foo 34) (woz 65))
+   324: CLIPS> (send [a6] put-bar 1)
+   324: [a6]
+   325: [MSGFUN1] No applicable primary message-handlers found for put-bar.
+   325: CLIPS> (send [a6] put-bar 1)
+   326: FALSE
+   326: [MSGFUN1] No applicable primary message-handlers found for 'put-bar'.
+   327: CLIPS> (send [a6] put-woz 1)
+   327: FALSE
+   328: [MSGFUN3] woz slot in [a6] of A6: write access denied.
+   328: CLIPS> (send [a6] put-woz 1)
+   329: [PRCCODE4] Execution halted during the actions of message-handler put-woz primary in class A6
+   329: [MSGFUN3] Write access denied for slot 'woz' in instance [a6] of class 'A6'.
+   330: FALSE
+   330: [PRCCODE4] Execution halted during the actions of message-handler 'put-woz' primary in class 'A6'
+   331: CLIPS> (send [a6] print)
+   331: FALSE
+   332: [a6] of A6
+   332: CLIPS> (send [a6] print)
+   333: (foo 34)
+   333: [a6] of A6
+   334: (bar abc)
+   334: (foo 34)
+   335: (woz 65)
+   335: (bar abc)
+   336: CLIPS> (describe-class A7)
+   336: (woz 65)
+   337: ================================================================================
+   337: CLIPS> (describe-class A7)
+   338: ********************************************************************************
+   338: ================================================================================
+   339: Concrete: direct instances of this class can be created.
+   339: ********************************************************************************
+   340: Non-reactive: direct instances of this class cannot match defrule patterns.
+   340: Concrete: direct instances of this class can be created.
+   341: 
+   341: Non-reactive: direct instances of this class cannot match defrule patterns.
+   342: Direct Superclasses: USER
+   342: 
+   343: Inheritance Precedence: A7 USER OBJECT
+   343: Direct Superclasses: USER
+   344: Direct Subclasses: B7
+   344: Inheritance Precedence: A7 USER OBJECT
+   345: --------------------------------------------------------------------------------
+   345: Direct Subclasses: B7
+   346: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   346: --------------------------------------------------------------------------------
+   347: foo   : SGL STC INH RW  LCL RCT EXC PRV RW  put-foo  A7
+   347: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   348: bar   : SGL STC NIL RW  LCL RCT EXC PRV RW  put-bar  A7
+   348: foo   : SGL STC INH RW  LCL RCT EXC PRV RW  put-foo  A7
+   349: 
+   349: bar   : SGL STC NIL RW  LCL RCT EXC PRV RW  put-bar  A7
+   350: Constraint information for slots:
+   350: 
+   351: 
+   351: Constraint information for slots:
+   352: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   352: 
+   353: foo   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   353: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   354: bar   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   354: foo   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   355: --------------------------------------------------------------------------------
+   355: bar   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   356: Recognized message-handlers:
+   356: --------------------------------------------------------------------------------
+   357: init primary in class USER
+   357: Recognized message-handlers:
+   358: delete primary in class USER
+   358: init primary in class USER
+   359: create primary in class USER
+   359: delete primary in class USER
+   360: print primary in class USER
+   360: create primary in class USER
+   361: direct-modify primary in class USER
+   361: print primary in class USER
+   362: message-modify primary in class USER
+   362: direct-modify primary in class USER
+   363: direct-duplicate primary in class USER
+   363: message-modify primary in class USER
+   364: message-duplicate primary in class USER
+   364: direct-duplicate primary in class USER
+   365: get-foo primary in class A7
+   365: message-duplicate primary in class USER
+   366: put-foo primary in class A7
+   366: get-foo primary in class A7
+   367: get-bar primary in class A7
+   367: put-foo primary in class A7
+   368: put-bar primary in class A7
+   368: get-bar primary in class A7
+   369: ********************************************************************************
+   369: put-bar primary in class A7
+   370: ================================================================================
+   370: ********************************************************************************
+   371: CLIPS> (describe-class B7)
+   371: ================================================================================
+   372: ================================================================================
+   372: CLIPS> (describe-class B7)
+   373: ********************************************************************************
+   373: ================================================================================
+   374: Concrete: direct instances of this class can be created.
+   374: ********************************************************************************
+   375: Non-reactive: direct instances of this class cannot match defrule patterns.
+   375: Concrete: direct instances of this class can be created.
+   376: 
+   376: Non-reactive: direct instances of this class cannot match defrule patterns.
+   377: Direct Superclasses: A7
+   377: 
+   378: Inheritance Precedence: B7 A7 USER OBJECT
+   378: Direct Superclasses: A7
+   379: Direct Subclasses:
+   379: Inheritance Precedence: B7 A7 USER OBJECT
+   380: --------------------------------------------------------------------------------
+   380: Direct Subclasses:
+   381: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   381: --------------------------------------------------------------------------------
+   382: foo   : SGL STC INH RW  LCL RCT EXC PRV RW  put-foo  A7
+   382: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   383: 
+   383: foo   : SGL STC INH RW  LCL RCT EXC PRV RW  put-foo  A7
+   384: Constraint information for slots:
+   384: 
+   385: 
+   385: Constraint information for slots:
+   386: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   386: 
+   387: foo   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   387: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   388: --------------------------------------------------------------------------------
+   388: foo   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] 
+   389: Recognized message-handlers:
+   389: --------------------------------------------------------------------------------
+   390: init primary in class USER
+   390: Recognized message-handlers:
+   391: delete primary in class USER
+   391: init primary in class USER
+   392: create primary in class USER
+   392: delete primary in class USER
+   393: print primary in class USER
+   393: create primary in class USER
+   394: direct-modify primary in class USER
+   394: print primary in class USER
+   395: message-modify primary in class USER
+   395: direct-modify primary in class USER
+   396: direct-duplicate primary in class USER
+   396: message-modify primary in class USER
+   397: message-duplicate primary in class USER
+   397: direct-duplicate primary in class USER
+   398: get-foo primary in class A7
+   398: message-duplicate primary in class USER
+   399: put-foo primary in class A7
+   399: get-foo primary in class A7
+   400: get-bar primary in class A7
+   400: put-foo primary in class A7
+   401: put-bar primary in class A7
+   401: get-bar primary in class A7
+   402: ********************************************************************************
+   402: put-bar primary in class A7
+   403: ================================================================================
+   403: ********************************************************************************
+   404: CLIPS> (describe-class C8)
+   404: ================================================================================
+   405: ================================================================================
+   405: CLIPS> (describe-class C8)
+   406: ********************************************************************************
+   406: ================================================================================
+   407: Concrete: direct instances of this class can be created.
+   407: ********************************************************************************
+   408: Non-reactive: direct instances of this class cannot match defrule patterns.
+   408: Concrete: direct instances of this class can be created.
+   409: 
+   409: Non-reactive: direct instances of this class cannot match defrule patterns.
+   410: Direct Superclasses: B8
+   410: 
+   411: Inheritance Precedence: C8 B8 A8 USER OBJECT
+   411: Direct Superclasses: B8
+   412: Direct Subclasses:
+   412: Inheritance Precedence: C8 B8 A8 USER OBJECT
+   413: --------------------------------------------------------------------------------
+   413: Direct Subclasses:
+   414: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   414: --------------------------------------------------------------------------------
+   415: foo   : MLT STC INH  R  SHR RCT CMP PRV  R  NIL      A8 C8
+   415: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   416: 
+   416: foo   : MLT STC INH  R  SHR RCT CMP PRV  R  NIL      A8 C8
+   417: Constraint information for slots:
+   417: 
+   418: 
+   418: Constraint information for slots:
+   419: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   419: 
+   420: foo   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] CRD:[0..+oo]
+   420: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   421: --------------------------------------------------------------------------------
+   421: foo   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] CRD:[0..+oo]
+   422: Recognized message-handlers:
+   422: --------------------------------------------------------------------------------
+   423: init primary in class USER
+   423: Recognized message-handlers:
+   424: delete primary in class USER
+   424: init primary in class USER
+   425: create primary in class USER
+   425: delete primary in class USER
+   426: print primary in class USER
+   426: create primary in class USER
+   427: direct-modify primary in class USER
+   427: print primary in class USER
+   428: message-modify primary in class USER
+   428: direct-modify primary in class USER
+   429: direct-duplicate primary in class USER
+   429: message-modify primary in class USER
+   430: message-duplicate primary in class USER
+   430: direct-duplicate primary in class USER
+   431: get-foo primary in class A8
+   431: message-duplicate primary in class USER
+   432: put-foo primary in class A8
+   432: get-foo primary in class A8
+   433: get-foo primary in class B8
+   433: put-foo primary in class A8
+   434: put-foo primary in class B8
+   434: get-foo primary in class B8
+   435: get-foo primary in class C8
+   435: put-foo primary in class B8
+   436: ********************************************************************************
+   436: get-foo primary in class C8
+   437: ================================================================================
+   437: ********************************************************************************
+   438: CLIPS> (describe-class B9)
+   438: ================================================================================
+   439: ================================================================================
+   439: CLIPS> (describe-class B9)
+   440: ********************************************************************************
+   440: ================================================================================
+   441: Concrete: direct instances of this class can be created.
+   441: ********************************************************************************
+   442: Non-reactive: direct instances of this class cannot match defrule patterns.
+   442: Concrete: direct instances of this class can be created.
+   443: 
+   443: Non-reactive: direct instances of this class cannot match defrule patterns.
+   444: Direct Superclasses: A9
+   444: 
+   445: Inheritance Precedence: B9 A9 USER OBJECT
+   445: Direct Superclasses: A9
+   446: Direct Subclasses:
+   446: Inheritance Precedence: B9 A9 USER OBJECT
+   447: --------------------------------------------------------------------------------
+   447: Direct Subclasses:
+   448: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   448: --------------------------------------------------------------------------------
+   449: foo   : MLT STC INH  R  SHR RCT CMP PRV  R  NIL      A9 B9
+   449: SLOTS : FLD DEF PRP ACC STO MCH SRC VIS CRT OVRD-MSG SOURCE(S)
+   450: 
+   450: foo   : MLT STC INH  R  SHR RCT CMP PRV  R  NIL      A9 B9
+   451: Constraint information for slots:
+   451: 
+   452: 
+   452: Constraint information for slots:
+   453: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   453: 
+   454: foo   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] CRD:[0..+oo]
+   454: SLOTS : SYM STR INN INA EXA FTA INT FLT
+   455: --------------------------------------------------------------------------------
+   455: foo   :  +   +   +   +   +   +   +   +  RNG:[-oo..+oo] CRD:[0..+oo]
+   456: Recognized message-handlers:
+   456: --------------------------------------------------------------------------------
+   457: init primary in class USER
+   457: Recognized message-handlers:
+   458: delete primary in class USER
+   458: init primary in class USER
+   459: create primary in class USER
+   459: delete primary in class USER
+   460: print primary in class USER
+   460: create primary in class USER
+   461: direct-modify primary in class USER
+   461: print primary in class USER
+   462: message-modify primary in class USER
+   462: direct-modify primary in class USER
+   463: direct-duplicate primary in class USER
+   463: message-modify primary in class USER
+   464: message-duplicate primary in class USER
+   464: direct-duplicate primary in class USER
+   465: get-foo primary in class A9
+   465: message-duplicate primary in class USER
+   466: get-foo primary in class B9
+   466: get-foo primary in class A9
+   467: ********************************************************************************
+   467: get-foo primary in class B9
+   468: ================================================================================
+   468: ********************************************************************************
+   469: CLIPS> (make-instance a9 of A9)
+   469: ================================================================================
+   470: [a9]
+   470: CLIPS> (make-instance a9 of A9)
+   471: CLIPS> (make-instance b9 of B9)
+   471: [a9]
+   472: [b9]
+   472: CLIPS> (make-instance b9 of B9)
+   473: CLIPS> (send [a9] get-foo)
+   473: [b9]
+   474: (a b c)
+   474: CLIPS> (send [a9] get-foo)
+   475: CLIPS> (send [b9] get-foo)
+   475: (a b c)
+   476: (d e f)
+   476: CLIPS> (send [b9] get-foo)
+   477: CLIPS> (make-instance global-test of GLOBAL-TEST)
+   477: (d e f)
+   478: [global-test]
+   478: CLIPS> (make-instance global-test of GLOBAL-TEST)
+   479: CLIPS> (send [global-test] print)
+   479: [global-test]
+   480: [global-test] of GLOBAL-TEST
+   480: CLIPS> (send [global-test] print)
+   481: (x 100)
+   481: [global-test] of GLOBAL-TEST
+   482: (y 100)
+   482: (x 100)
+   483: CLIPS> (bind ?*global-test* 200)
+   483: (y 100)
+   484: 200
+   484: CLIPS> (bind ?*global-test* 200)
+   485: CLIPS> (initialize-instance global-test)
+   485: 200
+   486: [global-test]
+   486: CLIPS> (initialize-instance global-test)
+   487: CLIPS> (send [global-test] print)
+   487: [global-test]
+   488: [global-test] of GLOBAL-TEST
+   488: CLIPS> (send [global-test] print)
+   489: (x 100)
+   489: [global-test] of GLOBAL-TEST
+   490: (y 200)
+   490: (x 100)
+   491: CLIPS> (dribble-off)
+   491: (y 200)
+   Files do not have the same # of lines

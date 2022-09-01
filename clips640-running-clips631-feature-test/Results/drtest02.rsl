@@ -1,0 +1,266 @@
+drtest02.bat differences are as follows:
+     7: 2
+     7: 1
+     9: ()
+     9: 
+    10: CLIPS> (sub-string 1 2 "a")              ; DR0105 - "a"
+    10: [EXPRNPSR3] Missing function declaration for 'str-explode'.
+    11: "a"
+    11: CLIPS> (sub-string 1 2 "a")              ; DR0105 - "a"
+    12: CLIPS> (sub-string 2 2 "a")              ; DR0105 - ""
+    12: "a"
+    13: ""
+    13: CLIPS> (sub-string 2 2 "a")              ; DR0105 - ""
+    14: CLIPS> (subseq$ (create$ a) 2 2)     ; DR0106 - ()
+    14: ""
+    15: ()
+    15: CLIPS> (subseq$ (create$ a) 2 2)     ; DR0106 - ()
+    16: CLIPS> (subseq$ (create$ a) 1 2)     ; DR0106 - (a)
+    16: ()
+    17: (a)
+    17: CLIPS> (subseq$ (create$ a) 1 2)     ; DR0106 - (a)
+    18: CLIPS> (str-index "a" "aba")             ; DR0109 - 1
+    18: (a)
+    19: 1
+    19: CLIPS> (str-index "a" "aba")             ; DR0109 - 1
+    20: CLIPS> (str-implode)                     ; DR0112 - Error
+    20: 1
+    21: [ARGACCES4] Function str-implode expected exactly 1 argument(s)
+    21: CLIPS> (str-implode)                     ; DR0112 - Error
+    22: CLIPS> (sub-string 1 3 "abc")            ; DR0113 - memory loss
+    22: 
+    23: "abc"
+    23: [EXPRNPSR3] Missing function declaration for 'str-implode'.
+    26: CLIPS> (setgen 1)                        ; DR0114 - Error
+    26: CLIPS> (sub-string 1 3 "abc")            ; DR0113 - memory loss
+    27: 1
+    27: "abc"
+    28: CLIPS> (setgen a)                        ; DR0114 - Error
+    28: CLIPS> (setgen 1)                        ; DR0114 - Error
+    29: [ARGACCES5] Function setgen expected argument #1 to be of type integer
+    29: 1
+    30: CLIPS> (read 1 1)                        ; DR0114 - Error
+    30: CLIPS> (setgen a)                        ; DR0114 - Error
+    31: [ARGACCES4] Function read expected no more than 1 argument(s)
+    31: [ARGACCES2] Function 'setgen' expected argument #1 to be of type integer.
+    32: CLIPS> (readline 1 1)                    ; DR0114 - Error
+    32: CLIPS> (read 1 1)                        ; DR0114 - Error
+    33: [ARGACCES4] Function readline expected no more than 1 argument(s)
+    33: [ARGACCES1] Function 'read' expected no more than 1 argument.
+    34: CLIPS> (min)                             ; DR0114 - Error
+    34: CLIPS> (readline 1 1)                    ; DR0114 - Error
+    35: [ARGACCES4] Function min expected at least 2 argument(s)
+    35: [ARGACCES1] Function 'readline' expected no more than 1 argument.
+    36: CLIPS> (max)                             ; DR0114 - Error
+    36: CLIPS> (min)                             ; DR0114 - Error
+    37: [ARGACCES4] Function max expected at least 2 argument(s)
+    37: [ARGACCES1] Function 'min' expected at least 1 argument.
+    38: CLIPS> (pi 1)                            ; DR0114 - Error
+    38: CLIPS> (max)                             ; DR0114 - Error
+    39: [ARGACCES4] Function pi expected exactly 0 argument(s)
+    39: [ARGACCES1] Function 'max' expected at least 1 argument.
+    40: CLIPS> (halt 1)                          ; DR0114 - Error
+    40: CLIPS> (pi 1)                            ; DR0114 - Error
+    41: [ARGACCES4] Function halt expected exactly 0 argument(s)
+    41: [ARGACCES1] Function 'pi' expected exactly 0 arguments.
+    42: CLIPS> (mod x y)                         ; DR0114 - Error
+    42: CLIPS> (halt 1)                          ; DR0114 - Error
+    43: [ARGACCES5] Function mod expected argument #1 to be of type integer or float
+    43: [ARGACCES1] Function 'halt' expected exactly 0 arguments.
+    44: CLIPS> (setgen 1)                        ; DR0114 - Error
+    44: CLIPS> (mod x y)                         ; DR0114 - Error
+    45: 1
+    45: [ARGACCES2] Function 'mod' expected argument #1 to be of type integer or float.
+    46: CLIPS> (gensym 10)                       ; DR0114 - Error
+    46: CLIPS> (setgen 1)                        ; DR0114 - Error
+    47: [ARGACCES4] Function gensym expected exactly 0 argument(s)
+    47: 1
+    48: CLIPS> (if (eq 1 2) then)                ; DR0115 - Syntax
+    48: CLIPS> (gensym 10)                       ; DR0114 - Error
+    49: FALSE
+    49: [ARGACCES1] Function 'gensym' expected exactly 0 arguments.
+    50: CLIPS> (if (eq 1 2) then else)           ; DR0115 - Syntax
+    50: CLIPS> (if (eq 1 2) then)                ; DR0115 - Syntax
+    52: CLIPS> (while (eq 1 2) do)               ; DR0115 - Syntax
+    52: CLIPS> (if (eq 1 2) then else)           ; DR0115 - Syntax
+    54: CLIPS> (clear)                           ; DR0120
+    54: CLIPS> (while (eq 1 2) do)               ; DR0115 - Syntax
+    55: CLIPS> (defrule a 
+    55: FALSE
+    56:    (x ?string) 
+    56: CLIPS> (clear)                           ; DR0120
+    57:    => 
+    57: CLIPS> (defrule a 
+    58:    (bind ?m (str-explode ?string)) 
+    58:    (x ?string) 
+    59:    (bind ?str (str-implode ?m))
+    59:    => 
+    60:    (printout t ?m " " ?str crlf))
+    60:    (bind ?m (str-explode ?string)) 
+    61: CLIPS> (defrule b 
+    61:    (bind ?str (str-implode ?m))
+    62:    => 
+    62:    (printout t ?m " " ?str crlf))
+    63:    (bind ?m (str-explode "a b c 1 2 3"))
+    63: 
+    64:    (bind ?s (str-implode ?m))
+    64: [EXPRNPSR3] Missing function declaration for 'str-explode'.
+    65:    (printout t ?m " " ?s crlf))
+    65: 
+    66: CLIPS> (reset)                           ; DR0120
+    66: ERROR:
+    67: CLIPS> (assert (x "a b c 1 2 3"))        ; DR0120
+    67: (defrule MAIN::a
+    68: <Fact-1>
+    68:    (x ?string)
+    69: CLIPS> (run)                             ; DR0120
+    69:    =>
+    70: (a b c 1 2 3) a b c 1 2 3
+    70:    (bind ?m (str-explode
+    71: (a b c 1 2 3) a b c 1 2 3
+    71: CLIPS> (defrule b 
+    72: CLIPS> (batch "a*a")                     ; DR0127
+    72:    => 
+    73: [ARGACCES2] Function batch was unable to open file a*a.
+    73:    (bind ?m (str-explode "a b c 1 2 3"))
+    74: FALSE
+    74:    (bind ?s (str-implode ?m))
+    75: CLIPS> (open "a*a" a)                    ; DR0127
+    75:    (printout t ?m " " ?s crlf))
+    76: FALSE
+    76: 
+    77: CLIPS> (fetch "a*a")                     ; DR0127
+    77: [EXPRNPSR3] Missing function declaration for 'str-explode'.
+    78: [TEXTPRO1] Could not open file "a*a".
+    78: 
+    79: FALSE
+    79: ERROR:
+    80: CLIPS> (clear)                           ; DR0135
+    80: (defrule MAIN::b
+    81: CLIPS> (defrule rule1 ""
+    81:    =>
+    82:   (token ?level ?token-num)
+    82:    (bind ?m (str-explode
+    83:   (expert ?level|* ?token-num|*)
+    83: CLIPS> (reset)                           ; DR0120
+    84:   =>)
+    84: CLIPS> (assert (x "a b c 1 2 3"))        ; DR0120
+    85: CLIPS> (assert (token 2 4))              ; DR0135
+    85: <Fact-1>
+    86: <Fact-1>
+    86: CLIPS> (run)                             ; DR0120
+    87: CLIPS> (assert (expert 2 4))             ; DR0135
+    87: CLIPS> (batch "a*a")                     ; DR0127
+    88: <Fact-2>
+    88: [ARGACCES3] Function 'batch' was unable to open file 'a*a'.
+    89: CLIPS> (assert (expert 2 2))             ; DR0135
+    89: FALSE
+    90: <Fact-3>
+    90: CLIPS> (open "a*a" a)                    ; DR0127
+    91: CLIPS> (assert (expert 2 *))             ; DR0135
+    91: FALSE
+    92: <Fact-4>
+    92: CLIPS> (fetch "a*a")                     ; DR0127
+    93: CLIPS> (assert (expert * 4))             ; DR0135
+    93: [TEXTPRO1] Could not open file 'a*a'.
+    94: <Fact-5>
+    94: FALSE
+    95: CLIPS> (assert (expert * *))             ; DR0135
+    95: CLIPS> (clear)                           ; DR0135
+    96: <Fact-6>
+    96: CLIPS> (defrule rule1 ""
+    97: CLIPS> (assert (expert 4 *))             ; DR0135
+    97:   (token ?level ?token-num)
+    98: <Fact-7>
+    98:   (expert ?level|* ?token-num|*)
+    99: CLIPS> (assert (expert * 2))             ; DR0135
+    99:   =>)
+   100: <Fact-8>
+   100: CLIPS> (assert (token 2 4))              ; DR0135
+   101: CLIPS> (agenda)                          ; DR0135
+   101: <Fact-1>
+   102: 0      rule1: f-1,f-6
+   102: CLIPS> (assert (expert 2 4))             ; DR0135
+   103: 0      rule1: f-1,f-5
+   103: <Fact-2>
+   104: 0      rule1: f-1,f-4
+   104: CLIPS> (assert (expert 2 2))             ; DR0135
+   105: 0      rule1: f-1,f-2
+   105: <Fact-3>
+   106: For a total of 4 activations.
+   106: CLIPS> (assert (expert 2 *))             ; DR0135
+   107: CLIPS> (setgen 1)                        ; DR0156
+   107: <Fact-4>
+   108: 1
+   108: CLIPS> (assert (expert * 4))             ; DR0135
+   109: CLIPS> (setgen -1)                       ; DR0156
+   109: <Fact-5>
+   110: [ARGACCES5] Function setgen expected argument #1 to be of type number (greater than or equal to 1)
+   110: CLIPS> (assert (expert * *))             ; DR0135
+   111: 1
+   111: <Fact-6>
+   112: CLIPS> (gensym)                          ; DR0156
+   112: CLIPS> (assert (expert 4 *))             ; DR0135
+   113: gen1
+   113: <Fact-7>
+   114: CLIPS> (evenp dlaj)                      ; DR0159
+   114: CLIPS> (assert (expert * 2))             ; DR0135
+   115: [ARGACCES5] Function evenp expected argument #1 to be of type integer
+   115: <Fact-8>
+   116: CLIPS> (evenp 2e1)                       ; DR0159
+   116: CLIPS> (agenda)                          ; DR0135
+   117: [ARGACCES5] Function evenp expected argument #1 to be of type integer
+   117: 0      rule1: f-1,f-6
+   118: CLIPS> (oddp 4.3)                        ; DR0159
+   118: 0      rule1: f-1,f-5
+   119: [ARGACCES5] Function oddp expected argument #1 to be of type integer
+   119: 0      rule1: f-1,f-4
+   120: CLIPS> (oddp 5e1)                        ; DR0159
+   120: 0      rule1: f-1,f-2
+   121: [ARGACCES5] Function oddp expected argument #1 to be of type integer
+   121: For a total of 4 activations.
+   122: CLIPS> (/ d 6)                           ; DR0160
+   122: CLIPS> (setgen 1)                        ; DR0156
+   123: [ARGACCES5] Function / expected argument #1 to be of type integer or float
+   123: 1
+   124: CLIPS> (clear)                           ; DR0198
+   124: CLIPS> (setgen -1)                       ; DR0156
+   125: CLIPS> (deffacts bugfacts
+   125: [ARGACCES2] Function 'setgen' expected argument #1 to be of type integer (greater than or equal to 1).
+   126:    (base-count a 2 strand_13)
+   126: 1
+   127:    (count-bases strand_13 [ t 3 ]))                
+   127: CLIPS> (gensym)                          ; DR0156
+   128: CLIPS> (defrule total
+   128: gen1
+   129:    ?accum <- (count-bases ?id $?bases-with-counts)
+   129: CLIPS> (evenp dlaj)                      ; DR0159
+   130:    (not (increment-base ? ?id ?))
+   130: [ARGACCES2] Function 'evenp' expected argument #1 to be of type integer.
+   131:    ?abase <- (base-count ?base ?count ?id)
+   131: CLIPS> (evenp 2e1)                       ; DR0159
+   132:    =>
+   132: [ARGACCES2] Function 'evenp' expected argument #1 to be of type integer.
+   133:    (retract ?accum ?abase)
+   133: CLIPS> (oddp 4.3)                        ; DR0159
+   134:    (bind ?bases-and-counts 
+   134: [ARGACCES2] Function 'oddp' expected argument #1 to be of type integer.
+   135:       (create$ [ ?base ?count ] ?bases-with-counts))
+   135: CLIPS> (oddp 5e1)                        ; DR0159
+   136:    (assert (count-bases ?id ?bases-and-counts)))
+   136: [ARGACCES2] Function 'oddp' expected argument #1 to be of type integer.
+   137: CLIPS> (reset)                           ; DR0198
+   137: CLIPS> (/ d 6)                           ; DR0160
+   138: CLIPS> (run)                             ; DR0198
+   138: [ARGACCES2] Function '/' expected argument #1 to be of type integer or float.
+   139: CLIPS> (facts)                           ; DR0198
+   139: CLIPS> (clear)                           ; DR0198
+   140: f-0     (initial-fact)
+   140: CLIPS> (deffacts bugfacts
+   141: f-3     (count-bases strand_13 [ a 2 ] [ t 3 ])
+   141:    (base-count a 2 strand_13)
+   142: For a total of 2 facts.
+   142:    (count-bases strand_13 [ t 3 ]))                
+   143: CLIPS> (dribble-off)
+   143: CLIPS> (defrule total
+   Files do not have the same # of lines

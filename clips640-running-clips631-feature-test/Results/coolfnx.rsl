@@ -1,0 +1,686 @@
+coolfnx.bat differences are as follows:
+     5: [ARGACCES4] Function superclassp expected exactly 2 argument(s)
+     5: [ARGACCES1] Function 'superclassp' expected exactly 2 arguments.
+     7: [ARGACCES4] Function superclassp expected exactly 2 argument(s)
+     7: [ARGACCES1] Function 'superclassp' expected exactly 2 arguments.
+     9: [ARGACCES4] Function superclassp expected exactly 2 argument(s)
+     9: [ARGACCES1] Function 'superclassp' expected exactly 2 arguments.
+    11: [CLASSFUN1] Unable to find class BOGUS in function superclassp.
+    11: [CLASSFUN1] Unable to find class 'BOGUS' in function 'superclassp'.
+    18: [ARGACCES4] Function superclassp expected exactly 2 argument(s)
+    18: [ARGACCES1] Function 'superclassp' expected exactly 2 arguments.
+    20: [ARGACCES4] Function subclassp expected exactly 2 argument(s)
+    20: [ARGACCES1] Function 'subclassp' expected exactly 2 arguments.
+    22: [ARGACCES4] Function subclassp expected exactly 2 argument(s)
+    22: [ARGACCES1] Function 'subclassp' expected exactly 2 arguments.
+    24: [ARGACCES4] Function subclassp expected exactly 2 argument(s)
+    24: [ARGACCES1] Function 'subclassp' expected exactly 2 arguments.
+    26: [CLASSFUN1] Unable to find class BOGUS in function subclassp.
+    26: [CLASSFUN1] Unable to find class 'BOGUS' in function 'subclassp'.
+    33: [ARGACCES4] Function subclassp expected exactly 2 argument(s)
+    33: [ARGACCES1] Function 'subclassp' expected exactly 2 arguments.
+    35: [ARGACCES4] Function slot-existp expected at least 2 argument(s)
+    35: [ARGACCES1] Function 'slot-existp' expected at least 2 arguments.
+    37: [ARGACCES4] Function slot-existp expected at least 2 argument(s)
+    37: [ARGACCES1] Function 'slot-existp' expected at least 2 arguments.
+    39: [CLASSFUN1] Unable to find class BOGUS in function slot-existp.
+    39: [CLASSFUN1] Unable to find class 'BOGUS' in function 'slot-existp'.
+    50: [ARGACCES5] Function slot-existp expected argument #1 to be of type symbol
+    50: [ARGACCES2] Function 'slot-existp' expected argument #1 to be of type symbol.
+    52: [ARGACCES4] Function message-handler-existp expected at least 2 argument(s)
+    52: [ARGACCES1] Function 'message-handler-existp' expected at least 2 arguments.
+    54: [ARGACCES4] Function message-handler-existp expected at least 2 argument(s)
+    54: [ARGACCES1] Function 'message-handler-existp' expected at least 2 arguments.
+    56: [CLASSFUN1] Unable to find class BOGUS in function message-handler-existp.
+    56: [CLASSFUN1] Unable to find class 'BOGUS' in function 'message-handler-existp'.
+    59: [CLASSFUN1] Unable to find class BOGUS in function message-handler-existp.
+    59: [CLASSFUN1] Unable to find class 'BOGUS' in function 'message-handler-existp'.
+    93: A2: (1 2 3 4)
+    93: USER: (1 2 3 4)
+    94: USER: (2 3 4)
+    94: CLIPS> (init-slots)
+    95: CLIPS> (init-slots)
+    95: [MSGFUN4] The function 'init-slots' may only be called from within message-handlers.
+    96: [MSGFUN4] init-slots may only be called from within message-handlers.
+    96: FALSE
+    97: FALSE
+    97: CLIPS> (make-instance [mea] of MY-EXTERNAL-ADDRESS (blah 0))
+    98: CLIPS> (make-instance [mea] of MY-EXTERNAL-ADDRESS (blah 0))
+    98: [mea]
+    99: [mea]
+    99: CLIPS> (send [mea] put-blah 12a5H)
+   100: CLIPS> (send [mea] put-blah 12a5H)
+   100: 12a5H
+   101: 12a5H
+   101: CLIPS> (send [mea] get-blah)
+   102: CLIPS> (send [mea] get-blah)
+   102: 12a5H
+   103: 12a5H
+   103: CLIPS> (watch instances)
+   104: CLIPS> (watch instances)
+   104: CLIPS> (unmake-instance mea)
+   105: CLIPS> (unmake-instance mea)
+   105: <== instance [mea] of MY-EXTERNAL-ADDRESS
+   106: <== instance [mea] of MY-EXTERNAL-ADDRESS
+   106: TRUE
+   107: TRUE
+   107: CLIPS> (unmake-instance *)
+   108: CLIPS> (unmake-instance *)
+   108: <== instance [a1] of A1
+   109: <== instance [initial-object] of INITIAL-OBJECT
+   109: <== instance [a2] of A2
+   110: <== instance [a1] of A1
+   110: TRUE
+   111: <== instance [a2] of A2
+   111: CLIPS> (unmake-instance)
+   112: TRUE
+   112: [ARGACCES1] Function 'unmake-instance' expected at least 1 argument.
+   113: CLIPS> (unmake-instance)
+   113: CLIPS> (make-instance * of A1 (x 0))
+   114: [ARGACCES4] Function unmake-instance expected at least 1 argument(s)
+   114: ==> instance [*] of A1
+   115: CLIPS> (make-instance * of A1 (x 0))
+   115: [*]
+   116: ==> instance [*] of A1
+   116: CLIPS> (make-instance a2 of A2)
+   117: [*]
+   117: ==> instance [a2] of A2
+   118: CLIPS> (make-instance a2 of A2)
+   118: [a2]
+   119: ==> instance [a2] of A2
+   119: CLIPS> (unmake-instance *)
+   120: [a2]
+   120: <== instance [*] of A1
+   121: CLIPS> (unmake-instance *)
+   121: TRUE
+   122: <== instance [*] of A1
+   122: CLIPS> (unmake-instance *)
+   123: TRUE
+   123: <== instance [a2] of A2
+   124: CLIPS> (unmake-instance *)
+   124: TRUE
+   125: <== instance [a2] of A2
+   125: CLIPS> (unwatch instances)
+   126: TRUE
+   126: CLIPS> (make-instance a1 of A1 (x 0))
+   127: CLIPS> (unwatch instances)
+   127: [a1]
+   128: CLIPS> (make-instance a1 of A1 (x 0))
+   128: CLIPS> (class)
+   129: [a1]
+   129: [ARGACCES1] Function 'class' expected exactly 1 argument.
+   130: CLIPS> (class)
+   130: CLIPS> (class a1)
+   131: [ARGACCES4] Function class expected exactly 1 argument(s)
+   131: SYMBOL
+   132: CLIPS> (class a1)
+   132: CLIPS> (class [a1])
+   133: SYMBOL
+   133: A1
+   134: CLIPS> (class [a1])
+   134: CLIPS> (class (sym-cat [ a1 ]))
+   135: A1
+   135: SYMBOL
+   136: CLIPS> (class (sym-cat [ a1 ]))
+   136: CLIPS> (class (symbol-to-instance-name (sym-cat a "1")))
+   137: SYMBOL
+   137: A1
+   138: CLIPS> (class (symbol-to-instance-name (sym-cat a "1")))
+   138: CLIPS> (class 34)
+   139: A1
+   139: INTEGER
+   140: CLIPS> (class 34)
+   140: CLIPS> (instance-name)
+   141: INTEGER
+   141: [ARGACCES1] Function 'instance-name' expected exactly 1 argument.
+   142: CLIPS> (instance-name)
+   142: CLIPS> (instance-address)
+   143: [ARGACCES4] Function instance-name expected exactly 1 argument(s)
+   143: [ARGACCES1] Function 'instance-address' expected at least 1 argument.
+   144: CLIPS> (instance-address)
+   144: CLIPS> (instance-address a1)
+   145: [ARGACCES4] Function instance-address expected at least 1 argument(s)
+   145: <Instance-a1>
+   146: CLIPS> (instance-address a1)
+   146: CLIPS> (instance-address [a1])
+   148: CLIPS> (instance-address [a1])
+   148: CLIPS> (instance-name (instance-address a1))
+   149: <Instance-a1>
+   149: [a1]
+   150: CLIPS> (instance-name (instance-address a1))
+   150: CLIPS> (instance-name bogus)
+   151: [a1]
+   151: [INSFUN2] No such instance [bogus] in function 'instance-name'.
+   152: CLIPS> (instance-name bogus)
+   152: FALSE
+   153: [INSFUN2] No such instance bogus in function instance-name.
+   153: CLIPS> (instance-address bogus)
+   154: FALSE
+   154: [INSFUN2] No such instance [bogus] in function 'instance-address'.
+   155: CLIPS> (instance-address bogus)
+   155: FALSE
+   156: [INSFUN2] No such instance bogus in function instance-address.
+   156: CLIPS> (symbol-to-instance-name)
+   157: FALSE
+   157: [ARGACCES1] Function 'symbol-to-instance-name' expected exactly 1 argument.
+   158: CLIPS> (symbol-to-instance-name)
+   158: CLIPS> (symbol-to-instance-name bogus)
+   159: [ARGACCES4] Function symbol-to-instance-name expected exactly 1 argument(s)
+   159: [bogus]
+   160: CLIPS> (symbol-to-instance-name bogus)
+   160: CLIPS> (symbol-to-instance-name [bogus])
+   161: [bogus]
+   161: [ARGACCES2] Function 'symbol-to-instance-name' expected argument #1 to be of type symbol.
+   162: CLIPS> (symbol-to-instance-name [bogus])
+   162: CLIPS> (symbol-to-instance-name 42)
+   163: [ARGACCES5] Function symbol-to-instance-name expected argument #1 to be of type symbol
+   163: [ARGACCES2] Function 'symbol-to-instance-name' expected argument #1 to be of type symbol.
+   164: CLIPS> (symbol-to-instance-name 42)
+   164: CLIPS> (instance-name-to-symbol)
+   165: [ARGACCES5] Function symbol-to-instance-name expected argument #1 to be of type symbol
+   165: [ARGACCES1] Function 'instance-name-to-symbol' expected exactly 1 argument.
+   166: CLIPS> (instance-name-to-symbol)
+   166: CLIPS> (instance-name-to-symbol [bogus])
+   167: [ARGACCES4] Function instance-name-to-symbol expected exactly 1 argument(s)
+   167: bogus
+   168: CLIPS> (instance-name-to-symbol [bogus])
+   168: CLIPS> (instance-name-to-symbol bogus)
+   170: CLIPS> (instance-name-to-symbol bogus)
+   170: CLIPS> (instance-name-to-symbol 42)
+   171: bogus
+   171: [ARGACCES2] Function 'instance-name-to-symbol' expected argument #1 to be of type symbol or instance name.
+   172: CLIPS> (instance-name-to-symbol 42)
+   172: CLIPS> (instancep)
+   173: [ARGACCES5] Function instance-name-to-symbol expected argument #1 to be of type instance name or symbol
+   173: [ARGACCES1] Function 'instancep' expected exactly 1 argument.
+   174: CLIPS> (instancep)
+   174: CLIPS> (instancep 42)
+   175: [ARGACCES4] Function instancep expected exactly 1 argument(s)
+   175: FALSE
+   176: CLIPS> (instancep 42)
+   176: CLIPS> (instancep (instance-address [a1]))
+   177: FALSE
+   177: TRUE
+   178: CLIPS> (instancep (instance-address [a1]))
+   178: CLIPS> (instancep a1)
+   179: TRUE
+   179: FALSE
+   180: CLIPS> (instancep a1)
+   180: CLIPS> (instancep [junk])
+   181: FALSE
+   181: TRUE
+   182: CLIPS> (instancep [junk])
+   182: CLIPS> (instance-namep (instance-address [a1]))
+   183: TRUE
+   183: FALSE
+   184: CLIPS> (instance-namep (instance-address [a1]))
+   184: CLIPS> (instance-addressp (instance-address [a1]))
+   185: FALSE
+   185: TRUE
+   186: CLIPS> (instance-addressp (instance-address [a1]))
+   186: CLIPS> (instance-namep [a1])
+   188: CLIPS> (instance-namep [a1])
+   188: CLIPS> (instance-addressp [a1])
+   189: TRUE
+   189: FALSE
+   190: CLIPS> (instance-addressp [a1])
+   190: CLIPS> (instance-namep bogus)
+   192: CLIPS> (instance-namep bogus)
+   192: CLIPS> (instance-addressp bogus)
+   194: CLIPS> (instance-addressp bogus)
+   194: CLIPS> (instance-namep)
+   195: FALSE
+   195: [ARGACCES1] Function 'instance-namep' expected exactly 1 argument.
+   196: CLIPS> (instance-namep)
+   196: CLIPS> (instance-addressp)
+   197: [ARGACCES4] Function instance-namep expected exactly 1 argument(s)
+   197: [ARGACCES1] Function 'instance-addressp' expected exactly 1 argument.
+   198: CLIPS> (instance-addressp)
+   198: CLIPS> (instance-existp)
+   199: [ARGACCES4] Function instance-addressp expected exactly 1 argument(s)
+   199: [ARGACCES1] Function 'instance-existp' expected exactly 1 argument.
+   200: CLIPS> (instance-existp)
+   200: CLIPS> (instance-existp a1)
+   201: [ARGACCES4] Function instance-existp expected exactly 1 argument(s)
+   201: TRUE
+   202: CLIPS> (instance-existp a1)
+   202: CLIPS> (instance-existp [a1])
+   204: CLIPS> (instance-existp [a1])
+   204: CLIPS> (instance-existp [junk])
+   205: TRUE
+   205: FALSE
+   206: CLIPS> (instance-existp [junk])
+   206: CLIPS> (instance-existp (instance-address a1))
+   207: FALSE
+   207: TRUE
+   208: CLIPS> (instance-existp (instance-address a1))
+   208: CLIPS> (bind ?*x* (instance-address [a1]))
+   209: TRUE
+   209: <Instance-a1>
+   210: CLIPS> (bind ?*x* (instance-address [a1]))
+   210: CLIPS> (unmake-instance *)
+   211: <Instance-a1>
+   211: TRUE
+   212: CLIPS> (unmake-instance *)
+   212: CLIPS> (instance-addressp ?*x*)
+   214: CLIPS> (instance-addressp ?*x*)
+   214: CLIPS> (instance-name ?*x*)
+   215: TRUE
+   215: [INSFUN4] Invalid instance-address in function 'instance-name'.
+   216: CLIPS> (instance-name ?*x*)
+   216: FALSE
+   217: [INSFUN4] Invalid instance-address in function instance-name.
+   217: CLIPS> (send ?*x* print)
+   218: FALSE
+   218: [INSFUN4] Invalid instance-address in function 'send'.
+   219: CLIPS> (send ?*x* print)
+   219: FALSE
+   220: [INSFUN4] Invalid instance-address in function send.
+   220: CLIPS> (make-instance b1 of B1 (x 0))
+   221: FALSE
+   221: [b1]
+   222: CLIPS> (make-instance b1 of B1 (x 0))
+   222: CLIPS> (slot-existp)
+   223: [b1]
+   223: [ARGACCES1] Function 'slot-existp' expected at least 2 arguments.
+   224: CLIPS> (slot-existp)
+   224: CLIPS> (slot-existp (class [b1]))
+   225: [ARGACCES4] Function slot-existp expected at least 2 argument(s)
+   225: [ARGACCES1] Function 'slot-existp' expected at least 2 arguments.
+   226: CLIPS> (slot-existp (class [b1]))
+   226: CLIPS> (slot-existp (class [b1]) x inherit)
+   227: [ARGACCES4] Function slot-existp expected at least 2 argument(s)
+   227: TRUE
+   228: CLIPS> (slot-existp (class [b1]) x inherit)
+   228: CLIPS> (slot-existp (class [b1]) y inherit)
+   230: CLIPS> (slot-existp (class [b1]) y inherit)
+   230: CLIPS> (slot-existp bogus x inherit)
+   231: TRUE
+   231: [CLASSFUN1] Unable to find class 'bogus' in function 'slot-existp'.
+   232: CLIPS> (slot-existp bogus x inherit)
+   232: FALSE
+   233: [CLASSFUN1] Unable to find class bogus in function slot-existp.
+   233: CLIPS> (slot-existp (class [b1]) bogus inherit)
+   235: CLIPS> (slot-existp (class [b1]) bogus inherit)
+   235: CLIPS> (slot-writablep (class [b1]) x)
+   236: FALSE
+   236: TRUE
+   237: CLIPS> (slot-writablep (class [b1]) x)
+   237: CLIPS> (slot-writablep (class [b1]) y)
+   238: TRUE
+   238: FALSE
+   239: CLIPS> (slot-writablep (class [b1]) y)
+   239: CLIPS> (slot-initablep (class [b1]) x)
+   240: FALSE
+   240: TRUE
+   241: CLIPS> (slot-initablep (class [b1]) x)
+   241: CLIPS> (slot-initablep (class [b1]) y)
+   242: TRUE
+   242: FALSE
+   243: CLIPS> (slot-initablep (class [b1]) y)
+   243: CLIPS> (slot-writablep)
+   244: FALSE
+   244: [ARGACCES1] Function 'slot-writablep' expected exactly 2 arguments.
+   245: CLIPS> (slot-writablep)
+   245: CLIPS> (slot-writablep (class [b1]))
+   246: [ARGACCES4] Function slot-writablep expected exactly 2 argument(s)
+   246: [ARGACCES1] Function 'slot-writablep' expected exactly 2 arguments.
+   247: CLIPS> (slot-writablep (class [b1]))
+   247: CLIPS> (slot-writablep (class [b1]) bogus)
+   248: [ARGACCES4] Function slot-writablep expected exactly 2 argument(s)
+   248: [INSFUN3] No such slot 'bogus' in function 'slot-writablep'.
+   249: CLIPS> (slot-writablep (class [b1]) bogus)
+   249: FALSE
+   250: [INSFUN3] No such slot bogus in function slot-writablep.
+   250: CLIPS> (slot-writablep bogus x)
+   251: FALSE
+   251: [CLASSFUN1] Unable to find class 'bogus' in function 'slot-writablep'.
+   252: CLIPS> (slot-writablep bogus x)
+   252: FALSE
+   253: [CLASSFUN1] Unable to find class bogus in function slot-writablep.
+   253: CLIPS> (slot-initablep)
+   254: FALSE
+   254: [ARGACCES1] Function 'slot-initablep' expected exactly 2 arguments.
+   255: CLIPS> (slot-initablep)
+   255: CLIPS> (slot-initablep (class [b1]))
+   256: [ARGACCES4] Function slot-initablep expected exactly 2 argument(s)
+   256: [ARGACCES1] Function 'slot-initablep' expected exactly 2 arguments.
+   257: CLIPS> (slot-initablep (class [b1]))
+   257: CLIPS> (slot-initablep (class [b1]) bogus)
+   258: [ARGACCES4] Function slot-initablep expected exactly 2 argument(s)
+   258: [INSFUN3] No such slot 'bogus' in function 'slot-initablep'.
+   259: CLIPS> (slot-initablep (class [b1]) bogus)
+   259: FALSE
+   260: [INSFUN3] No such slot bogus in function slot-initablep.
+   260: CLIPS> (slot-writablep bogus x)
+   261: FALSE
+   261: [CLASSFUN1] Unable to find class 'bogus' in function 'slot-writablep'.
+   262: CLIPS> (slot-writablep bogus x)
+   262: FALSE
+   263: [CLASSFUN1] Unable to find class bogus in function slot-writablep.
+   263: CLIPS> (get x)
+   264: FALSE
+   264: [MSGFUN4] The function 'dynamic-get' may only be called from within message-handlers.
+   265: CLIPS> (get x)
+   265: FALSE
+   266: [MSGFUN4] dynamic-get may only be called from within message-handlers.
+   266: CLIPS> (put x)
+   267: FALSE
+   267: [MSGFUN4] The function 'dynamic-put' may only be called from within message-handlers.
+   268: CLIPS> (put x)
+   268: FALSE
+   269: [MSGFUN4] dynamic-put may only be called from within message-handlers.
+   269: CLIPS> (make-instance [junk] of JUNK (x 0) (y 0))
+   270: FALSE
+   270: [junk]
+   271: CLIPS> (make-instance [junk] of JUNK (x 0) (y 0))
+   271: CLIPS> (send [junk] my-put x a b c d e)
+   272: [junk]
+   272: (a b c d e)
+   273: CLIPS> (send [junk] my-put x a b c d e)
+   273: CLIPS> (send [junk] my-get x)
+   275: CLIPS> (send [junk] my-get x)
+   275: CLIPS> (send [junk] my-get y)
+   276: (a b c d e)
+   276: 0
+   277: CLIPS> (send [junk] my-get y)
+   277: CLIPS> (mv-slot-replace junk x 2 4 2 3 4)
+   278: 0
+   278: 
+   279: CLIPS> (mv-slot-replace junk x 2 4 2 3 4)
+   279: [EXPRNPSR3] Missing function declaration for 'mv-slot-replace'.
+   280: (a 2 3 4 e)
+   280: CLIPS> (send [junk] get-x)
+   281: CLIPS> (send [junk] get-x)
+   281: (a b c d e)
+   282: (a 2 3 4 e)
+   282: CLIPS> (mv-slot-insert junk x 2 4 2 3 4)
+   283: CLIPS> (mv-slot-insert junk x 2 4 2 3 4)
+   283: 
+   284: (a 4 2 3 4 2 3 4 e)
+   284: [EXPRNPSR3] Missing function declaration for 'mv-slot-insert'.
+   286: (a 4 2 3 4 2 3 4 e)
+   286: (a b c d e)
+   288: (a 4 2 3 4 e)
+   288: 
+   289: CLIPS> (send [junk] get-x)
+   289: [EXPRNPSR3] Missing function declaration for 'mv-slot-delete'.
+   290: (a 4 2 3 4 e)
+   290: CLIPS> (send [junk] get-x)
+   291: CLIPS> (send [junk] put-x a b c d e)
+   291: (a b c d e)
+   292: (a b c d e)
+   292: CLIPS> (send [junk] put-x a b c d e)
+   293: CLIPS> (send [junk] my-replace x 2 4 2 3 4)
+   293: (a b c d e)
+   294: TRUE
+   294: CLIPS> (send [junk] my-replace x 2 4 2 3 4)
+   295: CLIPS> (send [junk] get-x)
+   295: [MSGFUN1] No applicable primary message-handlers found for 'my-replace'.
+   296: (a 2 3 4 e)
+   296: FALSE
+   297: CLIPS> (send [junk] my-insert x 2 4 2 3 4)
+   297: CLIPS> (send [junk] get-x)
+   298: TRUE
+   298: (a b c d e)
+   299: CLIPS> (send [junk] get-x)
+   299: CLIPS> (send [junk] my-insert x 2 4 2 3 4)
+   300: (a 4 2 3 4 2 3 4 e)
+   300: [MSGFUN1] No applicable primary message-handlers found for 'my-insert'.
+   301: CLIPS> (send [junk] my-delete x 2 4)
+   301: FALSE
+   302: TRUE
+   302: CLIPS> (send [junk] get-x)
+   303: CLIPS> (send [junk] get-x)
+   303: (a b c d e)
+   304: (a 4 2 3 4 e)
+   304: CLIPS> (send [junk] my-delete x 2 4)
+   305: CLIPS> (send [junk] put-x)
+   305: [MSGFUN1] No applicable primary message-handlers found for 'my-delete'.
+   306: ()
+   306: FALSE
+   307: CLIPS> (mv-slot-insert junk x 1 abc)
+   307: CLIPS> (send [junk] get-x)
+   308: (abc)
+   308: (a b c d e)
+   309: CLIPS> (mv-slot-insert)
+   309: CLIPS> (send [junk] put-x)
+   310: [ARGACCES4] Function mv-slot-insert expected at least 4 argument(s)
+   310: ()
+   311: CLIPS> (mv-slot-delete)
+   311: CLIPS> (mv-slot-insert junk x 1 abc)
+   312: [ARGACCES4] Function mv-slot-delete expected exactly 4 argument(s)
+   312: 
+   313: CLIPS> (mv-slot-replace)
+   313: [EXPRNPSR3] Missing function declaration for 'mv-slot-insert'.
+   314: [ARGACCES4] Function mv-slot-replace expected at least 5 argument(s)
+   314: CLIPS> (mv-slot-insert)
+   315: CLIPS> (mv-slot-replace bogus x 1 2 abc)
+   315: 
+   316: [INSFUN2] No such instance bogus in function slot-replace$.
+   316: [EXPRNPSR3] Missing function declaration for 'mv-slot-insert'.
+   317: FALSE
+   317: CLIPS> (mv-slot-delete)
+   318: CLIPS> (mv-slot-replace junk bogus 1 2 abc)
+   318: 
+   319: [INSFUN3] No such slot bogus in function slot-replace$.
+   319: [EXPRNPSR3] Missing function declaration for 'mv-slot-delete'.
+   320: FALSE
+   320: CLIPS> (mv-slot-replace)
+   321: CLIPS> (mv-slot-replace junk x 1 100 abc)
+   321: 
+   322: [MULTIFUN1] Multifield index range 1..100 out of range 1..1 in function slot-replace$.
+   322: [EXPRNPSR3] Missing function declaration for 'mv-slot-replace'.
+   323: FALSE
+   323: CLIPS> (mv-slot-replace bogus x 1 2 abc)
+   324: CLIPS> (send [junk] my-replace x 1 100 abc)
+   324: 
+   325: [MULTIFUN1] Multifield index range 1..100 out of range 1..1 in function direct-slot-replace$.
+   325: [EXPRNPSR3] Missing function declaration for 'mv-slot-replace'.
+   326: FALSE
+   326: CLIPS> (mv-slot-replace junk bogus 1 2 abc)
+   327: CLIPS> (mv-slot-replace junk y 1 2 def)
+   327: 
+   328: [INSMULT1] Function slot-replace$ cannot be used on single-field slot y in instance junk.
+   328: [EXPRNPSR3] Missing function declaration for 'mv-slot-replace'.
+   329: FALSE
+   329: CLIPS> (mv-slot-replace junk x 1 100 abc)
+   330: CLIPS> (class-existp)
+   330: 
+   331: [ARGACCES4] Function class-existp expected exactly 1 argument(s)
+   331: [EXPRNPSR3] Missing function declaration for 'mv-slot-replace'.
+   332: CLIPS> (class-existp 34)
+   332: CLIPS> (send [junk] my-replace x 1 100 abc)
+   333: [ARGACCES5] Function class-existp expected argument #1 to be of type symbol
+   333: [MSGFUN1] No applicable primary message-handlers found for 'my-replace'.
+   334: CLIPS> (class-existp abc def)
+   334: FALSE
+   335: [ARGACCES4] Function class-existp expected exactly 1 argument(s)
+   335: CLIPS> (mv-slot-replace junk y 1 2 def)
+   336: CLIPS> (class-existp USER)
+   336: 
+   337: TRUE
+   337: [EXPRNPSR3] Missing function declaration for 'mv-slot-replace'.
+   338: CLIPS> (class-existp user)
+   338: CLIPS> (class-existp)
+   339: FALSE
+   339: [ARGACCES1] Function 'class-existp' expected exactly 1 argument.
+   340: CLIPS> (class-abstractp)
+   340: CLIPS> (class-existp 34)
+   341: [ARGACCES4] Function class-abstractp expected exactly 1 argument(s)
+   341: [ARGACCES2] Function 'class-existp' expected argument #1 to be of type symbol.
+   342: CLIPS> (class-abstractp 1)
+   342: CLIPS> (class-existp abc def)
+   343: [ARGACCES5] Function class-abstractp expected argument #1 to be of type symbol
+   343: [ARGACCES1] Function 'class-existp' expected exactly 1 argument.
+   344: CLIPS> (class-abstractp USER 1)
+   344: CLIPS> (class-existp USER)
+   345: [ARGACCES4] Function class-abstractp expected exactly 1 argument(s)
+   345: TRUE
+   346: CLIPS> (class-abstractp USER)
+   346: CLIPS> (class-existp user)
+   347: TRUE
+   347: FALSE
+   348: CLIPS> (class-abstractp TEST)
+   348: CLIPS> (class-abstractp)
+   349: FALSE
+   349: [ARGACCES1] Function 'class-abstractp' expected exactly 1 argument.
+   350: CLIPS> (class-superclasses)
+   350: CLIPS> (class-abstractp 1)
+   351: [ARGACCES4] Function class-superclasses expected at least 1 argument(s)
+   351: [ARGACCES2] Function 'class-abstractp' expected argument #1 to be of type symbol.
+   352: CLIPS> (class-superclasses 1)
+   352: CLIPS> (class-abstractp USER 1)
+   353: [ARGACCES5] Function class-superclasses expected argument #1 to be of type symbol
+   353: [ARGACCES1] Function 'class-abstractp' expected exactly 1 argument.
+   354: CLIPS> (class-superclasses WOZBANG)
+   354: CLIPS> (class-abstractp USER)
+   355: (INTEGER FLOAT)
+   355: TRUE
+   356: CLIPS> (class-superclasses WOZBANG 1)
+   356: CLIPS> (class-abstractp TEST)
+   357: [ARGACCES5] Function class-superclasses expected argument #2 to be of type symbol
+   357: FALSE
+   358: CLIPS> (class-superclasses WOZBANG junk)
+   358: CLIPS> (class-superclasses)
+   359: 
+   359: [ARGACCES1] Function 'class-superclasses' expected at least 1 argument.
+   360: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for class-superclasses.
+   360: CLIPS> (class-superclasses 1)
+   361: ()
+   361: [ARGACCES2] Function 'class-superclasses' expected argument #1 to be of type symbol.
+   362: CLIPS> (class-superclasses WOZBANG inherit)
+   362: CLIPS> (class-superclasses WOZBANG)
+   363: (INTEGER FLOAT NUMBER PRIMITIVE OBJECT)
+   363: (INTEGER FLOAT)
+   364: CLIPS> (class-subclasses)
+   364: CLIPS> (class-superclasses WOZBANG 1)
+   365: [ARGACCES4] Function class-subclasses expected at least 1 argument(s)
+   365: [ARGACCES2] Function 'class-superclasses' expected argument #2 to be of type symbol.
+   366: CLIPS> (class-subclasses 1)
+   366: CLIPS> (class-superclasses WOZBANG junk)
+   367: [ARGACCES5] Function class-subclasses expected argument #1 to be of type symbol
+   367: 
+   368: CLIPS> (class-subclasses NUMBER)
+   368: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for class-superclasses.
+   369: (INTEGER FLOAT)
+   369: ()
+   370: CLIPS> (class-subclasses NUMBER 1)
+   370: CLIPS> (class-superclasses WOZBANG inherit)
+   371: [ARGACCES5] Function class-subclasses expected argument #2 to be of type symbol
+   371: (INTEGER FLOAT NUMBER PRIMITIVE OBJECT)
+   372: CLIPS> (class-subclasses NUMBER junk)
+   372: CLIPS> (class-subclasses)
+   373: 
+   373: [ARGACCES1] Function 'class-subclasses' expected at least 1 argument.
+   374: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for class-subclasses.
+   374: CLIPS> (class-subclasses 1)
+   375: ()
+   375: [ARGACCES2] Function 'class-subclasses' expected argument #1 to be of type symbol.
+   376: CLIPS> (class-subclasses NUMBER inherit)
+   376: CLIPS> (class-subclasses NUMBER)
+   377: (INTEGER WOZBANG BOOGLE COOGLE DOOGLE FLOAT)
+   377: (INTEGER FLOAT)
+   378: CLIPS> (class-subclasses OBJECT inherit)
+   378: CLIPS> (class-subclasses NUMBER 1)
+   379: (PRIMITIVE NUMBER INTEGER WOZBANG BOOGLE COOGLE DOOGLE FLOAT LEXEME SYMBOL STRING MULTIFIELD ADDRESS EXTERNAL-ADDRESS MY-EXTERNAL-ADDRESS FACT-ADDRESS INSTANCE-ADDRESS INSTANCE INSTANCE-NAME USER INITIAL-OBJECT TEST SUBTEST A A1 B1 A2 JUNK)
+   379: [ARGACCES2] Function 'class-subclasses' expected argument #2 to be of type symbol.
+   380: CLIPS> (get-defmessage-handler-list)
+   380: CLIPS> (class-subclasses NUMBER junk)
+   381: (USER init primary USER delete primary USER create primary USER print primary USER direct-modify primary USER message-modify primary USER direct-duplicate primary USER message-duplicate primary USER print-args primary TEST get-x primary TEST put-x primary A1 get-x primary A1 put-x primary A1 print-args primary A2 print-args primary MY-EXTERNAL-ADDRESS get-blah primary MY-EXTERNAL-ADDRESS put-blah primary MY-EXTERNAL-ADDRESS create primary MY-EXTERNAL-ADDRESS init primary MY-EXTERNAL-ADDRESS delete primary JUNK get-x primary JUNK put-x primary JUNK put-y primary JUNK my-put primary JUNK my-get primary JUNK my-replace primary JUNK my-insert primary JUNK my-delete primary BOOGLE put-z primary)
+   381: 
+   382: CLIPS> (get-defmessage-handler-list 1)
+   382: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for class-subclasses.
+   383: [ARGACCES5] Function get-defmessage-handler-list expected argument #1 to be of type symbol
+   383: ()
+   384: CLIPS> (get-defmessage-handler-list JUNK)
+   384: CLIPS> (class-subclasses NUMBER inherit)
+   385: (JUNK get-x primary JUNK put-x primary JUNK put-y primary JUNK my-put primary JUNK my-get primary JUNK my-replace primary JUNK my-insert primary JUNK my-delete primary)
+   385: (INTEGER WOZBANG BOOGLE COOGLE DOOGLE FLOAT)
+   386: CLIPS> (get-defmessage-handler-list JUNK 1)
+   386: CLIPS> (class-subclasses OBJECT inherit)
+   387: [ARGACCES5] Function get-defmessage-handler-list expected argument #2 to be of type symbol
+   387: (PRIMITIVE NUMBER INTEGER WOZBANG BOOGLE COOGLE DOOGLE FLOAT LEXEME SYMBOL STRING MULTIFIELD ADDRESS EXTERNAL-ADDRESS MY-EXTERNAL-ADDRESS FACT-ADDRESS INSTANCE-ADDRESS INSTANCE INSTANCE-NAME USER TEST SUBTEST A A1 B1 A2 JUNK)
+   388: CLIPS> (get-defmessage-handler-list JUNK junk)
+   388: CLIPS> (get-defmessage-handler-list)
+   389: 
+   389: (USER init primary USER delete primary USER create primary USER print primary USER direct-modify primary USER message-modify primary USER direct-duplicate primary USER message-duplicate primary USER print-args primary TEST get-x primary TEST put-x primary A1 get-x primary A1 put-x primary A1 print-args primary MY-EXTERNAL-ADDRESS get-blah primary MY-EXTERNAL-ADDRESS put-blah primary MY-EXTERNAL-ADDRESS create primary MY-EXTERNAL-ADDRESS init primary MY-EXTERNAL-ADDRESS delete primary JUNK get-x primary JUNK put-x primary JUNK put-y primary JUNK my-put primary JUNK my-get primary BOOGLE put-z primary)
+   390: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for get-defmessage-handler-list.
+   390: CLIPS> (get-defmessage-handler-list 1)
+   391: ()
+   391: [ARGACCES2] Function 'get-defmessage-handler-list' expected argument #1 to be of type symbol.
+   392: CLIPS> (get-defmessage-handler-list JUNK inherit)
+   392: CLIPS> (get-defmessage-handler-list JUNK)
+   393: (USER init primary USER delete primary USER create primary USER print primary USER direct-modify primary USER message-modify primary USER direct-duplicate primary USER message-duplicate primary USER print-args primary JUNK get-x primary JUNK put-x primary JUNK put-y primary JUNK my-put primary JUNK my-get primary JUNK my-replace primary JUNK my-insert primary JUNK my-delete primary)
+   393: (JUNK get-x primary JUNK put-x primary JUNK put-y primary JUNK my-put primary JUNK my-get primary)
+   394: CLIPS> (slot-facets)
+   394: CLIPS> (get-defmessage-handler-list JUNK 1)
+   395: [ARGACCES4] Function slot-facets expected exactly 2 argument(s)
+   395: [ARGACCES2] Function 'get-defmessage-handler-list' expected argument #2 to be of type symbol.
+   396: CLIPS> (slot-facets 1)
+   396: CLIPS> (get-defmessage-handler-list JUNK junk)
+   397: [ARGACCES4] Function slot-facets expected exactly 2 argument(s)
+   397: 
+   398: CLIPS> (slot-facets bad-class foo)
+   398: [PRNTUTIL2] Syntax Error:  Check appropriate syntax for get-defmessage-handler-list.
+   399: [CLASSFUN1] Unable to find class bad-class in function slot-facets.
+   399: ()
+   400: ()
+   400: CLIPS> (get-defmessage-handler-list JUNK inherit)
+   401: CLIPS> (slot-facets TEST 1)
+   401: (USER init primary USER delete primary USER create primary USER print primary USER direct-modify primary USER message-modify primary USER direct-duplicate primary USER message-duplicate primary USER print-args primary JUNK get-x primary JUNK put-x primary JUNK put-y primary JUNK my-put primary JUNK my-get primary)
+   402: [ARGACCES5] Function slot-facets expected argument #2 to be of type symbol
+   402: CLIPS> (slot-facets)
+   403: CLIPS> (slot-facets TEST ziggy)
+   403: [ARGACCES1] Function 'slot-facets' expected exactly 2 arguments.
+   404: [INSFUN3] No such slot ziggy in function slot-facets.
+   404: CLIPS> (slot-facets 1)
+   405: ()
+   405: [ARGACCES1] Function 'slot-facets' expected exactly 2 arguments.
+   406: CLIPS> (slot-facets TEST x)
+   406: CLIPS> (slot-facets bad-class foo)
+   407: (SGL NIL INH RW LCL RCT EXC PRV RW put-x)
+   407: [CLASSFUN1] Unable to find class 'bad-class' in function 'slot-facets'.
+   408: CLIPS> (slot-facets SUBTEST x)
+   408: ()
+   409: (SGL NIL INH RW LCL RCT EXC PRV RW put-x)
+   409: CLIPS> (slot-facets TEST 1)
+   410: CLIPS> (slot-sources)
+   410: [ARGACCES2] Function 'slot-facets' expected argument #2 to be of type symbol.
+   411: [ARGACCES4] Function slot-sources expected exactly 2 argument(s)
+   411: CLIPS> (slot-facets TEST ziggy)
+   412: CLIPS> (slot-sources 1)
+   412: [INSFUN3] No such slot 'ziggy' in function 'slot-facets'.
+   413: [ARGACCES4] Function slot-sources expected exactly 2 argument(s)
+   413: ()
+   414: CLIPS> (slot-sources bad-class foo)
+   414: CLIPS> (slot-facets TEST x)
+   415: [CLASSFUN1] Unable to find class bad-class in function slot-sources.
+   415: (SGL NIL INH RW LCL RCT EXC PRV RW put-x)
+   416: ()
+   416: CLIPS> (slot-facets SUBTEST x)
+   417: CLIPS> (slot-sources TEST 1)
+   417: (SGL NIL INH RW LCL RCT EXC PRV RW put-x)
+   418: [ARGACCES5] Function slot-sources expected argument #2 to be of type symbol
+   418: CLIPS> (slot-sources)
+   419: CLIPS> (slot-sources TEST ziggy)
+   419: [ARGACCES1] Function 'slot-sources' expected exactly 2 arguments.
+   420: [INSFUN3] No such slot ziggy in function slot-sources.
+   420: CLIPS> (slot-sources 1)
+   421: ()
+   421: [ARGACCES1] Function 'slot-sources' expected exactly 2 arguments.
+   422: CLIPS> (slot-sources TEST x)
+   422: CLIPS> (slot-sources bad-class foo)
+   423: (TEST)
+   423: [CLASSFUN1] Unable to find class 'bad-class' in function 'slot-sources'.
+   424: CLIPS> (slot-sources SUBTEST x)
+   424: ()
+   425: (TEST)
+   425: CLIPS> (slot-sources TEST 1)
+   426: CLIPS> (slot-sources DOOGLE z)
+   426: [ARGACCES2] Function 'slot-sources' expected argument #2 to be of type symbol.
+   427: (WOZBANG COOGLE)
+   427: CLIPS> (slot-sources TEST ziggy)
+   428: CLIPS> (dribble-off)
+   428: [INSFUN3] No such slot 'ziggy' in function 'slot-sources'.
+   Files do not have the same # of lines

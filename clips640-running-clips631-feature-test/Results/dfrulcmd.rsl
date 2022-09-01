@@ -1,0 +1,566 @@
+dfrulcmd.bat differences are as follows:
+    13: [ARGACCES5] Function list-defrules expected argument #1 to be of type defmodule name
+    13: [ARGACCES2] Function 'list-defrules' expected argument #1 to be of type 'defmodule name'.
+    69: [ARGACCES4] Function undefrule expected exactly 1 argument(s)
+    69: [ARGACCES1] Function 'undefrule' expected exactly 1 argument.
+    71: [ARGACCES5] Function undefrule expected argument #1 to be of type symbol
+    71: [ARGACCES2] Function 'undefrule' expected argument #1 to be of type symbol.
+    73: [PRNTUTIL1] Unable to find defrule bad-name.
+    73: [PRNTUTIL1] Unable to find defrule 'bad-name'.
+    75: [ARGACCES4] Function undefrule expected exactly 1 argument(s)
+    75: [ARGACCES1] Function 'undefrule' expected exactly 1 argument.
+   109: [PRNTUTIL4] Unable to delete defrule foo.
+   109: [PRNTUTIL4] Unable to delete defrule 'foo'.
+   154: [PRNTUTIL4] Unable to delete defrule bar3.
+   154: [PRNTUTIL4] Unable to delete defrule 'bar3'.
+   178: [ARGACCES5] Function agenda expected argument #1 to be of type symbol
+   178: [ARGACCES2] Function 'agenda' expected argument #1 to be of type symbol.
+   201: [ARGACCES4] Function matches expected at least 1 argument(s)
+   201: [ARGACCES1] Function 'matches' expected at least 1 argument.
+   203: [ARGACCES5] Function matches expected argument #1 to be of type symbol
+   203: [ARGACCES2] Function 'matches' expected argument #1 to be of type symbol.
+   205: [PRNTUTIL1] Unable to find defrule bad-rule.
+   205: [PRNTUTIL1] Unable to find defrule 'bad-rule'.
+   289: [ARGACCES4] Function set-break expected exactly 1 argument(s)
+   289: [ARGACCES1] Function 'set-break' expected exactly 1 argument.
+   291: [ARGACCES5] Function set-break expected argument #1 to be of type symbol
+   291: [ARGACCES2] Function 'set-break' expected argument #1 to be of type symbol.
+   293: [PRNTUTIL1] Unable to find defrule bad-rule.
+   293: [PRNTUTIL1] Unable to find defrule 'bad-rule'.
+   296: [ARGACCES5] Function show-breaks expected argument #1 to be of type symbol
+   296: [ARGACCES2] Function 'show-breaks' expected argument #1 to be of type symbol.
+   299: [ARGACCES5] Function remove-break expected argument #1 to be of type symbol
+   299: [ARGACCES2] Function 'remove-break' expected argument #1 to be of type symbol.
+   301: [PRNTUTIL1] Unable to find defrule bad-rule.
+   301: [PRNTUTIL1] Unable to find defrule 'bad-rule'.
+   309: [ARGACCES4] Function set-break expected exactly 1 argument(s)
+   309: [ARGACCES1] Function 'set-break' expected exactly 1 argument.
+   311: [ARGACCES4] Function remove-break expected no more than 1 argument(s)
+   311: [ARGACCES1] Function 'remove-break' expected no more than 1 argument.
+   366: [ARGACCES4] Function refresh expected exactly 1 argument(s)
+   366: [ARGACCES1] Function 'refresh' expected exactly 1 argument.
+   368: [ARGACCES5] Function refresh expected argument #1 to be of type symbol
+   368: [ARGACCES2] Function 'refresh' expected argument #1 to be of type symbol.
+   370: [PRNTUTIL1] Unable to find defrule bad-rule.
+   370: [PRNTUTIL1] Unable to find defrule 'bad-rule'.
+   459: [ARGACCES4] Function set-strategy expected exactly 1 argument(s)
+   459: [ARGACCES1] Function 'set-strategy' expected exactly 1 argument.
+   461: [ARGACCES4] Function set-strategy expected exactly 1 argument(s)
+   461: [ARGACCES1] Function 'set-strategy' expected exactly 1 argument.
+   463: [ARGACCES4] Function get-strategy expected exactly 0 argument(s)
+   463: [ARGACCES1] Function 'get-strategy' expected exactly 0 arguments.
+   489: [ARGACCES5] Function set-strategy expected argument #1 to be of type symbol with value depth, breadth, lex, mea, complexity, simplicity, or random
+   489: [ARGACCES2] Function 'set-strategy' expected argument #1 to be of type symbol with value depth, breadth, lex, mea, complexity, simplicity, or random.
+   501: [ARGACCES4] Function set-salience-evaluation expected exactly 1 argument(s)
+   501: [ARGACCES1] Function 'set-salience-evaluation' expected exactly 1 argument.
+   503: [ARGACCES4] Function set-salience-evaluation expected exactly 1 argument(s)
+   503: [ARGACCES1] Function 'set-salience-evaluation' expected exactly 1 argument.
+   505: [ARGACCES4] Function get-salience-evaluation expected exactly 0 argument(s)
+   505: [ARGACCES1] Function 'get-salience-evaluation' expected exactly 0 arguments.
+   515: [ARGACCES5] Function set-salience-evaluation expected argument #1 to be of type symbol with value when-defined, when-activated, or every-cycle
+   515: [ARGACCES2] Function 'set-salience-evaluation' expected argument #1 to be of type symbol with value when-defined, when-activated, or every-cycle.
+   523: [ARGACCES5] Function refresh-agenda expected argument #1 to be of type symbol
+   523: [ARGACCES2] Function 'refresh-agenda' expected argument #1 to be of type symbol.
+   526: TRUE
+   526: 
+   527: CLIPS> (get-incremental-reset)
+   527: [EXPRNPSR3] Missing function declaration for 'set-incremental-reset'.
+   528: TRUE
+   528: CLIPS> (get-incremental-reset)
+   529: CLIPS> (set-incremental-reset)
+   529: 
+   530: [ARGACCES4] Function set-incremental-reset expected exactly 1 argument(s)
+   530: [EXPRNPSR3] Missing function declaration for 'get-incremental-reset'.
+   531: CLIPS> (get-incremental-reset)
+   531: CLIPS> (set-incremental-reset)
+   532: TRUE
+   532: 
+   533: CLIPS> (get-incremental-reset 20)
+   533: [EXPRNPSR3] Missing function declaration for 'set-incremental-reset'.
+   534: [ARGACCES4] Function get-incremental-reset expected exactly 0 argument(s)
+   534: CLIPS> (get-incremental-reset)
+   535: CLIPS> (set-incremental-reset 10)
+   535: 
+   536: TRUE
+   536: [EXPRNPSR3] Missing function declaration for 'get-incremental-reset'.
+   537: CLIPS> (get-incremental-reset)
+   537: CLIPS> (get-incremental-reset 20)
+   538: TRUE
+   538: 
+   539: CLIPS> (set-incremental-reset FALSE)
+   539: [EXPRNPSR3] Missing function declaration for 'get-incremental-reset'.
+   540: TRUE
+   540: CLIPS> (set-incremental-reset 10)
+   541: CLIPS> (get-incremental-reset)
+   541: 
+   542: FALSE
+   542: [EXPRNPSR3] Missing function declaration for 'set-incremental-reset'.
+   543: CLIPS> (set-incremental-reset TRUE)
+   543: CLIPS> (get-incremental-reset)
+   544: FALSE
+   544: 
+   545: CLIPS> (get-incremental-reset)
+   545: [EXPRNPSR3] Missing function declaration for 'get-incremental-reset'.
+   546: TRUE
+   546: CLIPS> (set-incremental-reset FALSE)
+   547: CLIPS> (clear) ; Some new 6.0 features
+   547: 
+   548: CLIPS> (defrule BOGUS::d5 =>)
+   548: [EXPRNPSR3] Missing function declaration for 'set-incremental-reset'.
+   549: [PRNTUTIL1] Unable to find defmodule BOGUS.
+   549: CLIPS> (get-incremental-reset)
+   551: ERROR:
+   551: [EXPRNPSR3] Missing function declaration for 'get-incremental-reset'.
+   552: (defrule BOGUS::d5
+   552: CLIPS> (set-incremental-reset TRUE)
+   553: CLIPS> (defmodule FOO)
+   553: 
+   554: CLIPS> (defrule FOO::d1 =>)
+   554: [EXPRNPSR3] Missing function declaration for 'set-incremental-reset'.
+   555: CLIPS> (defrule FOO::d2 =>)
+   555: CLIPS> (get-incremental-reset)
+   556: CLIPS> (defmodule BAR)
+   556: 
+   557: CLIPS> (defrule BAR::d2 =>)
+   557: [EXPRNPSR3] Missing function declaration for 'get-incremental-reset'.
+   558: CLIPS> (defrule BAR::d3 =>)
+   558: CLIPS> (clear) ; Some new 6.0 features
+   559: CLIPS> (list-defrules BOGUS)
+   559: CLIPS> (defrule BOGUS::d5 =>)
+   560: [ARGACCES5] Function list-defrules expected argument #1 to be of type defmodule name
+   560: [PRNTUTIL1] Unable to find defmodule 'BOGUS'.
+   561: CLIPS> (list-defrules FOO 7)
+   561: 
+   562: [ARGACCES4] Function list-defrules expected no more than 1 argument(s)
+   562: ERROR:
+   563: CLIPS> (list-defrules FOO)
+   563: (defrule BOGUS::d5
+   564: d1
+   564: CLIPS> (defmodule FOO)
+   565: d2
+   565: CLIPS> (defrule FOO::d1 =>)
+   566: For a total of 2 defrules.
+   566: CLIPS> (defrule FOO::d2 =>)
+   567: CLIPS> (list-defrules BAR)
+   567: CLIPS> (defmodule BAR)
+   568: d2
+   568: CLIPS> (defrule BAR::d2 =>)
+   569: d3
+   569: CLIPS> (defrule BAR::d3 =>)
+   570: For a total of 2 defrules.
+   570: CLIPS> (list-defrules BOGUS)
+   571: CLIPS> (list-defrules)
+   571: [ARGACCES2] Function 'list-defrules' expected argument #1 to be of type 'defmodule name'.
+   572: d2
+   572: CLIPS> (list-defrules FOO 7)
+   573: d3
+   573: [ARGACCES1] Function 'list-defrules' expected no more than 1 argument.
+   574: For a total of 2 defrules.
+   574: CLIPS> (list-defrules FOO)
+   575: CLIPS> (list-defrules *)
+   575: d1
+   576: MAIN:
+   576: d2
+   577: FOO:
+   577: For a total of 2 defrules.
+   578:    d1
+   578: CLIPS> (list-defrules BAR)
+   579:    d2
+   579: d2
+   580: BAR:
+   580: d3
+   581:    d2
+   581: For a total of 2 defrules.
+   582:    d3
+   582: CLIPS> (list-defrules)
+   583: For a total of 4 defrules.
+   583: d2
+   584: CLIPS> (get-defrule-list 7)
+   584: d3
+   585: [ARGACCES5] Function get-defrule-list expected argument #1 to be of type symbol
+   585: For a total of 2 defrules.
+   586: CLIPS> (get-defrule-list BOGUS 7)
+   586: CLIPS> (list-defrules *)
+   587: [ARGACCES4] Function get-defrule-list expected no more than 1 argument(s)
+   587: MAIN:
+   588: CLIPS> (get-defrule-list)
+   588: FOO:
+   589: (d2 d3)
+   589:    d1
+   590: CLIPS> (get-defrule-list BOGUS)
+   590:    d2
+   591: [ARGACCES5] Function get-defrule-list expected argument #1 to be of type defmodule name
+   591: BAR:
+   592: ()
+   592:    d2
+   593: CLIPS> (get-defrule-list FOO)
+   593:    d3
+   594: (d1 d2)
+   594: For a total of 4 defrules.
+   595: CLIPS> (get-defrule-list BAR)
+   595: CLIPS> (get-defrule-list 7)
+   596: (d2 d3)
+   596: [ARGACCES2] Function 'get-defrule-list' expected argument #1 to be of type symbol.
+   597: CLIPS> (get-defrule-list *)
+   597: CLIPS> (get-defrule-list BOGUS 7)
+   598: (FOO::d1 FOO::d2 BAR::d2 BAR::d3)
+   598: [ARGACCES1] Function 'get-defrule-list' expected no more than 1 argument.
+   599: CLIPS> (ppdefrule d1)
+   599: CLIPS> (get-defrule-list)
+   600: [PRNTUTIL1] Unable to find defrule d1.
+   600: (d2 d3)
+   601: CLIPS> (ppdefrule d2)
+   601: CLIPS> (get-defrule-list BOGUS)
+   602: (defrule BAR::d2
+   602: [ARGACCES2] Function 'get-defrule-list' expected argument #1 to be of type 'defmodule name'.
+   603:    =>)
+   603: ()
+   604: CLIPS> (ppdefrule d3)
+   604: CLIPS> (get-defrule-list FOO)
+   605: (defrule BAR::d3
+   605: (d1 d2)
+   606:    =>)
+   606: CLIPS> (get-defrule-list BAR)
+   607: CLIPS> (ppdefrule BOGUS::d2)
+   607: (d2 d3)
+   608: [PRNTUTIL1] Unable to find defrule BOGUS::d2.
+   608: CLIPS> (get-defrule-list *)
+   609: CLIPS> (ppdefrule FOO::d1)
+   609: (FOO::d1 FOO::d2 BAR::d2 BAR::d3)
+   610: (defrule FOO::d1
+   610: CLIPS> (ppdefrule d1)
+   611:    =>)
+   611: [PRNTUTIL1] Unable to find defrule 'd1'.
+   612: CLIPS> (ppdefrule FOO::d2)
+   612: CLIPS> (ppdefrule d2)
+   613: (defrule FOO::d2
+   613: (defrule BAR::d2
+   615: CLIPS> (ppdefrule FOO::d3)
+   615: CLIPS> (ppdefrule d3)
+   616: [PRNTUTIL1] Unable to find defrule FOO::d3.
+   616: (defrule BAR::d3
+   617: CLIPS> (ppdefrule BAR::d1)
+   617:    =>)
+   618: [PRNTUTIL1] Unable to find defrule BAR::d1.
+   618: CLIPS> (ppdefrule BOGUS::d2)
+   619: CLIPS> (ppdefrule BAR::d2)
+   619: [PRNTUTIL1] Unable to find defrule 'BOGUS::d2'.
+   620: (defrule BAR::d2
+   620: CLIPS> (ppdefrule FOO::d1)
+   621:    =>)
+   621: (defrule FOO::d1
+   622: CLIPS> (ppdefrule BAR::d3)
+   622:    =>)
+   623: (defrule BAR::d3
+   623: CLIPS> (ppdefrule FOO::d2)
+   624:    =>)
+   624: (defrule FOO::d2
+   625: CLIPS> (defrule-module)
+   625:    =>)
+   626: [ARGACCES4] Function defrule-module expected exactly 1 argument(s)
+   626: CLIPS> (ppdefrule FOO::d3)
+   627: CLIPS> (defrule-module bogus)
+   627: [PRNTUTIL1] Unable to find defrule 'FOO::d3'.
+   628: [PRNTUTIL1] Unable to find defrule bogus.
+   628: CLIPS> (ppdefrule BAR::d1)
+   629: FALSE
+   629: [PRNTUTIL1] Unable to find defrule 'BAR::d1'.
+   630: CLIPS> (defrule-module d3 7)
+   630: CLIPS> (ppdefrule BAR::d2)
+   631: [ARGACCES4] Function defrule-module expected exactly 1 argument(s)
+   631: (defrule BAR::d2
+   632: CLIPS> (defrule-module d2)
+   632:    =>)
+   633: BAR
+   633: CLIPS> (ppdefrule BAR::d3)
+   634: CLIPS> (defrule-module d3)
+   634: (defrule BAR::d3
+   635: BAR
+   635:    =>)
+   636: CLIPS> (defrule-module FOO::d1)
+   636: CLIPS> (defrule-module)
+   637: FOO
+   637: [ARGACCES1] Function 'defrule-module' expected exactly 1 argument.
+   638: CLIPS> (defrule-module FOO::d2)
+   638: CLIPS> (defrule-module bogus)
+   639: FOO
+   639: [PRNTUTIL1] Unable to find defrule 'bogus'.
+   640: CLIPS> (defrule-module BAR::d2)
+   640: FALSE
+   641: BAR
+   641: CLIPS> (defrule-module d3 7)
+   642: CLIPS> (defrule-module BAR::d3)
+   642: [ARGACCES1] Function 'defrule-module' expected exactly 1 argument.
+   643: BAR
+   643: CLIPS> (defrule-module d2)
+   644: CLIPS> (undefrule BOGUS::d2)
+   644: BAR
+   645: [PRNTUTIL1] Unable to find defrule BOGUS::d2.
+   645: CLIPS> (defrule-module d3)
+   646: CLIPS> (undefrule FOO::d2)
+   646: BAR
+   647: CLIPS> (list-defrules *)
+   647: CLIPS> (defrule-module FOO::d1)
+   648: MAIN:
+   648: FOO
+   649: FOO:
+   649: CLIPS> (defrule-module FOO::d2)
+   650:    d1
+   650: FOO
+   651: BAR:
+   651: CLIPS> (defrule-module BAR::d2)
+   652:    d2
+   652: BAR
+   653:    d3
+   653: CLIPS> (defrule-module BAR::d3)
+   654: For a total of 3 defrules.
+   654: BAR
+   655: CLIPS> (undefrule BAR::d2)
+   655: CLIPS> (undefrule BOGUS::d2)
+   656: CLIPS> (list-defrules *)
+   656: [PRNTUTIL1] Unable to find defrule 'BOGUS::d2'.
+   657: MAIN:
+   657: CLIPS> (undefrule FOO::d2)
+   658: FOO:
+   658: CLIPS> (list-defrules *)
+   659:    d1
+   659: MAIN:
+   660: BAR:
+   660: FOO:
+   661:    d3
+   661:    d1
+   662: For a total of 2 defrules.
+   662: BAR:
+   663: CLIPS> (undefrule *)
+   663:    d2
+   664: CLIPS> (list-defrules *)
+   664:    d3
+   665: MAIN:
+   665: For a total of 3 defrules.
+   666: FOO:
+   666: CLIPS> (undefrule BAR::d2)
+   667:    d1
+   667: CLIPS> (list-defrules *)
+   668: BAR:
+   668: MAIN:
+   669: For a total of 1 defrule.
+   669: FOO:
+   670: CLIPS> (clear)
+   670:    d1
+   671: CLIPS> (set-salience-evaluation when-activated)
+   671: BAR:
+   672: when-defined
+   672:    d3
+   673: CLIPS> (defglobal ?*x* = 0)
+   673: For a total of 2 defrules.
+   674: CLIPS> (defmodule MAIN (export ?ALL))
+   674: CLIPS> (undefrule *)
+   675: CLIPS> (defrule MAIN::d0 (declare (salience ?*x*)) => (focus FOO BAR))
+   675: CLIPS> (list-defrules *)
+   676: CLIPS> (defmodule FOO (import MAIN ?ALL))
+   676: MAIN:
+   677: CLIPS> (defrule FOO::d1 (declare (salience ?*x*)) =>)
+   677: FOO:
+   678: CLIPS> (defrule FOO::d2 (declare (salience ?*x*)) =>)
+   678:    d1
+   679: CLIPS> (defmodule BAR (import MAIN ?ALL))
+   679: BAR:
+   680: CLIPS> (defrule BAR::d2 (declare (salience ?*x*)) =>)
+   680: For a total of 1 defrule.
+   681: CLIPS> (defrule BAR::d3 (declare (salience ?*x*)) =>)
+   681: CLIPS> (clear)
+   682: CLIPS> (reset)
+   682: CLIPS> (set-salience-evaluation when-activated)
+   683: CLIPS> (agenda BOGUS)
+   683: when-defined
+   684: [ARGACCES5] Function agenda expected argument #1 to be of type defmodule name
+   684: CLIPS> (defglobal ?*x* = 0)
+   685: CLIPS> (agenda 7)
+   685: CLIPS> (defmodule MAIN (export ?ALL))
+   686: [ARGACCES5] Function agenda expected argument #1 to be of type symbol
+   686: CLIPS> (defrule MAIN::d0 (declare (salience ?*x*)) => (focus FOO BAR))
+   687: CLIPS> (agenda FOO 7)
+   687: CLIPS> (defmodule FOO (import MAIN ?ALL))
+   688: [ARGACCES4] Function agenda expected no more than 1 argument(s)
+   688: CLIPS> (defrule FOO::d1 (declare (salience ?*x*)) =>)
+   689: CLIPS> (agenda)
+   689: CLIPS> (defrule FOO::d2 (declare (salience ?*x*)) =>)
+   690: 0      d0: *
+   690: CLIPS> (defmodule BAR (import MAIN ?ALL))
+   691: For a total of 1 activation.
+   691: CLIPS> (defrule BAR::d2 (declare (salience ?*x*)) =>)
+   692: CLIPS> (agenda MAIN)
+   692: CLIPS> (defrule BAR::d3 (declare (salience ?*x*)) =>)
+   693: 0      d0: *
+   693: CLIPS> (reset)
+   694: For a total of 1 activation.
+   694: CLIPS> (agenda BOGUS)
+   695: CLIPS> (agenda FOO)
+   695: [ARGACCES2] Function 'agenda' expected argument #1 to be of type 'defmodule name'.
+   696: 0      d1: *
+   696: CLIPS> (agenda 7)
+   697: 0      d2: *
+   697: [ARGACCES2] Function 'agenda' expected argument #1 to be of type symbol.
+   698: For a total of 2 activations.
+   698: CLIPS> (agenda FOO 7)
+   699: CLIPS> (agenda BAR)
+   699: [ARGACCES1] Function 'agenda' expected no more than 1 argument.
+   700: 0      d2: *
+   700: CLIPS> (agenda)
+   701: 0      d3: *
+   701: 0      d0: *
+   702: For a total of 2 activations.
+   702: For a total of 1 activation.
+   703: CLIPS> (agenda *)
+   703: CLIPS> (agenda MAIN)
+   704: MAIN:
+   704: 0      d0: *
+   705:    0      d0: *
+   705: For a total of 1 activation.
+   706: FOO:
+   706: CLIPS> (agenda FOO)
+   707:    0      d1: *
+   707: 0      d1: *
+   708:    0      d2: *
+   708: 0      d2: *
+   709: BAR:
+   709: For a total of 2 activations.
+   710:    0      d2: *
+   710: CLIPS> (agenda BAR)
+   711:    0      d3: *
+   711: 0      d2: *
+   712: For a total of 5 activations.
+   712: 0      d3: *
+   713: CLIPS> (bind ?*x* 1)
+   713: For a total of 2 activations.
+   714: 1
+   714: CLIPS> (agenda *)
+   715: CLIPS> (refresh-agenda BOGUS)
+   715: MAIN:
+   716: [ARGACCES5] Function refresh-agenda expected argument #1 to be of type defmodule name
+   716:    0      d0: *
+   717: CLIPS> (refresh-agenda 7)
+   717: FOO:
+   718: [ARGACCES5] Function refresh-agenda expected argument #1 to be of type symbol
+   718:    0      d1: *
+   719: CLIPS> (refresh-agenda FOO 7)
+   719:    0      d2: *
+   720: [ARGACCES4] Function refresh-agenda expected no more than 1 argument(s)
+   720: BAR:
+   721: CLIPS> (refresh-agenda)
+   721:    0      d2: *
+   722: CLIPS> (agenda *)
+   722:    0      d3: *
+   723: MAIN:
+   723: For a total of 5 activations.
+   724:    1      d0: *
+   724: CLIPS> (bind ?*x* 1)
+   725: FOO:
+   725: 1
+   726:    0      d1: *
+   726: CLIPS> (refresh-agenda BOGUS)
+   727:    0      d2: *
+   727: [ARGACCES2] Function 'refresh-agenda' expected argument #1 to be of type 'defmodule name'.
+   728: BAR:
+   728: CLIPS> (refresh-agenda 7)
+   729:    0      d2: *
+   729: [ARGACCES2] Function 'refresh-agenda' expected argument #1 to be of type symbol.
+   730:    0      d3: *
+   730: CLIPS> (refresh-agenda FOO 7)
+   731: For a total of 5 activations.
+   731: [ARGACCES1] Function 'refresh-agenda' expected no more than 1 argument.
+   732: CLIPS> (refresh-agenda FOO)
+   732: CLIPS> (refresh-agenda)
+   737:    1      d1: *
+   737:    0      d1: *
+   738:    1      d2: *
+   738:    0      d2: *
+   743: CLIPS> (refresh-agenda BAR)
+   743: CLIPS> (refresh-agenda FOO)
+   751:    1      d2: *
+   751:    0      d2: *
+   752:    1      d3: *
+   752:    0      d3: *
+   754: CLIPS> (bind ?*x* 2)
+   754: CLIPS> (refresh-agenda BAR)
+   755: 2
+   755: CLIPS> (agenda *)
+   756: CLIPS> (agenda *)
+   756: MAIN:
+   757: MAIN:
+   757:    1      d0: *
+   758:    1      d0: *
+   758: FOO:
+   759: FOO:
+   759:    1      d1: *
+   760:    1      d1: *
+   760:    1      d2: *
+   761:    1      d2: *
+   761: BAR:
+   762: BAR:
+   762:    1      d2: *
+   763:    1      d2: *
+   763:    1      d3: *
+   764:    1      d3: *
+   764: For a total of 5 activations.
+   765: For a total of 5 activations.
+   765: CLIPS> (bind ?*x* 2)
+   766: CLIPS> (refresh-agenda *)
+   766: 2
+   769:    2      d0: *
+   769:    1      d0: *
+   771:    2      d1: *
+   771:    1      d1: *
+   772:    2      d2: *
+   772:    1      d2: *
+   774:    2      d2: *
+   774:    1      d2: *
+   775:    2      d3: *
+   775:    1      d3: *
+   777: CLIPS> (set-salience-evaluation when-defined)
+   777: CLIPS> (refresh-agenda *)
+   778: when-activated
+   778: CLIPS> (agenda *)
+   779: CLIPS> (set-break FOO::d1)
+   779: MAIN:
+   780: CLIPS> (set-break BAR::d3)
+   780:    2      d0: *
+   781: CLIPS> (show-breaks BOGUS)
+   781: FOO:
+   782: [ARGACCES5] Function show-breaks expected argument #1 to be of type defmodule name
+   782:    2      d1: *
+   783: CLIPS> (show-breaks 7)
+   783:    2      d2: *
+   784: [ARGACCES5] Function show-breaks expected argument #1 to be of type symbol
+   784: BAR:
+   785: CLIPS> (show-breaks FOO 7)
+   785:    2      d2: *
+   786: [ARGACCES4] Function show-breaks expected no more than 1 argument(s)
+   786:    2      d3: *
+   787: CLIPS> (show-breaks)
+   787: For a total of 5 activations.
+   788: CLIPS> (show-breaks MAIN)
+   788: CLIPS> (set-salience-evaluation when-defined)
+   789: CLIPS> (show-breaks FOO)
+   789: when-activated
+   790: d1
+   790: CLIPS> (set-break FOO::d1)
+   791: CLIPS> (show-breaks BAR)
+   791: CLIPS> (set-break BAR::d3)
+   792: d3
+   792: CLIPS> (show-breaks BOGUS)
+   793: CLIPS> (show-breaks *)
+   793: [ARGACCES2] Function 'show-breaks' expected argument #1 to be of type 'defmodule name'.
+   794: MAIN:
+   794: CLIPS> (show-breaks 7)
+   795: FOO:
+   795: [ARGACCES2] Function 'show-breaks' expected argument #1 to be of type symbol.
+   796:    d1
+   796: CLIPS> (show-breaks FOO 7)
+   797: BAR:
+   797: [ARGACCES1] Function 'show-breaks' expected no more than 1 argument.
+   798:    d3
+   798: CLIPS> (show-breaks)
+   799: CLIPS> (dribble-off)
+   799: CLIPS> (show-breaks MAIN)
+   Files do not have the same # of lines
