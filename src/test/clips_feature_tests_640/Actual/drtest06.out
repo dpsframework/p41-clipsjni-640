@@ -311,7 +311,7 @@ CLIPS> (deftemplate foo                   ; DR0561
 CLIPS> (assert (foo))                     ; DR0561
 <Fact-1>
 CLIPS> (facts)                            ; DR0561
-f-1     (foo (x <Pointer-C-00000000>))
+f-1     (foo (x <Pointer-C-0000000000000000>))
 For a total of 1 fact.
 CLIPS> (clear)                            ; DR0562
 CLIPS> (deffunction foo ()                ; DR0562

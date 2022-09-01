@@ -349,7 +349,7 @@ CLIPS>
 CLIPS> (assert (stuff))
 <Fact-1>
 CLIPS> (facts)
-f-1     (stuff (fa <Dummy Fact>) (ea <Pointer-C-00000000>) (ia <Dummy Instance>))
+f-1     (stuff (fa <Dummy Fact>) (ea <Pointer-C-0000000000000000>) (ia <Dummy Instance>))
 For a total of 1 fact.
 CLIPS> (defclass THING (is-a USER))
 CLIPS> (make-instance t1 of THING)
@@ -357,9 +357,9 @@ CLIPS> (make-instance t1 of THING)
 CLIPS> (assert (stuff (fa (assert (colors red green blue))) (ia (instance-address [t1]))))
 <Fact-3>
 CLIPS> (facts)
-f-1     (stuff (fa <Dummy Fact>) (ea <Pointer-C-00000000>) (ia <Dummy Instance>))
+f-1     (stuff (fa <Dummy Fact>) (ea <Pointer-C-0000000000000000>) (ia <Dummy Instance>))
 f-2     (colors red green blue)
-f-3     (stuff (fa <Fact-2>) (ea <Pointer-C-00000000>) (ia <Instance-t1>))
+f-3     (stuff (fa <Fact-2>) (ea <Pointer-C-0000000000000000>) (ia <Instance-t1>))
 For a total of 3 facts.
 CLIPS> (bsave-facts "Temp//fctsavb10.fct")
 3
@@ -367,9 +367,9 @@ CLIPS> (reset)
 CLIPS> (bload-facts "Temp//fctsavb10.fct")
 3
 CLIPS> (facts)
-f-1     (stuff (fa <Dummy Fact>) (ea <Pointer-C-00000000>) (ia [Dummy Instance]))
+f-1     (stuff (fa <Dummy Fact>) (ea <Pointer-C-0000000000000000>) (ia [Dummy Instance]))
 f-2     (colors red green blue)
-f-3     (stuff (fa <Dummy Fact>) (ea <Pointer-C-00000000>) (ia [t1]))
+f-3     (stuff (fa <Dummy Fact>) (ea <Pointer-C-0000000000000000>) (ia [t1]))
 For a total of 3 facts.
 CLIPS> (clear)
 CLIPS> (deftemplate cp (multislot v) (multislot a))

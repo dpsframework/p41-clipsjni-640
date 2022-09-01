@@ -45,11 +45,11 @@ OBJS = agenda.obj analysis.obj argacces.obj bload.obj bmathfun.obj bsave.obj \
 all: CLIPSJNI.dll
 
 CLIPSJNI.dll : $(OBJS)
-	link /MACHINE:X86  /libpath:"$(JAVA_LIB)" *.obj /dll /out:clipsjni-6.40-x86.dll
+	link /MACHINE:X86  /libpath:"$(JAVA_LIB)" *.obj /dll /out:clipsjni-6.40-x32.dll
 
 	
 clean : 
-	erase /Q clipsjni-6.40-x86.dll $(OBJS)
+	erase /Q clipsjni-6.40-x32.dll $(OBJS)
 
 .VIRTUAL : all clean
 	

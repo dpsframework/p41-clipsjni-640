@@ -939,7 +939,7 @@ CLIPS>
   (if (> ?bt ?tt)
      then
      (printout t "Binary load time exceeded text load time" crlf)))
-Binary load time exceeded text load time
+FALSE
 CLIPS> (save-instances "Actual//inssav1.out")
 200
 CLIPS> (file-message "Actual//inssav1.out" "D E")

@@ -16,13 +16,13 @@ echo. -------------------------------------------------------------
 echo. Compiling and Making the C++ Header File:
 echo.      src/main/c/net_sf_clipsrules_jni_Environment.h
 echo. -------------------------------------------------------------
-echo. javac -p %moName% %srClass%/%moName%/module-info.java %srClass%/%moName%/%ptClass%/*java -d %tgClass%/%moName%   -verbose -deprecation -h src/main/c
+echo. javac %srClass%/%moName%/%ptClass%/*java -d %tgClass%/%moName%   -verbose -deprecation -h src/main/c
 echo.
 echo.
 echo. -------------------------------------------------------------
 echo. Make Jar file
 echo. -------------------------------------------------------------
-echo. jar  -cfe %jarName%.jar  %moName%.Shell %tgClass%/%moName%/%ptClass%/Shell.class %tgClass%/%moName%/module-info.class -C %tgClass%/%moName% net
+echo. jar  -cfe %jarName%.jar  %moName%.Shell %tgClass%/%moName%/%ptClass%/Shell.class -C %tgClass%/%moName% net
 echo.
 echo. -------------------------------------------------------------
 echo. Open new terminal with Native-Tools Visual Studio 2022 x64
@@ -37,14 +37,12 @@ echo.
 echo. -------------------------------------------------------------
 echo. Launch with: 
 echo. -------------------------------------------------------------
-echo. java -p %jarName%.jar    -m %moName%/%moName%.Shell
-echo. java -jar %jarName%.jar    net.sf.clipsrules.jni.Shell
-echo. java  %moName%.Shell
+echo. java -jar %jarName%.jar  
 echo. -------------------------------------------------------------
 echo.
 echo. Test with:
 echo. ------------
-echo. "CLIPS> (chdir C:\\Users\\---YOUR-NAME-----\\p41-clipsjni-640\\src\\test\\clips_feature_tests_640)"
+echo. "CLIPS> (chdir ../src/test/clips_feature_tests_640)"
 echo. 
 echo.  "CLIPS> (batch testall.tst)"
 echo.  "CLIPS> (exit)"

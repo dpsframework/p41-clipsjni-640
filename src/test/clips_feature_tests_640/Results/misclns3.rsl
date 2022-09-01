@@ -1,9 +1,2 @@
 misclns3.bat differences are as follows:
-   144: get-dynamic-constraint-checking
-   144: dynamic-put
-   145: dynamic-put
-   145: set-dynamic-constraint-checking
-   146: set-dynamic-constraint-checking
-   146: dynamic-get
-   147: dynamic-get
-   147: get-dynamic-constraint-checking
+   No differences detected in 263 lines.

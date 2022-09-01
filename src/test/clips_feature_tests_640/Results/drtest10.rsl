@@ -1,41 +1,41 @@
 drtest10.bat differences are as follows:
      8: 1697966  ;; Can be different
-     8: 855686
+     8: 1695990
     31: 1698150 ;; Reference mem-used number
-    31: 855806
+    31: 1696110
     51: 1698150 ;; Should be the same as above
-    51: 855806
+    51: 1696110
     74: 1698150 ;; Should be the same as above
-    74: 855806
+    74: 1696110
     94: 1698150 ;; Should be the same as above
-    94: 855806
+    94: 1696110
    114: 1698150 ;; Should be the same as above
-   114: 855806
+   114: 1696110
    138: 1698150 ;; Should be the same as above
-   138: 855806
+   138: 1696110
    182: MSG >> direct-modify ED:1 (<Instance-a> <Pointer-C-0x60400005b6f0>) ;; Reference Pointer
-   182: MSG >> direct-modify ED:1 (<Instance-a> <Pointer-C-15B1AC48>)
+   182: MSG >> direct-modify ED:1 (<Instance-a> <Pointer-C-0000025335C44DF0>)
    184:        ED:1 (<Instance-a> <Pointer-C-0x60400005b6f0>)               ;; Should be the same as above
-   184:        ED:1 (<Instance-a> <Pointer-C-15B1AC48>)
+   184:        ED:1 (<Instance-a> <Pointer-C-0000025335C44DF0>)
    187:        ED:1 (<Instance-a> <Pointer-C-0x60400005b6f0>)               ;; Should be the same as above
-   187:        ED:1 (<Instance-a> <Pointer-C-15B1AC48>)
+   187:        ED:1 (<Instance-a> <Pointer-C-0000025335C44DF0>)
    188: MSG << direct-modify ED:1 (<Instance-a> <Pointer-C-0x60400005b6f0)  ;; Should be the same as above
-   188: MSG << direct-modify ED:1 (<Instance-a> <Pointer-C-15B1AC48>)
+   188: MSG << direct-modify ED:1 (<Instance-a> <Pointer-C-0000025335C44DF0>)
    1194: (ea <Pointer-C-0x0>)
-   1194: (ea <Pointer-C-00000000>)
+   1194: (ea <Pointer-C-0000000000000000>)
    1199: (ea <Pointer-C-0x0>)
-   1199: (ea <Pointer-C-00000000>)
+   1199: (ea <Pointer-C-0000000000000000>)
    1499: (ea <Pointer-C-0x0>)
-   1499: (ea <Pointer-C-00000000>)
+   1499: (ea <Pointer-C-0000000000000000>)
    1505:    (ea <Pointer-C-0x0>))
-   1505:    (ea <Pointer-C-00000000>))
+   1505:    (ea <Pointer-C-0000000000000000>))
    1510: (ea <Pointer-C-0x0>)
-   1510: (ea <Pointer-C-00000000>)
+   1510: (ea <Pointer-C-0000000000000000>)
    1522:    (ea <Pointer-C-0x0>))
-   1522:    (ea <Pointer-C-00000000>))
+   1522:    (ea <Pointer-C-0000000000000000>))
    1527: (ea <Pointer-C-0x0>)
-   1527: (ea <Pointer-C-00000000>)
+   1527: (ea <Pointer-C-0000000000000000>)
    1533:    (ea <Pointer-C-0x0>))
-   1533:    (ea <Pointer-C-00000000>))
+   1533:    (ea <Pointer-C-0000000000000000>))
    1538: (ea <Pointer-C-0x0>)
-   1538: (ea <Pointer-C-00000000>)
+   1538: (ea <Pointer-C-0000000000000000>)

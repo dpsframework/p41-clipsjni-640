@@ -1,12 +1,12 @@
 @echo off
-::  Module_Name x86 (Java SE1.8 only)
+::  Module_Name x32 (Java SE1.8 only)
 set moName=net.sf.clipsrules.jni
 set libName=clipsjni
 set libVer=6.40
 set tgClass=target/classes
 set srClass=src/main/java
 set ptClass=net/sf/clipsrules/jni
-set jarName=%libName%-%libVer%-x86
+set jarName=%libName%-%libVer%-x32
 
 
 
@@ -39,8 +39,8 @@ echo. -------------------------------------------------------------
 echo. 
 echo   cd src/main/c/ and type:
 echo.  del *.obj
-echo.  nmake -f makefile-640-x86.win CLIPSJNI.dll
-echo.  copy clipsjni-6.40-x86.dll ..\..\..\.
+echo.  nmake -f makefile-640-x32.win CLIPSJNI.dll
+echo.  copy clipsjni-6.40-x32.dll ..\..\..\.
 echo.  cd ..\..\..\.
 echo.
 echo.

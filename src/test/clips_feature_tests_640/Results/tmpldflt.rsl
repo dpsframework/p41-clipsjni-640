@@ -1,5 +1,5 @@
 tmpldflt.bat differences are as follows:
    312: ==> f-10    (foo10 (x <Pointer-C-0x0>)) ;; Any NULL pointer is OK
-   312: ==> f-10    (foo10 (x <Pointer-C-00000000>))
+   312: ==> f-10    (foo10 (x <Pointer-C-0000000000000000>))
    320: ==> f-12    (foo12 (x 9.8)) ;; Any value close to 9.8 is OK
    320: ==> f-12    (foo12 (x 9.8))

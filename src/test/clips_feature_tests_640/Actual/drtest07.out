@@ -57,21 +57,21 @@ CLIPS> (progn (release-mem) TRUE)         ; DR0610 - Memory Loss
 TRUE
 CLIPS> (clear)                            ; DR0612
 CLIPS> (release-mem)                      ; DR0612
-1997
+2213
 CLIPS> (defrule x (not (a)) =>)           ; DR0612
 CLIPS> (clear)                            ; DR0612
 CLIPS> (progn (release-mem) TRUE)         ; DR0612 - Memory Loss
 TRUE
 CLIPS> (clear)                            ; DR0613
 CLIPS> (release-mem)                      ; DR0613
-1997
+2213
 CLIPS> (defrule x (not (a)) (not (b))  =>) 
 CLIPS> (clear)                            ; DR0613
 CLIPS> (progn (release-mem) TRUE)         ; DR0613 - Memory Loss
 TRUE
 CLIPS> (clear)                            ; DR0614
 CLIPS> (release-mem)                      ; DR0614
-1997
+2213
 CLIPS> (defglobal ?*x* = 3)               ; DR0614
 CLIPS> (defglobal ?*x* = 4)               ; DR0614
 CLIPS> (clear)                            ; DR0614
@@ -79,7 +79,7 @@ CLIPS> (progn (release-mem) TRUE)         ; DR0614 - Memory Loss
 TRUE
 CLIPS> (clear)                            ; DR0615
 CLIPS> (release-mem)                      ; DR0615
-1997
+2213
 CLIPS> (deftemplate x (multifield y) (multifield y))
 
 [PRNTUTIL5] The slot 'y' has already been parsed.
@@ -93,7 +93,7 @@ CLIPS> (progn (release-mem) TRUE)         ; DR0615 - Memory Loss
 TRUE
 CLIPS> (clear)                            ; DR0616
 CLIPS> (release-mem)                      ; DR0616
-1997
+2213
 CLIPS> (any-instancep ((?a OBJECT) (?a OBJECT)) TRUE)
 [INSQYPSR1] Duplicate instance member variable name in function 'any-instancep'.
 CLIPS> (clear)                            ; DR0616
@@ -101,7 +101,7 @@ CLIPS> (progn (release-mem) TRUE)         ; DR0616 - Memory Loss
 TRUE
 CLIPS> (clear)                            ; DR0617
 CLIPS> (release-mem)                      ; DR0617
-1997
+2213
 CLIPS> (bind ?a 3)                        ; DR0617
 3
 CLIPS> (clear)                            ; DR0617
@@ -892,7 +892,7 @@ CLIPS> (deffunction force-garbage-collection ()
 CLIPS> (create$ (create-number) ?*x* (bind ?*x* 0)
   (force-garbage-collection) (float (random))
      (float (random)))
-(BOGUS 2.0 0 FALSE 14771.0 11538.0)
+(BOGUS 2.0 0 FALSE 24237.0 26443.0)
 CLIPS> (clear)
 CLIPS> (deffunction foo ()      ;; DR0699
    (printout t Foo crlf))
